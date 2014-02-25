@@ -16,6 +16,9 @@
             <h:outputLabel value="Senha: " for="senha"/>
             <h:inputText id="senha" value="#{usuarioBean.usuario.senha}"/> 
             
+            <h:outputLabel value="Confimar senha: " for="confirmarsenha"/>
+            
+            
             <h:commandButton value="Registrar" action="#{usuarioBean.salvar(usuarioBean.usuario)}"/>
         </h:form>
     </h:body>
