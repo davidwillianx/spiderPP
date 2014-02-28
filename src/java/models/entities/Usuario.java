@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package models.entities;
 
 import java.io.Serializable;
@@ -23,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
     @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,19 +49,20 @@ public class Usuario implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 122)
+    @NotNull(message="O campo nome não pode ser vazio")
+    @Size(min = 8, max = 122, message="O campo usuário deve ter no mínimo oito caracteres")
     @Column(name = "nome")
     private String nome;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 122)
+    @NotNull(message="O campo email não pode ser vazio")
+    @Size(min = 6, max = 122, message ="Email inválido")
+    @Pattern(regexp="^([0-9a-zA-Z]+([_.-]?[0-9a-zA-Z]+)*@[0-9a-zA-Z]+[0-9,a-z,A-Z,.,-]*(.){1}[a-zA-Z]{2,4})+$", message="Email inválido")
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 122)
+    @NotNull(message="O campo senha não pode ser vazio")
+    @Size(min = 6, max = 122, message =" o campo senha deve conter no mínimo 6 caracteres")
     @Column(name = "senha")
     private String senha;
     @JoinTable(name = "usuario_area_atuacao", joinColumns = {
@@ -170,5 +172,7 @@ public class Usuario implements Serializable {
     public String toString() {
         return "models.entities.Usuario[ id=" + id + " ]";
     }
-    
+
 }
+   
+    

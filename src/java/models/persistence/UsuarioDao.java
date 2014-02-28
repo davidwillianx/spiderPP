@@ -8,6 +8,7 @@ package models.persistence;
 
 import javax.persistence.EntityManager;
 import models.entities.Usuario;
+import libs.BuildHash;
 
 /**
  *
@@ -25,11 +26,18 @@ public class UsuarioDao {
        else return this.dao = new Dao();
    }
    
-   public void salvar(Usuario usuario)
+   public void save(Usuario usuario)
    {
      try{
+         //DOCrypt
          this.entityManager = this.getDao().getEntityManager();
          this.entityManager.getTransaction().begin();
+  
+         //Create Hash  
+         BuildHash buildHash = new BuildHash();
+         String  hashSenha = buildHash.createHash(usuario.getSenha());
+         usuario.setSenha(hashSenha);      
+         
          this.entityManager.persist(usuario);
          this.entityManager.getTransaction().commit();
      }catch(Exception error)
@@ -37,7 +45,6 @@ public class UsuarioDao {
          this.entityManager.getTransaction().rollback();
      }
         this.entityManager.close();
-        this.dao.close();
-        
-   }   
+        this.dao.close();   
+   }                 
 }

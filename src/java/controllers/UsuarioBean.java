@@ -33,9 +33,9 @@ public class UsuarioBean {
     
     //Events
     
-    public void salvar(Usuario usuario)
+    public void save(Usuario usuario)
     {
-        this.usuarioDao.salvar(usuario);
+        this.usuarioDao.save(usuario);
     }
     
 }
