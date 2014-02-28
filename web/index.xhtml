@@ -9,6 +9,7 @@
     </h:head>
     <h:body>
         <h:form>
+            
              <h:panelGrid columns="2">
                     <p:outputLabel value="Nome: " for="nome"/>
                     <p:inputText id="nome" value="#{usuarioBean.usuario.nome}" title="Nome"/>
@@ -17,10 +18,11 @@
                     <p:inputText id="email" value="#{usuarioBean.usuario.email}"/>
 
                     <p:outputLabel value="Senha:" for="senha"/>
-                    <p:password id="senha"  value="#{usuarioBean.usuario.senha}" feedback="false" match="ConfirmSenha" label="Senha"/> 
+                    <p:password id="senha"  value="#{usuarioBean.usuario.senha}" feedback="false" match="ConfirmSenha" label="Senha" validatorMessage="O campos de senha não correspondem"/> 
 
                     <p:outputLabel value="Confirma Senha:" for="ConfirmSenha" />
-                    <p:password id="ConfirmSenha" value="#{usuarioBean.usuario.senha}" feedback="false" label="Confirma Senha"/>
+                    <p:password id="ConfirmSenha" value="#{usuarioBean.usuario.senha}" feedback="false" label="Confirma Senha"  />
+                    
 
                     <h:commandButton value="Registrar" action="#{usuarioBean.save(usuarioBean.usuario)}"/>
             </h:panelGrid>
