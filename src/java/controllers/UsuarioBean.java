@@ -43,15 +43,16 @@ public class UsuarioBean {
     {
 //        this.usuarioDao.save(usuario);
         
-        Properties properties = new Properties();
-        properties.setProperty("mail.transport.protocol", "smtp");
-        properties.setProperty("mail.host", "smtp.ufpa.br");
-        properties.setProperty("mail.user", "david.lopes@icen.ufpa.br");
-        properties.setProperty("mail.password", "spiderteste");
-        
+       
         
         
         try {
+                Properties properties = new Properties();
+                properties.setProperty("mail.transport.protocol", "smtp");
+                properties.setProperty("mail.host", "smtp.ufpa.br");
+                properties.setProperty("mail.user", "david.lopes@icen.ufpa.br");
+                properties.setProperty("mail.password", "spiderteste");
+        
             Session sessionMail =  Session.getDefaultInstance(properties,null);
             Transport transportMail = sessionMail.getTransport();
             
