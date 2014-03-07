@@ -41,6 +41,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
     @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
 public class Usuario implements Serializable {
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "status")
+    private boolean status;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -65,6 +70,8 @@ public class Usuario implements Serializable {
     @Size(min = 6, max = 122, message =" o campo senha deve conter no mínimo 6 caracteres")
     @Column(name = "senha")
     private String senha;
+     
+    
     @JoinTable(name = "usuario_area_atuacao", joinColumns = {
         @JoinColumn(name = "id_usuario", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "id_area_atuacao", referencedColumnName = "id")})
@@ -173,6 +180,13 @@ public class Usuario implements Serializable {
         return "models.entities.Usuario[ id=" + id + " ]";
     }
 
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }
    
     
