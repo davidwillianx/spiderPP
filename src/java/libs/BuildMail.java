@@ -48,7 +48,7 @@ public class BuildMail {
             
         } catch (Exception error) {
             
-            System.out.println("Email error: check your log file"+ error.getStackTrace());
+            System.out.println("Email error: check your log file"+ error.getMessage());
         }
     }
    

@@ -39,8 +39,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id"),
     @NamedQuery(name = "Usuario.findByNome", query = "SELECT u FROM Usuario u WHERE u.nome = :nome"),
     @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
-    @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
+    @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha"),
+    @NamedQuery(name = "Usuario.findByHashMail", query = "SELECT u FROM Usuario u WHERE u.hashmail = :hashmail")})
+
 public class Usuario implements Serializable {
+    @Size(max = 122)
+    @Column(name = "hashmail")
+    private String hashmail;
     
     @Basic(optional = false)
     @NotNull
@@ -186,6 +191,14 @@ public class Usuario implements Serializable {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getHashmail() {
+        return hashmail;
+    }
+
+    public void setHashmail(String hashmail) {
+        this.hashmail = hashmail;
     }
 }
    

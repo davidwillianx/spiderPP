@@ -1,23 +1,53 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package controllers;
 
-import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import models.entities.Usuario;
+import models.persistence.UsuarioDao;
+
+
 
 /**
  *
  * @author smp
  */
 @ManagedBean
+@RequestScoped
 public class AuthMailBean {
-    public void authMail(String hashAuth){
-//        Map<String,String> request =  FacesContext.getExternalContext().getRequestParameterMap();
-//        System.out.println("pegando....");
+    
+    @ManagedProperty(value="#{param.auth}")
+    private String hashMail;
+    private boolean isActiveted;
+    private UsuarioDao usuarioDao;
+    private Usuario usuario;
+    
+    public void setHashMail(String hashMail)
+    {
+        this.hashMail = hashMail;
+    }
+    
+    public String getHashMail()
+    {
+        return this.hashMail;
+    }
+ 
+    
+    public boolean getIsActiveted()
+    {
+        return this.isActiveted;
+    }
+    
+    @PostConstruct
+    public void init()
+    {
+        System.out.println(" hash : "+this.hashMail);
+        this.usuario = new Usuario();
+        this.usuario.setHashmail(this.hashMail);
+        
+        
+        this.usuarioDao = new UsuarioDao();
+        this.isActiveted = this.usuarioDao.selectByHashMail(this.usuario);
     }
 }

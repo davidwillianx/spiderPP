@@ -34,17 +34,21 @@ public class UsuarioBean {
         return this.usuario;
     }
     
-    //Events
-    
     public void save(Usuario usuario)
     {
         try {
-              this.usuarioDao.save(usuario);
+            
+            BuildHash buildHash = new BuildHash();  
+            String hashMail = buildHash.createHash(usuario.getEmail());
+            usuario.setHashmail(hashMail);
+            this.usuarioDao.save(usuario);
               
-              BuildMail buildMail =  new BuildMail();
-              BuildHash buildHash = new BuildHash();
-              buildMail.sendRegisterNotification(usuario.getEmail(), usuario.getNome(),
-                                                buildHash.createHash(usuario.getEmail()));
+            BuildMail buildMail =  new BuildMail();
+            buildMail.sendRegisterNotification(
+                                         usuario.getEmail()
+                                        ,usuario.getNome()
+                                        ,hashMail
+                                        );
               
         } catch (Exception e) {
             System.out.println("error: "+ e.getMessage());

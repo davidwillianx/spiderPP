@@ -1,14 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+        xmlns:p="http://primefaces.org/ui">
     
-    #{authMailBean.authMail()}       
+    <h:head>
+        <title></title>
+    </h:head>
+    <h:body>
+            
+       <h:panelGroup layout="block" rendered="#{authMailBean.isActiveted}">
+            <p>Your account is successfully activated!</p>
+       </h:panelGroup>
+       <h:panelGroup layout="block" rendered="#{!authMailBean.isActiveted}">
+            <p>Something wrong in your account activation</p>
+       </h:panelGroup>
+    </h:body>
 </html>
+

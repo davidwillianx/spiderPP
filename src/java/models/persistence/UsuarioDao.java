@@ -46,5 +46,24 @@ public class UsuarioDao {
      }
         this.entityManager.close();
         this.dao.close();   
-   }                 
+   }   
+   
+   
+   //@TODO a classe esta ficando com muita coisa do negócio melhor componentisar
+   public boolean selectByHashMail(Usuario usuario)
+   {
+       Usuario usuarioFeched;
+       try {
+            usuarioFeched= (Usuario) this.getDao().getEntityManager()
+                                            .createNamedQuery("Usuario.findByHashMail")
+                                            .setParameter("hashmail", usuario.getHashmail())
+                                            .getSingleResult();
+            return true;
+           
+       } catch (Exception error) {
+           System.out.println("vamos ver no que da: "+error.getMessage());
+           return false;
+       }
+     
+   }
 }
