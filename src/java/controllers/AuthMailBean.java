@@ -17,7 +17,7 @@ import models.persistence.UsuarioDao;
 @RequestScoped
 public class AuthMailBean {
     
-    @ManagedProperty(value="#{param.auth}")
+    @ManagedProperty(value="#{param.pkm}")
     private String hashMail;
     private boolean isActiveted;
     private UsuarioDao usuarioDao;
@@ -37,7 +37,7 @@ public class AuthMailBean {
     public boolean getIsActiveted()
     {
         return this.isActiveted;
-    }
+    } 
     
     @PostConstruct
     public void init()
@@ -46,8 +46,9 @@ public class AuthMailBean {
         this.usuario = new Usuario();
         this.usuario.setHashmail(this.hashMail);
         
-        
         this.usuarioDao = new UsuarioDao();
-        this.isActiveted = this.usuarioDao.selectByHashMail(this.usuario);
+        this.isActiveted = this.usuarioDao.enableStatus(this.usuario);
+        
+        
     }
 }

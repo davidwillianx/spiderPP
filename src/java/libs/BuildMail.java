@@ -23,11 +23,10 @@ public class BuildMail {
     
     public void sendRegisterNotification(String address, String name, String hash)
     {
-        
         this.subject = "Cadastro efetuado com sucesso!";
         this.message = "<html>"
             + "Olá "+ name + ", <br><br>Bem vindo a plataforma de estimativa de projetos SpiderPP.<br>"
-            +" <br> Para efetivar o seu cadastro clique  no link abaixo: <br> <a style=  \"background-color:blue;\" href = \"http://localhost:8080/spider/faces/user/auth.xhtml?pkm="+hash+"\"> <p class=\"classname\">Clique aqui</p> </a>  </html>";
+            +" <br> Para efetivar o seu cadastro clique  no link abaixo: <br> <a style=  \"background-color:blue;\" href = \"http://localhost:8080/spider/user/auth.xhtml?pkm="+hash+"\"> <p class=\"classname\">Clique aqui</p> </a>  </html>";
         
         this.sendMail(address, this.subject, this.message);
     }
@@ -51,7 +50,6 @@ public class BuildMail {
             System.out.println("Email error: check your log file"+ error.getMessage());
         }
     }
-   
 }
 
 

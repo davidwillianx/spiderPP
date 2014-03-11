@@ -48,22 +48,31 @@ public class UsuarioDao {
         this.dao.close();   
    }   
    
-   
-   //@TODO a classe esta ficando com muita coisa do negócio melhor componentisar
-   public boolean selectByHashMail(Usuario usuario)
+   public boolean enableStatus (Usuario usuario)
    {
-       Usuario usuarioFeched;
        try {
-            usuarioFeched= (Usuario) this.getDao().getEntityManager()
-                                            .createNamedQuery("Usuario.findByHashMail")
-                                            .setParameter("hashmail", usuario.getHashmail())
-                                            .getSingleResult();
-            return true;
+            this.entityManager = this.getDao().getEntityManager();
+            this.entityManager.getTransaction().begin();
            
-       } catch (Exception error) {
-           System.out.println("vamos ver no que da: "+error.getMessage());
-           return false;
-       }
-     
+            Usuario usuarioHashMail = (Usuario) entityManager.createNamedQuery("Usuario.findByHashMail")
+                                .setParameter("hashmail", usuario.getHashmail())
+                                .getSingleResult();
+            
+            entityManager.merge(usuarioHashMail);
+            usuarioHashMail.setStatus(true);
+            this.entityManager.getTransaction().commit();
+            return true;
+            
+       } catch (IllegalArgumentException | IllegalStateException error) {
+            this.entityManager.getTransaction().rollback();
+            return false;
+       }finally {
+            this.entityManager.close();
+            this.dao.close();
+       } 
    }
+   
+   
+   
+   
 }
