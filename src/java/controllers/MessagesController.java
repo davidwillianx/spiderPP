@@ -19,16 +19,12 @@ package controllers;
     @ManagedBean
     public class MessagesController {
 
-        public void addInfo(ActionEvent actionEvent)
-        {
-            addMessage("Para efetivar seu cadastro, acesse o link de ativação que foi enviado ao seu e-mail.");
-        }
+        public void addInfo(ActionEvent actionEvent) 
+        {  
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Informação: ", "Para efetivar "
+                    + "o cadastro, acesse o link de confirmação no seu e-mail"));  
+        }  
 
-        public void addMessage(String summary)
-        {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,summary,null);
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }   
     }
 
 

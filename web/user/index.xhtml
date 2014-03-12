@@ -9,27 +9,26 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:tooltip/>
+             <p:tooltip/>
                 <p:panelGrid columns="2">             
-                    <p:outputLabel value="Nome: " for="nome"/>
+                    <h:outputLabel value="Nome: " for="nome"/>
                     <p:inputText id="nome" value="#{usuarioBean.usuario.nome}" title="Nome"/>
 
                     <p:outputLabel value="Email: " for="email"/>
-                    <p:inputText id="email" value="#{usuarioBean.usuario.email}"/>
+                    <p:inputText id="email" value="#{usuarioBean.usuario.email}" title="Email"/> 
 
                     <p:outputLabel value="Senha:" for="senha"/>
-                    <p:password id="senha"  value="#{usuarioBean.usuario.senha}" feedback="false" match="ConfirmSenha" label="Senha" validatorMessage="O campos de senha não correspondem"/> 
+                    <p:password id="senha"  value="#{usuarioBean.usuario.senha}" feedback="false" match="ConfirmSenha" label="Senha" validatorMessage="Os campos de senhas não correspondem"/> 
 
                     <p:outputLabel value="Confirma Senha:" for="ConfirmSenha" />
                     <p:password id="ConfirmSenha" value="#{usuarioBean.usuario.senha}" feedback="false" label="Confirma Senha"/>
                     
                 </p:panelGrid>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+                    <p:commandButton value="Registrar" actionListener="#{usuarioBean.save(usuarioBean.usuario)}" action="#{messagesController.addInfo()}"/>  
         </h:form>
         
-        <h:form>
-            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
-            <p:commandButton value="Registrar" actionListener="#{usuarioBean.save(usuarioBean.usuario)}" action="#{messagesController.addInfo(actionEvent)}" ajax="false"/>       
-        </h:form>
+      
     </h:body>
 </html>
 
