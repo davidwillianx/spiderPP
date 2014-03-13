@@ -11,10 +11,11 @@
     <h:body>
             
         <h:panelGroup layout="block" rendered="#{authMailBean.isActiveted}">
-            <p>Your account is successfully activated!</p>
+            <p>Sua conta está ativada!</p>
+            <h:link outcome="login"/>
        </h:panelGroup>
        <h:panelGroup layout="block" rendered="#{!authMailBean.isActiveted}">
-            <p>Something wrong in your account activation</p>
+            <p>Ocorreu um erro na ativação da sua conta!</p>
        </h:panelGroup>
     </h:body>
 </html>
