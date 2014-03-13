@@ -6,6 +6,8 @@
 
 package libs;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import libs.exception.BuildHashException;
@@ -16,23 +18,23 @@ import sun.misc.BASE64Encoder;
  * @author smp
  */
 public class BuildHash {
-    
-    
-    /**@TODO falta ajustar a exception*/
-    public String createHash(String hash)
+    public String createHash(String hash) throws UnsupportedEncodingException
     {
         try{        
              MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-             messageDigest.update(hash.getBytes());
-             BASE64Encoder base64Enconder = new BASE64Encoder();
-             String hashed = base64Enconder.encode(messageDigest.digest());
+             messageDigest.update(hash.getBytes("UTF-8"));
+             byte[] digest = messageDigest.digest();
+             BigInteger bigInteger = new BigInteger(1, digest);
+             String hashed = bigInteger.toString(16);
+             System.out.println("Hash: " + hashed);
              
              return hashed;
             
-        }catch( NoSuchAlgorithmException error)
+        }catch( NoSuchAlgorithmException | UnsupportedEncodingException error)
         {
-            System.out.println("sadasdsad");
             return "";
         }    
-    }    
-}
+    }
+    }
+       
+
