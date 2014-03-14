@@ -24,7 +24,7 @@
 
                     <h:outputLabel value="Confirma Senha:" for="ConfirmSenha" />
                     <p:password id="ConfirmSenha" value="#{usuarioBean.usuario.senha}" feedback="false" label="Confirma Senha"  />
-                    
+                     
 
                     <p:commandButton update="panel" value="Cadastrar" action="#{usuarioBean.save(usuarioBean.usuario)}"/>
             </h:panelGrid>
