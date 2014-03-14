@@ -24,6 +24,9 @@ and open the template in the editor.
                     <p:password id="senha" value="#{usuarioBean.usuario.senha}"/>
 
                     <p:commandButton value="Acessar" action="#{usuarioBean.authenticator(usuarioBean.usuario)}"/>
+                    <br/>
+                    
+                    <h:link outcome="cadastro.xhtml" value="Cadastre-se"/>
                 </h:panelGrid>
             </h:form>
         </p:fieldset>
