@@ -20,12 +20,22 @@ public class BuildMail {
     private String subject;
 
     
+    public void rescuesKey (String address, String name, String hash)
+    {
+        
+        this.subject = "Recuperação de Senha";
+        this.message = "<html> Olá "+ name + ", <br><br>Para recuperar sua senha acesse o link a baixo:<br>"
+                + " <a style= \"background-color:blue;\" href = \"http://localhost:41538/spiderPP/user/novaSenha.xhtml?pkm="+ hash +"\" > <p class=\"classname\">Clique aqui</p> </a> </html>";
+        
+        this.sendMail(address, this.subject, this.message);
+    }
+    
     public void sendRegisterNotification(String address, String name, String hash)
     {
         this.subject = "Cadastro efetuado com sucesso!";
         this.message = "<html>"
             + "Olá "+ name + ", <br><br>Bem vindo a plataforma de estimativa de projetos SpiderPP.<br>"
-            +" <br> Para efetivar o seu cadastro clique  no link abaixo: <br> <a style=  \"background-color:blue;\" href = \"http://localhost:8080/spider/user/auth.xhtml?pkm="+hash+"\"> <p class=\"classname\">Clique aqui</p> </a>  </html>";
+            +" <br> Para efetivar o seu cadastro clique  no link abaixo: <br> <a style=  \"background-color:blue;\" href = \"http://localhost:41538/spiderPP/user/auth.xhtml?pkm="+hash+"\"> <p class=\"classname\">Clique aqui</p> </a>  </html>";
         
         this.sendMail(address, this.subject, this.message);
     }
@@ -47,6 +57,8 @@ public class BuildMail {
         } catch (EmailException error) {
             System.out.println("Email error: check your log file"+ error.getMessage());
         }
+        
+        
     }
 }
 

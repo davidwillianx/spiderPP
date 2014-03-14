@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.UnsupportedEncodingException;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,9 @@ public class UsuarioBean {
     
     private Usuario usuario;
     private UsuarioDao usuarioDao;
+    
+     @ManagedProperty(value="#{param.pkm}")
+     private String hashMail;
     
     public UsuarioBean()
     {
@@ -98,4 +102,20 @@ public class UsuarioBean {
         session.removeAttribute("usuario");
         return "login.xhtml";
     }
+    
+    public void searchKey(Usuario usuario)
+    {
+        try {
+            Usuario use = this.usuarioDao.searchMail(usuario.getEmail());
+       
+            BuildMail buildMail = new BuildMail();
+            buildMail.rescuesKey(use.getEmail(), use.getNome(), use.getHashmail());
+            System.out.println("passou!!");
+        } catch (Exception e){
+            System.out.println("error:" + e);
+        }
+
+    }
+    
+    
 }

@@ -54,7 +54,7 @@ public class UsuarioDao {
             this.entityManager = this.getDao().getEntityManager();
             this.entityManager.getTransaction().begin();
            
-            Usuario usuarioHashMail = (Usuario) entityManager.createNamedQuery("Usuario.findByHashMail")
+            Usuario usuarioHashMail = (Usuario) entityManager.createNamedQuery("Usuario.findByMail")
                                 .setParameter("hashmail", usuario.getHashmail())
                                 .getSingleResult();
             
@@ -90,7 +90,50 @@ public class UsuarioDao {
        }
    }
    
+   public Usuario searchMail(String email) 
+   {
    
+       try {
+       
+           this.entityManager = this.getDao().getEntityManager();
+           this.entityManager.getTransaction().begin();
+           
+           Usuario usuarioMail = (Usuario) this.entityManager.createNamedQuery("Usuario.findByEmail")
+                                                       .setParameter("email", email)
+                                                       .getSingleResult();
+           
+           this.entityManager.merge(usuarioMail);
+           
+           this.entityManager.getTransaction().commit();
+           return usuarioMail;
+       } catch (Exception e){
+           
+           this.entityManager.getTransaction().rollback();
+           return null;
+       } finally {
+           
+           this.entityManager.close();
+           this.dao.close();
+       }
+       
+       
+   }
    
-   
+      public void mergeUsuario (String hashmail)
+      {
+       try {
+          this.entityManager = this.getDao().getEntityManager();
+          this.entityManager.getTransaction().begin();
+           
+            Usuario use = (Usuario) entityManager.createNamedQuery("Usuario.findByMail")
+                                .setParameter("hashmail", hashmail)
+                                .getSingleResult();
+          
+           this.entityManager.merge(use);
+           this.entityManager.getTransaction().commit();
+       } catch (Exception error){
+           System.out.println("Erro: " + error);
+       }
+     }
+     
 }
