@@ -8,25 +8,28 @@
         <title>Cadastro de Usuário</title> 
     </h:head>
     <h:body>
+        
+        <p:fieldset legend="Cadastro de usuário">
+            <p:messages id="messages" autoUpdate="true" closable="true" showDetail="true" showSummary="false"></p:messages>
         <h:form>
-            
-             <h:panelGrid columns="2">
-                    <p:outputLabel value="Nome: " for="nome"/>
+            <h:panelGrid id="panel" columns="2">
+                    <h:outputLabel value="Nome: " for="nome"/>
                     <p:inputText id="nome" value="#{usuarioBean.usuario.nome}" title="Nome"/>
 
-                    <p:outputLabel value="Email: " for="email"/>
+                    <h:outputLabel value="Email: " for="email"/>
                     <p:inputText id="email" value="#{usuarioBean.usuario.email}"/>
 
-                    <p:outputLabel value="Senha:" for="senha"/>
+                    <h:outputLabel value="Senha:" for="senha"/>
                     <p:password id="senha"  value="#{usuarioBean.usuario.senha}" feedback="false" match="ConfirmSenha" label="Senha" validatorMessage="O campos de senha não correspondem"/> 
 
-                    <p:outputLabel value="Confirma Senha:" for="ConfirmSenha" />
+                    <h:outputLabel value="Confirma Senha:" for="ConfirmSenha" />
                     <p:password id="ConfirmSenha" value="#{usuarioBean.usuario.senha}" feedback="false" label="Confirma Senha"  />
                     
 
-                    <h:commandButton value="Registrar" action="#{usuarioBean.save(usuarioBean.usuario)}"/>
+                    <p:commandButton update="panel" value="Registrar" action="#{usuarioBean.save(usuarioBean.usuario)}"/>
             </h:panelGrid>
         </h:form>
+      </p:fieldset>
     </h:body>
 </html>
 

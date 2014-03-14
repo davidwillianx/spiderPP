@@ -40,26 +40,32 @@ public class UsuarioBean {
     }
     
     public void save(Usuario usuario)
-    {
-        try {
-            
-            BuildHash buildHash = new BuildHash();  
-            String hashMail = buildHash.createHash(usuario.getEmail());
-            usuario.setHashmail(hashMail);
-            this.usuarioDao.save(usuario);
-              
-            BuildMail buildMail =  new BuildMail();
-            buildMail.sendRegisterNotification(
-                                         usuario.getEmail()
-                                        ,usuario.getNome()
-                                        ,hashMail
-                                        );
-              
-        } catch (Exception e) {
-            System.out.println("error: "+ e.getMessage());
-            e.printStackTrace();       
-        }
-    }
+   {
+       BuildMessage buildMessage = new BuildMessage();
+       try {
+           
+           BuildHash buildHash = new BuildHash();  
+           String hashMail = buildHash.createHash(usuario.getEmail());
+           usuario.setHashmail(hashMail);
+           this.usuarioDao.save(usuario);
+           
+           BuildMail buildMail =  new BuildMail();
+           buildMail.sendRegisterNotification(
+                                        usuario.getEmail()
+                                       ,usuario.getNome()
+                                       ,hashMail
+                                       );
+           
+           buildMessage.addInfo();
+           
+           this.usuario =  new Usuario();
+          
+       } catch (Exception e) {
+           buildMessage.addError("Email já cadastrado");
+           System.out.println("error: "+ e.getMessage());
+           e.printStackTrace();  
+       }
+   }
     
     public String authenticator(Usuario usuario)
     {

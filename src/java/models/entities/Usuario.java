@@ -66,14 +66,11 @@ public class Usuario implements Serializable {
     private String nome;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull(message="O campo email não pode ser vazio")
-    @Size(min = 6, max = 122, message ="Email inválido")
     @Pattern(regexp="^([0-9a-zA-Z]+([_.-]?[0-9a-zA-Z]+)*@[0-9a-zA-Z]+[0-9,a-z,A-Z,.,-]*(.){1}[a-zA-Z]{2,4})+$", message="Email inválido")
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
-    @NotNull(message="O campo senha não pode ser vazio")
-    @Size(min = 6, max = 122, message =" o campo senha deve conter no mínimo 6 caracteres")
+    @Size(min = 6, max = 122, message =" O campo senha deve conter no mínimo 6 caracteres")
     @Column(name = "senha")
     private String senha;
      
