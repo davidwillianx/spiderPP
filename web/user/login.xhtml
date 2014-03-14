@@ -14,6 +14,18 @@ and open the template in the editor.
         <title>Login</title> 
     </h:head>
     <h:body>
-        <h:outputText value="Tela de login a ser implementada"/>    
+        <p:fieldset legend="Acesso ao sistema">
+            <h:form>
+                <h:panelGrid>
+                    <p:outputLabel for="email" value="Email: "/>
+                    <p:inputText id="email" size="50" value="#{usuarioBean.usuario.email}"/>
+
+                    <p:outputLabel for="senha" value="Senha: "/>
+                    <p:password id="senha" value="#{usuarioBean.usuario.senha}"/>
+
+                    <p:commandButton value="Acessar" action="#{usuarioBean.authenticator(usuarioBean.usuario)}"/>
+                </h:panelGrid>
+            </h:form>
+        </p:fieldset>
     </h:body>
 </html>

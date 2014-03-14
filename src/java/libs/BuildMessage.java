@@ -17,8 +17,8 @@ public class BuildMessage {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso:", "Acesse seu email para validar o cadastro."));
     }
     
-    public void addError()
+    public void addError(String message)
     {
-        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro:","E-mail já cadastrado, tente com outro e-mail."));
+        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro:",message));
     }
 }

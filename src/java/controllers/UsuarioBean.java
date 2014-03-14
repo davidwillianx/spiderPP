@@ -6,9 +6,14 @@
 
 package controllers;
 
+import java.io.UnsupportedEncodingException;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import libs.BuildHash;
 import libs.BuildMail;
+import libs.BuildMessage;
 import models.entities.Usuario;
 import models.persistence.UsuarioDao;
 
@@ -54,5 +59,43 @@ public class UsuarioBean {
             System.out.println("error: "+ e.getMessage());
             e.printStackTrace();       
         }
+    }
+    
+    public String authenticator(Usuario usuario)
+    {
+        BuildMessage  buildMessage = new BuildMessage();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        
+        try{
+            BuildHash buildHash = new BuildHash();
+            usuario.setSenha(buildHash.createHash(usuario.getSenha()));
+            this.usuario = this.usuarioDao.selectUsuarioByEmailAndSenha(usuario);
+            
+            if(this.usuario != null){
+                ExternalContext externalContext = facesContext.getExternalContext();
+                HttpSession session = (HttpSession) externalContext.getSession(false);
+                session.setAttribute("usuario", this.usuario);
+                
+                return "/user/inicio.xhtml";
+                
+            }else{
+                buildMessage.addError("Email ou senha inválidos");
+                return "/user/login.xhtml";
+            }
+            
+                
+        }catch(UnsupportedEncodingException error){
+             buildMessage.addError("Email ou senha inválidos");
+             return "/user/login.xhtml";
+        }
+    }
+    
+    public String exit()
+    {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        HttpSession session = (HttpSession) externalContext.getSession(false);
+        session.removeAttribute("usuario");
+        return "login.xhtml";
     }
 }

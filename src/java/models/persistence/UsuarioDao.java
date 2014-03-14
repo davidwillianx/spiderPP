@@ -72,6 +72,24 @@ public class UsuarioDao {
        } 
    }
    
+   public Usuario selectUsuarioByEmailAndSenha(Usuario usuario)
+   {
+       try{
+           this.entityManager = this.getDao().getEntityManager();
+          Usuario usuarioResponse = (Usuario) this.entityManager.createNamedQuery("Usuario.findByEmailAndSenha")
+                               .setParameter("senha", usuario.getSenha())
+                               .setParameter("email", usuario.getEmail())
+                               .getSingleResult();
+          
+          return usuarioResponse;
+                   
+       }catch(Exception  error)
+       {
+           System.out.println("Algum problema ocorreu"+ error.getMessage());
+           return null;
+       }
+   }
+   
    
    
    
