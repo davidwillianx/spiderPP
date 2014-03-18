@@ -33,7 +33,7 @@ and open the template in the editor.
                                 feedback="false" label="Confirma Nova Senha"/>
                                 <br/>
                     
-                    <p:commandButton value="Confirma" action="#{usuarioBean.save(usuarioBean.usuario)}" update="panel"/>
+                                <p:commandButton value="Confirma" action="#{usuarioBean.changeKey(usuarioBean.usuario)}" update="panel"/>
                 </h:panelGrid>
             </p:fieldset>
         </h:form>

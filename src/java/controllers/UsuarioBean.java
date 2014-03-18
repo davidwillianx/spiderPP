@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.UnsupportedEncodingException;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
@@ -23,8 +24,8 @@ public class UsuarioBean {
     private Usuario usuario;
     private UsuarioDao usuarioDao;
     
-     @ManagedProperty(value="#{param.pkm}")
-     private String hashMail;
+    @ManagedProperty(value="#{param.pkm}")
+    private String hashMail;
     
     public UsuarioBean()
     {
@@ -117,5 +118,14 @@ public class UsuarioBean {
 
     }
     
-    
+    @PostConstruct
+    public void changeKey(Usuario usuario)
+    {
+        System.out.println("hashMail:" + this.hashMail);
+        usuario.setHashmail(this.hashMail);
+        
+        this.usuarioDao =  new UsuarioDao();
+        this.usuarioDao.mergeUsuario(usuario);
+        
+    }
 }

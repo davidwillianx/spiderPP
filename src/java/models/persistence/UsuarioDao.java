@@ -119,20 +119,24 @@ public class UsuarioDao {
        
    }
    
-      public void mergeUsuario (String hashmail)
+      public void mergeUsuario (Usuario usuario)
       {
        try {
           this.entityManager = this.getDao().getEntityManager();
           this.entityManager.getTransaction().begin();
            
             Usuario use = (Usuario) entityManager.createNamedQuery("Usuario.findByMail")
-                                .setParameter("hashmail", hashmail)
+                                .setParameter("hashmail", usuario.getHashmail())
                                 .getSingleResult();
           
            this.entityManager.merge(use);
+           use.setSenha(usuario.getSenha());
            this.entityManager.getTransaction().commit();
+           
        } catch (Exception error){
            System.out.println("Erro: " + error);
+           this.entityManager.getTransaction().rollback();
+           
        }
      }
      
