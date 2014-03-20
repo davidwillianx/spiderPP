@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -20,13 +21,13 @@ import models.persistence.UsuarioDao;
  */
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class UsuarioBean {
     
     private Usuario usuario;
     private UsuarioDao usuarioDao;
     
-    @ManagedProperty(value="#{param.pkm}")
+    //@ManagedProperty(value="#{param.pkm}")
     private String hashMail;
     
     public void setHashMail(String hashMail)
@@ -43,6 +44,7 @@ public class UsuarioBean {
     {
         this.usuario = new Usuario();
         this.usuarioDao =  new UsuarioDao();
+        this.hashMail = String.valueOf(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("pkm"));
     }
     
     public Usuario  getUsuario()
@@ -133,16 +135,13 @@ public class UsuarioBean {
     @PostConstruct
     public void init()
     {
-        System.out.println("hashMail.....:" + this.hashMail);
         this.usuario.setHashmail(this.hashMail);
-        System.out.println("hashMail2.....:" + this.usuario.getHashmail());
+        System.out.println("hashMail: " + this.usuario.getHashmail());
     }
     
     public void changeKey(Usuario usuario)
     {
-       System.out.println("hashMail3.....:" + usuario.getHashmail());
-       //usuario.setHashmail("2897ff22d81c406e67d6ae8d962edc54a175f82076b4fe6814e6dad156ed1e61");
-       this.usuarioDao =  new UsuarioDao();
-       this.usuarioDao.mergeUsuario(usuario);
+        this.usuarioDao =  new UsuarioDao();
+        this.usuarioDao.mergeUsuario(usuario);
     }
 }
