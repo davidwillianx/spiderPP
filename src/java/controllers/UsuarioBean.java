@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import models.persistence.UsuarioDao;
  */
 
 @ManagedBean
+@RequestScoped
 public class UsuarioBean {
     
     private Usuario usuario;
@@ -26,6 +28,16 @@ public class UsuarioBean {
     
     @ManagedProperty(value="#{param.pkm}")
     private String hashMail;
+    
+    public void setHashMail(String hashMail)
+    {
+        this.hashMail = hashMail;
+    }
+    
+    public String getHashMail()
+    {
+        return this.hashMail;
+    }
     
     public UsuarioBean()
     {
@@ -119,13 +131,18 @@ public class UsuarioBean {
     }
     
     @PostConstruct
+    public void init()
+    {
+        System.out.println("hashMail.....:" + this.hashMail);
+        this.usuario.setHashmail(this.hashMail);
+        System.out.println("hashMail2.....:" + this.usuario.getHashmail());
+    }
+    
     public void changeKey(Usuario usuario)
     {
-        System.out.println("hashMail:" + this.hashMail);
-        usuario.setHashmail(this.hashMail);
-        
-        this.usuarioDao =  new UsuarioDao();
-        this.usuarioDao.mergeUsuario(usuario);
-        
+       System.out.println("hashMail3.....:" + usuario.getHashmail());
+       //usuario.setHashmail("2897ff22d81c406e67d6ae8d962edc54a175f82076b4fe6814e6dad156ed1e61");
+       this.usuarioDao =  new UsuarioDao();
+       this.usuarioDao.mergeUsuario(usuario);
     }
 }

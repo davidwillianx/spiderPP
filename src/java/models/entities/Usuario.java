@@ -92,11 +92,12 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario(Integer id, String nome, String email, String senha) {
+    public Usuario(Integer id, String nome, String email, String senha, String hashmail) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.hashmail = hashmail;
     }
 
     public Integer getId() {

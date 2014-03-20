@@ -28,7 +28,7 @@ public class UsuarioDao {
    
    public void save(Usuario usuario)
    {
-     try{
+     try {
          //DOCrypt
          this.entityManager = this.getDao().getEntityManager();
          this.entityManager.getTransaction().begin();
@@ -54,7 +54,7 @@ public class UsuarioDao {
             this.entityManager = this.getDao().getEntityManager();
             this.entityManager.getTransaction().begin();
            
-            Usuario usuarioHashMail = (Usuario) entityManager.createNamedQuery("Usuario.findByMail")
+            Usuario usuarioHashMail = (Usuario) this.entityManager.createNamedQuery("Usuario.findByHashMail")
                                 .setParameter("hashmail", usuario.getHashmail())
                                 .getSingleResult();
             
@@ -92,9 +92,7 @@ public class UsuarioDao {
    
    public Usuario searchMail(String email) 
    {
-   
        try {
-       
            this.entityManager = this.getDao().getEntityManager();
            this.entityManager.getTransaction().begin();
            
@@ -107,16 +105,12 @@ public class UsuarioDao {
            this.entityManager.getTransaction().commit();
            return usuarioMail;
        } catch (Exception e){
-           
            this.entityManager.getTransaction().rollback();
            return null;
        } finally {
-           
            this.entityManager.close();
            this.dao.close();
        }
-       
-       
    }
    
       public void mergeUsuario (Usuario usuario)
@@ -125,18 +119,19 @@ public class UsuarioDao {
           this.entityManager = this.getDao().getEntityManager();
           this.entityManager.getTransaction().begin();
            
-            Usuario use = (Usuario) entityManager.createNamedQuery("Usuario.findByMail")
+            Usuario user = (Usuario) entityManager.createNamedQuery("Usuario.findByHashMail")
                                 .setParameter("hashmail", usuario.getHashmail())
                                 .getSingleResult();
-          
-           this.entityManager.merge(use);
-           use.setSenha(usuario.getSenha());
+            
+           this.entityManager.merge(user);
+           BuildHash buildHash = new BuildHash();
+           String hashSenha = buildHash.createHash(usuario.getSenha());
+           user.setSenha(hashSenha);
            this.entityManager.getTransaction().commit();
            
        } catch (Exception error){
            System.out.println("Erro: " + error);
-           this.entityManager.getTransaction().rollback();
-           
+           this.entityManager.getTransaction().rollback();  
        }
      }
      
