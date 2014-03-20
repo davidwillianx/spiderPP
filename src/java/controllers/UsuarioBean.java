@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.UnsupportedEncodingException;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import libs.BuildHash;
 import libs.BuildMail;
 import libs.BuildMessage;
+import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
 import models.persistence.UsuarioDao;
 
@@ -21,6 +23,9 @@ public class UsuarioBean {
     
     private Usuario usuario;
     private UsuarioDao usuarioDao;
+    
+    @EJB
+    private IUsuario iUsuario;
     
     public UsuarioBean()
     {
@@ -41,7 +46,8 @@ public class UsuarioBean {
            BuildHash buildHash = new BuildHash();  
            String hashMail = buildHash.createHash(usuario.getEmail());
            usuario.setHashmail(hashMail);
-           this.usuarioDao.save(usuario);
+           //this.usuarioDao.save(usuario);
+           this.iUsuario.save(usuario);
            
            BuildMail buildMail =  new BuildMail();
            buildMail.sendRegisterNotification(

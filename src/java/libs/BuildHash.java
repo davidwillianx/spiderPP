@@ -10,14 +10,14 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import libs.exception.BuildHashException;
-import sun.misc.BASE64Encoder;
 
 /**
  *
  * @author smp
  */
-public class BuildHash {
+public class BuildHash
+{
+    
     public String createHash(String hash) throws UnsupportedEncodingException
     {
         try{        
