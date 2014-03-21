@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author smp
+ * @author smartphonne
  */
 @Entity
 @Table(name = "jogar_rodada")
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "JogarRodada.findAll", query = "SELECT j FROM JogarRodada j"),
     @NamedQuery(name = "JogarRodada.findById", query = "SELECT j FROM JogarRodada j WHERE j.jogarRodadaPK.id = :id"),
     @NamedQuery(name = "JogarRodada.findByIdUsuario", query = "SELECT j FROM JogarRodada j WHERE j.jogarRodadaPK.idUsuario = :idUsuario"),
-    @NamedQuery(name = "JogarRodada.findByIdHistoria", query = "SELECT j FROM JogarRodada j WHERE j.jogarRodadaPK.idHistoria = :idHistoria"),
+    @NamedQuery(name = "JogarRodada.findByIdEstoria", query = "SELECT j FROM JogarRodada j WHERE j.jogarRodadaPK.idEstoria = :idEstoria"),
     @NamedQuery(name = "JogarRodada.findByEstimativa", query = "SELECT j FROM JogarRodada j WHERE j.estimativa = :estimativa")})
 public class JogarRodada implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -39,9 +39,9 @@ public class JogarRodada implements Serializable {
     @JoinColumn(name = "id_usuario", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
-    @JoinColumn(name = "id_historia", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "id_estoria", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Historia historia;
+    private Estoria estoria;
 
     public JogarRodada() {
     }
@@ -50,8 +50,8 @@ public class JogarRodada implements Serializable {
         this.jogarRodadaPK = jogarRodadaPK;
     }
 
-    public JogarRodada(int id, int idUsuario, int idHistoria) {
-        this.jogarRodadaPK = new JogarRodadaPK(id, idUsuario, idHistoria);
+    public JogarRodada(int id, int idUsuario, int idEstoria) {
+        this.jogarRodadaPK = new JogarRodadaPK(id, idUsuario, idEstoria);
     }
 
     public JogarRodadaPK getJogarRodadaPK() {
@@ -78,12 +78,12 @@ public class JogarRodada implements Serializable {
         this.usuario = usuario;
     }
 
-    public Historia getHistoria() {
-        return historia;
+    public Estoria getEstoria() {
+        return estoria;
     }
 
-    public void setHistoria(Historia historia) {
-        this.historia = historia;
+    public void setEstoria(Estoria estoria) {
+        this.estoria = estoria;
     }
 
     @Override

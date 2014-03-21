@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author smp
+ * @author smartphonne
  */
 @Embeddable
 public class AcessarPK implements Serializable {
@@ -24,8 +24,8 @@ public class AcessarPK implements Serializable {
     private int idPerfil;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_sala")
-    private int idSala;
+    @Column(name = "id_projeto")
+    private int idProjeto;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_usuario")
@@ -34,9 +34,9 @@ public class AcessarPK implements Serializable {
     public AcessarPK() {
     }
 
-    public AcessarPK(int idPerfil, int idSala, int idUsuario) {
+    public AcessarPK(int idPerfil, int idProjeto, int idUsuario) {
         this.idPerfil = idPerfil;
-        this.idSala = idSala;
+        this.idProjeto = idProjeto;
         this.idUsuario = idUsuario;
     }
 
@@ -48,12 +48,12 @@ public class AcessarPK implements Serializable {
         this.idPerfil = idPerfil;
     }
 
-    public int getIdSala() {
-        return idSala;
+    public int getIdProjeto() {
+        return idProjeto;
     }
 
-    public void setIdSala(int idSala) {
-        this.idSala = idSala;
+    public void setIdProjeto(int idProjeto) {
+        this.idProjeto = idProjeto;
     }
 
     public int getIdUsuario() {
@@ -68,7 +68,7 @@ public class AcessarPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) idPerfil;
-        hash += (int) idSala;
+        hash += (int) idProjeto;
         hash += (int) idUsuario;
         return hash;
     }
@@ -83,7 +83,7 @@ public class AcessarPK implements Serializable {
         if (this.idPerfil != other.idPerfil) {
             return false;
         }
-        if (this.idSala != other.idSala) {
+        if (this.idProjeto != other.idProjeto) {
             return false;
         }
         if (this.idUsuario != other.idUsuario) {
@@ -94,7 +94,7 @@ public class AcessarPK implements Serializable {
 
     @Override
     public String toString() {
-        return "models.entities.AcessarPK[ idPerfil=" + idPerfil + ", idSala=" + idSala + ", idUsuario=" + idUsuario + " ]";
+        return "models.entities.AcessarPK[ idPerfil=" + idPerfil + ", idProjeto=" + idProjeto + ", idUsuario=" + idUsuario + " ]";
     }
     
 }

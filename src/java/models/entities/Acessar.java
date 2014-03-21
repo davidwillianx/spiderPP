@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author smp
+ * @author smartphonne
  */
 @Entity
 @Table(name = "acessar")
@@ -26,12 +26,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Acessar.findAll", query = "SELECT a FROM Acessar a"),
     @NamedQuery(name = "Acessar.findByIdPerfil", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idPerfil = :idPerfil"),
-    @NamedQuery(name = "Acessar.findByIdSala", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idSala = :idSala"),
+    @NamedQuery(name = "Acessar.findByIdProjeto", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idProjeto = :idProjeto"),
     @NamedQuery(name = "Acessar.findByIdUsuario", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idUsuario = :idUsuario")})
 public class Acessar implements Serializable {
-    @JoinColumn(name = "id_projeto", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Projeto projeto;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AcessarPK acessarPK;
@@ -41,6 +38,9 @@ public class Acessar implements Serializable {
     @JoinColumn(name = "id_perfil", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Perfil perfil;
+    @JoinColumn(name = "id_projeto", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Projeto projeto;
 
     public Acessar() {
     }
@@ -49,8 +49,8 @@ public class Acessar implements Serializable {
         this.acessarPK = acessarPK;
     }
 
-    public Acessar(int idPerfil, int idSala, int idUsuario) {
-        this.acessarPK = new AcessarPK(idPerfil, idSala, idUsuario);
+    public Acessar(int idPerfil, int idProjeto, int idUsuario) {
+        this.acessarPK = new AcessarPK(idPerfil, idProjeto, idUsuario);
     }
 
     public AcessarPK getAcessarPK() {
@@ -77,6 +77,14 @@ public class Acessar implements Serializable {
         this.perfil = perfil;
     }
 
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -100,14 +108,6 @@ public class Acessar implements Serializable {
     @Override
     public String toString() {
         return "models.entities.Acessar[ acessarPK=" + acessarPK + " ]";
-    }
-
-    public Projeto getProjeto() {
-        return projeto;
-    }
-
-    public void setProjeto(Projeto projeto) {
-        this.projeto = projeto;
     }
     
 }

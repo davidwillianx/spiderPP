@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author smp
+ * @author smartphonne
  */
 @Embeddable
 public class JogarRodadaPK implements Serializable {
@@ -27,16 +27,16 @@ public class JogarRodadaPK implements Serializable {
     private int idUsuario;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_historia")
-    private int idHistoria;
+    @Column(name = "id_estoria")
+    private int idEstoria;
 
     public JogarRodadaPK() {
     }
 
-    public JogarRodadaPK(int id, int idUsuario, int idHistoria) {
+    public JogarRodadaPK(int id, int idUsuario, int idEstoria) {
         this.id = id;
         this.idUsuario = idUsuario;
-        this.idHistoria = idHistoria;
+        this.idEstoria = idEstoria;
     }
 
     public int getId() {
@@ -55,12 +55,12 @@ public class JogarRodadaPK implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public int getIdHistoria() {
-        return idHistoria;
+    public int getIdEstoria() {
+        return idEstoria;
     }
 
-    public void setIdHistoria(int idHistoria) {
-        this.idHistoria = idHistoria;
+    public void setIdEstoria(int idEstoria) {
+        this.idEstoria = idEstoria;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class JogarRodadaPK implements Serializable {
         int hash = 0;
         hash += (int) id;
         hash += (int) idUsuario;
-        hash += (int) idHistoria;
+        hash += (int) idEstoria;
         return hash;
     }
 
@@ -85,7 +85,7 @@ public class JogarRodadaPK implements Serializable {
         if (this.idUsuario != other.idUsuario) {
             return false;
         }
-        if (this.idHistoria != other.idHistoria) {
+        if (this.idEstoria != other.idEstoria) {
             return false;
         }
         return true;
@@ -93,7 +93,7 @@ public class JogarRodadaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "models.entities.JogarRodadaPK[ id=" + id + ", idUsuario=" + idUsuario + ", idHistoria=" + idHistoria + " ]";
+        return "models.entities.JogarRodadaPK[ id=" + id + ", idUsuario=" + idUsuario + ", idEstoria=" + idEstoria + " ]";
     }
     
 }

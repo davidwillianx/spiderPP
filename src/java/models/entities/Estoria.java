@@ -57,14 +57,14 @@ public class Estoria implements Serializable {
     private Integer estimativa;
     @Column(name = "status")
     private Boolean status;
-    @OneToMany(mappedBy = "idHistoria")
-    private Collection<Estoria> estoriaCollection;
-    @JoinColumn(name = "id_historia", referencedColumnName = "id")
-    @ManyToOne
-    private Estoria idHistoria;
     @JoinColumn(name = "id_projeto", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Projeto idProjeto;
+    @OneToMany(mappedBy = "idEstoria")
+    private Collection<Estoria> estoriaCollection;
+    @JoinColumn(name = "id_estoria", referencedColumnName = "id")
+    @ManyToOne
+    private Estoria idEstoria;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estoria")
     private Collection<JogarRodada> jogarRodadaCollection;
 
@@ -115,6 +115,14 @@ public class Estoria implements Serializable {
         this.status = status;
     }
 
+    public Projeto getIdProjeto() {
+        return idProjeto;
+    }
+
+    public void setIdProjeto(Projeto idProjeto) {
+        this.idProjeto = idProjeto;
+    }
+
     @XmlTransient
     public Collection<Estoria> getEstoriaCollection() {
         return estoriaCollection;
@@ -124,20 +132,12 @@ public class Estoria implements Serializable {
         this.estoriaCollection = estoriaCollection;
     }
 
-    public Estoria getIdHistoria() {
-        return idHistoria;
+    public Estoria getIdEstoria() {
+        return idEstoria;
     }
 
-    public void setIdHistoria(Estoria idHistoria) {
-        this.idHistoria = idHistoria;
-    }
-
-    public Projeto getIdProjeto() {
-        return idProjeto;
-    }
-
-    public void setIdProjeto(Projeto idProjeto) {
-        this.idProjeto = idProjeto;
+    public void setIdEstoria(Estoria idEstoria) {
+        this.idEstoria = idEstoria;
     }
 
     @XmlTransient
