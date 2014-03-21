@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author smp
+ * @author Bruno
  */
 @Embeddable
 public class JogarRodadaPK implements Serializable {

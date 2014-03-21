@@ -17,6 +17,13 @@
 
                         <h:outputLabel value="Email: " for="email"/>
                         <p:inputText id="email" value="#{usuarioBean.usuario.email}" title="Email"/> 
+                        <br/>
+                        
+                        <h>Defina o seu perfil baseado nas suas principais áreas de atuação: </h>
+                        <p:inputTextarea value="#{usuarioBean.usuario.descricao}" rows="10" cols="49" counter="counter" maxlength="140"
+                                         counterTemplate="{0} Caracteres restantes." autoResize="false"/>
+                        <h:outputText id="counter" />
+                        <br/>
 
                         <h:outputLabel value="Senha:" for="senha"/>
                         <p:password id="senha"  value="#{usuarioBean.usuario.senha}" feedback="false" match="ConfirmSenha" label="Senha" validatorMessage="Os campos de senhas não correspondem"/> 

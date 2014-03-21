@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author smp
+ * @author Bruno
  */
 @Entity
 @Table(name = "historia")
@@ -55,10 +55,6 @@ public class Historia implements Serializable {
     private String descricao;
     @Column(name = "estimativa")
     private Integer estimativa;
-    @Lob
-    @Size(max = 2147483647)
-    @Column(name = "forum")
-    private String forum;
     @Column(name = "status")
     private Boolean status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "historia")
@@ -109,14 +105,6 @@ public class Historia implements Serializable {
 
     public void setEstimativa(Integer estimativa) {
         this.estimativa = estimativa;
-    }
-
-    public String getForum() {
-        return forum;
-    }
-
-    public void setForum(String forum) {
-        this.forum = forum;
     }
 
     public Boolean getStatus() {
