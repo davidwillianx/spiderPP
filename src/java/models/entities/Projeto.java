@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Projeto.findById", query = "SELECT p FROM Projeto p WHERE p.id = :id"),
     @NamedQuery(name = "Projeto.findByNome", query = "SELECT p FROM Projeto p WHERE p.nome = :nome")})
 public class Projeto implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProjeto")
+    private Collection<Estoria> estoriaCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -134,6 +136,15 @@ public class Projeto implements Serializable {
     @Override
     public String toString() {
         return "models.entities.Projeto[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Estoria> getEstoriaCollection() {
+        return estoriaCollection;
+    }
+
+    public void setEstoriaCollection(Collection<Estoria> estoriaCollection) {
+        this.estoriaCollection = estoriaCollection;
     }
     
 }

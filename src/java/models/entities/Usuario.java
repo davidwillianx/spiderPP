@@ -44,6 +44,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByHashMail", query = "SELECT u FROM Usuario u WHERE u.hashmail = :hashmail")})
 
 public class Usuario implements Serializable {
+    @Size(max = 140)
+    @Column(name = "descricao")
+    private String descricao;
     @Size(max = 122)
     @Column(name = "hashmail")
     private String hashmail;
@@ -78,8 +81,7 @@ public class Usuario implements Serializable {
     @JoinTable(name = "usuario_area_atuacao", joinColumns = {
         @JoinColumn(name = "id_usuario", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "id_area_atuacao", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<AreaAtuacao> areaAtuacaoCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<JogarRodada> jogarRodadaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
@@ -131,14 +133,7 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    @XmlTransient
-    public Collection<AreaAtuacao> getAreaAtuacaoCollection() {
-        return areaAtuacaoCollection;
-    }
-
-    public void setAreaAtuacaoCollection(Collection<AreaAtuacao> areaAtuacaoCollection) {
-        this.areaAtuacaoCollection = areaAtuacaoCollection;
-    }
+    
 
     @XmlTransient
     public Collection<JogarRodada> getJogarRodadaCollection() {
@@ -197,6 +192,14 @@ public class Usuario implements Serializable {
 
     public void setHashmail(String hashmail) {
         this.hashmail = hashmail;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }
    
