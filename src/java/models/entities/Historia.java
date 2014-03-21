@@ -40,6 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Historia.findByEstimativa", query = "SELECT h FROM Historia h WHERE h.estimativa = :estimativa"),
     @NamedQuery(name = "Historia.findByStatus", query = "SELECT h FROM Historia h WHERE h.status = :status")})
 public class Historia implements Serializable {
+    @JoinColumn(name = "id_projeto", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Projeto idProjeto;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,9 +71,6 @@ public class Historia implements Serializable {
     @JoinColumn(name = "id_historia", referencedColumnName = "id")
     @ManyToOne
     private Historia idHistoria;
-    @JoinColumn(name = "id_sala", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Sala idSala;
 
     public Historia() {
     }
@@ -153,14 +153,6 @@ public class Historia implements Serializable {
         this.idHistoria = idHistoria;
     }
 
-    public Sala getIdSala() {
-        return idSala;
-    }
-
-    public void setIdSala(Sala idSala) {
-        this.idSala = idSala;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -184,6 +176,14 @@ public class Historia implements Serializable {
     @Override
     public String toString() {
         return "models.entities.Historia[ id=" + id + " ]";
+    }
+
+    public Projeto getIdProjeto() {
+        return idProjeto;
+    }
+
+    public void setIdProjeto(Projeto idProjeto) {
+        this.idProjeto = idProjeto;
     }
     
 }

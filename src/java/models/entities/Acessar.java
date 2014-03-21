@@ -29,15 +29,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Acessar.findByIdSala", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idSala = :idSala"),
     @NamedQuery(name = "Acessar.findByIdUsuario", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idUsuario = :idUsuario")})
 public class Acessar implements Serializable {
+    @JoinColumn(name = "id_projeto", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Projeto projeto;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AcessarPK acessarPK;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
-    @JoinColumn(name = "id_sala", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Sala sala;
     @JoinColumn(name = "id_perfil", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Perfil perfil;
@@ -67,14 +67,6 @@ public class Acessar implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public Sala getSala() {
-        return sala;
-    }
-
-    public void setSala(Sala sala) {
-        this.sala = sala;
     }
 
     public Perfil getPerfil() {
@@ -108,6 +100,14 @@ public class Acessar implements Serializable {
     @Override
     public String toString() {
         return "models.entities.Acessar[ acessarPK=" + acessarPK + " ]";
+    }
+
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
     
 }
