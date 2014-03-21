@@ -5,10 +5,15 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Cadastro de Usuáriox</title> 
+        <title>Página inicial do usuário</title> 
     </h:head>
     <h:body>
-        <p:messages id="messages" autoUpdate="true" closable="true" showDetail="true" showSummary="false"/>
+        
+        <h:form>
+            <h:commandLink value="Sair" action="#{usuarioBean.exit}"/>
+        </h:form>
+            
+<!--        <p:messages id="messages" autoUpdate="true" closable="true" showDetail="true" showSummary="false"/>
             <h:form>
                 <p:fieldset legend="Cadastro de Usuário: ">                   
                     <h:panelGrid id="panel">
@@ -30,7 +35,7 @@
                     </h:panelGrid>
                 </p:fieldset>
                     
-        </h:form>      
+        </h:form>      -->
     </h:body>
 </html>
 

@@ -22,6 +22,8 @@ import models.persistence.UsuarioDao;
 public class UsuarioBean {
     
     private Usuario usuario;
+    
+    //TODO remover este no fim da aplicação dos EJB's
     private UsuarioDao usuarioDao;
     
     @EJB
@@ -46,7 +48,6 @@ public class UsuarioBean {
            BuildHash buildHash = new BuildHash();  
            String hashMail = buildHash.createHash(usuario.getEmail());
            usuario.setHashmail(hashMail);
-           //this.usuarioDao.save(usuario);
            this.iUsuario.save(usuario);
            
            BuildMail buildMail =  new BuildMail();
@@ -75,24 +76,25 @@ public class UsuarioBean {
         try{
             BuildHash buildHash = new BuildHash();
             usuario.setSenha(buildHash.createHash(usuario.getSenha()));
-            this.usuario = this.usuarioDao.selectUsuarioByEmailAndSenha(usuario);
+          //  this.usuario = this.usuarioDao.selectUsuarioByEmailAndSenha(usuario);
+            this.usuario = this.iUsuario.findUsuarioByEmailAndSenha(usuario);
             
             if(this.usuario != null){
                 ExternalContext externalContext = facesContext.getExternalContext();
                 HttpSession session = (HttpSession) externalContext.getSession(false);
                 session.setAttribute("usuario", this.usuario);
                 
-                return "/user/inicio.xhtml";
+                return "/user/index.xhtml";
                 
             }else{
                 buildMessage.addError("Email ou senha inválidos");
-                return "/user/login.xhtml";
+                return null;
             }
             
                 
         }catch(UnsupportedEncodingException error){
              buildMessage.addError("Email ou senha inválidos");
-             return "/user/login.xhtml";
+             return null;
         }
     }
     
