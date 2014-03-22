@@ -45,6 +45,7 @@
                     <p:outputLabel for="senha" value="Senha: "/>
                     <p:password id="senha" value="#{usuarioBean.usuario.senha}"/>
 
+                    
                     <p:commandButton value="Acessar" action="#{usuarioBean.authenticator(usuarioBean.usuario)}"/>
                 </h:panelGrid>
             </h:form>
