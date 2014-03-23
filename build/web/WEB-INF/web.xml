@@ -5,11 +5,11 @@
         <param-value>Development</param-value>
     </context-param>
     <filter>
-        <filter-name>usarAccess</filter-name>
+        <filter-name>accessUser</filter-name>
         <filter-class>models.filters.AccessFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>usarAccess</filter-name>
+        <filter-name>accessUser</filter-name>
         <url-pattern>/user/*</url-pattern>
     </filter-mapping>
     <servlet>
@@ -27,6 +27,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

@@ -40,13 +40,17 @@ public class UsuarioBean implements IUsuario{
     
     @Resource
     private SessionContext context;
+    
+    private BuildHash buildHash;
 
     @Override
     public void save(Usuario usuario) {
         
         try {
-            BuildHash buildHash = new BuildHash();
+            this.buildHash = new BuildHash();
             usuario.setSenha(buildHash.createHash(usuario.getSenha()));
+            usuario.setHashmail(buildHash.createHash(usuario.getEmail()));
+            
             entityManager.persist(usuario);
             
         } catch (Exception error) {
@@ -60,14 +64,16 @@ public class UsuarioBean implements IUsuario{
         try{
             Usuario userFound = (Usuario)
                 this.entityManager.createNamedQuery("Usuario.findByHashMail")
-                                  .setParameter("hash", usuario.getHashmail())
+                                  .setParameter("hashmail", usuario.getHashmail())
                                   .getSingleResult();
             this.entityManager.merge(userFound);
             userFound.setStatus(true);
-            
+                System.err.println("usuario: "+usuario.getNome());
             return true;
+            
         }catch(Exception error){
             context.setRollbackOnly();
+            System.out.println("Error"+error.getMessage());
             return false;
         }
     }
@@ -76,6 +82,8 @@ public class UsuarioBean implements IUsuario{
     public Usuario findUsuarioByEmailAndSenha(Usuario usuario) {
         
         try{
+            this.buildHash = new BuildHash();
+            usuario.setSenha(this.buildHash.createHash(usuario.getSenha()));
             
              Usuario userFound = (Usuario) this.entityManager.createNamedQuery("Usuario.findByEmailAndSenha")
                       .setParameter("email", usuario.getEmail())
@@ -88,5 +96,4 @@ public class UsuarioBean implements IUsuario{
             return null;
         }
     }
-    
 }

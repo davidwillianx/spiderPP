@@ -1,17 +1,14 @@
 package controllers;
 
-import java.io.UnsupportedEncodingException;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import libs.BuildHash;
 import libs.BuildMail;
 import libs.BuildMessage;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
-import models.persistence.UsuarioDao;
 
 /**
  *
@@ -23,16 +20,16 @@ public class UsuarioController {
     
     private Usuario usuario;
     
-    //TODO remover este no fim da aplicação dos EJB's
-    private UsuarioDao usuarioDao;
     
     @EJB
     private IUsuario iUsuario;
     
+    private BuildMessage buildMessage;
+    private BuildMail buildMail;
+    
     public UsuarioController()
     {
         this.usuario = new Usuario();
-        this.usuarioDao =  new UsuarioDao();
     }
     
     public Usuario  getUsuario()
@@ -42,41 +39,38 @@ public class UsuarioController {
     
     public void save(Usuario usuario)
    {
-       BuildMessage buildMessage = new BuildMessage();
+      this.buildMessage = new BuildMessage();
+      
        try {
            
-           BuildHash buildHash = new BuildHash();  
-           String hashMail = buildHash.createHash(usuario.getEmail());
-           usuario.setHashmail(hashMail);
            this.iUsuario.save(usuario);
+           this.buildMessage = new BuildMessage();
+           this.buildMail =  new BuildMail();
            
-           BuildMail buildMail =  new BuildMail();
            buildMail.sendRegisterNotification(
                                         usuario.getEmail()
                                        ,usuario.getNome()
-                                       ,hashMail
+                                       ,usuario.getHashmail()
                                        );
-           
-           buildMessage.addInfo();
-           
+           this.buildMessage.addInfo();
            this.usuario =  new Usuario();
           
        } catch (Exception e) {
-           buildMessage.addError("Email já cadastrado");
+           this.buildMessage.addError("Email já cadastrado");
            System.out.println("error: "+ e.getMessage());
            e.printStackTrace();  
        }
    }
     
+    
+    //TODO criar objeto Session
     public String authenticator(Usuario usuario)
     {
-        BuildMessage  buildMessage = new BuildMessage();
+        this.buildMessage = new BuildMessage();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         
         try{
-            BuildHash buildHash = new BuildHash();
-            usuario.setSenha(buildHash.createHash(usuario.getSenha()));
-          //  this.usuario = this.usuarioDao.selectUsuarioByEmailAndSenha(usuario);
+            
             this.usuario = this.iUsuario.findUsuarioByEmailAndSenha(usuario);
             
             if(this.usuario != null){
@@ -91,19 +85,20 @@ public class UsuarioController {
                 return null;
             }
             
-                
-        }catch(UnsupportedEncodingException error){
-             buildMessage.addError("Email ou senha inválidos");
+        }catch(Exception error){
+             this.buildMessage.addError("Email ou senha inválidos");
              return null;
         }
     }
     
+    
+    //TODO modificar o redirect
     public String exit()
     {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpSession session = (HttpSession) externalContext.getSession(false);
         session.removeAttribute("usuario");
-        return "login.xhtml";
+        return "./index.xhtml";
     }
 }

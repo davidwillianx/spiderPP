@@ -1,11 +1,12 @@
 package controllers;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
-import models.persistence.UsuarioDao;
 
 
 
@@ -20,8 +21,10 @@ public class AuthMailBean {
     @ManagedProperty(value="#{param.pkm}")
     private String hashMail;
     private boolean isActiveted;
-    private UsuarioDao usuarioDao;
     private Usuario usuario;
+    
+    @EJB
+    private IUsuario iUsuario;
     
     public void setHashMail(String hashMail)
     {
@@ -42,13 +45,9 @@ public class AuthMailBean {
     @PostConstruct
     public void init()
     {
-        System.out.println(" hash : "+this.hashMail);
         this.usuario = new Usuario();
         this.usuario.setHashmail(this.hashMail);
         
-        this.usuarioDao = new UsuarioDao();
-        this.isActiveted = this.usuarioDao.enableStatus(this.usuario);
-        
-        
+        this.isActiveted = this.iUsuario.enableStatus(this.usuario);
     }
 }

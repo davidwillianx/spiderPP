@@ -31,7 +31,7 @@
                     <p:password id="ConfirmSenha" value="#{usuarioController.usuario.senha}" feedback="false" label="Confirma Senha"  />
                      
 
-                    <p:commandButton update="panel" value="Cadastrar" action="#{usuarioController.save(usuarioBean.usuario)}"/>
+                    <p:commandButton update="panel" value="Cadastrar" action="#{usuarioController.save(usuarioController.usuario)}"/>
             </h:panelGrid>
         </h:form>
       </p:fieldset>
@@ -46,7 +46,7 @@
                     <p:password id="senha" value="#{usuarioController.usuario.senha}"/>
 
                     
-                    <p:commandButton value="Acessar" action="#{usuarioController.authenticator(usuarioBean.usuario)}"/>
+                    <p:commandButton value="Acessar" action="#{usuarioController.authenticator(usuarioController.usuario)}"/>
                 </h:panelGrid>
             </h:form>
         </p:fieldset>
