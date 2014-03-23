@@ -19,19 +19,19 @@
         <h:form>
             <h:panelGrid id="panel" columns="2">
                     <h:outputLabel value="Nome: " for="nome"/>
-                    <p:inputText id="nome" value="#{usuarioBean.usuario.nome}" title="Nome"/>
+                    <p:inputText id="nome" value="#{usuarioController.usuario.nome}" title="Nome"/>
 
                     <h:outputLabel value="Email: " for="email"/>
-                    <p:inputText id="email" value="#{usuarioBean.usuario.email}"/>
+                    <p:inputText id="email" value="#{usuarioController.usuario.email}"/>
 
                     <h:outputLabel value="Senha:" for="senha"/>
-                    <p:password id="senha"  value="#{usuarioBean.usuario.senha}" feedback="false" match="ConfirmSenha" label="Senha" validatorMessage="O campos de senha não correspondem"/> 
+                    <p:password id="senha"  value="#{usuarioController.usuario.senha}" feedback="false" match="ConfirmSenha" label="Senha" validatorMessage="O campos de senha não correspondem"/> 
 
                     <h:outputLabel value="Confirma Senha:" for="ConfirmSenha" />
-                    <p:password id="ConfirmSenha" value="#{usuarioBean.usuario.senha}" feedback="false" label="Confirma Senha"  />
+                    <p:password id="ConfirmSenha" value="#{usuarioController.usuario.senha}" feedback="false" label="Confirma Senha"  />
                      
 
-                    <p:commandButton update="panel" value="Cadastrar" action="#{usuarioBean.save(usuarioBean.usuario)}"/>
+                    <p:commandButton update="panel" value="Cadastrar" action="#{usuarioController.save(usuarioBean.usuario)}"/>
             </h:panelGrid>
         </h:form>
       </p:fieldset>
@@ -40,13 +40,13 @@
             <h:form>
                 <h:panelGrid>
                     <p:outputLabel for="email" value="Email: "/>
-                    <p:inputText id="email" size="50" value="#{usuarioBean.usuario.email}"/>
+                    <p:inputText id="email" size="50" value="#{usuarioController.usuario.email}"/>
 
                     <p:outputLabel for="senha" value="Senha: "/>
-                    <p:password id="senha" value="#{usuarioBean.usuario.senha}"/>
+                    <p:password id="senha" value="#{usuarioController.usuario.senha}"/>
 
                     
-                    <p:commandButton value="Acessar" action="#{usuarioBean.authenticator(usuarioBean.usuario)}"/>
+                    <p:commandButton value="Acessar" action="#{usuarioController.authenticator(usuarioBean.usuario)}"/>
                 </h:panelGrid>
             </h:form>
         </p:fieldset>

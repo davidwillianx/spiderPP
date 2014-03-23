@@ -19,7 +19,7 @@ import models.persistence.UsuarioDao;
  */
 
 @ManagedBean
-public class UsuarioBean {
+public class UsuarioController {
     
     private Usuario usuario;
     
@@ -29,7 +29,7 @@ public class UsuarioBean {
     @EJB
     private IUsuario iUsuario;
     
-    public UsuarioBean()
+    public UsuarioController()
     {
         this.usuario = new Usuario();
         this.usuarioDao =  new UsuarioDao();
