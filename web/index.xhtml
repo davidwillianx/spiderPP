@@ -5,16 +5,56 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <h:head>
-        <title>Bem vindo a plataforma SpiderPP</title> 
+        <title>Spider Planning poker</title>
     </h:head>
-    <h:body>
+    
+    <!--Plugins -->
+    <h:outputStylesheet library="styles" name="assets/plugins/pace/pace-theme-flash.css" />
+    <h:outputStylesheet library="styles" name="assets/plugins/jquery-slider/css/jquery.sidr.light.css" />
+    <!-- End Plugins -->
+    
+    <!--Core Framework-->
+    <h:outputStylesheet library="styles" name="assets/plugins/boostrapv3/css/bootstrap.min.css" />
+    <h:outputStylesheet library="styles" name="assets/plugins/boostrapv3/css/bootstrap-theme.min.css" />
+    <h:outputStylesheet library="styles" name="assets/plugins/font-awesome/css/font-awesome.css" />
+    <h:outputStylesheet library="styles" name="assets/css/animate.min.css" />
+    <!--End Core Framework-->
+    
+    <!-- Begin CSS Template -->
+    <h:outputStylesheet library="styles" name="assets/css/style.css" />
+    <h:outputStylesheet library="styles" name="assets/css/stylefront.css" />
+    <h:outputStylesheet library="styles" name="assets/css/responsive.css" />
+    <h:outputStylesheet library="styles" name="assets/css/custom-icon-set.css" />
+    
+    <!-- End CSS Template -->
+    
+    <h:body class="pace-done">
+        <h:panelGroup layout="block" class="main-wrapper">
+            <h:panelGroup layout="block"  class="navbar navbar-transparent navbar-top">
+                <h:panelGroup layout="block" class="container">
+                    <h:panelGroup layout="block" class="compressed">
+                        <h:panelGroup layout="block" class="navbar-header">
+                            <h:graphicImage library="styles" name="assets/img/spider.png" width="200"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>Home</li>
+                                <li>O projeto</li>
+                                <li>Lab. Spider</li>
+                            </ul>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                 </h:panelGroup>    
+            </h:panelGroup>
+        </h:panelGroup>
         
-        <h:panelGroup layout="block"><h2>Plataforma de Estimativas SpiderPP</h2></h:panelGroup>
+        
+        <!--<h:panelGroup layout="block"><h2>Plataforma de Estimativas SpiderPP</h2></h:panelGroup>-->
         <!-- Error reporting -->
-        <h:messages id="messages"  showDetail="true" showSummary="false"></h:messages>
+        <!--<h:messages id="messages"  showDetail="true" showSummary="false"></h:messages>-->
         
         <!-- Registro -->
-            
+<!--            
         <h:form id="formRegister">
             <h:panelGrid id="panel" columns="2">
                     <h:outputLabel value="Nome: " for="nome"/>
@@ -37,9 +77,9 @@
 
                     <h:commandButton value="Cadastrar" action="#{usuarioController.save(usuarioController.usuario)}"/>
             </h:panelGrid>
-        </h:form>
+        </h:form>-->
         <!-- Acesso -->
-            <h:form>
+    <!--  <h:form>
                 <h:panelGrid>
                     <h:outputLabel for="email" value="Email: "/>
                     <h:inputText id="email" size="50" value="#{usuarioController.usuario.email}"/>
@@ -50,8 +90,7 @@
                     
                     <h:commandButton value="Acessar" action="#{usuarioController.authenticator(usuarioController.usuario)}"/>
                 </h:panelGrid>
-            </h:form>
-        
+            </h:form>-->
     </h:body>
 </html>
 

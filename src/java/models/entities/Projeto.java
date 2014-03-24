@@ -8,6 +8,7 @@ package models.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,6 +40,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Projeto.findById", query = "SELECT p FROM Projeto p WHERE p.id = :id"),
     @NamedQuery(name = "Projeto.findByNome", query = "SELECT p FROM Projeto p WHERE p.nome = :nome")})
 public class Projeto implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "data_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date dataInicio;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "data_fim")
+    @Temporal(TemporalType.DATE)
+    private Date dataFim;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -134,6 +147,22 @@ public class Projeto implements Serializable {
     @Override
     public String toString() {
         return "models.entities.Projeto[ id=" + id + " ]";
+    }
+
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
     }
     
 }
