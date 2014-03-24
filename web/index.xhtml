@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <h:head>
         <title>Bem vindo a plataforma SpiderPP</title> 
@@ -22,6 +22,9 @@
 
                     <h:outputLabel value="Email: " for="email"/>
                     <h:inputText id="email" value="#{usuarioController.usuario.email}"/>
+                    
+                    <h:outputLabel value="Descrição:" for="descricao"/>
+                    <h:inputTextarea id="descricao" value="#{usuarioController.usuario.descricao}"/>
 
                     <h:outputLabel value="Senha:" for="novasenha"/>
                     <h:inputSecret id="novasenha"  value="#{usuarioController.usuario.senha}" label="Senha"/> 
