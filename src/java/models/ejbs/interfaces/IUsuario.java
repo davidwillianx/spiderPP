@@ -20,4 +20,5 @@ public interface IUsuario {
     void save(Usuario usuario);
     boolean enableStatus(Usuario usuario);
     Usuario findUsuarioByEmailAndSenha(Usuario usuario);
+    boolean updatePassword(Usuario usuario, String haString);
 }

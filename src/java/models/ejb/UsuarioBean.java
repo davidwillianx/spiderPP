@@ -18,6 +18,7 @@
 
 package models.ejb;
 
+import java.io.UnsupportedEncodingException;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -47,11 +48,10 @@ public class UsuarioBean implements IUsuario{
     public void save(Usuario usuario) {
         
         try {
-            this.buildHash = new BuildHash();
-            usuario.setSenha(buildHash.createHash(usuario.getSenha()));
-            usuario.setHashmail(buildHash.createHash(usuario.getEmail()));
+            usuario.setSenha(this.hash(usuario.getSenha()));
+            usuario.setHashmail(this.hash(usuario.getEmail()));
             
-            entityManager.persist(usuario);
+            this.entityManager.persist(usuario);
             
         } catch (Exception error) {
             this.context.setRollbackOnly();
@@ -82,8 +82,7 @@ public class UsuarioBean implements IUsuario{
     public Usuario findUsuarioByEmailAndSenha(Usuario usuario) {
         
         try{
-            this.buildHash = new BuildHash();
-            usuario.setSenha(this.buildHash.createHash(usuario.getSenha()));
+            usuario.setSenha(this.hash(usuario.getSenha()));
             
              Usuario userFound = (Usuario) this.entityManager.createNamedQuery("Usuario.findByEmailAndSenha")
                       .setParameter("email", usuario.getEmail())
@@ -96,4 +95,30 @@ public class UsuarioBean implements IUsuario{
             return null;
         }
     }
+
+    @Override
+    public boolean updatePassword(Usuario usuario, String hashMail) {
+       try{
+
+           Usuario userFound = (Usuario) this.entityManager.createNamedQuery("Usuario.findByHashMail")
+                          .setParameter("hashmail", hashMail)
+                          .getSingleResult();
+            
+            this.entityManager.merge(userFound);
+            userFound.setSenha(this.hash(usuario.getSenha()));
+           return true;
+           
+       }catch(Exception error){
+           //TODO Lançar um exception
+           System.out.println("ErrorUpdatePassword: "+error.getMessage());
+           this.context.setRollbackOnly();
+           return false;
+       }
+    }
+    
+    private String hash(String string) throws UnsupportedEncodingException{
+        this.buildHash = new BuildHash();
+        return this.buildHash.createHash(string);
+    }
+    
 }

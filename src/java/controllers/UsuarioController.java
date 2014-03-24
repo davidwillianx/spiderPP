@@ -1,12 +1,11 @@
 package controllers;
 
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import libs.BuildMail;
 import libs.BuildMessage;
+import libs.SessionManager;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
 
@@ -15,7 +14,8 @@ import models.entities.Usuario;
  * @author smp
  */
 
-@ManagedBean
+@Named
+@RequestScoped
 public class UsuarioController {
     
     private Usuario usuario;
@@ -26,6 +26,7 @@ public class UsuarioController {
     
     private BuildMessage buildMessage;
     private BuildMail buildMail;
+    private SessionManager sessionManager;
     
     public UsuarioController()
     {
@@ -67,19 +68,15 @@ public class UsuarioController {
     public String authenticator(Usuario usuario)
     {
         this.buildMessage = new BuildMessage();
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        
         try{
             
             this.usuario = this.iUsuario.findUsuarioByEmailAndSenha(usuario);
             
             if(this.usuario != null){
-                ExternalContext externalContext = facesContext.getExternalContext();
-                HttpSession session = (HttpSession) externalContext.getSession(false);
-                session.setAttribute("usuario", this.usuario);
+                this.sessionManager = new SessionManager();
+                this.sessionManager.set("usuario", usuario);
                 
                 return "/user/index.xhtml";
-                
             }else{
                 buildMessage.addError("Email ou senha inválidos");
                 return null;
@@ -90,15 +87,14 @@ public class UsuarioController {
              return null;
         }
     }
-    
+
     
     //TODO modificar o redirect
     public String exit()
     {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = facesContext.getExternalContext();
-        HttpSession session = (HttpSession) externalContext.getSession(false);
-        session.removeAttribute("usuario");
+        this.sessionManager = new SessionManager();
+        this.sessionManager.remove("usuario");
+        
         return "./index.xhtml";
     }
 }
