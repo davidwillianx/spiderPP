@@ -31,7 +31,7 @@ public class PasswordValidator implements Validator{
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
         this.confPassword = (String) value;
-        this.psui = (UIInput) context.getViewRoot().findComponent("formnewpassword:novasenha");
+        this.psui = (UIInput) context.getViewRoot().findComponent("formRegister:novasenha");
         this.password = (String) this.psui.getValue();
         
         if(!this.confPassword.equals(this.password)){
