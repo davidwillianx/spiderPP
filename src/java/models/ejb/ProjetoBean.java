@@ -38,7 +38,7 @@ public class ProjetoBean implements IProjeto{
             error.getStackTrace();
         }
     }
-    
+     
     public String currentDate(){ 
         
         Date date = new Date(System.currentTimeMillis());
