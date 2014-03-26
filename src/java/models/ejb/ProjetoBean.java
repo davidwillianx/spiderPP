@@ -39,7 +39,7 @@ public class ProjetoBean implements IProjeto{
         }
     }
     
-    public String currentDate(){
+    public String currentDate(){ 
         
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
