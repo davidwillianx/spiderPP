@@ -31,6 +31,8 @@ public class ProjetoBean implements IProjeto{
             this.entityManager.persist(projeto);
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
+            System.out.println("Error: " + error);
+            error.getStackTrace();
         }
     }
     

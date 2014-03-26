@@ -2,7 +2,7 @@
 package controllers;
 
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import models.ejbs.interfaces.IProjeto;
 import models.entities.Projeto;
@@ -12,7 +12,7 @@ import models.entities.Projeto;
  * @author BlenoVale
  */
 //msm coisa que MenagedBean
-@Named 
+@Named
 @RequestScoped
 public class ProjetoController {
     
@@ -27,7 +27,7 @@ public class ProjetoController {
         this.projeto = new Projeto();
     }
 
-    public Projeto getProjeto ()
+    public Projeto getProjeto()
     {
         return this.projeto;
     }

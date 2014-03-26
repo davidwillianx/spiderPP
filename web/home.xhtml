@@ -17,7 +17,7 @@
                 <h:outputLabel value="Descrição:" for="descricao"/>
                 <h:inputTextarea id="descricao" value="#{projetoController.projeto.descricao}" title="Descrição do projeto"/>
                 
-                <h:commandButton value="Criar" action="#{projetoController.saveProjeto(projeto)}"/>
+                <h:commandButton value="Criar" action="#{projetoController.saveProjeto(projetoController.projeto)}"/>
             </h:panelGrid>
         </h:form>
     </h:body>
