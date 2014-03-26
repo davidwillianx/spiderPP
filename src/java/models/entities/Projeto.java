@@ -46,7 +46,6 @@ public class Projeto implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dataInicio;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "data_fim")
     @Temporal(TemporalType.DATE)
     private Date dataFim;

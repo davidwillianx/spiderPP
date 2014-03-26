@@ -1,6 +1,9 @@
 
 package models.ejb;
 
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -34,6 +37,13 @@ public class ProjetoBean implements IProjeto{
             System.out.println("Error: " + error);
             error.getStackTrace();
         }
+    }
+    
+    public String currentDate(){
+        
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(date);
     }
     
 }
