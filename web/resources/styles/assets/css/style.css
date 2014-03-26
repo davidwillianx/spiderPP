@@ -8034,9 +8034,16 @@ ul.my-friends li .profile-pic{
 }
 
 
-#next{
-    background-image: url("#{resource['styles/assets/img/icon/large_left.png']}");
+.next{
+    background-image: url("#{resource['styles/assets/img/icon/large_right.png']}");
+    background-repeat: no-repeat;
+    background-position: 0 -40px;
     /*background-image: url("../resources/styles/assets/img/icon/large_left.png");*/
     height: 50px;
     width: 50px;
+}
+
+a .next :hover{
+   background-position: 0 30px; 
+    
 }

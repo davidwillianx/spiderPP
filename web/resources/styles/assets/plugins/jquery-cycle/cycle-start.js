@@ -8,7 +8,7 @@
 $(document).ready(function(){
    $("#formAccess").cycle({
        fx: 'scrollHorz',
-//       prev: "#prev",
+       prev: "#prev",
        next: "#next",
        timeout: 0
    });
