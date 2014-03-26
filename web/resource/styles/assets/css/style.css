@@ -8032,3 +8032,11 @@ ul.my-friends li .profile-pic{
 .rickshaw_graph{
 	overflow:hidden;
 }
+
+
+#next{
+    background-image: url("#{resource['styles/assets/img/icon/large_left.png']}");
+    /*background-image: url("../resources/styles/assets/img/icon/large_left.png");*/
+    height: 50px;
+    width: 50px;
+}
