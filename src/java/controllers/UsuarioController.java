@@ -5,6 +5,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import libs.BuildMail;
 import libs.BuildMessage;
+import libs.Redirect;
 import libs.SessionManager;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
@@ -27,10 +28,13 @@ public class UsuarioController {
     private BuildMessage buildMessage;
     private BuildMail buildMail;
     private SessionManager sessionManager;
+    private Redirect redirect;
     
     public UsuarioController()
     {
         this.usuario = new Usuario();
+        this.buildMessage = new BuildMessage();
+        this.redirect = new Redirect();
     }
     
     public Usuario  getUsuario()
@@ -41,6 +45,7 @@ public class UsuarioController {
     public void save(Usuario usuario)
    {
       this.buildMessage = new BuildMessage();
+      
       
        try {
            
@@ -65,9 +70,11 @@ public class UsuarioController {
     
     
     //TODO criar objeto Session
-    public String authenticator(Usuario usuario)
+    public void authenticator(Usuario usuario)
     {
         this.buildMessage = new BuildMessage();
+        this.redirect = new Redirect();
+        
         try{
             
             this.usuario = this.iUsuario.findUsuarioByEmailAndSenha(usuario);
@@ -76,25 +83,31 @@ public class UsuarioController {
                 this.sessionManager = new SessionManager();
                 this.sessionManager.set("usuario", usuario);
                 
-                return "/user/index.xhtml";
+                this.redirect.redirectTo("/user/index.xhtml");
+                
             }else{
                 buildMessage.addError("Email ou senha inválidos");
-                return null;
             }
             
         }catch(Exception error){
              this.buildMessage.addError("Email ou senha inválidos");
-             return null;
         }
     }
 
     
     //TODO modificar o redirect
-    public String exit()
+    public void exit()
     {
-        this.sessionManager = new SessionManager();
-        this.sessionManager.remove("usuario");
-        
-        return "./index.xhtml";
+        try{
+            
+            this.sessionManager = new SessionManager();
+            this.sessionManager.remove("usuario");
+
+            this.redirect.redirectTo("/index.xhtml");
+            
+        }catch(Exception error)
+        {
+            this.buildMessage.addError("Falha ao executar a operação");
+        }
     }
 }
