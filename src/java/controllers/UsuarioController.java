@@ -58,7 +58,7 @@ public class UsuarioController {
                                        ,usuario.getNome()
                                        ,usuario.getHashmail()
                                        );
-           this.buildMessage.addInfo();
+           this.buildMessage.addInfo("Cadastro realizado com sucesso");
            this.usuario =  new Usuario();
           
        } catch (Exception e) {

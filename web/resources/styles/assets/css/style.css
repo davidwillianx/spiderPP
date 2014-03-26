@@ -8045,5 +8045,11 @@ ul.my-friends li .profile-pic{
 
 a .next :hover{
    background-position: 0 30px; 
-    
+}
+
+.alert ul{
+    z-index: 4;
+}
+.alert li {
+    list-style: none;
 }
