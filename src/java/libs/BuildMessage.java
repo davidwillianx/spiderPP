@@ -12,9 +12,9 @@ import javax.faces.context.FacesContext;
 
 public class BuildMessage {
     
-    public void addInfo()
+    public void addInfo(String message)
     {    
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso:", "Acesse seu email para validar o cadastro."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso:", message));
     }
     
     public void addError(String message)
