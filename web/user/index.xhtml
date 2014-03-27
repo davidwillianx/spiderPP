@@ -3,16 +3,79 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:p="http://primefaces.org/ui">
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Página inicial do usuário</title> 
     </h:head>
+    <ui:include src="../WEB-INF/templates/scripts.xhtml"/>
     <h:body>
-        
-        <h:form>
-            <h:commandLink value="Sair" action="#{usuarioController.exit}"/>
-        </h:form>
-        
+        <h:panelGroup layout="block" class="header navbar navbar-inverse">
+            <h:panelGroup layout="block" class="navbar inner">
+                <h:panelGroup layout="block" class="header-seperation">
+                    <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">	
+                        <li class="dropdown">
+                            <a id="main-menu-toggle" href="#main-menu" class="">
+                                    <div class="iconset top-menu-toggle-white"></div>
+                            </a>
+                        </li>		 
+                    </ul>
+                 
+                    <h:link outcome="index.xhtml">
+                        <h:graphicImage library="styles" value="assets/img/logo.png"/>
+                    </h:link>  
+                    
+                    <!-- AREA DE CONTROLLE DO ICONE MENSSAGE E HOME-->
+                    <ul class="nav pull-right notifcation-center">	
+			<li class="dropdown" id="header_task_bar">
+                            <a href="#" class="dropdown-toggle active" data-toggle="">
+				<div class="iconset top-home"></div>
+                            </a>
+			</li>
+			<li class="dropdown" id="header_inbox_bar">
+                            <a href="#" class="dropdown-toggle">
+                               	<div class="iconset top-messages"></div>
+				<span class="badge" id="msgs-badge">2</span>
+                            </a>
+			</li>
+				<!-- BEGIN MOBILE CHAT TOGGLER -->
+			<li class="dropdown" id="portrait-chat-toggler" style="display:none">
+                            <a href="#sidr" class="chat-menu-toggle">
+				<div class="iconset top-chat-white"></div>
+                            </a>
+			</li>
+				<!-- END MOBILE CHAT TOGGLER -->				        
+			</ul>
+                    <!-- FIM AREA DE CONTROLLE DO ICONE MENSSAGE E HOME-->
+                    
+                </h:panelGroup>
+                
+                <h:panelGroup layout="block" class="header-quick-nav">
+                    <h:panelGroup layout="block" class="pull-left">
+                        <ul class="nav quick-section">
+                            <li class="quicklinks">
+				<a href="#" class="" id="layout-condensed-toggle">
+                                    <div class="iconset top-menu-toggle-dark"></div>
+                        	</a>
+                            </li>
+			</ul>
+                        <!-- BEGIN HEADER QUICK LINKS -->
+			<ul class="nav quick-section">
+                            <li class="quicklinks"><a href="#" class=""><div class="iconset top-reload"></div></a></li>
+                            <li class="quicklinks"><span class="h-seperate"></span></li>
+                            <li class="quicklinks"><a href="#" class=""><div class="iconset top-tiles"></div></a></li>
+                            <!-- BEGIN SEARCH BOX -->
+                            <li class="m-r-10 input-prepend inside search-form no-boarder">
+				<span class="add-on"><span class="iconset top-search"></span></span>
+                                <h:inputText   class="no-boarder"  style="width:250px;"/>
+                            </li>
+				<!-- END SEARCH BOX -->
+                        </ul>
+                    </h:panelGroup>
+                </h:panelGroup>
+                
+              </h:panelGroup>
+        </h:panelGroup>
         
             
     </h:body>
