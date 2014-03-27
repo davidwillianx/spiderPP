@@ -3,20 +3,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <h:head>
         <title></title>
     </h:head>
+    <ui:include src="../WEB-INF/templates/scripts.xhtml"/>
     <h:body>
-            
-        <h:panelGroup layout="block" rendered="#{authMailBean.isActiveted}">
-            <p>Sua conta está ativada!</p>
-            <h:link outcome="login"/>
-       </h:panelGroup>
-       <h:panelGroup layout="block" rendered="#{!authMailBean.isActiveted}">
-            <p>Ocorreu um erro na ativação da sua conta!</p>
-       </h:panelGroup>
+        <h:panelGroup layout="block" class="row p-t-80 m-l-60 m-r-60 p-l-65  text-center" >
+            <h:panelGroup layout="block" class="text-center p-t-80 col-lg-5 ">
+                <h:panelGroup layout="block" class="alert alert-success" rendered="#{authMailBean.isActiveted}">
+                    <h2>Sua conta está ativada!</h2>
+                    <h:link outcome="/index.xhtml" class="btn btn-success">Página Inicial</h:link>
+               </h:panelGroup>
+               <h:panelGroup layout="block" class="alert alert-danger" rendered="#{!authMailBean.isActiveted}">
+                    <h2>
+                        Ocorreu um erro na ativação da sua conta!
+                        <h:link outcome="/index.xhtml" class="btn btn-danger">Página Inicial</h:link>
+                    </h2>
+               </h:panelGroup>
+            </h:panelGroup> 
+        </h:panelGroup>
+      
     </h:body>
 </html>
 
