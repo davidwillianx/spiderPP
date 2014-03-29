@@ -525,7 +525,8 @@ span.iconset{
 }
 
 .iconset{
-	background: url('../img/icon/top-tray.png') no-repeat;
+	/*background: url('../img/icon/top-tray.png') no-repeat;*/
+       background-image: url("#{resource['styles/assets/img/icon/top-tray.png']}");
 	position: relative;
 	top: 1px;
 }

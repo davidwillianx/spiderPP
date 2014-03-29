@@ -813,7 +813,8 @@ and (orientation : portrait) {
 		}
 	
 		.iconset{
-		background: url('../img/icon/top-trayx2.png'); 
+		/*background: url('../img/icon/top-trayx2.png');*/ 
+                background-image: url("#{resource['styles/assets/img/icon/top-trayx2.png']}");
 		background-size: 394px 29px;
 		}
 		
