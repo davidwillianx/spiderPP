@@ -7,7 +7,7 @@
 package controllers;
 
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import libs.BuildMessage;
 import models.ejbs.interfaces.IEstoria;
@@ -30,6 +30,7 @@ public class EstoriaController
     
     public EstoriaController()
     {
+        this.buildMessage = new BuildMessage();
         this.estoria = new Estoria();
     }
     
@@ -44,10 +45,12 @@ public class EstoriaController
         try
         {
             this.iEstoria.saveStory(estoria);
+            this.buildMessage.addInfo("Estória criada");
             this.estoria = new Estoria();
         }catch(Exception e)
                 {
                     System.out.println("error: "+ e.getMessage());
+                    this.buildMessage.addError("Ocorreu um erro ao tentar criar a estória");
                     e.printStackTrace();  
                 }
     }
