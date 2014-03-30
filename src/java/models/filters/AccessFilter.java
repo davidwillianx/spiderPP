@@ -35,12 +35,14 @@ public class AccessFilter implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+        
         HttpServletRequest httpServletRequest = ((HttpServletRequest) request);
         HttpServletResponse httpServletResponse = ((HttpServletResponse) response);
         HttpSession session = httpServletRequest.getSession();
         
         if(session.getAttribute("usuario") != null && !session.isNew())
             chain.doFilter(request, response);
+        
         else
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/index.xhtml");
     }

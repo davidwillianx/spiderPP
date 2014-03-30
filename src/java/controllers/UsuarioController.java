@@ -2,7 +2,9 @@ package controllers;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import libs.BuildMail;
 import libs.BuildMessage;
 import libs.Redirect;
@@ -80,8 +82,9 @@ public class UsuarioController {
             this.usuario = this.iUsuario.findUsuarioByEmailAndSenha(usuario);
             
             if(this.usuario != null){
+                
                 this.sessionManager = new SessionManager();
-                this.sessionManager.set("usuario", usuario);
+                this.sessionManager.set("usuario", this.usuario);
                 
                 this.redirect.redirectTo("/user/index.xhtml");
                 
@@ -91,6 +94,7 @@ public class UsuarioController {
             
         }catch(Exception error){
              this.buildMessage.addError("Email ou senha inválidos");
+             
         }
     }
 

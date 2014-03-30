@@ -92,7 +92,7 @@
                         </h:panelGroup>
                         <h:panelGroup layout="block" class="user-info">
                             <h:panelGroup layout="block" class="greeting">Bem Vindo</h:panelGroup>
-                            <h:panelGroup layout="block" class="username">Fulano</h:panelGroup>
+                            <h:panelGroup layout="block" class="username"><h:outputText value="#{usuario.nome}"/></h:panelGroup>
                             <!--STATUS ON/OFF -->
                                 <!--<h:panelGroup layout="block" class="status">
                                 <h:link outcome="index.xhtml"><h:panelGroup layout="block" class="status-icon green"></h:panelGroup>Online</h:link>
