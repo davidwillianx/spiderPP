@@ -34,6 +34,7 @@ public class EstoriaBean implements IEstoria{
             this.entityManager.persist(estoria);
         }catch (Exception Error)
             {
+                System.out.println("Errado em EstoriaBean"+Error);
                 this.sessionContext.setRollbackOnly();
             }
     }
