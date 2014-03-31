@@ -2,9 +2,7 @@ package controllers;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 import libs.BuildMail;
 import libs.BuildMessage;
 import libs.Redirect;
@@ -97,13 +95,17 @@ public class UsuarioController {
              
         }
     }
+    
+    public void edit(Usuario usuario)
+    {
+        this.usuario = usuario;
+    }
 
     
     //TODO modificar o redirect
     public void exit()
     {
         try{
-            
             this.sessionManager = new SessionManager();
             this.sessionManager.remove("usuario");
 

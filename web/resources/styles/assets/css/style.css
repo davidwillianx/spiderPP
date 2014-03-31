@@ -146,7 +146,8 @@ Page sidebar
 
 .page-sidebar  .page-sidebar-wrapper > ul > li.open > a, 
 .page-sidebar  .page-sidebar-wrapper > ul > li >a:hover, 
-.page-sidebar  .page-sidebar-wrapper > ul > li:hover >a {  
+.page-sidebar  .page-sidebar-wrapper > ul > li:hover >a,
+.page-sidebar  .page-sidebar-wrapper > ul > li > form >a:hover{  
   background: #1b1e24;
  /* border-left:4px solid  #0aa699;*/
   padding:11.5px 31px;
@@ -154,7 +155,8 @@ Page sidebar
 }
 .page-sidebar  .page-sidebar-wrapper > ul > li.open > a i, 
 .page-sidebar  .page-sidebar-wrapper > ul > li >a:hover i, 
-.page-sidebar  .page-sidebar-wrapper > ul > li:hover >a  i{  
+.page-sidebar  .page-sidebar-wrapper > ul > li:hover >a  i,
+.page-sidebar  .page-sidebar-wrapper > ul > li > form >a:hover  i{  
 
   color: #fff;
 }
@@ -8054,3 +8056,17 @@ a .next :hover{
 .alert li {
     list-style: none;
 }
+
+li form a {
+    color: #8b91a0;
+    display: block;
+    position: relative;
+    margin: 0;
+    border: 0px;
+    padding: 11.5px 31px 11.5px 31px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: normal;
+    transition: color 0.1s linear 0s,background-color 0.1s linear 0s, opacity 0.1s linear 0s!important;
+}
+

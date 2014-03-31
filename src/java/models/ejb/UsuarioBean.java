@@ -120,5 +120,17 @@ public class UsuarioBean implements IUsuario{
         this.buildHash = new BuildHash();
         return this.buildHash.createHash(string);
     }
+
+    @Override
+    public void updateUsuario(Usuario usuario) {
+        try
+        {
+            this.entityManager.merge(usuario);
+            
+        }catch(Exception error)
+        {
+            this.context.setRollbackOnly();
+        }
+    }
     
 }

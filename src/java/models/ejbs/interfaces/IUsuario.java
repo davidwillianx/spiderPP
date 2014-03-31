@@ -21,4 +21,5 @@ public interface IUsuario {
     boolean enableStatus(Usuario usuario);
     Usuario findUsuarioByEmailAndSenha(Usuario usuario);
     boolean updatePassword(Usuario usuario, String haString);
+    void updateUsuario(Usuario usuario);
 }

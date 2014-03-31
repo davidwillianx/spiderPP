@@ -207,7 +207,7 @@ and (min-width : 1824px) {
 			padding: 13px;
 			color:#fff;
 	}
-	.page-sidebar .page-sidebar-wrapper > ul > li a i{
+	.page-sidebar .page-sidebar-wrapper > ul > li a i,.page-sidebar .page-sidebar-wrapper > ul > li > form > a i{
 			color:#fff;
 	}
 	.page-sidebar .user-info{
@@ -248,10 +248,11 @@ and (min-width : 1824px) {
 		 background-color: #0aa699 !important;
 	}	
 	.page-sidebar .page-sidebar-wrapper > ul > li >a:hover, 
-	.page-sidebar .page-sidebar-wrapper > ul > li:hover >a {  
+	.page-sidebar .page-sidebar-wrapper > ul > li:hover >a,
+        .page-sidebar .page-sidebar-wrapper > ul > li:hover > form >a{  
 		background: #0b9c8f;
 	}
-	.page-sidebar .page-sidebar-wrapper > ul > li.open > a, .page-sidebar .page-sidebar-wrapper > ul > li > a:hover, .page-sidebar .page-sidebar-wrapper > ul > li:hover > a{
+	.page-sidebar .page-sidebar-wrapper > ul > li.open > a, .page-sidebar .page-sidebar-wrapper > ul > li > a:hover, .page-sidebar .page-sidebar-wrapper > ul > li:hover > a, .page-sidebar .page-sidebar-wrapper > ul > li:hover > form > a{
 		padding: 13px;
 	}
 	.page-sidebar  .page-sidebar-wrapper > ul > li > ul.sub-menu{
@@ -380,20 +381,22 @@ and (orientation : portrait) {
 		display:block;
 	}
 
-	.page-sidebar .page-sidebar-wrapper > ul > li > a {
+	.page-sidebar .page-sidebar-wrapper > ul > li > a,
+        .page-sidebar .page-sidebar-wrapper > ul > li > form > a{
 	  padding: 11.5px 31px 11.5px 31px;
 	  color:#8B91A0;
 	}
 	
 	.page-sidebar .page-sidebar-wrapper > ul > li >a:hover, 
-	.page-sidebar .page-sidebar-wrapper > ul > li:hover >a {  
+	.page-sidebar .page-sidebar-wrapper > ul > li:hover >a,
+        .page-sidebar .page-sidebar-wrapper > ul > li:hover > form >a{  
 		background: #1b1e24;
 	}
-	.page-sidebar .page-sidebar-wrapper > ul > li.open > a, .page-sidebar .page-sidebar-wrapper > ul > li > a:hover, .page-sidebar .page-sidebar-wrapper > ul > li:hover > a{
+	.page-sidebar .page-sidebar-wrapper > ul > li.open > a,.page-sidebar .page-sidebar-wrapper > ul > li.open > form > a, .page-sidebar .page-sidebar-wrapper > ul > li > a:hover, .page-sidebar .page-sidebar-wrapper > ul > li:hover > a,.page-sidebar .page-sidebar-wrapper > ul > li:hover > form > a{
 		  padding: 11.5px 31px 11.5px 31px;
 	}
 	
-	.page-sidebar .page-sidebar-wrapper > ul > li > a i {	 
+	.page-sidebar .page-sidebar-wrapper > ul > li > a i,.page-sidebar .page-sidebar-wrapper > ul > li> form > a i {	 
 	    color:#8B91A0;
 	}
 

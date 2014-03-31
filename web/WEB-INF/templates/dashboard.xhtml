@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Página inicial do usuário</title> 
     </h:head>
@@ -101,7 +102,7 @@
                         </h:panelGroup>
                     </h:panelGroup>
                     <p class="menu-title">Op&ccedil;&otilde;es<span class="pull-right"></span></p>
-                    
+
                     <ul>
                         <li class="start active">
                             <h:link outcome="index.xhtml">
@@ -132,35 +133,47 @@
 			</li>
 			<!-- END BADGE LINK -->  
                         <!-- BEGIN BADGE LINK -->
-			<li class="">
-				<a href="#">
-					<i class="icon-custom-newpage"></i>
-					<span class="title">Criar Projeto</span>
-				</a>
-			</li>
+                        <li class="">
+                            <a href="#">
+                                <i class="icon-custom-newpage"></i>
+                                <span class="title">Criar Projeto</span>
+                            </a>
+                        </li>
 			<!-- END BADGE LINK -->  
                        
                         <!-- BEGIN BADGE LINK -->
 			<li class="">
-				<a href="#">
-					<i class="icon-custom-new"></i>
-					<span class="title">Editar Registro</span>
-				</a>
+                            <f:facet name="header">Edit</f:facet>
+                            <!-- 
+                            <h:form>
+                                <h:commandLink  action="/user/edit.xhtml" class="title" >
+                                      <i class="icon-custom-new"></i>
+                                      <span class="title">Editar Registro</span>
+                                      <f:setPropertyActionListener value="#{usuario}" 
+                                         target="#{usuarioController.usuario}" />
+                                  </h:commandLink>
+                              </h:form>-->
+                           <h:link class="title"  outcome="edit.xhtml">
+                               <i class="icon-custom-new"></i>
+                               <span class="title">Editar Registro</span>
+                          </h:link>
 			</li>
 			<!-- END BADGE LINK -->  
                           <!-- BEGIN BADGE LINK -->
-			<li class="">
-                            <h:form>
-                                <h:commandLink action="#{usuarioController.exit}">
-                                    <i class="fa fa-power-off"></i>
-                                    <span class="title">Sair</span>
-                                </h:commandLink>
-                            </h:form>
-			</li>
+			
+                          <!--<h:form>-->
+                          <li class="">
+                              <h:form>
+                                  <h:commandLink action="#{usuarioController.exit}" class="title">
+                                      <i class="icon-custom-cross"></i>
+                                      <span class="title">Sair</span>
+                                  </h:commandLink>
+                              </h:form>
+                          </li>
+                          <!--</h:form>-->
 			<!-- END BADGE LINK -->  
                         
                     </ul>
-                    
                 </h:panelGroup>
                 
             </h:panelGroup>
