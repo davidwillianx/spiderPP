@@ -125,6 +125,7 @@ public class UsuarioBean implements IUsuario{
     public void updateUsuario(Usuario usuario) {
         try
         {
+            usuario.setSenha(this.hash(usuario.getSenha()));
             this.entityManager.merge(usuario);
             
         }catch(Exception error)

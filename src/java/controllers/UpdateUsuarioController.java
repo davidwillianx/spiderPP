@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controllers;
 
 import javax.ejb.EJB;
@@ -22,39 +21,34 @@ import models.entities.Usuario;
 @Named
 @RequestScoped
 public class UpdateUsuarioController {
-   
+
     private Usuario usuario;
-    
+
     @EJB
     private IUsuario iUsuario;
-    
+
     private SessionManager sessionManager;
     private BuildMessage buildMessage;
-    
-    public UpdateUsuarioController()
-    {
+
+    public UpdateUsuarioController() {
         this.sessionManager = new SessionManager();
         this.usuario = (Usuario) this.sessionManager.get("usuario");
     }
-    
-    public Usuario getUsuario()
-    {
+
+    public Usuario getUsuario() {
         return this.usuario;
     }
-    
-    public void edit(Usuario usuario)
-    {   
+
+    public void edit(Usuario usuario) {
         this.buildMessage = new BuildMessage();
         this.sessionManager = new SessionManager();
-        
-        try
-        {
+
+        try {
             this.iUsuario.updateUsuario(usuario);
             this.sessionManager.set("usuario", usuario);
-            this.buildMessage.addInfo("Edi&ccdeil;&atilde;o realizada com sucesso!");
-        }
-        catch(Exception error)
-        {
+            this.buildMessage.addInfo("Edição realizada com sucesso!");
+            //            this.buildMessage.addInfo("Edi&ccdeil;&atilde;o realizada com sucesso!");
+        } catch (Exception error) {
             this.buildMessage.addError("Falha ao realizar a edi&ccedil;&atilde;o");
         }
     }
