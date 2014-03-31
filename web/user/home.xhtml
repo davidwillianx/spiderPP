@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>Home-SpiderPP</title>
+    </h:head>
+    
+    <h:body>
+        <h:form id="formHome1">
+            <h:panelGrid id="panel">
+                <h:commandLink value="sair" action="#{usuarioController.exit()}"/>
+            </h:panelGrid>
+        </h:form>
+        
+        <h:form id="formHome2">
+            <h:panelGrid id="panel">
+                <h:commandLink value="Novo Projeto" action="#{projetoController.newProjeto()}"/>
+            </h:panelGrid>
+        </h:form>
+        
+        <h:form>
+            <h:panelGroup id="formHome3">
+                <h:dataTable value="#{projetoController.projetos}" var="projeto" border="2">
+                    <h:column>
+                        <f:facet name="head">Projeto</f:facet>
+                        <h:commandLink value="#{projeto.nome}" action="#{projetoController.configProjeto(projeto)}"/> 
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+        </h:form>
+    </h:body>
+</html>

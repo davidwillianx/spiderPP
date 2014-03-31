@@ -56,8 +56,8 @@ public class Projeto implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 122)
+    @NotNull(message="O campo nome do Projeto não pode ser vazio.")
+    @Size(min = 1, max = 122, message="O campo nome do Projeto não pode ser vazio.")
     @Column(name = "nome")
     private String nome;
     @Lob

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+        
+    <h:head>
+        <title>visualiza-Projeto</title>
+    </h:head>
+    
+    <h:body>
+        <h:form>
+            <h:commandLink value="Deletar projeto" action="#{projetoController.removeProjeto(projeto)}">
+                <f:param name="pkm" value="pkm" />
+            </h:commandLink>
+        </h:form>
+        
+        <h:form>
+            <h:panelGrid>
+                <h:outputLabel value="Nome do Projeto: " for="nome"/>
+                <h:outputText id="nome" value="#{projetoController.projeto.nome}"/>
+                <h:outputLabel value="Descrição do Projeto:" for="desc"/>
+                <h:outputText id="desc" value="#{projetoController.projeto.descricao}"/>
+             </h:panelGrid>
+        </h:form>
+    </h:body>
+
+</html>
