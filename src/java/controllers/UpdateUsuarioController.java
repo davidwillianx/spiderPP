@@ -8,10 +8,10 @@ package controllers;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import libs.BuildMessage;
 import libs.SessionManager;
-import models.ejb.UsuarioBean;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
 

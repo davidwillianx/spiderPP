@@ -68,7 +68,7 @@ public class UsuarioBean implements IUsuario{
                                   .getSingleResult();
             this.entityManager.merge(userFound);
             userFound.setStatus(true);
-                System.err.println("usuario: "+usuario.getNome());
+            System.err.println("usuario: "+usuario.getNome());
             return true;
             
         }catch(Exception error){

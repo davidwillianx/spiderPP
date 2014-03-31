@@ -13,12 +13,14 @@
         <h:panelGroup layout="block" class="row">
             <h:panelGroup layout="block" class="col-md-7">
                 <h:panelGroup layout="block" class="grid simple">
+                    
                     <h:panelGroup layout="block" class="grid-title">
                         <h4>Atualize suas Informa&ccedil;&otilde;es</h4>
                     </h:panelGroup>
+                    
                     <h:panelGroup layout="block" class="grid-body no-border">
                         <h:panelGroup layout="block" class="row">
-
+                            <h:messages showDetail="true" showSummary="false"></h:messages>
                             <h:form class="p-l-30" id="formRegister">  
                                 <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
                                     <h:outputLabel for="nome" value="Nome " class="form-label"/>
@@ -34,7 +36,8 @@
                                 </h:panelGroup>
                                 <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
                                     <h:outputLabel for="novasenha" value="Senha: " class="form-label"/>
-                                    <h:inputSecret id="novasenha"  class="form-control" value="#{updateUsuarioController.usuario.senha}" />  
+                                    <h:inputSecret id="novasenha"  class="form-control" value="#{updateUsuarioController.usuario.senha}" >
+                                    </h:inputSecret>
                                 </h:panelGroup> 
                                 <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
                                     <h:outputLabel for="confpassword" value="Confir. Senha: " class="form-label"/>
@@ -43,7 +46,8 @@
                                     </h:inputSecret>  
                                 </h:panelGroup> 
                                 <h:panelGroup layout="block" class="col-md-7">
-                                    <h:commandButton class="btn btn-primary btn-cons" value="Atualizar" action="#{updateUsuarioController.edit(updateUsuarioController.usuario)}"/>
+                                    <h:commandButton class="btn btn-primary btn-cons" value="Atualizar" action="#{updateUsuarioController.edit(updateUsuarioController.usuario)}">
+                                    </h:commandButton>
                                     
                                 </h:panelGroup>
                                 
