@@ -31,7 +31,7 @@ and open the template in the editor.
                 <h:dataTable value="#{projetoController.projetos}" var="projeto" border="2">
                     <h:column>
                         <f:facet name="head">Projeto</f:facet>
-                        <h:commandLink value="#{projeto.nome}" action="#{projetoController.configProjeto(projeto)}"/> 
+                            <h:commandLink value="#{projeto.nome}" action="#{projetoController.configProjeto(projeto)}"/> 
                     </h:column>
                 </h:dataTable>
             </h:panelGroup>
