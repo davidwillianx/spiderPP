@@ -6,12 +6,21 @@
 
 package models.ejbs.interfaces;
 
+import java.util.List;
+import javax.faces.event.ActionEvent;
 import models.entities.Estoria;
 
 /**
  *
  * @author Bruno
  */
+
 public interface IEstoria {
+    
     public void saveStory(Estoria estoria);
+    public Estoria selectStory(int id);
+    public boolean modifyStory(Estoria estoria);
+    public boolean removeStory(Estoria estoria);
+    public List<Estoria> ListStory();
+    Estoria findEstoriaByIdProjeto(Estoria estoria);
 }
