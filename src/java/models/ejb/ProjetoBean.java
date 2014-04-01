@@ -7,8 +7,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import libs.exception.NoPersistException;
+import models.ejbs.interfaces.IPerfil;
 import models.ejbs.interfaces.IProjeto;
 import models.entities.Projeto;
 
@@ -22,24 +25,35 @@ public class ProjetoBean implements IProjeto {
     private Date dateProjeto;
     private List<Projeto> projetos;
 
-    // cria uma conexão para fazer o crud 
     @PersistenceContext
     private EntityManager entityManager;
 
-    // da rollback quando acontece algum erro de transação
     @Resource
     private SessionContext sessionContext;
+    
+    
+    private IPerfil iPerfil;
+    
 
     @Override
     public void saveProjeto(Projeto projeto) {
         try {
+            
+            
             projeto.setDataInicio(currentDate());
             this.entityManager.persist(projeto);
-        } catch (Exception error) {
+            
+            
+        } catch (NoPersistException  error ) {
+            System.out.println("Error: " + error);
+            error.getStackTrace();
+        }catch(Exception error)
+        {
             this.sessionContext.setRollbackOnly();
             System.out.println("Error: " + error);
             error.getStackTrace();
         }
+        
     }
 
     public Date currentDate() throws ParseException {
@@ -69,6 +83,7 @@ public class ProjetoBean implements IProjeto {
     public void mergeProjeto(Projeto projeto) {
         try {
             this.entityManager.merge(projeto);
+            
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
         }

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+    template="/WEB-INF/templates/dashboard.xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- ADICIONE CONTEUDO NESTA TAG -->
+    <ui:define name="content-dashboad">
+
+        <h:panelGroup layout="block" class="row">
+            <h:panelGroup layout="block" class="col-md-7">
+                <h:panelGroup layout="block" class="grid simple">
+
+                    <h:panelGroup layout="block" class="grid-title">
+                        <h4>Iniciar projeto</h4>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" class="grid-body no-border">
+                        <h:panelGroup layout="block" class="row">
+                            <h:messages showDetail="true" showSummary="false"></h:messages>
+
+                            <h:form id="formProject">
+                                <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                    <h:outputLabel value="Nome do Projeto:" for="nome" class="form-label"/>
+                                    <h:inputText class="form-control" id="nome" value="#{projetoController.projeto.nome}" title="Nome do Projeto"/>
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                    <h:outputLabel value="Descrição:" for="descricao" class="form-label"/>
+                                    <h:inputTextarea rows="8" cols="6" id="descricao" value="#{projetoController.projeto.descricao}" title="Descrição do projeto" class="form-control"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" class="col-md-7">
+                                    <h:commandButton value="Registrar Projeto" action="#{projetoController.saveProjeto(projetoController.projeto)}" class="btn btn-success"/>
+                                </h:panelGroup>
+
+                            </h:form>
+
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

@@ -55,10 +55,13 @@ public class ProjetoController {
     }
 
     public void saveProjeto(Projeto projeto) {
+        
         this.buildMessage = new BuildMessage();
+        
         try {
             this.iProjeto.saveProjeto(projeto);
             this.buildMessage.addInfo("Projeto cadastrado com Sucesso");
+        
         } catch (Exception error) {
             this.buildMessage.addError("Erro ao cadastrar Projeto.");
             System.out.println("Ocorreu um erro: " + error);
