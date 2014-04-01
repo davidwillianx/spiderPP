@@ -11,6 +11,6 @@ import models.entities.Projeto;
 public interface IProjeto {
     public void saveProjeto (Projeto projeto);
     public List<Projeto> getProjetos ();
-    public Projeto mergeProjeto(Projeto projeto) throws Exception;
+    public void mergeProjeto(Projeto projeto);
     public void removeProjeto (String id_pkm) throws Exception;
 }

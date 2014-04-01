@@ -16,7 +16,7 @@ and open the template in the editor.
     <h:body>
         <h:form>
             <h:commandLink value="Deletar projeto" action="#{projetoController.removeProjeto(projeto)}">
-                <f:param name="pkm" value="pkm" />
+                <f:param name="pkm" value="#{projetoController.pkm}"/>
             </h:commandLink>
         </h:form>
         
