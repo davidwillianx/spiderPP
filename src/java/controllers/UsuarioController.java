@@ -15,7 +15,7 @@ import models.entities.Usuario;
  * @author smp
  */
 
-@Named
+@Named (value="usuarioController")
 @RequestScoped
 public class UsuarioController {
     
