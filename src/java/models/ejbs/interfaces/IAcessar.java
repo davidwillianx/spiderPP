@@ -6,13 +6,15 @@
 
 package models.ejbs.interfaces;
 
-import models.entities.Acessar;
+
 import models.entities.Perfil;
+import models.entities.Projeto;
+import models.entities.Usuario;
 
 /**
  *
  * @author smp
  */
 public interface IAcessar {
-   void save(Acessar acessar, Perfil perfil);
+   void save(Perfil perfil, Usuario usuario, Projeto projeto);
 }

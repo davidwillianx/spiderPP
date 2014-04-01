@@ -5,15 +5,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import libs.SessionManager;
+import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
+import models.ejbs.interfaces.IAcessar;
 import models.ejbs.interfaces.IPerfil;
 import models.ejbs.interfaces.IProjeto;
+import models.entities.Perfil;
 import models.entities.Projeto;
+import models.entities.Usuario;
 
 /**
  *
@@ -24,6 +29,11 @@ public class ProjetoBean implements IProjeto {
 
     private Date dateProjeto;
     private List<Projeto> projetos;
+    private Perfil perfil;
+    private Usuario usuario;
+    private SessionManager sessionManager;
+    
+    private static final int PERFIL_SCRUM_MASTER = 1;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -31,27 +41,27 @@ public class ProjetoBean implements IProjeto {
     @Resource
     private SessionContext sessionContext;
     
-    
+    @EJB
     private IPerfil iPerfil;
+    @EJB 
+    private IAcessar iAcessar;
     
-
+    
     @Override
     public void saveProjeto(Projeto projeto) {
         try {
             
-            
             projeto.setDataInicio(currentDate());
             this.entityManager.persist(projeto);
-            
-            
+            this.perfil = this.iPerfil.findPerfil(PERFIL_SCRUM_MASTER);
+            this.usuario = (Usuario) this.sessionManager.get("usuario");
+            this.iAcessar.save(this.perfil, this.usuario, projeto);
+
         } catch (NoPersistException  error ) {
-            System.out.println("Error: " + error);
-            error.getStackTrace();
-        }catch(Exception error)
-        {
+           throw new BusinessException("Falha ao salvar projeto");
+        }catch(Exception error){
             this.sessionContext.setRollbackOnly();
-            System.out.println("Error: " + error);
-            error.getStackTrace();
+            throw new BusinessException("Falha ao salvar projeto");
         }
         
     }
