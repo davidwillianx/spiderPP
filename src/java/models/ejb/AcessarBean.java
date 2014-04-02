@@ -8,6 +8,7 @@ package models.ejb;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -23,6 +24,7 @@ import models.entities.Usuario;
  *
  * @author smp
  */
+@Stateless
 public class AcessarBean implements IAcessar{
 
     @PersistenceContext

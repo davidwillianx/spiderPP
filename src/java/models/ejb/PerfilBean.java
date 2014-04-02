@@ -12,6 +12,7 @@ package models.ejb;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import libs.exception.NotFoundException;
@@ -22,6 +23,7 @@ import models.entities.Perfil;
  *
  * @author smp
  */
+@Stateless
 public class PerfilBean  implements  IPerfil{
 
     @PersistenceContext
