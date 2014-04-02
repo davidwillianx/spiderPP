@@ -3,15 +3,67 @@
 <ui:composition 
     template="/WEB-INF/templates/dashboard.xhtml"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-     xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
     <!-- ADICIONE CONTEUDO NESTA TAG -->
     <ui:define name="content-dashboad">
-    
-        <h:dataTable value="#{projetoController.projetos}" var="projeto">
-            
-        </h:dataTable>
+
+        <h:panelGroup layout="block" class="row">
+            <h:panelGroup layout="block" class="col-lg-8">
+
+                <ui:repeat value="#{projetoController.projetos}" var="projeto">
+                    <h:panelGroup layout="block" class="col-lg-6 m-b-20">
+                        <h:panelGroup layout="block" class="widget-item">
+                            <h:panelGroup layout="block" class="tiles green" style="max-height:345px">
+                                <h:panelGroup layout="block" class="tiles-body">
+                                    <h3 class="text-white m-t-50 m-b-30 m-r-20">
+                                        <span class="semi-bold"><h:outputText value="#{projeto.nome}"/></span>
+                                    </h3>
+                                        <h:panelGroup layout="block" class="overlayer bottom-right fullwidth">
+                                            <h:panelGroup layout="block" class="overlayer-wrapper">
+                                                <h:panelGroup layout="block" class=" p-l-20 p-r-20 p-b-20 p-t-20">
+                                                    <h:panelGroup layout="block" class="pull-right">
+                                                        <span class="hashtags">#SM</span>
+                                                                                                               </h:panelGroup>
+                                                </h:panelGroup>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                        
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" class="tiles white">
+                                    <h:panelGroup layout="block" class="tiles-body">
+                                        <h:panelGroup layout="block" class="row">
+                                            <h:panelGroup layout="block" class="user-comment-wrapper pull-left">
+                                                <h:panelGroup layout="block" class="comment">
+                                                    <p>
+                                                        <span class="user-name text-black bold"> Descri&ccedil;&atilde;o</span>
+                                                        <span class="preview-wrapper">Inicio <h:outputText value="#{projeto.dataInicio}"/></span>
+                                                    </p>
+                                                </h:panelGroup>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" class="p-l-15 p-t-15 p-r-20 " >
+                                                <h:panelGroup layout="block" class="slimScrollDiv">
+                                                    <h:panelGroup layout="block" class="scroller">
+                                                        <p><h:outputText value="#{projeto.descricao}"/> </p>
+                                                    </h:panelGroup>
+
+                                                </h:panelGroup>
+
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </ui:repeat>
+
+            </h:panelGroup>
+        </h:panelGroup>
+
     </ui:define>
-    
+
 </ui:composition>

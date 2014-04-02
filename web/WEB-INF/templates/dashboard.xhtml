@@ -117,18 +117,14 @@
 					<span class="title">Projetos</span>
 				</a>
                             <ul class="sub-menu">
-                                <li class="">
-                                    <a href="#">
-                                        <i class="fa fa-envelope"></i>
-					<span class="title">Projeto 1</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="#">
-                                        <i class="fa fa-envelope"></i>
-					<span class="title">Projeto 1</span>
-                                    </a>
-                                </li>
+                                <ui:repeat value="#{projetoController.projetos}" var="projeto">
+                                    <li class="">
+                                        <a href="#">
+                                            <i class="fa fa-envelope"></i>
+                                            <span class="title"><h:outputText value="#{projeto.nome}"/></span>
+                                        </a>
+                                    </li>
+                                </ui:repeat>
                             </ul>
 			</li>
 			<!-- END BADGE LINK -->  
