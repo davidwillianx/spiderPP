@@ -76,10 +76,13 @@ public class ProjetoBean implements IProjeto {
 
     @Override
     public List<Projeto> getProjetos() {
-        try {
+        try { 
             if (this.projetos == null) {
-                this.projetos = this.entityManager.createNamedQuery("Projeto.findAll", Projeto.class)
-                        .getResultList();
+                this.sessionManager = new SessionManager();
+                this.usuario = (Usuario) this.sessionManager.get("usuario");
+                this.projetos =  this.entityManager.createNamedQuery("Projeto.findAllByUserId", Projeto.class)
+                        .setParameter("id_usuario", this.usuario.getId())
+                        .getResultList(); 
             }
             return this.projetos;
         } catch (Exception error) {

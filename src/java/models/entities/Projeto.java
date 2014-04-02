@@ -23,20 +23,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull; 
+import javax.validation.constraints.Size; 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
+ 
 /**
  *
  * @author smartphonne
  */
 @Entity
 @Table(name = "projeto")
-@XmlRootElement
+@XmlRootElement 
 @NamedQueries({
     @NamedQuery(name = "Projeto.findAll", query = "SELECT p FROM Projeto p"),
+    @NamedQuery(name = "Projeto.findAllByUserId", query = "SELECT p FROM Projeto p JOIN p.acessarCollection a WHERE a.usuario.id = :id_usuario"),
     @NamedQuery(name = "Projeto.findById", query = "SELECT p FROM Projeto p WHERE p.id = :id"),
     @NamedQuery(name = "Projeto.findByNome", query = "SELECT p FROM Projeto p WHERE p.nome = :nome")})
 public class Projeto implements Serializable {
