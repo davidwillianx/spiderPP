@@ -50,12 +50,12 @@ public class ProjetoBean implements IProjeto {
     @Override
     public void saveProjeto(Projeto projeto) {
         try {
-            
-            projeto.setDataInicio(currentDate());
-            this.entityManager.persist(projeto);
-            this.perfil = this.iPerfil.findPerfil(PERFIL_SCRUM_MASTER);
-            this.usuario = (Usuario) this.sessionManager.get("usuario");
-            this.iAcessar.save(this.perfil, this.usuario, projeto);
+                this.sessionManager = new SessionManager();
+                projeto.setDataInicio(currentDate());
+                this.entityManager.persist(projeto);
+                this.perfil = this.iPerfil.findPerfil(PERFIL_SCRUM_MASTER);
+                this.usuario = (Usuario) this.sessionManager.get("usuario");
+                this.iAcessar.save(this.perfil, this.usuario, projeto);
 
         } catch (NoPersistException  error ) {
            throw new BusinessException("Falha ao salvar projeto");

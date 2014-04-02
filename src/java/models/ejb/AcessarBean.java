@@ -40,13 +40,9 @@ public class AcessarBean implements IAcessar{
     public void save(Perfil perfil,Usuario usuario, Projeto projeto)
     {
         try {
-                this.entityManager.merge(perfil);
-                this.acessar = new Acessar();
-                this.acessar.setPerfil(perfil);
-                this.acessar.setProjeto(projeto);
-                this.acessar.setUsuario(usuario);
-                
+                this.acessar = new Acessar(perfil.getId(), projeto.getId(), usuario.getId());
                 this.entityManager.persist(acessar);
+                
         } catch (Exception error) {
             throw new NoPersistException("Falha na vincular");
         }
