@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estoria.findByNome", query = "SELECT e FROM Estoria e WHERE e.nome = :nome"),
     @NamedQuery(name = "Estoria.findByEstimativa", query = "SELECT e FROM Estoria e WHERE e.estimativa = :estimativa"),
     @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status"),
-    @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.idProjeto = :idProjeto")})
+    @NamedQuery(name = "Estoria.findAllByIdProjeto", query = "SELECT e From Estoria e JOIN e.estoriaCollection est WHERE est.idProjeto = :id_projeto")})
 public class Estoria implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
