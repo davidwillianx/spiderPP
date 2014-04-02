@@ -28,9 +28,9 @@ and open the template in the editor.
         
         <h:form>
             <h:panelGroup id="formHome3">
-                <h:dataTable value="#{estoriaControllers.estorias}" var="estoria" border="2">
+                <h:dataTable value="#{estoriaBean.estorias}" var="estoria" border="2">
                     <h:column>
-                        <f:facet name="head">Projeto</f:facet>
+                        <f:facet name="head">Estórias</f:facet>
                             <h:commandLink value="#{estoria.nome}"/>
                     </h:column>
                 </h:dataTable>

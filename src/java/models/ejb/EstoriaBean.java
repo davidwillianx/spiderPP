@@ -14,6 +14,7 @@ import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import libs.exception.BusinessException;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 
@@ -24,6 +25,8 @@ import models.entities.Estoria;
 @Stateless
 public class EstoriaBean implements IEstoria{
 
+    private List<Estoria> estorias;
+    
     @PersistenceContext
     private EntityManager entityManager;
     
@@ -57,30 +60,7 @@ public class EstoriaBean implements IEstoria{
        return success;
     }
 
-    @Override
-    public List<Estoria> ListStory() {
-        List<Estoria> estorias = null;
-        try
-        {
-            Query query = entityManager.createQuery("Estoria.findById");
-            estorias = query.getResultList();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return estorias;
-    }
 
-    @Override
-    public Estoria selectStory(int id) {
-        Estoria estoria = null;
-        try
-        {
-            estoria = entityManager.find(Estoria.class, id);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return estoria;
-    }
 
     @Override
     public boolean modifyStory(Estoria estoria) {
@@ -96,21 +76,22 @@ public class EstoriaBean implements IEstoria{
         
     }
 
+
     @Override
-    public Estoria findEstoriaByIdProjeto(Estoria estoria) {
-       try
+    public List<Estoria> getEstorias() {
+        try
         {
-           Estoria storyFound = (Estoria) this.entityManager.createNamedQuery("Estoria.findByIdProjeto")
-                .setParameter("nome",estoria.getNome())
-                .setParameter("descricao",estoria.getDescricao())
-                .setParameter("estimativa",estoria.getEstimativa())
-                .setParameter("status",estoria.getStatus());   
-                return storyFound;
-        }catch(Exception e){
-            return null;
+            if (this.estorias == null)
+            {
+                this.estorias = this.entityManager.createNamedQuery("Estoria.findAllByIdProjeto", Estoria.class)
+                        .getResultList();
+            }
+        return estorias;
+        }catch(Exception error){
+            throw new BusinessException("Falha ao listar Estórias");
         }
     }
     
 
-    
+     
 }

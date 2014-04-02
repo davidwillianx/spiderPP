@@ -18,9 +18,7 @@ import models.entities.Estoria;
 public interface IEstoria {
     
     public void saveStory(Estoria estoria);
-    public Estoria selectStory(int id);
     public boolean modifyStory(Estoria estoria);
     public boolean removeStory(Estoria estoria);
-    public List<Estoria> ListStory();
-    Estoria findEstoriaByIdProjeto(Estoria estoria);
+    public List<Estoria> getEstorias();
 }

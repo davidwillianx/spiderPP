@@ -49,7 +49,6 @@ public class EstoriaController
         this.sessionManager = new SessionManager();
         this.sessionManager.set("projeto", this.projeto);
         Projeto projeto = new Projeto(1);
-        this.estoria = new Estoria();
         this.estoria.setIdProjeto(projeto);
     }
     
@@ -65,14 +64,21 @@ public class EstoriaController
     
     public List<Estoria> getEstorias()
     {
-        estorias = estoriaBean.ListStory();
-        return estorias;
+        try
+        {
+            this.estoria = new Estoria();
+            this.sessionManager = new SessionManager();
+            this.sessionManager.set("projeto", this.projeto);
+            Projeto projeto = new Projeto(1);
+            this.estoria.setIdProjeto(projeto);
+            return this.iEstoria.getEstorias();
+        }catch (Exception error){
+            System.out.println("Ocorreu um erro: " + error);
+            error.printStackTrace();
+            return null;
+        }
     }
     
-    public void setEstorias(List<Estoria> estorias)
-    {
-        this.estorias = estorias;
-    }
     
     public void newStory() throws IOException
     {
@@ -96,29 +102,6 @@ public class EstoriaController
                 }
     }
     
-    public void listStories(Estoria estoria)
-    {
-        this.buildMessage = new BuildMessage();
-        this.redirect = new Redirect();
-        
-        try
-        {
-            this.estoria = this.iEstoria.findEstoriaByIdProjeto(estoria);
-            
-            if (this.estoria != null){
-                this.sessionManager = new SessionManager();
-                this.sessionManager.set("estorias", this.estoria);
-                
-                this.redirect.redirectTo("/projeto/liststories.xhtml");
-            }else{
-                buildMessage.addError("Referência de Projeto não encontrada");
-            }
-            
-        }catch(Exception e){
-            buildMessage.addError("Referência de Projeto não encontrada");
-        }
-    }
-    
     public void removeStory()
     {
         FacesContext.getCurrentInstance();
@@ -133,11 +116,6 @@ public class EstoriaController
         }
     }
     
-    public void selectStory(ActionEvent event)
-    {
-        int id = (int) event.getComponent().getAttributes().get("id");
-        estoria = estoriaBean.selectStory(id);
-    }
     
    public void modifyStory()
    {
