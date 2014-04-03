@@ -40,6 +40,7 @@ public class SessionManager {
     
     public void remove(String key)
     {
-        this.session.removeAttribute(key);
+//        this.session.removeAttribute(key);
+        this.externalContext.getSessionMap().remove("usuario");
     }
 }

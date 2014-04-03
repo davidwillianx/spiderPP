@@ -17,7 +17,7 @@ import models.entities.Usuario;
  * @author smp
  */
 
-@Named (value="usuarioController")
+@Named
 @RequestScoped
 public class UsuarioController {
     
@@ -47,7 +47,6 @@ public class UsuarioController {
     public void save(Usuario usuario)
    {
       this.buildMessage = new BuildMessage();
-      
       
        try {
            
@@ -110,7 +109,6 @@ public class UsuarioController {
         try{
             this.sessionManager = new SessionManager();
             this.sessionManager.remove("usuario");
-
             this.redirect.redirectTo("/index.xhtml");
             
         }catch(Exception error)

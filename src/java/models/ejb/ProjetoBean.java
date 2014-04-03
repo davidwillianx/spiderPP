@@ -79,30 +79,18 @@ public class ProjetoBean implements IProjeto {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Projeto> getProjetos() {
+    public List<Projeto> selectProjetoByUsuario() {
         try {
-            if (this.projetos == null) {
-                this.sessionManager = new SessionManager();
-                this.usuario = (Usuario) this.sessionManager.get("usuario");
-                this.projetos = this.entityManager.createNamedQuery("Projeto.findAllByUserId", Projeto.class)
-                        .setParameter("id_usuario", this.usuario.getId())
-                        .getResultList();
-            }
+            sessionManager = new SessionManager();
+            usuario = (Usuario) sessionManager.get("usuario");
+            this.projetos = this.entityManager.createNamedQuery("Projeto.findAllByUserId", Projeto.class)
+                    .setParameter("id_usuario", usuario.getId())
+                    .getResultList();
+
             return this.projetos;
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
-            System.out.println("Error: " + error);
             return null;
-        }
-    }
-
-    @Override
-    public void mergeProjeto(Projeto projeto) {
-        try {
-            this.entityManager.merge(projeto);
-
-        } catch (Exception error) {
-            this.sessionContext.setRollbackOnly();
         }
     }
 
