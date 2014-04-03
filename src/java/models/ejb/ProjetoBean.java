@@ -32,7 +32,8 @@ public class ProjetoBean implements IProjeto {
     private Perfil perfil;
     private Usuario usuario;
     private SessionManager sessionManager;
-    
+    private Projeto projeto;
+
     private static final int PERFIL_SCRUM_MASTER = 1;
 
     @PersistenceContext
@@ -40,30 +41,29 @@ public class ProjetoBean implements IProjeto {
 
     @Resource
     private SessionContext sessionContext;
-    
+
     @EJB
     private IPerfil iPerfil;
-    @EJB 
+    @EJB
     private IAcessar iAcessar;
-    
-    
+
     @Override
     public void saveProjeto(Projeto projeto) {
         try {
-                this.sessionManager = new SessionManager();
-                projeto.setDataInicio(currentDate());
-                this.entityManager.persist(projeto);
-                this.perfil = this.iPerfil.findPerfil(PERFIL_SCRUM_MASTER);
-                this.usuario = (Usuario) this.sessionManager.get("usuario");
-                this.iAcessar.save(this.perfil, this.usuario, projeto);
+            this.sessionManager = new SessionManager();
+            projeto.setDataInicio(currentDate());
+            this.entityManager.persist(projeto);
+            this.perfil = this.iPerfil.findPerfil(PERFIL_SCRUM_MASTER);
+            this.usuario = (Usuario) this.sessionManager.get("usuario");
+            this.iAcessar.save(this.perfil, this.usuario, projeto);
 
-        } catch (NoPersistException  error ) {
-           throw new BusinessException("Falha ao salvar projeto");
-        }catch(Exception error){
+        } catch (NoPersistException error) {
+            throw new BusinessException("Falha ao salvar projeto");
+        } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
             throw new BusinessException("Falha ao salvar projeto");
         }
-        
+
     }
 
     public Date currentDate() throws ParseException {
@@ -76,13 +76,13 @@ public class ProjetoBean implements IProjeto {
 
     @Override
     public List<Projeto> getProjetos() {
-        try { 
+        try {
             if (this.projetos == null) {
                 this.sessionManager = new SessionManager();
                 this.usuario = (Usuario) this.sessionManager.get("usuario");
-                this.projetos =  this.entityManager.createNamedQuery("Projeto.findAllByUserId", Projeto.class)
+                this.projetos = this.entityManager.createNamedQuery("Projeto.findAllByUserId", Projeto.class)
                         .setParameter("id_usuario", this.usuario.getId())
-                        .getResultList(); 
+                        .getResultList();
             }
             return this.projetos;
         } catch (Exception error) {
@@ -96,7 +96,7 @@ public class ProjetoBean implements IProjeto {
     public void mergeProjeto(Projeto projeto) {
         try {
             this.entityManager.merge(projeto);
-            
+
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
         }
@@ -113,4 +113,26 @@ public class ProjetoBean implements IProjeto {
 
     }
 
+    @Override
+    public Projeto selectProjetoById(int idProjeto) {
+        try {
+            this.projeto = this.entityManager.find(Projeto.class, idProjeto);
+            return this.projeto;
+        } catch (Exception error) {
+            throw new BusinessException("Falha na consulta do projeto");
+        }
+    }
+    
+    @Override
+    public int selectProjetoUsuarioPerfil(int idProjeto, int idUsuario)
+    {
+        try{
+            this.perfil = this.iPerfil.selectPerfilByIdUsuarioAndIdProjeto(idProjeto, idUsuario);
+            return this.perfil.getId();
+        }catch(BusinessException error)
+        {
+            System.out.println("Exception x");
+            throw new BusinessException((error.getMessage()));
+        }
+    }
 }

@@ -13,4 +13,6 @@ public interface IProjeto {
     public List<Projeto> getProjetos ();
     public void mergeProjeto(Projeto projeto);
     public void removeProjeto (String id_pkm) throws Exception;
+    public Projeto selectProjetoById(int idProjeto);
+    public int selectProjetoUsuarioPerfil(int idProjeto, int idUsuario);
 }

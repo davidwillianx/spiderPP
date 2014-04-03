@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -7,6 +8,7 @@ import libs.BuildMail;
 import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
+import libs.exception.BusinessException;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
 
@@ -116,4 +118,5 @@ public class UsuarioController {
             this.buildMessage.addError("Falha ao executar a operação");
         }
     }
+    
 }

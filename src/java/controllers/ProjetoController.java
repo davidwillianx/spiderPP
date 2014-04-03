@@ -8,6 +8,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import libs.BuildMessage;
 import libs.Redirect;
+import libs.SessionManager;
+import libs.exception.BusinessException;
 import models.ejbs.interfaces.IProjeto;
 import models.entities.Projeto;
 
@@ -15,7 +17,6 @@ import models.entities.Projeto;
  *
  * @author BlenoVale
  */
-//msm coisa que MenagedBean
 @Named
 @RequestScoped
 public class ProjetoController {
@@ -24,6 +25,8 @@ public class ProjetoController {
     private Redirect redirect;
     private BuildMessage buildMessage;
     private String pkm;
+    
+    private SessionManager sessionManager;
 
     // injeta o stateless
     @EJB
@@ -49,9 +52,22 @@ public class ProjetoController {
         return this.projeto;
     }
 
-    public void newProjeto() throws IOException {
-        this.redirect = new Redirect();
-        this.redirect.redirectTo("/user/projeto/cadastro_projeto.xhtml");
+    public void signProjeto(int idProjeto)
+    {
+        this.buildMessage = new BuildMessage();
+        
+        try{
+            this.projeto = this.iProjeto.selectProjetoById(idProjeto);
+            this.sessionManager = new SessionManager();
+            this.sessionManager.set("projeto", projeto);
+            
+            this.redirect = new Redirect();
+            this.redirect.redirectTo("/projeto/");
+            
+        }catch(BusinessException error)
+        {
+            this.buildMessage.addError("falha ao acessar o projeto");
+        }
     }
 
     public void saveProjeto(Projeto projeto) {
@@ -98,5 +114,18 @@ public class ProjetoController {
         System.out.println("pkm:" + this.pkm);
         this.iProjeto.removeProjeto(this.pkm);
         this.redirect.redirectTo("/user/home.xhtml");
+    }
+    
+    
+    public int showUserProjetoPersmission(int idProjeto, int idUsuario)
+    {
+        try{
+            return this.iProjeto.selectProjetoUsuarioPerfil(idProjeto, idUsuario);
+            
+        }catch(BusinessException error)
+        {
+            this.redirect.redirectTo("/index.xhtml");
+            return 0;
+        }
     }
 }

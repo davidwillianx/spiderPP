@@ -28,8 +28,14 @@ public class Redirect {
         this.request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
     }
     
-    public void redirectTo(String page) throws IOException
+    public void redirectTo(String page)
     {
-        response.sendRedirect(request.getContextPath()+page);
+        try{
+           response.sendRedirect(request.getContextPath()+page);
+        }catch(Exception error)
+        {
+            System.out.println("Error ao redirecionar");
+        }
+        
     }
 }

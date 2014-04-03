@@ -19,14 +19,17 @@
                         <h:panelGroup layout="block" class="widget-item">
                             <h:panelGroup layout="block" class="tiles green" style="max-height:345px">
                                 <h:panelGroup layout="block" class="tiles-body">
-                                    <h3 class="text-white m-t-50 m-b-30 m-r-20">
+                                    <h3 class="text-white m-t-30 m-b-30 m-r-20">
                                         <span class="semi-bold"><h:outputText value="#{projeto.nome}"/></span>
                                     </h3>
+                                    <h:form>
+                                        <h:commandButton class="btn btn-info btn-small" action="#{projetoController.signProjeto(projeto.id)}" value="Acessar" />
+                                    </h:form>
                                         <h:panelGroup layout="block" class="overlayer bottom-right fullwidth">
                                             <h:panelGroup layout="block" class="overlayer-wrapper">
                                                 <h:panelGroup layout="block" class=" p-l-20 p-r-20 p-b-20 p-t-20">
                                                     <h:panelGroup layout="block" class="pull-right">
-                                                        <span class="hashtags">#SM</span>
+                                                        <span data-toggle="tooltip" data-placement="right" title="Scrum Master" class="hashtags">#SM</span>
                                                                                                                </h:panelGroup>
                                                 </h:panelGroup>
                                             </h:panelGroup>
@@ -39,7 +42,9 @@
                                             <h:panelGroup layout="block" class="user-comment-wrapper pull-left">
                                                 <h:panelGroup layout="block" class="comment">
                                                     <p>
-                                                        <span class="user-name text-black bold"> Descri&ccedil;&atilde;o</span>
+                                                        <span class="user-name text-black bold">
+                                                            Descri&ccedil;&atilde;o
+                                                        </span>
                                                         <span class="preview-wrapper">Inicio <h:outputText value="#{projeto.dataInicio}"/></span>
                                                     </p>
                                                 </h:panelGroup>

@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import libs.BuildHash;
+import libs.exception.BusinessException;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
 
@@ -18,6 +19,8 @@ import models.entities.Usuario;
 
 @Stateless
 public class UsuarioBean implements IUsuario{
+    
+    private Usuario usuario;
     
     @PersistenceContext
     private EntityManager entityManager;
@@ -116,5 +119,4 @@ public class UsuarioBean implements IUsuario{
             this.context.setRollbackOnly();
         }
     }
-    
 }

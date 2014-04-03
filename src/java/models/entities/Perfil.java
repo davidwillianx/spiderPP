@@ -32,7 +32,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p"),
     @NamedQuery(name = "Perfil.findById", query = "SELECT p FROM Perfil p WHERE p.id = :id"),
-    @NamedQuery(name = "Perfil.findByNome", query = "SELECT p FROM Perfil p WHERE p.nome = :nome")})
+    @NamedQuery(name = "Perfil.findByNome", query = "SELECT p FROM Perfil p WHERE p.nome = :nome"),
+    @NamedQuery(name = "Perfil.findByIdProjetoAndIdUsuario", query = "SELECT p FROM Perfil p JOIN p.acessarCollection a WHERE a.usuario.id = :id_usuario AND a.projeto.id = :id_projeto")})
+
 public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
