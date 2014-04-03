@@ -9,6 +9,53 @@
         xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
         <ui:define name="content-dashborad">
-            
+            <div class="row">
+           
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-6 spacing-bottom">
+                            <div class="widget">
+                                <div class="widget-title dark">
+                                    <div class="pull-left">
+                                        <!-- Adicionar evento pro icone -->
+                                        <i class="fa fa-plus"/>
+                                    </div>
+                                    Inclua Membros no seu projeto
+                                </div>
+                                <div class="widget-body">
+                                    <div class="col-md-12">
+                                        <h:form>
+                                            <h:inputText class="form-control dark"/>
+                                        </h:form>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <div class="row-fluid">
+                                        <div class="checkbox check-success">
+                                            <h:selectBooleanCheckbox id="mb1" class="todo-list"/>
+                                            <label for="mb1">David Willian Santana Lopes</label>
+                                        </div>
+                                    </div>
+                                    <div class="row-fluid">
+                                        <div class="checkbox check-success">
+                                            <h:selectBooleanCheckbox class="todo-list"/>
+                                            <label>Bruno Spider Murakami</label>
+                                        </div>
+                                    </div>
+                                    <div class="row-fluid">
+                                        <div class="checkbox check-success">
+                                            <h:selectBooleanCheckbox class="todo-list"/>
+                                            <label>Bleno Spider Vale</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+            </div>
+
         </ui:define>
     </ui:composition>

@@ -1283,7 +1283,8 @@ line-height: 21px;
   margin-top: 3px;
 }
 .grid.box .grid-title .tools a{
-  background:url(../img/icon/portlet-tray.png) no-repeat;
+  /*background:url(../img/icon/portlet-tray.png) no-repeat;*/
+  background:url("#{resource[styles/assets/img/icon/portlet-tray.png]}") no-repeat;
   width:23px;
   height:23px
 }
@@ -1441,7 +1442,8 @@ line-height: 21px;
   display: block;
   width: 8px;
   height: 25px;
-  background-image: url("../img/sidebar-menu-arrow.png");
+/*  background-image: url("../img/sidebar-menu-arrow.png");*/
+  background-image: url("#{resource['styles/assets/img/sidebar-menu-arrow.png']}");
   float: right;
   position: absolute;
   right:-8px;
@@ -2331,7 +2333,8 @@ form legend,
 }
 /** Slides **/
 #working-section{
-	background-image: url(../img/work.jpg);
+	/*background-image: url(../img/work.jpg);*/
+        background-image: url("#resouce['styles/assets/img/work.jpg']");
 	height: 400px;
 	background-attachment:fixed;
 }

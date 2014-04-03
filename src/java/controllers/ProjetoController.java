@@ -36,14 +36,6 @@ public class ProjetoController {
         this.buildMessage = new BuildMessage();
     }
 
-    public void setPkm(String pkm) {
-        this.pkm = pkm;
-    }
-
-    public String getPkm() {
-        return this.pkm;
-    }
-
     public Projeto getProjeto() {
         return this.projeto;
     }
