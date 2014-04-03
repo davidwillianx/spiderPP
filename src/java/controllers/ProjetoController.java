@@ -21,7 +21,7 @@ import models.entities.Projeto;
 @RequestScoped
 public class ProjetoController {
 
-    private Projeto projeto;
+    private Projeto projeto = new Projeto();
     private Redirect redirect;
     private BuildMessage buildMessage;
     private String pkm;
@@ -33,11 +33,8 @@ public class ProjetoController {
     private IProjeto iProjeto;
 
     public ProjetoController() {
-        this.projeto = new Projeto();
         this.redirect = new Redirect();
-        this.pkm = String.valueOf(FacesContext.getCurrentInstance()
-                .getExternalContext().getRequestParameterMap()
-                .get("pkm"));
+        this.buildMessage = new BuildMessage();
     }
 
     public void setPkm(String pkm) {
@@ -126,6 +123,17 @@ public class ProjetoController {
         {
             this.redirect.redirectTo("/index.xhtml");
             return 0;
+        }
+    }
+    
+    public void preEditProjeto(int idProjeto)
+    {
+        try{
+            this.projeto = this.iProjeto.selectProjetoById(idProjeto);
+            this.redirect.redirectTo("/projeto/editar.xhtml");
+        }catch(BusinessException error)
+        {
+            this.buildMessage.addError(error.getMessage());
         }
     }
 }

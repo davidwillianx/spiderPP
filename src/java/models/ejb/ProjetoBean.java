@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import libs.SessionManager;
@@ -56,6 +58,7 @@ public class ProjetoBean implements IProjeto {
             this.perfil = this.iPerfil.findPerfil(PERFIL_SCRUM_MASTER);
             this.usuario = (Usuario) this.sessionManager.get("usuario");
             this.iAcessar.save(this.perfil, this.usuario, projeto);
+            
 
         } catch (NoPersistException error) {
             throw new BusinessException("Falha ao salvar projeto");
@@ -75,6 +78,7 @@ public class ProjetoBean implements IProjeto {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Projeto> getProjetos() {
         try {
             if (this.projetos == null) {
@@ -114,6 +118,7 @@ public class ProjetoBean implements IProjeto {
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Projeto selectProjetoById(int idProjeto) {
         try {
             this.projeto = this.entityManager.find(Projeto.class, idProjeto);
@@ -124,6 +129,7 @@ public class ProjetoBean implements IProjeto {
     }
     
     @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public int selectProjetoUsuarioPerfil(int idProjeto, int idUsuario)
     {
         try{
@@ -133,6 +139,18 @@ public class ProjetoBean implements IProjeto {
         {
             System.out.println("Exception x");
             throw new BusinessException((error.getMessage()));
+        }
+    }
+
+    @Override
+    public void updateProjeto(Projeto projeto) {
+        try{
+            
+            this.entityManager.merge(projeto);
+                    
+        }catch(Exception error)
+        {
+            throw new NoPersistException("Falha na atualização do projeto");
         }
     }
 }

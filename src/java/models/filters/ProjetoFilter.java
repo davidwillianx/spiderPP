@@ -13,6 +13,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,7 +30,15 @@ public class ProjetoFilter  implements Filter{
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+          HttpServletRequest httpServletRequest = ((HttpServletRequest) request);
+        HttpServletResponse httpServletResponse = ((HttpServletResponse) response);
+        HttpSession session = httpServletRequest.getSession();
         
+        if(session.getAttribute("usuario") != null && session.getAttribute("projeto") != null && !session.isNew())
+            chain.doFilter(request, response);
+        else
+             httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/index.xhtml");
+
     }
 
     @Override

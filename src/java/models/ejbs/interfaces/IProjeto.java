@@ -15,4 +15,5 @@ public interface IProjeto {
     public void removeProjeto (String id_pkm) throws Exception;
     public Projeto selectProjetoById(int idProjeto);
     public int selectProjetoUsuarioPerfil(int idProjeto, int idUsuario);
+    public void updateProjeto(Projeto projeto);
 }
