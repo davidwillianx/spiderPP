@@ -10,6 +10,7 @@
 
 package models.ejbs.interfaces;
 
+import java.util.List;
 import models.entities.Usuario;
 
 /**
@@ -22,4 +23,5 @@ public interface IUsuario {
     Usuario findUsuarioByEmailAndSenha(Usuario usuario);
     boolean updatePassword(Usuario usuario, String haString);
     void updateUsuario(Usuario usuario);
+    public List<Usuario> selectUsuarioOutOfProjectById();
 }

@@ -15,4 +15,5 @@ public interface IProjeto {
     public Projeto selectProjetoById(int idProjeto);
     public int selectProjetoUsuarioPerfil(int idProjeto, int idUsuario);
     public void updateProjeto(Projeto projeto);
+    
 }

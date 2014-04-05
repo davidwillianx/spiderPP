@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -22,6 +23,7 @@ import models.entities.Usuario;
 public class UsuarioController {
     
     private Usuario usuario;
+    private List<Usuario> usuarios;
     
     
     @EJB
@@ -42,6 +44,11 @@ public class UsuarioController {
     public Usuario  getUsuario()
     {
         return this.usuario;
+    }
+    
+    public List<Usuario> getUsuarios()
+    {
+        return this.iUsuario.selectUsuarioOutOfProjectById();
     }
     
     public void save(Usuario usuario)

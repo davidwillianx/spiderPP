@@ -113,4 +113,12 @@ public class ProjetoController {
             this.buildMessage.addError(error.getMessage());
         }
     }
+    
+    public void exitProjeto()
+    {
+        this.sessionManager =  new SessionManager();
+        this.sessionManager.remove("projeto");
+        this.sessionManager.remove("usuario");
+        this.redirect.redirectTo("/index.xhtml");
+    }
 }

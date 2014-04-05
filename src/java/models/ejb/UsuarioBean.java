@@ -2,14 +2,17 @@
 package models.ejb;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import libs.BuildHash;
+import libs.SessionManager;
 import libs.exception.BusinessException;
 import models.ejbs.interfaces.IUsuario;
+import models.entities.Projeto;
 import models.entities.Usuario;
 
 /**
@@ -21,6 +24,7 @@ import models.entities.Usuario;
 public class UsuarioBean implements IUsuario{
     
     private Usuario usuario;
+    private List<Usuario> usuarios;
     
     @PersistenceContext
     private EntityManager entityManager;
@@ -29,6 +33,8 @@ public class UsuarioBean implements IUsuario{
     private SessionContext context;
     
     private BuildHash buildHash;
+    
+    private SessionManager sessionManager;
 
     @Override
     public void save(Usuario usuario) {
@@ -117,6 +123,24 @@ public class UsuarioBean implements IUsuario{
         }catch(Exception error)
         {
             this.context.setRollbackOnly();
+        }
+    }
+
+    @Override
+    public List<Usuario> selectUsuarioOutOfProjectById() {
+        try{
+            
+            this.sessionManager = new SessionManager();
+            Projeto projeto = (Projeto) this.sessionManager.get("projeto");
+            
+           this.usuarios = this.entityManager.createNamedQuery("Usuario.findUsuarioOutOfProjetoId")
+                               .setParameter("id_projeto", projeto.getId())
+                               .getResultList();
+           
+           return this.usuarios;
+           
+        }catch(Exception error){
+            throw  new BusinessException("Falha na consulta de usuários");
         }
     }
 }
