@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha"),
     @NamedQuery(name = "Usuario.findByEmailAndSenha", query = "SELECT u FROM Usuario u WHERE  u.email = :email AND u.senha = :senha AND u.status = TRUE"),
     @NamedQuery(name = "Usuario.findByHashMail", query = "SELECT u FROM Usuario u WHERE u.hashmail = :hashmail"),
-    @NamedQuery(name = "Usuario.findUsuarioOutOfProjetoId", query = "SELECT u FROM Usuario u WHERE u.id NOT IN (SELECT up.id FROM Usuario up JOIN up.acessarCollection a WHERE  a.projeto.id = :id_projeto)")})
+    @NamedQuery(name = "Usuario.findUsuarioOutOfProjetoId", query = "SELECT u FROM Usuario u WHERE u.id NOT IN (SELECT up.id FROM Usuario up JOIN up.acessarCollection a WHERE a.projeto.id = :id_projeto) AND u.status = TRUE")})
 
 public class Usuario implements Serializable {
     @Size(max = 140)

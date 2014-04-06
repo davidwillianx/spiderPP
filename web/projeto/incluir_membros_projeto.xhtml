@@ -31,11 +31,11 @@
                                     <br/>
                                     <br/>
                                     <br/>
-                                    <ui:repeat value="#{usuarioController.usuarios}" var="usuarioOfProjeto">
+                                    <ui:repeat id="invite" value="#{usuarioController.usuarios}" var="usuarioOfProjeto" varStatus="indice">
                                         <div class="row-fluid">
                                             <div  class="checkbox check-primary checkbox-circle">
-                                                <h:selectBooleanCheckbox class="todo-list" id="usr-#{usuarioOfProjeto.id}"/>
-                                                <label for="usr-#{usuarioOfProjeto.getId()}">#{usuarioOfProjeto.getNome()}</label>
+                                                <h:selectBooleanCheckbox class="todo-list" id="user"/>
+                                                <label for="invite:#{indice.index}:user">#{usuarioOfProjeto.getNome()}</label>
                                             </div>
                                         </div>
                                     </ui:repeat>
