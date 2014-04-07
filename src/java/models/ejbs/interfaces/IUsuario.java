@@ -24,4 +24,5 @@ public interface IUsuario {
     boolean updatePassword(Usuario usuario, String haString);
     void updateUsuario(Usuario usuario);
     public List<Usuario> selectUsuarioOutOfProjectById();
+    public void insertUsuarioToProjetoByPerfil(Usuario usuario, int idPerfil);
 }

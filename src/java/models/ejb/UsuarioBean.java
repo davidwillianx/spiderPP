@@ -4,6 +4,7 @@ package models.ejb;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -11,7 +12,10 @@ import javax.persistence.PersistenceContext;
 import libs.BuildHash;
 import libs.SessionManager;
 import libs.exception.BusinessException;
+import libs.exception.NoPersistException;
+import models.ejbs.interfaces.IAcessar;
 import models.ejbs.interfaces.IUsuario;
+import models.entities.Perfil;
 import models.entities.Projeto;
 import models.entities.Usuario;
 
@@ -24,6 +28,7 @@ import models.entities.Usuario;
 public class UsuarioBean implements IUsuario{
     
     private Usuario usuario;
+    private Projeto projeto;
     private List<Usuario> usuarios;
     
     @PersistenceContext
@@ -31,6 +36,9 @@ public class UsuarioBean implements IUsuario{
     
     @Resource
     private SessionContext context;
+    
+    @EJB
+    private IAcessar iAcessar;
     
     private BuildHash buildHash;
     
@@ -63,7 +71,7 @@ public class UsuarioBean implements IUsuario{
             System.err.println("usuario: "+usuario.getNome());
             return true;
             
-        }catch(Exception error){
+        }catch(Exception error){ 
             context.setRollbackOnly();
             System.out.println("Error"+error.getMessage());
             return false;
@@ -141,6 +149,25 @@ public class UsuarioBean implements IUsuario{
            
         }catch(Exception error){
             throw  new BusinessException("Falha na consulta de usuários");
+        }
+    } 
+
+    @Override
+    public void insertUsuarioToProjetoByPerfil(Usuario usuario,int idPerfil) {
+        try
+        {
+            this.sessionManager = new SessionManager();
+            this.usuario = usuario;
+            this.projeto = (Projeto) this.sessionManager.get("projeto");
+            Perfil perfil = new Perfil();
+            perfil.setId(idPerfil); 
+            
+            this.iAcessar.save(perfil, this.usuario, this.projeto);
+         
+        }catch(NoPersistException error){
+            throw  new BusinessException("Falha na persistência");
+        }catch(Exception error){
+            throw new BusinessException("Falha na persistência");
         }
     }
 }

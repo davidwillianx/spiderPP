@@ -10,39 +10,66 @@
 
 package controllers;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import libs.BuildMessage;
+import libs.exception.NoPersistException;
+import models.ejbs.interfaces.IUsuario;
 import models.entities.Perfil;
 import models.entities.Usuario;
 
 /**
  *
  * @author smartphonne
- */
+ */ 
 
 @Named
 @RequestScoped
 public class UserProjetoController {
     
-    private Perfil perfil;
+    private int perfilSelected;
     private Usuario usuario = new Usuario();
+    private BuildMessage buildMessage;
     
+    @EJB
+    private IUsuario iUsuario;
+     
     public UserProjetoController()
     {
     }
     
-    public void inveteUserProjetoWithPerfil()
-    {
-        System.err.println("Estamos aqui");
-    } 
-    
     public Usuario getUsuario()
     {
         return this.usuario;
+    } 
+    
+    public void setPerfilSelected(int idPerfil)
+    {
+        this.perfilSelected = idPerfil;
     }
     
-    public Perfil getPerfil()
+    public int getPerfilSelected()
     {
-        return this.perfil;
-    }
+        return perfilSelected;
+    } 
+    
+    public void inviteUserProjetoWithPerfil(Usuario usuario) {
+        this.buildMessage = new BuildMessage();
+
+        try { 
+
+            if (this.perfilSelected != 0) {
+                this.iUsuario.insertUsuarioToProjetoByPerfil(usuario,this.perfilSelected);
+                //FAZER Bean que Receba duas variaveis  (usuario and Id
+                System.err.println("Parece que salvou normalemte ");
+            } else {
+                System.out.println("NNN");
+                //@TODO do something when user no select something.
+            }
+
+        } catch (NoPersistException error) {
+
+        }
+    } 
 }

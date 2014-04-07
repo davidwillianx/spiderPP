@@ -57,6 +57,7 @@ public class PerfilBean  implements  IPerfil{
     public Perfil selectPerfilByIdUsuarioAndIdProjeto(int idProjeto, int idUsuario)
     {
         try{
+            
             this.perfil = (Perfil) this.entityManager.createNamedQuery("Perfil.findByIdProjetoAndIdUsuario")
                                 .setParameter("id_projeto", idProjeto)             
                                 .setParameter("id_usuario", idUsuario)
@@ -66,6 +67,7 @@ public class PerfilBean  implements  IPerfil{
             
         }catch(Exception error)
         {
+            System.err.println(" error "+error.getMessage());
             throw new BusinessException("Falha ao buscar perfil do usuário");
         }
     }
