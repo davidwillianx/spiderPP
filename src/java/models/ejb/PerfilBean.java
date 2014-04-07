@@ -10,6 +10,7 @@
 
 package models.ejb;
 
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -29,6 +30,7 @@ public class PerfilBean  implements  IPerfil{
 
     
     private Perfil perfil;
+    private List<Perfil> perfis;
     
     @PersistenceContext
     private EntityManager entityManager;
@@ -65,6 +67,16 @@ public class PerfilBean  implements  IPerfil{
         }catch(Exception error)
         {
             throw new BusinessException("Falha ao buscar perfil do usuário");
+        }
+    }
+
+    @Override
+    public List<Perfil> selectAll() {
+        try{
+            this.perfis = this.entityManager.createNamedQuery("Perfil.findAll").getResultList();
+            return this.perfis;
+        }catch(Exception error){
+            throw  new NotFoundException(("Falha na busca dos perfis"));
         }
     }
     

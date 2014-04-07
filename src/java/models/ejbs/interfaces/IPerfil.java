@@ -6,6 +6,7 @@
 
 package models.ejbs.interfaces;
 
+import java.util.List;
 import models.entities.Perfil;
 
 /**
@@ -15,4 +16,5 @@ import models.entities.Perfil;
 public interface IPerfil {
     Perfil findPerfil(int idPerfil);
     Perfil selectPerfilByIdUsuarioAndIdProjeto(int idProjeto, int idUsuario);
+    List<Perfil> selectAll();
 }

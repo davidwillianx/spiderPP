@@ -10,7 +10,7 @@
 
         <ui:define name="content-dashborad">
             <div class="row"> 
-                <div class="col-md-4">
+                <div class="col-md-7">
                     <div class="row">
                         <div class="col-md-12 col-sm-6 spacing-bottom">
                             <div class="widget">
@@ -22,22 +22,48 @@
                                     Inclua Membros no seu projeto
                                 </div>
                                 <div class="widget-body">
-                                  
-                                    <div class="col-md-12">
-                                        <h:form>
-                                            <h:inputText class="form-control dark"/>
-                                        </h:form>
-                                    </div>
-                                    <br/>
-                                    <br/>
-                                    <br/>
                                     <ui:repeat id="invite" value="#{usuarioController.usuarios}" var="usuarioOfProjeto" varStatus="indice">
-                                        <div class="row-fluid">
-                                            <div  class="checkbox check-primary checkbox-circle">
-                                                <h:selectBooleanCheckbox class="todo-list" id="user"/>
-                                                <label for="invite:#{indice.index}:user">#{usuarioOfProjeto.getNome()}</label>
+                                        <div class="p-l-15 p-r-15 p-b-10 p-t-10 b-b b-grey">
+                                            <div class="pull-left">
+                                                <p class="small-text">Nome</p>
                                             </div>
+                                            <div class="pull-right">
+                                                <p class="small-text">Invite me</p>
+                                            </div>
+                                            
+                                            <div class="clearfix"></div>
+                                            <div class="pull-left">
+                                                <h4 class="semi-bold">#{usuarioOfProjeto.nome}</h4>
+                                            </div>
+                                            <div class="pull-right" style="line-height: 27px;">
+                                                <div class="form-horizontal">
+                                                    <h:form>
+                                                        <h:selectOneMenu value="#{userProjetoController.perfil}" > 
+                                                            <f:selectItems value="#{controllerPerfil.perfis}"/>
+                                                        </h:selectOneMenu>
+                                                        <h:commandButton class="btn btn-small btn-dark" value="add"/>
+                                                    </h:form>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
                                         </div>
+                                        
+                                        
+                                        
+<!--                                        <div class="row-fluid">
+                                            <div class="form-horizontal ">
+                                                <h:form>
+                                                    <div class="xs-no-padding col-md-6 col-lg-4 col-sm-6">
+                                                        <h:commandButton class="btn btn-purple btn-small" value="add"/>
+                                                    </div>
+                                                    <div class="xs-no-padding col-md-6 col-lg-8 col-sm-6">
+                                                        <label>#{usuarioOfProjeto.getNome()}</label>
+                                                    </div>
+                                                    
+                                                </h:form>
+                                            </div>
+
+                                        </div>-->
                                     </ui:repeat>
                                 </div>
                             </div>
