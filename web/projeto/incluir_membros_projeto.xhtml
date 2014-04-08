@@ -24,7 +24,45 @@
                                 <div class="widget-body">
                                     <h:message for="perfil_select" showSummary="false" showDetail="true"></h:message>
                                     <ui:repeat id="invite" value="#{usuarioController.usuarios}" var="usuarioOfProjeto" varStatus="indice">
-                                        <div class="p-l-15 p-r-15 p-b-10 p-t-10 b-b b-grey">
+                                        
+                                        <h:panelGroup id="pannel_invite" layout="block" class="p-l-15 p-r-15 p-b-10 p-t-10 b-b b-grey">
+                                            
+
+
+                                            <div class="pull-left">
+                                                <p class="small-text">Nome</p>
+                                            </div>
+                                            <div class="pull-right">
+                                                <p class="small-text">Invite me</p>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+                                            <div class="pull-left">
+                                                <h4 class="semi-bold">#{usuarioOfProjeto.nome}</h4>
+                                            </div>
+                                            <div class="pull-right" style="line-height: 27px;">
+
+                                                <h:panelGroup layout="block" class="form-horizontal" id="listUser" >
+                                                    <h:form>
+                                                        <h:selectOneMenu value="#{userProjetoController.perfilSelected}"  id="perfil_select"> 
+                                                            <f:selectItem itemLabel="Selecione Cargo" noSelectionOption="true"/>
+                                                            <f:selectItems value="#{controllerPerfil.perfis}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil.id}"/>
+                                                        </h:selectOneMenu>
+
+                                                        <h:commandButton class="btn btn-small btn-dark" value="add" action="#{userProjetoController.inviteUserProjetoWithPerfil(usuarioOfProjeto)}">
+                                                            <f:ajax execute="@form" render="perfil_select" />
+                                                        </h:commandButton>
+
+                                                    </h:form>
+                                                </h:panelGroup>
+                                            </div>
+                                            <div class="clearfix"></div>
+
+                                        </h:panelGroup>
+
+
+<!--                                        <div class="p-l-15 p-r-15 p-b-10 p-t-10 b-b b-grey">
+                                           
                                             <div class="pull-left">
                                                 <p class="small-text">Nome</p>
                                             </div>
@@ -39,7 +77,7 @@
                                             <div class="pull-right" style="line-height: 27px;">
                                                 
                                                 
-                                                <h:panelGroup layout="block" class="form-horizontal" id="listUser">
+                                                <h:panelGroup layout="block" class="form-horizontal" id="listUser" >
                                                     <h:form>
                                                         <h:selectOneMenu value="#{userProjetoController.perfilSelected}"  id="perfil_select"> 
                                                             <f:selectItem itemLabel="Selecione Cargo" noSelectionOption="true"/>
@@ -54,7 +92,9 @@
                                                 </h:panelGroup>
                                             </div>
                                             <div class="clearfix"></div>
-                                        </div>
+                                            
+                                            
+                                        </div>-->
                                     </ui:repeat>
                                 </div>
                             </div>

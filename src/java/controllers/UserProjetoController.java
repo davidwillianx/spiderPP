@@ -62,11 +62,8 @@ public class UserProjetoController {
             if (this.perfilSelected != 0) {
                 this.iUsuario.insertUsuarioToProjetoByPerfil(usuario,this.perfilSelected);
                 //FAZER Bean que Receba duas variaveis  (usuario and Id
-                System.err.println("Parece que salvou normalemte ");
-            } else {
-                System.out.println("NNN");
-                //@TODO do something when user no select something.
-            }
+                //System.err.println("Parece que salvou normalemte ");  
+            } 
 
         } catch (NoPersistException error) {
 
