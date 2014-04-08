@@ -8,15 +8,19 @@ package models.ejb;
 
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import libs.SessionManager;
 import libs.exception.BusinessException;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
+import models.entities.EstoriaPK;
+import models.entities.Projeto;
+
 
 /**
  *
@@ -26,21 +30,36 @@ import models.entities.Estoria;
 public class EstoriaBean implements IEstoria{
 
     private List<Estoria> estorias;
+    private SessionManager sessionManager;
+    private Projeto projeto;
+    private Estoria estoria;
+    private EstoriaPK estoriaPK;
     
     @PersistenceContext
     private EntityManager entityManager;
     
     @Resource
     private SessionContext sessionContext;
+    
+    @EJB
+    private IEstoria iEstoria;
+    
 
     @Override
-    public void saveStory(Estoria estoria) {
+    public void saveStoryBean(Estoria estoria) {
         try
         {
+            this.sessionManager = new SessionManager();
+            this.projeto = (Projeto) this.sessionManager.get("projeto");
+            //this.entityManager.merge(this.projeto);            
+            estoria.setProjeto(this.projeto);
+            this.estoriaPK = new EstoriaPK(0,this.projeto.getId());
+            estoria.setEstoriaPK(this.estoriaPK);
+            System.err.println("$$$$$#####" + estoria.getProjeto().getId() + "               " + estoria.getEstoriaPK());
             this.entityManager.persist(estoria);
-        }catch (Exception Error)
+        }catch (Exception error)
             {
-                System.out.println("Errado em EstoriaBean"+Error);
+                System.out.println("Errado em EstoriaBean" + error.getMessage()); 
                 this.sessionContext.setRollbackOnly();
             }
     }
@@ -50,7 +69,7 @@ public class EstoriaBean implements IEstoria{
        boolean success = false;
        try
        {
-           estoria = entityManager.find(Estoria.class, estoria.getId());
+           estoria = entityManager.find(Estoria.class, estoria.getIdEstoria());
            entityManager.remove(estoria);
            success = true;
        }catch(Exception e)
@@ -83,10 +102,13 @@ public class EstoriaBean implements IEstoria{
         {
             if (this.estorias == null)
             {
+                this.sessionManager = new SessionManager();
+                this.projeto = (Projeto) this.sessionManager.get("Projeto");
                 this.estorias = this.entityManager.createNamedQuery("Estoria.findAllByIdProjeto", Estoria.class)
+                        .setParameter("id_projeto",this.projeto.getId())
                         .getResultList();
             }
-        return estorias;
+        return this.estorias;
         }catch(Exception error){
             throw new BusinessException("Falha ao listar Estórias");
         }

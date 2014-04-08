@@ -7,8 +7,8 @@
 package models.ejbs.interfaces;
 
 import java.util.List;
-import javax.faces.event.ActionEvent;
 import models.entities.Estoria;
+
 
 /**
  *
@@ -17,7 +17,7 @@ import models.entities.Estoria;
 
 public interface IEstoria {
     
-    public void saveStory(Estoria estoria);
+    public void saveStoryBean(Estoria estoria);
     public boolean modifyStory(Estoria estoria);
     public boolean removeStory(Estoria estoria);
     public List<Estoria> getEstorias();

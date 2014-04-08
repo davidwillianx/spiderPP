@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author smartphonne
+ * @author Bruno
  */
 @Entity
 @Table(name = "perfil")
@@ -34,12 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Perfil.findById", query = "SELECT p FROM Perfil p WHERE p.id = :id"),
     @NamedQuery(name = "Perfil.findByNome", query = "SELECT p FROM Perfil p WHERE p.nome = :nome"),
     @NamedQuery(name = "Perfil.findByIdProjetoAndIdUsuario", query = "SELECT p FROM Perfil p JOIN p.acessarCollection a WHERE a.usuario.id = :id_usuario AND a.projeto.id = :id_projeto")})
-
 public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)

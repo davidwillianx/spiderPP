@@ -12,7 +12,7 @@
         <h:form id="createstory">
             <h:panelGrid id="panel" columns="2">
                 <h:outputLabel value="Projeto de Referência" for="referenciaprojeto"/>
-                <h:outputText id="referenciaprojeto" value="#{estoriaController.estoria.idProjeto}"/>
+                <h:outputText id="referenciaprojeto" value="#{estoriaController.estoria.projeto.id}"/>
                 
                 <h:outputLabel value="Estoria de Refêrencia" for ="referencia"/>
                 <h:inputText id="referencia" value="#{estoriaController.estoria.idEstoria}" rendered="false"/> <br/>

@@ -11,7 +11,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,10 +45,6 @@ public class EstoriaController
     {
         this.buildMessage = new BuildMessage();
         this.estoria = new Estoria();
-        this.sessionManager = new SessionManager();
-        this.sessionManager.set("projeto", this.projeto);
-        Projeto projeto = new Projeto(1);
-        this.estoria.setIdProjeto(projeto);
     }
     
     public Estoria getEstoria()
@@ -66,11 +61,6 @@ public class EstoriaController
     {
         try
         {
-            this.estoria = new Estoria();
-            this.sessionManager = new SessionManager();
-            this.sessionManager.set("projeto", this.projeto);
-            Projeto projeto = new Projeto(1);
-            this.estoria.setIdProjeto(projeto);
             return this.iEstoria.getEstorias();
         }catch (Exception error){
             System.out.println("Ocorreu um erro: " + error);
@@ -91,12 +81,13 @@ public class EstoriaController
         this.buildMessage = new BuildMessage(); 
         try
         {   
-            this.iEstoria.saveStory(estoria);
+            
+            this.iEstoria.saveStoryBean(estoria);
             this.buildMessage.addInfo("Estória criada");
-            this.estoria = new Estoria();
         }catch(Exception e)
                 {
-                    System.out.println("error: "+ e.getMessage());
+                    
+                    System.out.println("error-->: "  + e.getMessage());
                     this.buildMessage.addError("Ocorreu um erro ao tentar criar a estória");
                     e.printStackTrace();  
                 }
