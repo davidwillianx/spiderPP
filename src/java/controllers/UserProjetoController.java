@@ -7,7 +7,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controllers;
 
 import javax.ejb.EJB;
@@ -22,51 +21,47 @@ import models.entities.Usuario;
 /**
  *
  * @author smartphonne
- */ 
-
+ */
 @Named
 @RequestScoped
 public class UserProjetoController {
-    
+
     private int perfilSelected;
     private Usuario usuario = new Usuario();
     private BuildMessage buildMessage;
-    
+
     @EJB
     private IUsuario iUsuario;
-     
-    public UserProjetoController()
-    {
+
+    public UserProjetoController() {
     }
-    
-    public Usuario getUsuario()
-    {
+
+    public Usuario getUsuario() {
         return this.usuario;
-    } 
-    
-    public void setPerfilSelected(int idPerfil)
-    {
+    }
+
+    public void setPerfilSelected(int idPerfil) {
         this.perfilSelected = idPerfil;
     }
-    
-    public int getPerfilSelected()
-    {
+
+    public int getPerfilSelected() {
         return perfilSelected;
-    } 
-    
-    public void inviteUserProjetoWithPerfil(Usuario usuario) {
+    }
+
+    public void inviteUserProjetoWithPerfil(Usuario usuario) 
+    {
         this.buildMessage = new BuildMessage();
-
-        try { 
-
+        try {
+    
             if (this.perfilSelected != 0) {
-                this.iUsuario.insertUsuarioToProjetoByPerfil(usuario,this.perfilSelected);
-                //FAZER Bean que Receba duas variaveis  (usuario and Id
-                //System.err.println("Parece que salvou normalemte ");  
-            } 
-
+                this.iUsuario.insertUsuarioToProjetoByPerfil(usuario, this.perfilSelected);
+                this.perfilSelected = 0;
+                
+                this.buildMessage.addInfo("Cadastro realizado com sucesso");
+                
+            }else this.buildMessage.addError("Selecione o papel");
         } catch (NoPersistException error) {
-
+            this.buildMessage.addError("Falha na realização da operação");
         }
-    } 
+    }
 }
