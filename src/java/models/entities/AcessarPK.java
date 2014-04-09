@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author smartphonne
+ * @author Bruno
  */
 @Embeddable
 public class AcessarPK implements Serializable {

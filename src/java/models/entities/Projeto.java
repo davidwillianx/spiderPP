@@ -6,7 +6,7 @@
 
 package models.entities;
 
-import java.io.Serializable; 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -23,33 +23,26 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull; 
-import javax.validation.constraints.Size; 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
- 
+
 /**
  *
- * @author smartphonne
+ * @author Bruno
  */
 @Entity
 @Table(name = "projeto")
-@XmlRootElement 
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Projeto.findAll", query = "SELECT p FROM Projeto p"),
-    @NamedQuery(name = "Projeto.findAllByUserId", query = "SELECT p FROM Projeto p JOIN p.acessarCollection a WHERE a.usuario.id = :id_usuario"),
     @NamedQuery(name = "Projeto.findById", query = "SELECT p FROM Projeto p WHERE p.id = :id"),
-    @NamedQuery(name = "Projeto.findByNome", query = "SELECT p FROM Projeto p WHERE p.nome = :nome")})
+    @NamedQuery(name = "Projeto.findByNome", query = "SELECT p FROM Projeto p WHERE p.nome = :nome"),
+    @NamedQuery(name = "Projeto.findByDataInicio", query = "SELECT p FROM Projeto p WHERE p.dataInicio = :dataInicio"),
+    @NamedQuery(name = "Projeto.findAllByUserId", query = "SELECT p FROM Projeto p JOIN p.acessarCollection a WHERE a.usuario.id = :id_usuario"),
+    @NamedQuery(name = "Projeto.findByDataFim", query = "SELECT p FROM Projeto p WHERE p.dataFim = :dataFim")})
 public class Projeto implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "data_inicio")
-    @Temporal(TemporalType.DATE)
-    private Date dataInicio;
-    @Basic(optional = false)
-    @Column(name = "data_fim")
-    @Temporal(TemporalType.DATE)
-    private Date dataFim;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,15 +50,23 @@ public class Projeto implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull(message="O campo nome do Projeto não pode ser vazio.")
-    @Size(min = 1, max = 122, message="O campo nome do Projeto não pode ser vazio.")
+    @NotNull
+    @Size(min = 1, max = 122)
     @Column(name = "nome")
     private String nome;
     @Lob
     @Size(max = 2147483647)
     @Column(name = "descricao")
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProjeto")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "data_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date dataInicio;
+    @Column(name = "data_fim")
+    @Temporal(TemporalType.DATE)
+    private Date dataFim;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projeto")
     private Collection<Estoria> estoriaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projeto")
     private Collection<Acessar> acessarCollection;
@@ -77,9 +78,10 @@ public class Projeto implements Serializable {
         this.id = id;
     }
 
-    public Projeto(Integer id, String nome) {
+    public Projeto(Integer id, String nome, Date dataInicio) {
         this.id = id;
         this.nome = nome;
+        this.dataInicio = dataInicio;
     }
 
     public Integer getId() {
@@ -104,6 +106,22 @@ public class Projeto implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
     }
 
     @XmlTransient
@@ -147,22 +165,6 @@ public class Projeto implements Serializable {
     @Override
     public String toString() {
         return "models.entities.Projeto[ id=" + id + " ]";
-    }
-
-    public Date getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public Date getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
     }
     
 }
