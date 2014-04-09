@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>Descrição Estórias</title>
+    </h:head>
+    
+    <h:body>
+        <h:form>
+            <h:panelGrid>
+                <h:outputLabel value="Nome da Estória" for="nome"/>
+                <h:outputText id="nome" value="#{estoriaController.estoria.nome}"/>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package models.ejb;
 
 import java.util.List;
@@ -15,7 +14,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import libs.SessionManager;
 import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
@@ -24,118 +22,102 @@ import models.entities.Estoria;
 import models.entities.EstoriaPK;
 import models.entities.Projeto;
 
-
 /**
  *
- * @author Bruno
+ * @author Bruno and Bleno
  */
 @Stateless
-public class EstoriaBean implements IEstoria{
+public class EstoriaBean implements IEstoria {
 
     private List<Estoria> estorias;
     private SessionManager sessionManager;
     private Projeto projeto;
     private Estoria estoria;
     private EstoriaPK estoriaPK;
-    
+
     @PersistenceContext
     private EntityManager entityManager;
-    
+
     @Resource
     private SessionContext sessionContext;
-    
+
     @EJB
     private IEstoria iEstoria;
-    
 
     @Override
     public void saveStoryBean(Estoria estoria) {
-        try
-        {
+        try {
             this.sessionManager = new SessionManager();
-            this.projeto = (Projeto) this.sessionManager.get("projeto");     
+            this.projeto = (Projeto) this.sessionManager.get("projeto");
             estoria.setProjeto(this.projeto);
-            this.estoriaPK = new EstoriaPK(0,this.projeto.getId());
+            this.estoriaPK = new EstoriaPK(0, this.projeto.getId());
             estoria.setEstoriaPK(this.estoriaPK);
             this.entityManager.persist(estoria);
-        }catch (Exception error)
-            {
-                System.out.println("Errado em EstoriaBean" + error.getMessage()); 
-                this.sessionContext.setRollbackOnly();
-            }
+        } catch (Exception error) {
+            System.out.println("Errado em EstoriaBean" + error.getMessage());
+            this.sessionContext.setRollbackOnly();
+        }
     }
 
     @Override
     public boolean removeStory(Estoria estoria) {
-       boolean success = false;
-       try
-       {
-           estoria = entityManager.find(Estoria.class, estoria.getIdEstoria());
-           entityManager.remove(estoria);
-           success = true;
-       }catch(Exception e)
-       {
-           e.printStackTrace();
-       }
-       return success;
+        boolean success = false;
+        try {
+            estoria = entityManager.find(Estoria.class, estoria.getIdEstoria());
+            entityManager.remove(estoria);
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return success;
     }
-
-
 
     @Override
     public boolean modifyStory(Estoria estoria) {
         boolean success = false;
-        try
-        {
+        try {
             entityManager.merge(estoria);
             success = true;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return success;
-        
-    }
 
+    }
 
     @Override
     public List<Estoria> getEstorias() {
-        try
-        {
-            if (this.estorias == null)
-            {
-                this.sessionManager = new SessionManager();
-                this.projeto = (Projeto) this.sessionManager.get("Projeto");
-                this.estorias = this.entityManager.createNamedQuery("Estoria.findAllByIdProjeto", Estoria.class)
-                        .setParameter("id_projeto",this.projeto.getId())
-                        .getResultList();
-            }
-        return this.estorias;
-        }catch(Exception error){
-            throw new BusinessException("Falha ao listar Estórias");
+        try {
+            this.sessionManager = new SessionManager();
+            this.projeto = (Projeto) this.sessionManager.get("projeto");
+            this.estorias = this.entityManager.createNamedQuery("Estoria.findByIdProjeto", Estoria.class)
+                    .setParameter("idProjeto", this.projeto.getId())
+                    .getResultList();
+            return this.estorias;
+        } catch (Exception error) {
+            this.sessionContext.setRollbackOnly();
+            return null;
         }
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Estoria selectEstoriaById(int idEstoria) {
-        try
-        {
+        try {
             this.estoria = this.entityManager.find(Estoria.class, idEstoria);
             return this.estoria;
-        }catch(Exception error){
+        } catch (Exception error) {
             throw new BusinessException("Falha ao consultar estória");
         }
     }
 
     @Override
     public void updateEstoriaBean(Estoria estoria) {
-        try{
-                this.entityManager.merge(estoria);
-        }catch(Exception error){
+        try {
+            this.entityManager.merge(estoria);
+        } catch (Exception error) {
             throw new NoPersistException("Falha na atualização da Estória");
         }
     }
-    
 
-     
 }
