@@ -12,112 +12,108 @@
         <div class="row"> 
             <div class="col-md-5">
                 <div class="row">
-                    <div class="col-md-12 col-sm-6 spacing-bottom">
-                        <div class="grid simple">
-                            <div class="grid-title">
-                                <h4>Membros do Projeto</h4>
-                                <!-- Caso querida adicionar opção de fechar<div class="tools"></div>-->                    
-                            </div>
-                            <div class="grid-body">
-                                <div id="" class="dataTables_wrapper form-inline">
-                                    <div class="row">
-                                        <!-- Adicionar SELECT para quantidade-->
-<!--                                        <div class="col-md-6">
-                                            <div class="">
-                                                <label>
-                                                    
-                                                </label>
-                                            </div>
-                                        </div>-->
-                                        <div class="col-md-6">
-                                            <div class="">
-                                                <label>
-                                                    <div class="form-horizontal">
-                                                        <h:inputText class="input-sm"/>
-                                                        <!--<h:button class="btn btn-small btn-default" value="search"/>-->
-                                                    </div>
-                                                </label>
-                                            </div>
+                    <div class="grid simple">
+                        <div class="grid-title">
+                            <h4>Membros do Projeto</h4>
+                            <!-- Caso querida adicionar opção de fechar<div class="tools"></div>-->                    
+                        </div>
+                        <div class="grid-body">
+                            <div id="" class="dataTables_wrapper form-inline">
+                                <div class="row">
+                                    <!-- Adicionar SELECT para quantidade-->
+                                    <!--                                        <div class="col-md-6">
+                                                                                <div class="">
+                                                                                    <label>
+                                                                                        
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>-->
+                                    <div class="col-md-6">
+                                        <div class="">
+                                            <label>
+                                                <!--Espaco para busca -->
+<!--                                                <div class="form-horizontal">
+                                                    <h:inputText class="input-sm"/>
+                                                    <h:button class="btn btn-small btn-default" value="search"/>
+                                                </div>-->
+                                            </label>
                                         </div>
-                                        <!-- Datatable -->
-                                        <h:dataTable value="#{usuarioController.usuarioOfProjeto}" var="usuarioOfProjeto"
-                                                     class="table dataTable">
-                                            <h:column class="">
-                                                <f:facet name="header">Nome</f:facet>
-                                                #{usuarioOfProjeto.nome}
-                                            </h:column>
-                                            <h:column class="">
-                                                <f:facet name="header">Email</f:facet>
-                                                #{usuarioOfProjeto.email}
-                                            </h:column>
-                                        </h:dataTable>
-                                        
-                                        <!--<ui:repeat value="#{usuarioController.usuarioOfProjeto}" var="usuarioOfProjeto">
-                                            <h:outputText value="#{usuarioOfProjeto.nome}"/>
-                                            <h4>sss</h4>
-                                        </ui:repeat>-->
-                                           
                                     </div>
+                                    <!-- Datatable -->
+                                    <h:dataTable value="#{usuarioController.usuarioOfProjeto}" var="usuarioOfProjeto"
+                                                 class="table dataTable">
+                                        <h:column class="">
+                                            <f:facet name="header">Nome</f:facet>
+                                            <h4>#{usuarioOfProjeto.nome}</h4>
+                                        </h:column>
+                                        <h:column class="">
+                                            <f:facet name="header">Email</f:facet>
+                                            <h4> #{usuarioOfProjeto.email}</h4> 
+                                        </h:column>
+                                        <h:column class="">
+                                             <f:facet name="header">-</f:facet>
+                                             <a class=" btn btn-dark btn-small" href="#">x</a>
+                                        </h:column>
+                                    </h:dataTable>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="col-md-7">
+
+            <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-12 col-sm-6 spacing-bottom">
-                        <div class="widget">
-                            <div class="widget-title dark">
-                                <div class="pull-left">
-                                    <!-- Adicionar evento pro icone -->
-                                    <i class="fa fa-plus"/>
-                                </div>
-                                Inclua Membros no seu projeto
+
+                    <div class="widget m-l-20">
+                        <div class="widget-title dark">
+                            <div class="pull-left">
+                                <!-- Adicionar evento pro icone -->
+                                <i class="fa fa-plus"/>
                             </div>
-                            <h:panelGroup layout="block" class="widget-body" id="box-invite">
-
-                                <h:messages globalOnly="true" class="alert alert-success" showSummary="false" showDetail="true"></h:messages>
-                                <h:message for="perfil_select" class="alert alert-error"></h:message>
-                                <ui:repeat  id="invite" value="#{usuarioController.usuariosOutOfProjeto}" var="usuarioOfProjeto" varStatus="indice">
-
-                                    <h:panelGroup  id="pannel_invite" layout="block" class="p-l-15 p-r-15 p-b-10 p-t-10 b-b b-grey">
-
-
-
-                                        <div class="pull-left">
-                                            <p class="small-text">Nome</p>
-                                        </div>
-                                        <div class="pull-right">
-                                            <p class="small-text">Invite me</p>
-                                        </div>
-
-                                        <div class="clearfix"></div>
-                                        <div class="pull-left">
-                                            <h4 class="semi-bold">#{usuarioOfProjeto.nome}</h4>
-                                        </div>
-                                        <div class="pull-right" style="line-height: 27px;">
-                                            <h:panelGroup layout="block" class="form-horizontal" id="listUser">
-                                                <h:form >
-                                                    <h:selectOneMenu value="#{userProjetoController.perfilSelected}"  id="perfil_select"> 
-                                                        <f:selectItem itemLabel="Selecione Cargo" noSelectionOption="true"/>
-                                                        <f:selectItems value="#{controllerPerfil.perfis}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil.id}"/>
-                                                    </h:selectOneMenu>
-
-                                                    <h:commandButton class="btn btn-small btn-dark" value="add" action="#{userProjetoController.inviteUserProjetoWithPerfil(usuarioOfProjeto)}">
-                                                        <f:ajax  execute="@form" render=":box-invite" />
-                                                    </h:commandButton>
-                                                </h:form>
-
-                                            </h:panelGroup>
-                                        </div>
-                                        <div class="clearfix"></div>
-
-                                    </h:panelGroup>
-                                </ui:repeat>
-                            </h:panelGroup>     
+                            Inclua Membros no seu projeto
                         </div>
+                        <h:panelGroup layout="block" class="widget-body" id="box-invite">
+
+                            <h:messages globalOnly="true" class="alert alert-success" showSummary="false" showDetail="true"></h:messages>
+                            <h:message for="perfil_select" class="alert alert-error"></h:message>
+                            <ui:repeat  id="invite" value="#{usuarioController.usuariosOutOfProjeto}" var="usuarioOfProjeto" varStatus="indice">
+
+                                <h:panelGroup  id="pannel_invite" layout="block" class="p-l-15 p-r-15 p-b-10 p-t-10 b-b b-grey">
+
+
+
+                                    <div class="pull-left">
+                                        <p class="small-text">Nome</p>
+                                    </div>
+                                    <div class="pull-right">
+                                        <p class="small-text">Invite me</p>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="pull-left">
+                                        <h4>#{usuarioOfProjeto.nome}</h4>
+                                    </div>
+                                    <div class="pull-right" style="line-height: 27px;">
+                                        <h:panelGroup layout="block" class="form-horizontal" id="listUser">
+                                            <h:form >
+                                                <h:selectOneMenu value="#{userProjetoController.perfilSelected}"  id="perfil_select"> 
+                                                    <f:selectItem itemLabel="Selecione Cargo" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{controllerPerfil.perfis}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil.id}"/>
+                                                </h:selectOneMenu>
+
+                                                <h:commandButton class="btn btn-small btn-dark" value="add" action="#{userProjetoController.inviteUserProjetoWithPerfil(usuarioOfProjeto)}">
+                                                    <f:ajax  execute="@form" render=":box-invite" />
+                                                </h:commandButton>
+                                            </h:form>
+
+                                        </h:panelGroup>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </h:panelGroup>     
                     </div>
                 </div>
             </div> 

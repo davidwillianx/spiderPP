@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+
 package models.entities;
 
 import java.io.Serializable;
