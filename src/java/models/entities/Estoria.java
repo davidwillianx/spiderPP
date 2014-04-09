@@ -8,48 +8,41 @@ package models.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author smartphonne
+ * @author Bruno
  */
 @Entity
 @Table(name = "estoria")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Estoria.findAll", query = "SELECT e FROM Estoria e"),
-    @NamedQuery(name = "Estoria.findById", query = "SELECT e FROM Estoria e WHERE e.id = :id"),
+    @NamedQuery(name = "Estoria.findById", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id = :id"),
+    @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.idProjeto = :idProjeto"),
     @NamedQuery(name = "Estoria.findByNome", query = "SELECT e FROM Estoria e WHERE e.nome = :nome"),
     @NamedQuery(name = "Estoria.findByEstimativa", query = "SELECT e FROM Estoria e WHERE e.estimativa = :estimativa"),
-    @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status"),
-    @NamedQuery(name = "Estoria.findAllByIdProjeto", query = "SELECT e From Estoria e JOIN e.estoriaCollection est WHERE est.idProjeto = :id_projeto")})
+    @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status")})
 public class Estoria implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    protected EstoriaPK estoriaPK;
     @Size(max = 30)
-    @NotNull(message="O campo nome não pode ser vazio")
     @Column(name = "nome")
     private String nome;
     @Lob
@@ -60,13 +53,16 @@ public class Estoria implements Serializable {
     private Integer estimativa;
     @Column(name = "status")
     private Boolean status;
-    @JoinColumn(name = "id_projeto", referencedColumnName = "id")
+    @JoinColumn(name = "id_projeto", nullable = false , referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Projeto idProjeto;
+    private Projeto projeto;
     @OneToMany(mappedBy = "idEstoria")
     private Collection<Estoria> estoriaCollection;
-    @JoinColumn(name = "id_estoria", referencedColumnName = "id")
     @ManyToOne
+    @JoinColumns({
+        @JoinColumn(name = "id_estoria", referencedColumnName = "id", insertable = false, updatable = false),
+        @JoinColumn(name = "id", referencedColumnName = "id",insertable = false, updatable = false)
+    })
     private Estoria idEstoria;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estoria")
     private Collection<JogarRodada> jogarRodadaCollection;
@@ -74,16 +70,20 @@ public class Estoria implements Serializable {
     public Estoria() {
     }
 
-    public Estoria(Integer id) {
-        this.id = id;
+    public Estoria(EstoriaPK estoriaPK) {
+        this.estoriaPK = estoriaPK;
     }
 
-    public Integer getId() {
-        return id;
+    public Estoria(int id, int idProjeto) {
+        this.estoriaPK = new EstoriaPK(id, idProjeto);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public EstoriaPK getEstoriaPK() {
+        return estoriaPK;
+    }
+
+    public void setEstoriaPK(EstoriaPK estoriaPK) {
+        this.estoriaPK = estoriaPK;
     }
 
     public String getNome() {
@@ -118,12 +118,12 @@ public class Estoria implements Serializable {
         this.status = status;
     }
 
-    public Projeto getIdProjeto() {
-        return idProjeto;
+    public Projeto getProjeto() {
+        return projeto;
     }
 
-    public void setIdProjeto(Projeto idProjeto) {
-        this.idProjeto = idProjeto;
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
     }
 
     @XmlTransient
@@ -155,7 +155,7 @@ public class Estoria implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (estoriaPK != null ? estoriaPK.hashCode() : 0);
         return hash;
     }
 
@@ -166,7 +166,7 @@ public class Estoria implements Serializable {
             return false;
         }
         Estoria other = (Estoria) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.estoriaPK == null && other.estoriaPK != null) || (this.estoriaPK != null && !this.estoriaPK.equals(other.estoriaPK))) {
             return false;
         }
         return true;
@@ -174,7 +174,7 @@ public class Estoria implements Serializable {
 
     @Override
     public String toString() {
-        return "models.entities.Estoria[ id=" + id + " ]";
+        return "models.entities.Estoria[ estoriaPK=" + estoriaPK + " ]";
     }
     
 }

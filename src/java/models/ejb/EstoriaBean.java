@@ -11,11 +11,14 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import libs.SessionManager;
 import libs.exception.BusinessException;
+import libs.exception.NoPersistException;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.EstoriaPK;
@@ -50,12 +53,10 @@ public class EstoriaBean implements IEstoria{
         try
         {
             this.sessionManager = new SessionManager();
-            this.projeto = (Projeto) this.sessionManager.get("projeto");
-            //this.entityManager.merge(this.projeto);            
+            this.projeto = (Projeto) this.sessionManager.get("projeto");     
             estoria.setProjeto(this.projeto);
             this.estoriaPK = new EstoriaPK(0,this.projeto.getId());
             estoria.setEstoriaPK(this.estoriaPK);
-            System.err.println("$$$$$#####" + estoria.getProjeto().getId() + "               " + estoria.getEstoriaPK());
             this.entityManager.persist(estoria);
         }catch (Exception error)
             {
@@ -111,6 +112,27 @@ public class EstoriaBean implements IEstoria{
         return this.estorias;
         }catch(Exception error){
             throw new BusinessException("Falha ao listar Estórias");
+        }
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Estoria selectEstoriaById(int idEstoria) {
+        try
+        {
+            this.estoria = this.entityManager.find(Estoria.class, idEstoria);
+            return this.estoria;
+        }catch(Exception error){
+            throw new BusinessException("Falha ao consultar estória");
+        }
+    }
+
+    @Override
+    public void updateEstoriaBean(Estoria estoria) {
+        try{
+                this.entityManager.merge(estoria);
+        }catch(Exception error){
+            throw new NoPersistException("Falha na atualização da Estória");
         }
     }
     

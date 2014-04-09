@@ -26,6 +26,12 @@ and open the template in the editor.
             </h:panelGrid>
         </h:form>
         
+        <h:form id="formHome3">
+            <h:panelGrid id="panel">
+            </h:panelGrid>                
+            <h:commandLink value="Editar Estória" action="#{estoriaController.signStory(id)}" />
+        </h:form>
+        
         <h:form>
             <h:panelGroup id="formHome3">
                 <h:dataTable value="#{estoriaBean.estorias}" var="estoria" border="2">

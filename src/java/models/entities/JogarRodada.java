@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author smartphonne
+ * @author Bruno
  */
 @Entity
 @Table(name = "jogar_rodada")
@@ -28,20 +29,23 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "JogarRodada.findAll", query = "SELECT j FROM JogarRodada j"),
     @NamedQuery(name = "JogarRodada.findById", query = "SELECT j FROM JogarRodada j WHERE j.jogarRodadaPK.id = :id"),
     @NamedQuery(name = "JogarRodada.findByIdUsuario", query = "SELECT j FROM JogarRodada j WHERE j.jogarRodadaPK.idUsuario = :idUsuario"),
+    @NamedQuery(name = "JogarRodada.findByEstimativa", query = "SELECT j FROM JogarRodada j WHERE j.estimativa = :estimativa"),
     @NamedQuery(name = "JogarRodada.findByIdEstoria", query = "SELECT j FROM JogarRodada j WHERE j.jogarRodadaPK.idEstoria = :idEstoria"),
-    @NamedQuery(name = "JogarRodada.findByEstimativa", query = "SELECT j FROM JogarRodada j WHERE j.estimativa = :estimativa")})
+    @NamedQuery(name = "JogarRodada.findByIdProjetoEstoria", query = "SELECT j FROM JogarRodada j WHERE j.jogarRodadaPK.idProjetoEstoria = :idProjetoEstoria")})
 public class JogarRodada implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected JogarRodadaPK jogarRodadaPK;
     @Column(name = "estimativa")
     private Integer estimativa;
+    @JoinColumns({
+        @JoinColumn(name = "id_estoria", referencedColumnName = "id", insertable = false, updatable = false),
+        @JoinColumn(name = "id_projeto_estoria", referencedColumnName = "id_projeto", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Estoria estoria;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
-    @JoinColumn(name = "id_estoria", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Estoria estoria;
 
     public JogarRodada() {
     }
@@ -50,8 +54,8 @@ public class JogarRodada implements Serializable {
         this.jogarRodadaPK = jogarRodadaPK;
     }
 
-    public JogarRodada(int id, int idUsuario, int idEstoria) {
-        this.jogarRodadaPK = new JogarRodadaPK(id, idUsuario, idEstoria);
+    public JogarRodada(int id, int idUsuario, int idEstoria, int idProjetoEstoria) {
+        this.jogarRodadaPK = new JogarRodadaPK(id, idUsuario, idEstoria, idProjetoEstoria);
     }
 
     public JogarRodadaPK getJogarRodadaPK() {
@@ -70,20 +74,20 @@ public class JogarRodada implements Serializable {
         this.estimativa = estimativa;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
     public Estoria getEstoria() {
         return estoria;
     }
 
     public void setEstoria(Estoria estoria) {
         this.estoria = estoria;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override

@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author smartphonne
+ * @author Bruno
  */
 @Embeddable
 public class JogarRodadaPK implements Serializable {
@@ -29,14 +29,19 @@ public class JogarRodadaPK implements Serializable {
     @NotNull
     @Column(name = "id_estoria")
     private int idEstoria;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id_projeto_estoria")
+    private int idProjetoEstoria;
 
     public JogarRodadaPK() {
     }
 
-    public JogarRodadaPK(int id, int idUsuario, int idEstoria) {
+    public JogarRodadaPK(int id, int idUsuario, int idEstoria, int idProjetoEstoria) {
         this.id = id;
         this.idUsuario = idUsuario;
         this.idEstoria = idEstoria;
+        this.idProjetoEstoria = idProjetoEstoria;
     }
 
     public int getId() {
@@ -63,12 +68,21 @@ public class JogarRodadaPK implements Serializable {
         this.idEstoria = idEstoria;
     }
 
+    public int getIdProjetoEstoria() {
+        return idProjetoEstoria;
+    }
+
+    public void setIdProjetoEstoria(int idProjetoEstoria) {
+        this.idProjetoEstoria = idProjetoEstoria;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) id;
         hash += (int) idUsuario;
         hash += (int) idEstoria;
+        hash += (int) idProjetoEstoria;
         return hash;
     }
 
@@ -88,12 +102,15 @@ public class JogarRodadaPK implements Serializable {
         if (this.idEstoria != other.idEstoria) {
             return false;
         }
+        if (this.idProjetoEstoria != other.idProjetoEstoria) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "models.entities.JogarRodadaPK[ id=" + id + ", idUsuario=" + idUsuario + ", idEstoria=" + idEstoria + " ]";
+        return "models.entities.JogarRodadaPK[ id=" + id + ", idUsuario=" + idUsuario + ", idEstoria=" + idEstoria + ", idProjetoEstoria=" + idProjetoEstoria + " ]";
     }
     
 }

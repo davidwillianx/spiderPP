@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
+import libs.exception.BusinessException;
 import models.ejb.EstoriaBean;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
@@ -30,16 +31,17 @@ import models.entities.Projeto;
 @RequestScoped
 public class EstoriaController
 {
-    private Estoria estoria;
-    
-    @EJB
-    private IEstoria iEstoria;
     private BuildMessage buildMessage;
     private SessionManager sessionManager;
     private Projeto projeto;
     private EstoriaBean estoriaBean;
     private List<Estoria> estorias;
     private Redirect redirect;
+    private Estoria estoria;
+    
+    @EJB
+    private IEstoria iEstoria;
+
     
     public EstoriaController()
     {
@@ -119,5 +121,33 @@ public class EstoriaController
        }else{
            buildMessage.addError("Falha ao alterar estória.");
        }
+   }
+   
+   public void signStory(int idEstoria)
+   {
+        this.buildMessage = new BuildMessage();
+        
+        try{
+            this.estoria = this.iEstoria.selectEstoriaById(idEstoria);
+            this.sessionManager = new SessionManager();
+            this.sessionManager.set("estoria", estoria);
+            
+            this.redirect = new Redirect();
+            this.redirect.redirectTo("editar_estorias.xhtml");
+            
+        }catch(BusinessException error)
+        {
+            this.buildMessage.addError("falha ao acessar o projeto");
+        }
+   }
+   
+   public void preEditStory(int id){
+        try{
+            this.estoria = this.iEstoria.selectEstoriaById(id);
+            this.redirect.redirectTo("editar_estorias.xhtml");
+        }catch(BusinessException error)
+        {
+            this.buildMessage.addError(error.getMessage());
+        }
    }
 }
