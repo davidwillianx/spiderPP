@@ -25,19 +25,13 @@ and open the template in the editor.
                 <h:commandLink value="Criar Estória" action="#{estoriaController.newStory()}"/>
             </h:panelGrid>
         </h:form>
-        
-        <h:form id="formHome3">
-            <h:panelGrid id="panel">
-            </h:panelGrid>                
-            <h:commandLink value="Editar Estória" action="#{estoriaController.signStory(id)}" />
-        </h:form>
-        
+       
         <h:form>
             <h:panelGroup id="formHome3">
-                <h:dataTable value="#{estoriaBean.estorias}" var="estoria" border="2">
+                <h:dataTable value="#{estoriaController.estorias}" var="estoria" border="2">
                     <h:column>
                         <f:facet name="head">Estórias</f:facet>
-                            <h:commandLink value="#{estoria.nome}"/>
+                            <h:commandLink value="#{estoria.nome}" action="/projeto/descricao_estoria.xhtml"/>
                     </h:column>
                 </h:dataTable>
             </h:panelGroup>
