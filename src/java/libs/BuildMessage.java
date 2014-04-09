@@ -21,4 +21,5 @@ public class BuildMessage {
     {
         FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro:",message));
     }
+    
 }

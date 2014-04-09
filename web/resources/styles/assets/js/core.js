@@ -526,4 +526,6 @@ $(document).ready(function() {
 			if(911 > contentHeight){	
 				console.log("Small");
 			}	
-	}	
+	}
+        
+        
