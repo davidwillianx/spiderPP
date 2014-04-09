@@ -41,8 +41,8 @@ public class EstoriaBean implements IEstoria {
     @Resource
     private SessionContext sessionContext;
 
-    @EJB
-    private IEstoria iEstoria;
+//    @EJB
+//    private IEstoria iEstoria;
 
     @Override
     public void saveStoryBean(Estoria estoria) {

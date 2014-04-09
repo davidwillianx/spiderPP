@@ -1,10 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--<ui:composition 
+    template="/WEB-INF/templates/dashboard_projeto.xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+        
+    <ui:define name="content-dashborad">
+        
+        <div class="row">
+            <div class="grid simple">
+                <div class="grid-title">
+                    <h4>
+                        Projeto:
+                        <span class="semi-bold">#{projeto.nome}</span>
+                    </h4>
+                    <div class="tools">
+                        <a href="javascript:" class="collapse"></a>
+                        <a href="#grid-config" data-toggle="modal" class="config"></a>
+                        <a href="javascript:;" class="reload"></a>
+                        <a href="javascript:;" class="remove"></a>
+                    </div>
+                    <div class="grid-body">
+                        <h:dataTable class="table table-striped dataTable" value="#{estoriaController.estorias}" var="estoria" border="2">
+                            <h:column>
+                                <h:commandLink value="#{estoria.nome}" action="homestory.xhtml"/>
+                                <h:commandLink value="#{estoria.descricao}" action="homestory.xhtml"/>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>-->
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">

@@ -30,7 +30,7 @@
                 <h:inputText id="status" value="#{estoriaController.estoria.status}" rendered="false"/> <br/>
                 
                 
-                <h:commandButton value="Criar" action="#{estoriaController.saveEstoria(estoria)}"/>
+                <h:commandButton value="Criar" action="#{estoriaController.saveEstoria(estoriaController.estoria)}"/>
                 
             </h:panelGrid>
         </h:form>
