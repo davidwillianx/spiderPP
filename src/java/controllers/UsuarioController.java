@@ -10,6 +10,7 @@ import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
 import libs.exception.BusinessException;
+import libs.exception.NoPersistException;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
 
@@ -25,6 +26,7 @@ public class UsuarioController {
     private Usuario usuario;
     private List<Usuario> usuariosOutOfProjeto;
     private List<Usuario> usuariosOfProjeto;
+    private int perfilSelected;
     
     
     @EJB
@@ -45,6 +47,16 @@ public class UsuarioController {
     public Usuario  getUsuario()
     {
         return this.usuario;
+    }
+    
+    public void setPerfilSelected(int perfilSelected)
+    {
+        this.perfilSelected = perfilSelected;
+    }
+                  
+    public int getPerfilSelected()
+    {
+        return this.perfilSelected;
     }
     
     //@TODO falta tratar a exception lancada
@@ -138,5 +150,20 @@ public class UsuarioController {
             this.buildMessage.addError("Falha ao executar a operação");
         }
     }
+    
+    
+    public void saveAndInviteUsuario(Usuario usuario)
+    {
+        this.buildMessage = new BuildMessage();
+        try{
+            this.iUsuario.saveAndInviteOnProjeto(usuario, this.perfilSelected);
+            this.buildMessage.addInfo("Cadastro realizado com sucesso, um email foi enviado ao usuario");
+            
+            
+        }catch(BusinessException | NoPersistException error){
+            this.buildMessage.addError("Falha ao incluir usuario no projeto");
+        }
+    }
+    
     
 }

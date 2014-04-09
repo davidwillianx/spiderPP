@@ -70,14 +70,12 @@ public class EstoriaController {
     public void saveEstoria(Estoria estoria) {
         this.buildMessage = new BuildMessage();
         try {
-
+            
             this.iEstoria.saveStoryBean(estoria);
             this.buildMessage.addInfo("Estória criada");
+            
         } catch (Exception error) {
-
-            System.out.println("ocorreu um erro em EstoriaController.saveEstoria: " + error.getMessage());
             this.buildMessage.addError("Ocorreu um erro ao criar  a Estória:" );
-            error.printStackTrace();
         }
     }
 
