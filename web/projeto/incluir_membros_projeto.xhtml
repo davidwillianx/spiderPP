@@ -10,7 +10,7 @@
 
     <ui:define name="content-dashborad">
         <div class="row"> 
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="row">
                     <div class="grid simple">
                         <div class="grid-title">
@@ -40,7 +40,7 @@
                                         </div>
                                     </div>
                                     <!-- Datatable -->
-                                    <h:dataTable value="#{usuarioController.usuarioOfProjeto}" var="usuarioOfProjeto"
+                                    <h:dataTable id="grid_users" value="#{usuarioController.usuarioOfProjeto}" var="usuarioOfProjeto"
                                                  class="table dataTable">
                                         <h:column class="">
                                             <f:facet name="header">Nome</f:facet>
@@ -52,7 +52,12 @@
                                         </h:column>
                                         <h:column class="">
                                              <f:facet name="header">-</f:facet>
-                                             <a class=" btn btn-dark btn-small" href="#">x</a>
+                                             <h:form>
+                                                 <h:commandButton class=" btn btn-success btn-small" value="X" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.id)}">
+                                                     <f:ajax render=":grid_users" />
+                                                 </h:commandButton>
+                                             </h:form>
+                                             <!--<a class=" btn btn-success btn-small" href="#">x</a>-->
                                         </h:column>
                                     </h:dataTable>
                                 </div>
@@ -65,13 +70,13 @@
             <div class="col-md-6">
                 <div class="row">
 
-                    <div class="widget m-l-20">
-                        <div class="widget-title dark">
+                    <div class="widget">
+                        <div class="widget-title ">
                             <div class="pull-left">
                                 <!-- Adicionar evento pro icone -->
                                 <i class="fa fa-plus"/>
                             </div>
-                            Inclua Membros no seu projeto
+                            <h4>Inclua Membros no seu projeto</h4>
                         </div>
                         <h:panelGroup layout="block" class="widget-body" id="box-invite">
 

@@ -17,4 +17,5 @@ import models.entities.Usuario;
  */
 public interface IAcessar {
    void save(Perfil perfil, Usuario usuario, Projeto projeto);
+   void remove(int idPerfil,int idUsuario, int idProjeto);
 }

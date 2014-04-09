@@ -13,8 +13,10 @@ import libs.BuildHash;
 import libs.SessionManager;
 import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
+import libs.exception.NoRemoveException;
 import libs.exception.NotFoundException;
 import models.ejbs.interfaces.IAcessar;
+import models.ejbs.interfaces.IPerfil;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Perfil;
 import models.entities.Projeto;
@@ -40,6 +42,9 @@ public class UsuarioBean implements IUsuario{
     
     @EJB
     private IAcessar iAcessar;
+    
+    @EJB
+    private IPerfil iPerfil;
     
     private BuildHash buildHash;
     
@@ -187,5 +192,27 @@ public class UsuarioBean implements IUsuario{
         }catch(Exception error){
             throw new NotFoundException("Falha ao executar a busca");
         }
+    }
+
+    @Override
+    public void removeUsuarioOfProjeto(int idUsuario) {
+       
+        try{
+            
+            this.sessionManager = new SessionManager();
+            
+            this.usuario = this.entityManager.find(Usuario.class, idUsuario);
+            this.projeto = (Projeto) this.sessionManager.get("projeto");
+            
+            Perfil perfil = this.iPerfil.selectPerfilByIdUsuarioAndIdProjeto(projeto.getId(), idUsuario);
+            
+            this.iAcessar.remove(perfil.getId(), idUsuario, this.projeto.getId());
+            
+        }catch(NoRemoveException error)
+        {
+            throw new BusinessException("Falha na exclusão");
+        }
+        
+        
     }
 }

@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import libs.BuildMessage;
+import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Perfil;
@@ -62,6 +63,18 @@ public class UserProjetoController {
             }else this.buildMessage.addError("Selecione o papel");
         } catch (NoPersistException error) {
             this.buildMessage.addError("Falha na realização da operação");
+        }
+    }
+    
+    public void removeUsuarioToProjeto(int idUsuario) {
+        this.buildMessage = new BuildMessage();
+
+        try {
+            this.iUsuario.removeUsuarioOfProjeto(idUsuario);
+            this.buildMessage.addInfo("Operação realizada com sucesso");
+
+        } catch (BusinessException error) {
+            this.buildMessage.addError("Falha na operação");
         }
     }
 }

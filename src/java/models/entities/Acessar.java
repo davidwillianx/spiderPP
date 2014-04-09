@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Acessar.findAll", query = "SELECT a FROM Acessar a"),
     @NamedQuery(name = "Acessar.findByIdPerfil", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idPerfil = :idPerfil"),
     @NamedQuery(name = "Acessar.findByIdProjeto", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idProjeto = :idProjeto"),
-    @NamedQuery(name = "Acessar.findByIdUsuario", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idUsuario = :idUsuario")})
+    @NamedQuery(name = "Acessar.findByIdUsuario", query = "SELECT a FROM Acessar a WHERE a.acessarPK.idUsuario = :idUsuario"),
+    @NamedQuery(name = "Acessar.findByIdUsuarioAndIdProjeto", query = "SELECT a FROM Acessar a WHERE a.projeto.id = :id_projeto AND a.usuario.id = :id_usuario")})
 public class Acessar implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
