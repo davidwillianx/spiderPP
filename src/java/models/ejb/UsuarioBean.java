@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import libs.BuildHash;
+import libs.BuildMail;
 import libs.SessionManager;
 import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
@@ -33,6 +34,9 @@ public class UsuarioBean implements IUsuario{
     private Usuario usuario;
     private Projeto projeto;
     private List<Usuario> usuarios;
+    private int perfilSelected;
+    
+    private BuildMail buildMail;
     
     @PersistenceContext
     private EntityManager entityManager;
@@ -214,5 +218,35 @@ public class UsuarioBean implements IUsuario{
         }
         
         
+    }
+
+    @Override
+    public void saveAndInviteOnProjeto(Usuario usuario, int idPerfil) {
+        try{
+            
+            this.buildMail  = new BuildMail();
+            this.sessionManager = new SessionManager();
+            this.projeto = (Projeto) this.sessionManager.get("projeto");
+            
+            usuario.setSenha(this.hash(usuario.getSenha()));
+            usuario.setHashmail(this.hash(usuario.getEmail()));
+            this.entityManager.persist(usuario);
+            this.entityManager.flush();
+            
+            System.err.println(" SUSUARIO "+usuario.getId());
+            
+            
+            Perfil perfil = new Perfil(idPerfil);
+            this.iAcessar.save(perfil, usuario, this.projeto);
+            
+            this.buildMail.sendRegisterAndInviteProjetoNotification(
+                                                usuario.getEmail(),
+                                                usuario.getNome(),
+                                                this.hash(usuario.getEmail()));
+            
+        }catch(Exception error){
+            
+            throw new BusinessException("Falha na operação");
+        }
     }
 }

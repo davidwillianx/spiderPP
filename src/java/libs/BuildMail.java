@@ -30,6 +30,15 @@ public class BuildMail {
         this.sendMail(address, this.subject, this.message);
     }
     
+    //@TODO usar o metodo acima para fazer esta operação somente alterando a mensagem
+    public void sendRegisterAndInviteProjetoNotification(String address,String nome, String hash)
+    {
+        this.subject = "Bem vindo ao SpiderPP";
+        this.message = "Olá "+nome+", <br><br>Agora esta participando da plataforma de estimativas SpiderPP, você foi convidado em um projeto desta plataforma."
+                +"Para ativar seu cadastro clique no link abaixo: <br> <a style=  \"background-color:blue;\" href = \"http://localhost:8080/spiderPP/security/auth.xhtml?pkm="+hash+"\"> <p class=\"classname\">Clique aqui</p> </a>  </html>"; 
+        this.sendMail(address, this.subject, this.message);
+    }
+    
     private void sendMail(String address, String subject, String msg)
     {
         try {

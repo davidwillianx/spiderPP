@@ -11,10 +11,7 @@
     <ui:define name="content-dashborad">
 
         <h:panelGroup layout="block" id="project_user_manager" class="row">
-
-            <h:messages globalOnly="true" class="alert alert-info fade in"
-                        errorStyle="alert alert-info fade in" showSummary="false"  showDetail="true">
-            </h:messages>
+            <h:messages globalOnly="true" class="alert alert-info fade in" errorStyle="alert alert-info fade in" showSummary="false"  showDetail="true"/>
             <h:message for="perfil_select" class="alert alert-error"></h:message>
 
             <div class="col-md-6">
@@ -62,7 +59,7 @@
                                         <h:column class="">
                                             <f:facet name="header">-</f:facet>
                                             <h:form>
-                                                <h:commandButton  class=" btn btn-success btn-small" value="X" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.id)}">
+                                                <h:commandButton  class=" btn btn-success btn-small" value="x" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.id)}">
                                                     <f:ajax render=":project_user_manager" />
                                                 </h:commandButton>
                                             </h:form>
@@ -100,7 +97,7 @@
                                                      class="table dataTable">
                                             <h:column>
                                                 <f:facet name="header">Nome</f:facet>
-                                                 #{usuarioOutOfProjeto.nome}
+                                                <h4>#{usuarioOutOfProjeto.nome}</h4>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">Atividade</f:facet>
@@ -127,6 +124,74 @@
                 </div>
             </div>
         </h:panelGroup> 
+        <div class="row m-t-60 ">
+                <div class="col-md-12">
+                    <div class="grid simple horizontal red ">
+                        <div class="grid-title">
+                            <h4>Novos Usuários</h4>
+                        </div>
+                        <div class="grid-body">
+                            <div class="row">
+                                <div class="col-md-4 pull-left">
+                                    <h3>Atividades</h3>
+                                    <h4>
+                                        Adicione pessoas não cadastradas no sistema :) 
+                                        depois de enviado esta receberá esta informação via email.
+                                    
+                                    </h4>
+                                    
+                                </div>
+                                <div class="col-md-7 pull-right">
+                                    <h:messages class="alert alert-error" showDetail="true" showSummary="false"></h:messages>
+                                   
+                                    
+                                    <h:form id="formRegister">  
+                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                            <h:outputLabel for="nome" value="Nome " class="form-label"/>
+                                            <h:inputText id="nome" class="form-control" value="#{usuarioController.usuario.nome}"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                            <h:outputLabel for="email" value="Email: " class="form-label"/>
+                                            <h:inputText id="email" class="form-control" value="#{usuarioController.usuario.email}"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                            <h:outputLabel for="descricao" value="Descrição: " class="form-label"/>
+                                            <h:inputTextarea id="descricao" class="form-control" value="#{usuarioController.usuario.descricao}"/>
+                                        </h:panelGroup>
+                                         <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
+                                            <h:outputLabel value="Perfil" for="perfil" class="form-label"/>
+                                            <h:selectOneMenu value="#{usuarioController.perfilSelected}"  id="perfil_select"> 
+                                                <f:selectItem itemLabel="Selecione Cargo" noSelectionOption="true"/>
+                                                <f:selectItems value="#{controllerPerfil.perfis}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil.id}"/>
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
+                                            <h:outputLabel for="novasenha" value="Senha: " class="form-label"/>
+                                            <h:inputSecret id="novasenha"  class="form-control" value="#{usuarioController.usuario.senha}" />  
+                                        </h:panelGroup> 
+                                         
+                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
+                                            <h:outputLabel for="confpassword" value="Confir. Senha: " class="form-label"/>
+                                            <h:inputSecret id="confpassword"  class="form-control" >
+                                                <f:validator validatorId="passvalidator"/>
+                                            </h:inputSecret>  
+                                        </h:panelGroup> 
+                                      
+                                        <h:panelGroup layout="block" class="col-md-7">
+                                            <h:commandButton class="btn btn-primary btn-cons" value="Cadastrar" action="#{usuarioController.saveAndInviteUsuario(usuarioController.usuario)}"/>
+                                        </h:panelGroup>
+                                    </h:form>
+
+                                    
+                                    
+                                    <!--<ui:include class="grid-body" src="/WEB-INF/templates/form_register.xhtml"/>-->
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
 
     </ui:define>
 </ui:composition>

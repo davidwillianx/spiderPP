@@ -19,6 +19,7 @@ import models.entities.Usuario;
  */
 public interface IUsuario {
     void save(Usuario usuario);
+    void saveAndInviteOnProjeto(Usuario usuario, int idPerfil);
     boolean enableStatus(Usuario usuario);
     Usuario findUsuarioByEmailAndSenha(Usuario usuario);
     boolean updatePassword(Usuario usuario, String haString);
