@@ -23,7 +23,8 @@ import models.entities.Usuario;
 public class UsuarioController {
     
     private Usuario usuario;
-    private List<Usuario> usuarios;
+    private List<Usuario> usuariosOutOfProjeto;
+    private List<Usuario> usuariosOfProjeto;
     
     
     @EJB
@@ -46,9 +47,24 @@ public class UsuarioController {
         return this.usuario;
     }
     
-    public List<Usuario> getUsuarios()
+    //@TODO falta tratar a exception lancada
+    public List<Usuario> getUsuariosOutOfProjeto()
     {
         return this.iUsuario.selectUsuarioOutOfProjectById();
+    }
+    
+    public List<Usuario>getUsuarioOfProjeto()
+    {
+       try{
+           
+           return this.iUsuario.selectUsuarioOfProjeto();
+           
+       }catch(BusinessException error){
+           
+           this.buildMessage = new BuildMessage();
+           this.buildMessage.addError(error.getMessage());
+           return null;
+       }
     }
     
     public void save(Usuario usuario)
@@ -71,7 +87,6 @@ public class UsuarioController {
           
        } catch (Exception e) {
            this.buildMessage.addError("Email já cadastrado");
-           System.out.println("error: "+ e.getMessage());
            e.printStackTrace();  
        }
    }

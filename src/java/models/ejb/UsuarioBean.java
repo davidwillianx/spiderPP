@@ -13,6 +13,7 @@ import libs.BuildHash;
 import libs.SessionManager;
 import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
+import libs.exception.NotFoundException;
 import models.ejbs.interfaces.IAcessar;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Perfil;
@@ -139,14 +140,14 @@ public class UsuarioBean implements IUsuario{
         try{
             
             this.sessionManager = new SessionManager();
-            Projeto projeto = (Projeto) this.sessionManager.get("projeto");
+            this.projeto = (Projeto) this.sessionManager.get("projeto");
             
            this.usuarios = this.entityManager.createNamedQuery("Usuario.findUsuarioOutOfProjetoId")
                                .setParameter("id_projeto", projeto.getId())
                                .getResultList();
            
            return this.usuarios;
-           
+            
         }catch(Exception error){
             throw  new BusinessException("Falha na consulta de usuários");
         }
@@ -168,6 +169,23 @@ public class UsuarioBean implements IUsuario{
             throw  new BusinessException("Falha na persistência");
         }catch(Exception error){
             throw new BusinessException("Falha na persistência");
+        }
+    }
+
+    @Override
+    public List<Usuario> selectUsuarioOfProjeto() 
+    {
+        try{
+            this.sessionManager = new SessionManager();
+            this.projeto =  (Projeto) this.sessionManager.get("projeto");
+            this.usuarios =  this.entityManager.createNamedQuery("Usuario.findUsuarioOfProjetoId")
+                              .setParameter("id_projeto", this.projeto.getId())
+                              .getResultList();
+            
+            return this.usuarios;
+                                
+        }catch(Exception error){
+            throw new NotFoundException("Falha ao executar a busca");
         }
     }
 }
