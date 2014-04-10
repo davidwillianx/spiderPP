@@ -233,9 +233,6 @@ public class UsuarioBean implements IUsuario{
             this.entityManager.persist(usuario);
             this.entityManager.flush();
             
-            System.err.println(" SUSUARIO "+usuario.getId());
-            
-            
             Perfil perfil = new Perfil(idPerfil);
             this.iAcessar.save(perfil, usuario, this.projeto);
             
