@@ -1138,7 +1138,8 @@ line-height: 21px;
 }
  .grid.simple .grid-title .tools a,.grid.solid .grid-title .tools a{
   	position:relative;
-	background: url('../img/icon/portlet-tray.png') no-repeat;
+	/*background: url('../img/icon/portlet-tray.png') no-repeat;*/
+        background:  url("#resouce['styles/assets/img/icon/portlet-tray.png']") no-repeat;
 	transition: all 0.1s linear 0s;
 }
 .grid.simple .grid-title .tools > a.remove, 
@@ -1284,7 +1285,7 @@ line-height: 21px;
 }
 .grid.box .grid-title .tools a{
   /*background:url(../img/icon/portlet-tray.png) no-repeat;*/
-  background:url("#{resource[styles/assets/img/icon/portlet-tray.png]}") no-repeat;
+  background:url("#{resource['styles/assets/img/icon/portlet-tray.png']}") no-repeat;
   width:23px;
   height:23px
 }
@@ -2339,12 +2340,14 @@ form legend,
 	background-attachment:fixed;
 }
 #pricing-section{
-	background-image: url(../img/pricing.jpg);
+	/*background-image: url(../img/pricing.jpg);*/
+        background-image: url("#resouce['styles/assets/img/princing.jpg");
 	height: 300px;
 	background-attachment:fixed;
 }
 #green{
-	background-image: url(../img/bg/green.png);
+	/*background-image: url(../img/bg/green.png);*/
+        background-image: url("resouce['styles/assets/img/bg/green.png");
 	height: 300px;
 	background-attachment:fixed;
 }

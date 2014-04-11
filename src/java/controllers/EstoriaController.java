@@ -51,7 +51,6 @@ public class EstoriaController {
         try {
             return this.iEstoria.selectEstorias();
         } catch (Exception error) {
-            System.err.println("Erro em EstoriaController-58--> " + error.getMessage());
             return null;
         }
     }
@@ -65,18 +64,15 @@ public class EstoriaController {
 
         } catch (Exception error) {
             this.buildMessage.addError("Ocorreu um erro ao criar  a Estória.");
-            System.err.println("Error em EstoriaController-saveEstoria-->" + error.getMessage());
         }
     }
 
     public void deleteEstoria(Estoria estoria) {
         this.buildMessage = new BuildMessage();
         try {
-            System.err.println("Estoria em EstoriaController-deleteEstoria-->" + estoria);
             this.iEstoria.removeEstoria(estoria);
             this.buildMessage.addInfo("Estória removida com sucesso.");
         } catch (Exception error){
-            System.err.println("Error em EstoriaController-deleteEstoria-->" + error.getMessage());
             this.buildMessage.addError("Aconteceu um erro ao remover Estória.");
         }
         
@@ -84,7 +80,6 @@ public class EstoriaController {
 
     public void redirectEditarEstoria(Estoria estoria) {
         this.redirect = new Redirect();
-        System.err.println("EstoriaID---->" + estoria.getEstoriaPK().getId());
         this.redirect.redirectTo("/projeto/editarestoria.xhtml?estoria=" + estoria.getEstoriaPK().getId());
     }
 }

@@ -266,7 +266,8 @@ Page sidebar
 .notification-alert{
 	width:29px;
 	height:29px;
-	background-image: url("../img/notification-alert.png");
+	/*background-image: url("../img/notification-alert.png");*/
+        background-image: url("#resouce['styles/img/notification-alert.png']");
 	position:absolute;
 	float:right;
 	right:-15px;
@@ -1428,7 +1429,8 @@ span.iconset{
   display: block;
   width: 8px;
   height: 25px;
-  background-image: url("../img/sidebar-menu-arrow.png");
+  /*background-image: url("../img/sidebar-menu-arrow.png");*/
+  background-image:  url("#resouce['styles/assets/img/sidebar-menu-arrow.png']");
   float: right;
   position: absolute;
   right:-8px;
@@ -1589,7 +1591,8 @@ span.iconset{
 
 /*** Scroll to top *****/
 .scrollup{
-	background: url('../img/pullup.png') no-repeat;
+	/*background: url('../img/pullup.png') no-repeat;*/
+        background: url("#resouce['styles/assets/img/pullup.png']") no-repeat;
 	background-position:0px 0px;
     width: 27px; height: 27px;
     position:fixed;

@@ -1,11 +1,21 @@
 @font-face {
 	font-family: 'icomoon';
-	/*src:url('../fonts/custom-set.eot');*/
+        
         src:url("#{resource['styles/assets/fonts/custom-set.eot']}");
+        src:url("#{resource['styles/assets/fonts/custom-set.eot']}") format('embedded-opentype'),
+		url("#{resource['styles/assets/fonts/custom-set.woff']}") format('woff'),
+		url("#{resource['styles/assets/fonts/custom-set.ttf']}") format('truetype'),
+		url("#{resource['styles/assets/fonts/custom-set.svg']}") format('svg');
+        
+        
+        
+        
+	/*src:url('../fonts/custom-set.eot');*/
+/*        src:url("#{resource['styles/assets/fonts/custom-set.eot']}");
         src:url("#{resource['styles/assets/fonts/custom-set.eot?#iefix']}") format('embedded-opentype'),
 		url("#{resource['styles/assets/fonts/custom-set.woff']}") format('woff'),
 		url("#{resource['styles/assets/fonts/custom-set.ttf']}") format('truetype'),
-		url("#{resource['styles/assets/fonts/custom-set.svg#icomoon']}") format('svg');
+		url("#{resource['styles/assets/fonts/custom-set.svg#icomoon']}") format('svg');*/
 /*	src:url('../fonts/custom-set.eot?#iefix') format('embedded-opentype'),
 		url('../fonts/custom-set.woff') format('woff'),
 		url('../fonts/custom-set.ttf') format('truetype'),

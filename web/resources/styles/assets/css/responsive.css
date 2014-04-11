@@ -801,17 +801,20 @@ and (orientation : portrait) {
        only screen and (-o-min-device-pixel-ratio: 200/100),
        only screen and (min-device-pixel-ratio: 2.0) {
 		.grid.simple .grid-title .tools a{
-  			background: url('../img/icon/portlet-tray-2x.png');
+  			/*background: url('../img/icon/portlet-tray-2x.png');*/
+                        background:  url("#resouce['styles/assets/img/icon/portlet-tray-2x.png']");
 			background-size: 199px 57px;
 		} 	
 		.tiles .controller a{
 			position:relative;
-			background: url('../img/icon/portlet-tray-2x.png');
+			/*background: url('../img/icon/portlet-tray-2x.png');*/
+                        background:  url("#resouce['styles/assets/img/icon/portlet-tray-2x.png']");
 			background-size: 199px 57px;
 		}
 		.widget-item .controller a{
 			position:relative;
-			background: url('../img/icon/portlet-tray-2x.png');
+			/*background: url('../img/icon/portlet-tray-2x.png');*/
+                        background:  url("#resouce['styles/assets/img/icon/portlet-tray-2x.png']");
 			background-size: 199px 57px;
 		}
 	
@@ -822,18 +825,21 @@ and (orientation : portrait) {
 		}
 		
 		.status-icon{
-		background: url('../img/icon/status2x.png'); 
+		/*background: url('../img/icon/status2x.png');*/ 
+                background:  url("#resouce['styles/assets/img/icon/status2x.png']");
 		background-size: 79px 16px;
 		
 		}
 		
 		.scrollup{
 			background: url('../img/pullup2x.png'); 
+                        background:  url("#resouce['styles/assets/img/pullup2x.png']");
 			background-size: 57px 27px;
 		}
 		
 		.alert .close{
-			background: url("../img/icon/noti-cross-2x.png") no-repeat scroll 0 0 transparent;
+			/*background: url("../img/icon/noti-cross-2x.png") no-repeat scroll 0 0 transparent;*/
+                        background:  url("#resouce['styles/assets/img/icon/noti-cross-2x.png']") no-repeat scroll 0 0 transparent;
 			background-position: -9px -10px;
 			width: 10px; height: 9px;
 			position: relative;

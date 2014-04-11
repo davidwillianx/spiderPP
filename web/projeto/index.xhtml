@@ -8,11 +8,56 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
-    <ui:define name="content-dashboard">
-        
+
+    <ui:define name="content-dashborad">
+
+        <div class="row">
+            <div class="grid simple">
+                <div class="grid-title">
+                    <h4>Estorias do projeto</h4>
+                    <!--<div class="tools"></div>-->
+                </div>
+                <div class="grid-body">
+                    <div class="dataTables_wrapper">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- ADICIONAR FILTRO DE QUANTIDADE-->
+                            </div>
+                            <div class="col-md-6">
+                                <!-- FERRAMENTA DE BUSCA -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h:dataTable value="#{estoriaController.estorias}" var="estoria" class="table table-striped dataTable">
+                        <h:column>
+                            <f:facet name="head" class="sortable">
+                            </f:facet>
+                            <i class="icon-custom-down"></i>
+
+                        </h:column>
+                        <h:column>
+                            <f:facet name="head" class="sortable">T&iacute;tulo</f:facet>
+                            #{estoria.nome}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="head" class="sortable">Data de cria&ccedil;&atilde;o</f:facet>
+                             03/06/1989
+                        </h:column>
+                    </h:dataTable>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+
     </ui:define>
-      
+
 </ui:composition>
 
 

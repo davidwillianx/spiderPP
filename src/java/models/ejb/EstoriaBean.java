@@ -49,8 +49,8 @@ public class EstoriaBean implements IEstoria {
             this.estoriaPK = new EstoriaPK(0, this.projeto.getId());
             estoria.setEstoriaPK(this.estoriaPK);
             this.entityManager.persist(estoria);
+            
         } catch (Exception error) {
-            System.err.println("Error em EstoriaBean-persistEstoria-->" + error.getMessage());
             this.sessionContext.setRollbackOnly();
         }
     }
@@ -58,7 +58,6 @@ public class EstoriaBean implements IEstoria {
     @Override
     public void removeEstoria(Estoria estoria) {
         try {
-            System.err.println("EstoriaPK em EstoriaBean-removeEstoria-->" + estoria.getEstoriaPK());
             
            this.estoria = this.entityManager.merge(estoria);
             this.entityManager.remove(this.estoria);
