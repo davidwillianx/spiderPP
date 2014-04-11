@@ -5,17 +5,13 @@
  */
 package controllers;
 
-import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
-import libs.exception.BusinessException;
-import models.ejb.EstoriaBean;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Projeto;
@@ -31,11 +27,10 @@ public class EstoriaController {
     private BuildMessage buildMessage;
     private SessionManager sessionManager;
     private Projeto projeto;
-    private EstoriaBean estoriaBean;
     private List<Estoria> estorias;
     private Redirect redirect;
     private Estoria estoria;
-
+ 
     @EJB
     private IEstoria iEstoria;
 
@@ -54,78 +49,42 @@ public class EstoriaController {
 
     public List<Estoria> getEstorias() {
         try {
-            return this.iEstoria.getEstorias();
+            return this.iEstoria.selectEstorias();
         } catch (Exception error) {
-            System.out.println("Ocorreu um erro em EstoriaController.getEstorias: " + error);
-            error.printStackTrace();
+            System.err.println("Erro em EstoriaController-58--> " + error.getMessage());
             return null;
         }
-    }
-
-    public void newStory() throws IOException {
-        this.redirect = new Redirect();
-        this.redirect.redirectTo("/projeto/createstory.xhtml");
     }
 
     public void saveEstoria(Estoria estoria) {
         this.buildMessage = new BuildMessage();
         try {
-            
-            this.iEstoria.saveStoryBean(estoria);
+
+            this.iEstoria.persistEstoria(estoria);
             this.buildMessage.addInfo("Estória criada");
-            
+
         } catch (Exception error) {
-            this.buildMessage.addError("Ocorreu um erro ao criar  a Estória:" );
+            this.buildMessage.addError("Ocorreu um erro ao criar  a Estória.");
+            System.err.println("Error em EstoriaController-saveEstoria-->" + error.getMessage());
         }
     }
 
-    public void removeStory() {
-        FacesContext.getCurrentInstance();
-        boolean result = estoriaBean.removeStory(estoria);
-
-        if (result) {
-            estoria = new Estoria();
-            buildMessage.addInfo("Estória Removida com Sucesso");
-        } else {
-            buildMessage.addError("Falha ao deletar Estória");
-        }
-    }
-
-    public void modifyStory() {
-        FacesContext.getCurrentInstance();
-        boolean result = estoriaBean.modifyStory(estoria);
-
-        if (result) {
-            estoria = new Estoria();
-            buildMessage.addInfo("Estória alterada com sucesso.");
-        } else {
-            buildMessage.addError("Falha ao alterar estória.");
-        }
-    }
-
-    public void signStory(int idEstoria) {
+    public void deleteEstoria(Estoria estoria) {
         this.buildMessage = new BuildMessage();
-
         try {
-            System.err.println("erro!!");
-            this.estoria = this.iEstoria.selectEstoriaById(idEstoria);
-            this.sessionManager = new SessionManager();
-            this.sessionManager.set("estoria", estoria);
-
-            this.redirect = new Redirect();
-            this.redirect.redirectTo("/projeto/editar_estorias.xhtml");
-
-        } catch (BusinessException error) {
-            this.buildMessage.addError("falha ao acessar o projeto");
+            System.err.println("Estoria em EstoriaController-deleteEstoria-->" + estoria);
+            this.iEstoria.removeEstoria(estoria);
+            this.buildMessage.addInfo("Estória removida com sucesso.");
+        } catch (Exception error){
+            System.err.println("Error em EstoriaController-deleteEstoria-->" + error.getMessage());
+            this.buildMessage.addError("Aconteceu um erro ao remover Estória.");
         }
+        
     }
 
-    public void preEditStory(int id) {
-        try {
-            this.estoria = this.iEstoria.selectEstoriaById(id);
-            this.redirect.redirectTo("/projeto/editar_estorias.xhtml");
-        } catch (BusinessException error) {
-            this.buildMessage.addError(error.getMessage());
-        }
+    public void redirectEditarEstoria(Estoria estoria) {
+        this.redirect = new Redirect();
+        System.err.println("EstoriaID---->" + estoria.getEstoriaPK().getId());
+        this.redirect.redirectTo("/projeto/editarestoria.xhtml?estoria=" + estoria.getEstoriaPK().getId());
     }
 }

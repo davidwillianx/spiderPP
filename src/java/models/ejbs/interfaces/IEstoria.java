@@ -13,15 +13,14 @@ import models.entities.EstoriaPK;
 
 /**
  *
- * @author Bruno
+ * @author Bruno and Bleno
  */
 
 public interface IEstoria {
     
-    public void saveStoryBean(Estoria estoria);
-    public boolean modifyStory(Estoria estoria);
-    public boolean removeStory(Estoria estoria);
-    public List<Estoria> getEstorias();
-    public Estoria selectEstoriaById(int id);
-    public void updateEstoriaBean(Estoria estoria);
+    public void persistEstoria(Estoria estoria);
+    public void removeEstoria(Estoria estoria);
+    public List<Estoria> selectEstorias();
+    public Estoria selectEstoriaById(String id);
+    public void updateEstoria(Estoria estoria, String id);
 }

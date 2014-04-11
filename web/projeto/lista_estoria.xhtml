@@ -53,7 +53,7 @@
         
         <h:form id="formHome2">
             <h:panelGrid id="panel">
-                <h:commandLink value="Criar Estória" action="#{estoriaController.newStory()}"/>
+                <h:commandLink value="Criar Estória" action="/projeto/cria_estoria.xhtml"/>
             </h:panelGrid>
         </h:form>
        
@@ -62,7 +62,17 @@
                 <h:dataTable value="#{estoriaController.estorias}" var="estoria" border="2">
                     <h:column>
                         <f:facet name="head">Estórias</f:facet>
-                            <h:commandLink value="#{estoria.nome}" action="/projeto/descricao_estoria.xhtml"/>
+                        <h:outputText value="#{estoria.nome}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="head">Atualizar</f:facet>
+                        <h:commandLink value="editar" action="#{estoriaController.redirectEditarEstoria(estoria)}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="head">Remover</f:facet>
+                        <h:commandLink value="Remover" action="#{estoriaController.deleteEstoria(estoria)}"/>
                     </h:column>
                 </h:dataTable>
             </h:panelGroup>
