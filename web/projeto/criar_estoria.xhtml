@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition
+    template="/WEB-INF/templates/dashboard_projeto.xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:define name="content-dashborad">
+        
+        
+         <h:panelGroup layout="block" class="row">
+            <h:panelGroup layout="block" class="col-md-7">
+                <h:panelGroup layout="block" class="grid simple">
+                    
+                    <h:panelGroup layout="block" class="grid-title">
+                        <h4>Crie estorias para o projeto</h4>
+                    </h:panelGroup>
+                    
+                    <h:panelGroup layout="block" class="grid-body no-border">
+                        <h:panelGroup layout="block" class="row">
+                            <h:messages showDetail="true" showSummary="false"></h:messages>
+                            <h:form class="p-l-30" id="formRegister">  
+                                <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                    <h:outputLabel for="nome" value="Nome " class="form-label"/>
+                                    <h:inputText id="nome" class="form-control" value="#{estoriaController.estoria.nome}"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                    <h:outputLabel for="descricao" value="Descrição " class="form-label"/>
+                                    <h:inputTextarea rows="8" cols="6"  id="descricao" class="form-control" value="#{estoriaController.estoria.descricao}"/>
+                                </h:panelGroup>
+                                 
+                                <h:panelGroup layout="block" class="col-md-7">
+                                    <h:commandButton class="btn btn-primary btn-cons" value="Atualizar" action="#{estoriaController.saveEstoria(estoriaController.estoria)}">
+                                    </h:commandButton>
+                                </h:panelGroup>
+                                
+                            </h:form>
+                            <h:link outcome="index.xhtml" class="btn btn-dark">
+                                <i class="icon-custom-home"></i>
+                                <span class="title">P&aacute;gina Inicial</span>
+                            </h:link>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+        
+    </ui:define>
+      
+</ui:composition>
+

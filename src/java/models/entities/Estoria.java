@@ -46,7 +46,7 @@ public class Estoria implements Serializable {
     @Column(name = "nome")
     private String nome;
     @Lob
-    @Size(max = 2147483647)
+    @Size(max = 2147483647,message = "Esta descrição excede o tamanho aceitado, por favor resuma seu texto")
     @Column(name = "descricao")
     private String descricao;
     @Column(name = "estimativa")
