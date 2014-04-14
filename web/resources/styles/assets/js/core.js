@@ -530,32 +530,34 @@ $(document).ready(function() {
         
         function showDetails(nome,descricao)
         {
+            html = getMessageDetails(nome,descricao);
+                   
+            if($('#detailStory').length)
+                replaceDataModalDetails(nome,descricao);
+            else
+                $('body .content').append(html);
             
-            html = ' <div role="dialog" id="detailStory" class="modal fade in" tabindex="-1" >\n\
+            $('#detailStory').modal();
+        }
+        
+        function replaceDataModalDetails(nome,descricao)
+        {
+            $('#detailStoryLabel').html(nome);
+            $('#detailsStoryDesc').html(descricao);
+        }
+        
+        function getMessageDetails(nome, descricao)
+        {
+            return ' <div role="dialog" id="detailStory" class="modal fade in" tabindex="-1" >\n\
                          <div class="modal-dialog " >\n\
                             <div class="modal-content">\n\
                                 <div class="modal-header"> \n\
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\n\
+                                    <button type="button" class="close" id="closeModalDetails" data-dismiss="modal" aria-hidden="true">×</button>\n\
                                     <h4 id="detailStoryLabel">'+nome+'</h4>\n\
-                                    <p>'+descricao+'</p>\n\
+                                    <p id="detailsStoryDesc">'+descricao+'</p>\n\
                                 </div>\n\
                             </div>\n\
                         </div>\n\
                      </div>';
-                   
-
-            $('body').append(html);
-            $('#detailStory').modal({
-                'hidden': closeModal()
-            });
         }
-        $('#detailStory').on('hidden', function () {
-            console.log('dsadadsadsa');
-        });
-        
-        function closeModal()
-        {
-            $('#detailStory').remove();
-        }
-        
         
