@@ -119,6 +119,6 @@ public class ProjetoController {
         this.sessionManager =  new SessionManager();
         this.sessionManager.remove("projeto");
         this.sessionManager.remove("usuario");
-        this.redirect.redirectTo("/index.xhtml");
+        this.redirect.redirectTo("/user/index.xhtml");
     }
 }

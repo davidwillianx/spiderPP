@@ -45,7 +45,11 @@
                                                         <span class="user-name text-black bold">
                                                             Descri&ccedil;&atilde;o
                                                         </span>
-                                                        <span class="preview-wrapper">Inicio <h:outputText value="#{projeto.dataInicio}"/></span>
+                                                        <span class="preview-wrapper">Inicio 
+                                                            <h:outputText value="#{projeto.dataInicio}">
+                                                                <f:convertDateTime parent="d-m-yyyy"/>
+                                                            </h:outputText>
+                                                        </span>
                                                     </p>
                                                 </h:panelGroup>
                                             </h:panelGroup>

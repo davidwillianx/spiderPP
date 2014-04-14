@@ -68,6 +68,9 @@ public class UsuarioBean implements IUsuario{
         }
     }
 
+      /**
+       *@TODO lancar exception
+       */
     @Override
     public boolean enableStatus(Usuario usuario) {
         
@@ -78,16 +81,17 @@ public class UsuarioBean implements IUsuario{
                                   .getSingleResult();
             this.entityManager.merge(userFound);
             userFound.setStatus(true);
-            System.err.println("usuario: "+usuario.getNome());
             return true;
             
         }catch(Exception error){ 
             context.setRollbackOnly();
-            System.out.println("Error"+error.getMessage());
             return false;
         }
     }
 
+      /**
+       *@TODO lancar exception
+       */
     @Override
     public Usuario findUsuarioByEmailAndSenha(Usuario usuario) {
         
@@ -106,6 +110,9 @@ public class UsuarioBean implements IUsuario{
         }
     }
 
+       /**
+       *@TODO lancar exception
+       */
     @Override
     public boolean updatePassword(Usuario usuario, String hashMail) {
        try{
@@ -118,7 +125,7 @@ public class UsuarioBean implements IUsuario{
             userFound.setSenha(this.hash(usuario.getSenha()));
            return true;
            
-       }catch(Exception error){
+       }catch(UnsupportedEncodingException error){
            //TODO Lançar um exception
            System.out.println("ErrorUpdatePassword: "+error.getMessage());
            this.context.setRollbackOnly();
@@ -131,6 +138,9 @@ public class UsuarioBean implements IUsuario{
         return this.buildHash.createHash(string);
     }
 
+      /**
+       *@TODO lancar exception NoPersist pois já tem método para rollback
+       */
     @Override
     public void updateUsuario(Usuario usuario) {
         try
@@ -138,7 +148,7 @@ public class UsuarioBean implements IUsuario{
             usuario.setSenha(this.hash(usuario.getSenha()));
             this.entityManager.merge(usuario);
             
-        }catch(Exception error)
+        }catch(UnsupportedEncodingException error)
         {
             this.context.setRollbackOnly();
         }
@@ -227,10 +237,7 @@ public class UsuarioBean implements IUsuario{
             this.buildMail  = new BuildMail();
             this.sessionManager = new SessionManager();
             this.projeto = (Projeto) this.sessionManager.get("projeto");
-            
-            usuario.setSenha(this.hash(usuario.getSenha()));
-            usuario.setHashmail(this.hash(usuario.getEmail()));
-            this.entityManager.persist(usuario);
+            this.save(usuario);
             this.entityManager.flush();
             
             Perfil perfil = new Perfil(idPerfil);
@@ -241,7 +248,7 @@ public class UsuarioBean implements IUsuario{
                                                 usuario.getNome(),
                                                 this.hash(usuario.getEmail()));
             
-        }catch(Exception error){
+        }catch(UnsupportedEncodingException error){
             
             throw new BusinessException("Falha na operação");
         }

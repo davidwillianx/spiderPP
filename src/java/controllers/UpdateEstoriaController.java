@@ -48,14 +48,12 @@ public class UpdateEstoriaController {
     }
 
     public void viewEstoria() {
+        this.buildMessage = new BuildMessage();
         try {
-            System.err.println("ID estoria --->" + this.id);
             this.estoria = this.iEstoria.selectEstoriaById(this.id);
-            System.err.println("Estoria:" + this.estoria.getNome());
         } catch (NumberFormatException error) {
-            System.err.println("Erro em UpdateEstoriaController-59--> " + error.getMessage());
+            this.buildMessage.addError("Falha na operacao");
         }
-
     }
 
     public void editEstoria(Estoria estoria) {
@@ -64,7 +62,6 @@ public class UpdateEstoriaController {
             this.iEstoria.updateEstoria(estoria, this.id);
             this.buildMessage.addInfo("Estória Atualizada com Sucesso");
         } catch (NumberFormatException error) {
-            System.err.println("Erro em UpdateEstoriaController-70--> " + error.getMessage());
             this.buildMessage.addError("Falha na atualização das informações");
         }
     }
