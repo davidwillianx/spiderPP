@@ -12,7 +12,7 @@
     <ui:define name="content-dashborad">
 
         <div class="row">
-            <div class="grid simple">
+            <div class="grid simple col-md-7">
                 <div class="grid-title">
                     <h4>Estorias do projeto</h4>
                     <!--<div class="tools"></div>-->
@@ -21,6 +21,7 @@
                     <div class="dataTables_wrapper">
                         <div class="row">
                             <div class="col-md-6">
+                                <a href="criar_estoria.xhtml" class="btn btn-success">Adicionar Est&oacute;ria</a>
                                 <!-- ADICIONAR FILTRO DE QUANTIDADE-->
                             </div>
                             <div class="col-md-6">
@@ -28,12 +29,14 @@
                             </div>
                         </div>
                     </div>
-                    <h:dataTable value="#{estoriaController.estorias}" var="estoria" class="table table-striped dataTable">
+                    <h:dataTable value="#{estoriaController.estorias}" var="estoria" class="table table-striped dataTable" rowClasses="center-text">
                         <h:column>
                             <f:facet name="header" class="sortable">
                             </f:facet>
-                            <i class="icon-custom-down"></i>
-
+                            <a class="btn btn-success btn-small" onclick="showDetails('#{estoria.nome}','#{estoria.descricao}');">
+                                <i class="icon-custom-extra"/>
+                            </a>
+                            <!--<i class="fa fa-plus-circle"></i>-->
                         </h:column>
                         <h:column>
                             <f:facet name="header" class="sortable">T&iacute;tulo</f:facet>
@@ -41,7 +44,11 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header" class="sortable">Data de cria&ccedil;&atilde;o</f:facet>
-                             03/06/1989
+                            <!--Esperando a nova tabela do BD
+                                   <h:outputText value="">
+                                <f:convertDateTime pattern="d-m-yyyy"/>
+                            </h:outputText>-->
+                            03/07/1990
                         </h:column>
                         <h:column >
                             <f:facet name="header" class="sortable">status</f:facet>
@@ -55,14 +62,77 @@
                         <h:column>
                             <f:facet name="header">pontos</f:facet>
                             <h:outputText rendered="#{estoria.estimativa != 0}">
-                                <span class="badge" style="background-color: #fb3c4a; color: #fff;">#{estoria.estimativa}</span>
+                                <span class="badge " style="background-color: #fb3c4a; color: #fff;">#{estoria.estimativa}</span>
                             </h:outputText>
                             -
                         </h:column>
                     </h:dataTable>
                 </div>
             </div>
+            
+            
+            
+             <div class="col-md-5" >
+                <div class="row">
+                    <div class="grid simple">
+                        <div class="grid-title">
+                            <h4>Membros do Projeto</h4>
+                            <!-- Caso querida adicionar opção de fechar<div class="tools"></div>-->                    
+                        </div>
+
+                        <div class="grid-body">
+
+                            <h:panelGroup layout="block" id="grid_users" class="dataTables_wrapper form-inline">
+                                <div class="row">
+                                  
+                                    <!-- Adicionar SELECT para quantidade-->
+                                    <!--                                        <div class="col-md-6">
+                                                                                <div class="">
+                                                                                    <label>
+                                                                                        
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>-->
+                                    <div class="col-md-5">
+                                          <a href="incluir_membros_projeto.xhtml" class="btn btn-primary">Incluir Membros</a>
+                                        <div class="">
+                                            <label>
+                                                <!--Espaco para busca -->
+                                                <!--                                                <div class="form-horizontal">
+                                                                                                    <h:inputText class="input-sm"/>
+                                                                                                    <h:button class="btn btn-small btn-default" value="search"/>
+                                                                                                </div>-->
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- Datatable -->
+                                    <h:dataTable  value="#{usuarioController.usuarioOfProjeto}" var="usuarioOfProjeto"
+                                                  class="table dataTable">
+                                        <h:column class="">
+                                            <f:facet name="header">Nome</f:facet>
+                                            <h4>#{usuarioOfProjeto.nome}</h4>
+                                        </h:column>
+                                        <h:column class="">
+                                            <f:facet name="header">Email</f:facet>
+                                            <h4> #{usuarioOfProjeto.email}</h4> 
+                                        </h:column>
+                                        <h:column class="">
+                                            <f:facet name="header">-</f:facet>
+                                            <h:form>
+                                                <h:commandButton  class=" btn btn-purple btn-small" value="x" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.id)}">
+                                                    <f:ajax render=":grid_users" />
+                                                </h:commandButton>
+                                            </h:form>
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
     </ui:define>
 
 </ui:composition>

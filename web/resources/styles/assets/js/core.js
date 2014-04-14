@@ -528,4 +528,34 @@ $(document).ready(function() {
 			}	
 	}
         
+        function showDetails(nome,descricao)
+        {
+            
+            html = ' <div role="dialog" id="detailStory" class="modal fade in" tabindex="-1" >\n\
+                         <div class="modal-dialog " >\n\
+                            <div class="modal-content">\n\
+                                <div class="modal-header"> \n\
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\n\
+                                    <h4 id="detailStoryLabel">'+nome+'</h4>\n\
+                                    <p>'+descricao+'</p>\n\
+                                </div>\n\
+                            </div>\n\
+                        </div>\n\
+                     </div>';
+                   
+
+            $('body').append(html);
+            $('#detailStory').modal({
+                'hidden': closeModal()
+            });
+        }
+        $('#detailStory').on('hidden', function () {
+            console.log('dsadadsadsa');
+        });
+        
+        function closeModal()
+        {
+            $('#detailStory').remove();
+        }
+        
         

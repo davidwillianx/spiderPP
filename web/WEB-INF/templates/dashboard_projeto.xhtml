@@ -118,11 +118,11 @@
                                          <span class=" badge badge-disable pull-right ">#{estoriaController.estorias.size()}</span>
 				</a>
                             <ul class="sub-menu">
-                                <ui:repeat value="#{estoriaController.estorias}" var="projeto">
+                                <ui:repeat value="#{estoriaController.estorias}" var="estoria">
                                     <li class="">
                                         <a href="#">
                                             <i class="fa fa-envelope"></i>
-                                            <span class="title"><h:outputText value="#{projeto.nome}"/></span>
+                                            <span class="title"><h:outputText value="#{estoria.nome}"/></span>
                                         </a>
                                     </li>
                                 </ui:repeat>
