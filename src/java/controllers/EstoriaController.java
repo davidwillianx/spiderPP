@@ -61,6 +61,7 @@ public class EstoriaController {
 
             this.iEstoria.persistEstoria(estoria);
             this.buildMessage.addInfo("Estória criada");
+            this.estoria = new Estoria();
 
         } catch (Exception error) {
             this.buildMessage.addError("Ocorreu um erro ao criar  a Estória.");

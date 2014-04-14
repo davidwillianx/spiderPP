@@ -28,34 +28,41 @@
                             </div>
                         </div>
                     </div>
-                    
                     <h:dataTable value="#{estoriaController.estorias}" var="estoria" class="table table-striped dataTable">
                         <h:column>
-                            <f:facet name="head" class="sortable">
+                            <f:facet name="header" class="sortable">
                             </f:facet>
                             <i class="icon-custom-down"></i>
 
                         </h:column>
                         <h:column>
-                            <f:facet name="head" class="sortable">T&iacute;tulo</f:facet>
+                            <f:facet name="header" class="sortable">T&iacute;tulo</f:facet>
                             #{estoria.nome}
                         </h:column>
                         <h:column>
-                            <f:facet name="head" class="sortable">Data de cria&ccedil;&atilde;o</f:facet>
+                            <f:facet name="header" class="sortable">Data de cria&ccedil;&atilde;o</f:facet>
                              03/06/1989
+                        </h:column>
+                        <h:column >
+                            <f:facet name="header" class="sortable">status</f:facet>
+                            <h:outputText rendered="#{estoria.status ==  true}">
+                                estimada
+                            </h:outputText>
+                            <h:outputText rendered="#{estoria.status == false}">
+                                nao estimada
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">pontos</f:facet>
+                            <h:outputText rendered="#{estoria.estimativa != 0}">
+                                <span class="badge" style="background-color: #fb3c4a; color: #fff;">#{estoria.estimativa}</span>
+                            </h:outputText>
+                            -
                         </h:column>
                     </h:dataTable>
                 </div>
-
-
             </div>
         </div>
-
-
-
-
-
-
     </ui:define>
 
 </ui:composition>
