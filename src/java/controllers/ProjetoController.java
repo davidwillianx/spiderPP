@@ -18,7 +18,7 @@ import models.entities.Projeto;
 @Named
 @RequestScoped
 public class ProjetoController {
-
+    
     private Projeto projeto = new Projeto();
     private Redirect redirect;
     private BuildMessage buildMessage;
