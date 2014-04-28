@@ -7,15 +7,21 @@
     </h:head>
     <h:body>
         <script type="text/javascript">
-//            path = "ws://" + document.location.host + document.location.pathname + "spiderSocketGame";
-              path = "ws://localhost:8080/spiderPP/projeto/spiderSocketGame";
-            var spiderSocket = new WebSocket(path);
+            var spiderSocket = new WebSocket("ws://"+document.location.host+"/spiderPP/spiderSocketGame");
             
-//            spiderSocket.onopen = function()
-//            {
-//                console.log("connection stablished");
-//                
-//            }
+            spiderSocket.onopen = function()
+            {
+                spiderSocket.send("dadasdsad");
+                
+            };
+            
+            spiderSocket.onmessage = function(evt){
+                console.log(evt.data);
+                console.log("evt.data");
+            
+            };
+                
+            
             
         </script>
     </h:body>
