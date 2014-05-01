@@ -1,29 +1,72 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        <script type="text/javascript">
-            var spiderSocket = new WebSocket("ws://"+document.location.host+"/spiderPP/spiderSocketGame");
-            
-            spiderSocket.onopen = function()
-            {
-                spiderSocket.send("dadasdsad");
-                
-            };
-            
-            spiderSocket.onmessage = function(evt){
-                console.log(evt.data);
-                console.log("evt.data");
-            
-            };
-                
-            
-            
-        </script>
-    </h:body>
-</html>
+<ui:composition
+    template="/WEB-INF/templates/dashboard_projeto_game.xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
+    <ui:define name="content-dashboard" >
+        
+        
+         <script type="text/javascript">
+            $(document).ready(function(){
+               
+               var  host = "ws://localhost:8080/spiderPP/spiderSocketGame"
+               var spiderSocket = new WebSocket(host);
+               
+               
+               $("#chat-message-input").keypress(function(messageContent){
+                     if(messageContent.keyCode === 13){
+                          messageContent.preventDefault();
+                          sendMessage($(this).val());
+                          spiderSocket.send($(this).val());
+                          $(this).val(null).focus();
+                     }
+               });
+               
+               spiderSocket.onmessage = function(messageIncoming)
+               {
+                   receiveMessage(messageIncoming.data);
+               }
+                
+            });
+          
+             function sendMessage(msg){
+		$('.chat-messages').append('<div class="user-details-wrapper pull-right animated fadeIn">'+
+			'<div class="user-details">'+
+			  '<div class="bubble old sender">'+	
+					msg+
+			   '</div>'+
+			'</div>'+				
+			'<div class="clearfix"></div>'+
+		'</div>');
+            }	           
+            
+            
+            function receiveMessage(msg)
+            {
+                $('.chat-messages').append('<div class="user-details-wrapper animated fadeIn">'+
+//                                       '<div class="user-profile"> '+
+//                                            <!--&lt;img src=&quot;assets/img/profiles/d.jpg&quot; alt=&quot;&quot; data-src=&quot;assets/img/profiles/d.jpg&quot; data-src-retina=&quot;assets/img/profiles/d2x.jpg&quot; width=&quot;35&quot; height=&quot;35&quot;&gt;--> 
+//                                        '</div>'+
+                                    '<div class="user-details">'+
+                                    '<div class="bubble">'+msg+'</div>'+
+                                '</div>'+
+                                '<div class="clearfix"></div>'+
+                               '<div class="sent_time off">Yesterday 11:25pm</div>'+
+                            '</div>');
+                
+            }
+    
+    
+        </script>
+        
+        
+    </ui:define>
+
+
+</ui:composition>
+ 

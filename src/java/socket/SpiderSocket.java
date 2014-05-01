@@ -9,14 +9,14 @@ package socket;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-import libs.SessionManager;
-import models.entities.Projeto;
-import models.entities.UserOnSession;
 
 /**
  *
@@ -25,69 +25,35 @@ import models.entities.UserOnSession;
 
 @ServerEndpoint("/spiderSocketGame")
 public class SpiderSocket implements Serializable{
-    
-    private UserOnSession userOnSession;
-    
-    private SessionManager  sessionManager;
-    private Projeto projeto;
-    
-    private ArrayList<UserOnSession> usersOnGame = new ArrayList<UserOnSession>();
-    
+
+      private static final Set<Session> sessions = 
+                           Collections.synchronizedSet(new HashSet<Session>()); 
+     /*
+     *@TODO 
+     *verificar sua sala e carregar as mensagens antigas
+     *
+     */
     @OnOpen
     public void onOpen(Session session) {
-        
-        
-        
-        sessionManager = new SessionManager();
-        System.err.println("1 - criando ");
-        projeto =  (Projeto)sessionManager.get("projeto");
-        
-        
-        userOnSession = this.buildObjetoUserOnGame( projeto , session);
-        
-        usersOnGame.add(userOnSession);
-        
+        sessions.add(session);
     }
     
     @OnMessage
-    public void onMessage(String message) {
-        sessionManager = new SessionManager();
-        projeto = (Projeto) sessionManager.get("projeto");
-        
-        System.err.println("Mesage incoming");
-        
-        try {
-
-            for (UserOnSession user : usersOnGame) {
-                if (user.getProjeto().getId() == projeto.getId()) {
-
-                    Session session = user.getSocketSession();
-                    session.getBasicRemote().sendText(message);
-                }
-            }
-
-        } catch (IOException error) {
-            System.err.println("Falha ao realizar operação");
-        }
-
+    public void onMessage(String message, Session senderSession) {
+        System.err.println("Mandando...");
+       try{
+            for (Session session : sessions) {
+                if(!senderSession.equals(session))
+                     session.getBasicRemote().sendText(message);
+           }
+       }catch(IOException error){
+           System.err.println("Algo ocorreu");
+       }
+       
     }
     
     @OnClose
     public void onClose(Session session) {
-        
-           userOnSession = this.buildObjetoUserOnGame(
-                            (Projeto)sessionManager.get("projeto"),
-                            session);
-           usersOnGame.remove(userOnSession);
-        
+           sessions.remove(session);
     }
-    
-    private UserOnSession buildObjetoUserOnGame(Projeto projeto, Session session)
-    {
-        userOnSession = new UserOnSession(projeto,session);
-        return userOnSession;
-    }
-
-
-   
 }
