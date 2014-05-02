@@ -9,58 +9,30 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="content-dashboard" >
-        
+        <h:outputScript library="styles" name="assets/js/gamescript.js"/>   
         
          <script type="text/javascript">
             $(document).ready(function(){
-               
-               var  host = "ws://localhost:8080/spiderPP/spiderSocketGame"
-               var spiderSocket = new WebSocket(host);
+                
+               var room = #{projeto.id};
+               var  host = "ws://localhost:8080/spiderPP/spiderSocketGame/";
+               var spiderSocket = new WebSocket(host+room);
                
                
                $("#chat-message-input").keypress(function(messageContent){
                      if(messageContent.keyCode === 13){
                           messageContent.preventDefault();
-                          sendMessage($(this).val());
-                          spiderSocket.send($(this).val());
-                          $(this).val(null).focus();
+                          sendMessage(spiderSocket,$(this).val());
                      }
                });
                
                spiderSocket.onmessage = function(messageIncoming)
                {
-                   receiveMessage(messageIncoming.data);
+                   appendMessageReceived(messageIncoming.data);
+                   scrollToFinish();
                }
                 
             });
-          
-             function sendMessage(msg){
-		$('.chat-messages').append('<div class="user-details-wrapper pull-right animated fadeIn">'+
-			'<div class="user-details">'+
-			  '<div class="bubble old sender">'+	
-					msg+
-			   '</div>'+
-			'</div>'+				
-			'<div class="clearfix"></div>'+
-		'</div>');
-            }	           
-            
-            
-            function receiveMessage(msg)
-            {
-                $('.chat-messages').append('<div class="user-details-wrapper animated fadeIn">'+
-//                                       '<div class="user-profile"> '+
-//                                            <!--&lt;img src=&quot;assets/img/profiles/d.jpg&quot; alt=&quot;&quot; data-src=&quot;assets/img/profiles/d.jpg&quot; data-src-retina=&quot;assets/img/profiles/d2x.jpg&quot; width=&quot;35&quot; height=&quot;35&quot;&gt;--> 
-//                                        '</div>'+
-                                    '<div class="user-details">'+
-                                    '<div class="bubble">'+msg+'</div>'+
-                                '</div>'+
-                                '<div class="clearfix"></div>'+
-                               '<div class="sent_time off">Yesterday 11:25pm</div>'+
-                            '</div>');
-                
-            }
-    
     
         </script>
         
