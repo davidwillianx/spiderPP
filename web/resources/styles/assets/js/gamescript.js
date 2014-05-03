@@ -11,16 +11,13 @@ $(document).ready(function() {
     inputMessage = $('#chat-message-input');
     boxMessage = $('.chat-messages');
     chatScrollStart();
-    
-    
-    
 });
 
 
 function chatScrollStart()
 {
     boxMessage.slimScroll({
-        height: '600px',
+        height: '550px',
         start: 'bottom'
     });
 }
@@ -29,7 +26,7 @@ function appendMessageSent(msg) {
     boxMessage.append('<div class="user-details-wrapper pull-right animated fadeIn">' +
             '<div class="user-details">' +
             '<div class="bubble old sender">' +
-            msg +
+            msg.message +
             '</div>' +
             '</div>' +
             '<div class="clearfix"></div>' +
@@ -48,7 +45,6 @@ function appendMessageReceived(msg)
             '<div class="clearfix"></div>' +
             '<div class="sent_time off">Yesterday 11:25pm</div>' +
             '</div>');
-
 }
 
 function scrollToFinish()
@@ -57,12 +53,10 @@ function scrollToFinish()
     boxMessage.slimScroll({scrollTo: scrollFinish});
 }
 
-function sendMessage(socket, message)
+function sendMessage(socket, chatMessage)
 {
-    appendMessageSent(message);
     scrollToFinish();
-
-    socket.send(message);
-   inputMessage.val(null).focus();
+    socket.send(JSON.stringify(chatMessage));
+    appendMessageSent(chatMessage);
+    inputMessage.val(null).focus();
 }
-            

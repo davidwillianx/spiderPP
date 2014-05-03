@@ -12,30 +12,38 @@
         <h:outputScript library="styles" name="assets/js/gamescript.js"/>   
         
          <script type="text/javascript">
-            $(document).ready(function(){
+             
+            $(document).ready(socketStart);
+        
+            function socketStart(){
                 
                var room = #{projeto.id};
                var  host = "ws://localhost:8080/spiderPP/spiderSocketGame/";
                var spiderSocket = new WebSocket(host+room);
                
-               
                $("#chat-message-input").keypress(function(messageContent){
                      if(messageContent.keyCode === 13){
-                          messageContent.preventDefault();
-                          sendMessage(spiderSocket,$(this).val());
-                     }
+                         messageContent.preventDefault();
+                          
+                          chatMessage = {
+                               "id"     :  #{usuario.id},
+                               "author" : "#{usuario.nome}",
+                               "message":  $(this).val()
+                              };
+                          
+                          sendMessage(spiderSocket,chatMessage);
+                       }
                });
                
-               spiderSocket.onmessage = function(messageIncoming)
+               spiderSocket.onmessage = function(event)
                {
-                   appendMessageReceived(messageIncoming.data);
+                   chatMessage = JSON.parse(event.data);
+                   appendMessageReceived(chatMessage.message);
                    scrollToFinish();
-               }
-                
-            });
-    
-        </script>
-        
+               };
+            }
+         
+         </script>
         
     </ui:define>
 

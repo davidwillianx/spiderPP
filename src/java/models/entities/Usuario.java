@@ -46,6 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findUsuarioOfProjetoId", query = "SELECT u FROM Usuario u JOIN u.acessarCollection a WHERE a.projeto.id = :id_projeto AND u.status = TRUE")})
 
 public class Usuario implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private Collection<Mensagem> mensagemCollection;
     @Size(max = 140)
     @Column(name = "descricao")
     private String descricao;
@@ -202,6 +204,15 @@ public class Usuario implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @XmlTransient
+    public Collection<Mensagem> getMensagemCollection() {
+        return mensagemCollection;
+    }
+
+    public void setMensagemCollection(Collection<Mensagem> mensagemCollection) {
+        this.mensagemCollection = mensagemCollection;
     }
 }
    

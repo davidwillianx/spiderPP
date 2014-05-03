@@ -6,29 +6,38 @@
 
 package socket;
 
+import static antlr.Utils.error;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import javax.inject.Inject;
+import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import models.ejb.MensagemBean;
+import models.ejbs.interfaces.IMensagem;
+import models.entities.Mensagem;
 
 /**
  *
  * @author smartphonne
  */
 
-@ServerEndpoint("/spiderSocketGame/{room}")
+@ServerEndpoint(value = "/spiderSocketGame/{room}", encoders ={MessageEncoder.class}, decoders = {MessageDecoder.class})
 public class SpiderSocket implements Serializable{
     
       private String room;
+      Mensagem mensagem = new Mensagem();
       private static final Set<Session> sessions = 
                            Collections.synchronizedSet(new HashSet<Session>()); 
+      @Inject
+      private MensagemBean mensagemBean;
      /*
      *@TODO 
      *verificar sua sala e carregar as mensagens antigas
@@ -41,17 +50,22 @@ public class SpiderSocket implements Serializable{
     }
     
     @OnMessage
-    public void onMessage(String message, Session senderSession) {
+    public void onMessage(ChatMessage message, Session senderSession){
         room = (String) senderSession.getUserProperties().get("room");
         
-        System.err.println("Mandando...");
-       try{
+        try{
+          
+            mensagem.setTexto(message.getMessage());
+            
+            mensagemBean.save(mensagem);
+            System.err.println("sss");
+            
             for (Session session : sessions) {
                 if(room.equals(session.getUserProperties().get("room")))
                     if(!senderSession.equals(session))
-                         session.getBasicRemote().sendText(message);
+                         session.getBasicRemote().sendObject(message);
            }
-       }catch(IOException error){
+       }catch(IOException | EncodeException error){
            System.err.println("Algo ocorreu");
        }
     }
