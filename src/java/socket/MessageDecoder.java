@@ -27,12 +27,12 @@ public class MessageDecoder implements  Decoder.Text<ChatMessage>{
 
             JsonObject jsonReceived = Json.createReader(new StringReader(dataReceived)).readObject();
             
-            chatMessage.setId(jsonReceived.getInt("id"));
+            chatMessage.setIdUsuario(jsonReceived.getInt("idUsuario"));
+            chatMessage.setIdProjeto(jsonReceived.getInt("idProjeto"));
             chatMessage.setAuthor(jsonReceived.getString("author"));
             chatMessage.setMessage(jsonReceived.getString("message"));
             chatMessage.setDateReceived(new Date());
             return chatMessage;
-        
     }
 
 

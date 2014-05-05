@@ -139,6 +139,7 @@ public class UsuarioBean implements IUsuario{
     }
 
       /**
+     * @param usuario
        *@TODO lancar exception NoPersist pois já tem método para rollback
        */
     @Override
@@ -253,4 +254,16 @@ public class UsuarioBean implements IUsuario{
             throw new BusinessException("Falha na operação");
         }
     }
+
+    @Override
+    public Usuario selectUsuarioById(int idUsuario) {
+        
+        try{
+            return   entityManager.find(Usuario.class, idUsuario);
+        }catch(Exception error){
+            throw new NotFoundException("Falha ao encontrar usario");
+        }
+    }
+    
+    
 }

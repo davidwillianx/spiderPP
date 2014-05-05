@@ -28,4 +28,5 @@ public interface IUsuario {
     public List<Usuario> selectUsuarioOfProjeto();
     public void insertUsuarioToProjetoByPerfil(Usuario usuario, int idPerfil);
     public void removeUsuarioOfProjeto(int idUsuario);
+    public Usuario selectUsuarioById(int idUsuario);
 }

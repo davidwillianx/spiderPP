@@ -11,6 +11,7 @@ $(document).ready(function() {
     inputMessage = $('#chat-message-input');
     boxMessage = $('.chat-messages');
     chatScrollStart();
+    inputMessage.focus();
 });
 
 
@@ -55,8 +56,9 @@ function scrollToFinish()
 
 function sendMessage(socket, chatMessage)
 {
-    scrollToFinish();
+    
     socket.send(JSON.stringify(chatMessage));
     appendMessageSent(chatMessage);
+    scrollToFinish();
     inputMessage.val(null).focus();
 }

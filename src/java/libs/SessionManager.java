@@ -25,7 +25,8 @@ public class SessionManager {
     {
         this.facesContext = FacesContext.getCurrentInstance();
         this.externalContext = facesContext.getExternalContext();
-        this.session =  (HttpSession) externalContext.getSession(false);
+        this.session = (HttpSession) externalContext.getSession(false);
+
     }
     
     public void set(String key, Object value)
@@ -40,7 +41,6 @@ public class SessionManager {
     
     public void remove(String key)
     {
-//        this.session.removeAttribute(key);
-        this.externalContext.getSessionMap().remove("usuario");
+        this.externalContext.getSessionMap().remove(key);
     }
 }

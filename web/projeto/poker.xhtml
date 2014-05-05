@@ -26,9 +26,11 @@
                          messageContent.preventDefault();
                           
                           chatMessage = {
-                               "id"     :  #{usuario.id},
+                               "idUsuario":  #{usuario.id},
+                               "idProjeto": #{projeto.id},
                                "author" : "#{usuario.nome}",
                                "message":  $(this).val()
+                               
                               };
                           
                           sendMessage(spiderSocket,chatMessage);

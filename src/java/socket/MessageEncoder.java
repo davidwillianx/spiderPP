@@ -12,7 +12,7 @@ import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
 /**
- *
+ * 
  * @author smp
  */
 public class MessageEncoder implements Encoder.Text<ChatMessage>{
@@ -20,7 +20,8 @@ public class MessageEncoder implements Encoder.Text<ChatMessage>{
     @Override
     public String encode(ChatMessage chatMessage) throws EncodeException {
         return Json.createObjectBuilder()
-                .add("id", chatMessage.getId())
+                .add("idUsuario", chatMessage.getIdUsuario())
+                .add("idProjeto",chatMessage.getIdProjeto())
                 .add("message", chatMessage.getMessage())
                 .add("author", chatMessage.getAuthor())
                 .add("dateReceived", chatMessage.getDateReceived().toString())

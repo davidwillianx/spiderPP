@@ -6,13 +6,19 @@
 
 package models.ejb;
 
+import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import libs.SessionManager;
+import libs.exception.NoPersistException;
 import models.ejbs.interfaces.IMensagem;
+import models.ejbs.interfaces.IProjeto;
+import models.ejbs.interfaces.IUsuario;
 import models.entities.Mensagem;
 import models.entities.Projeto;
 import models.entities.Usuario;
@@ -23,30 +29,40 @@ import models.entities.Usuario;
  */
 
 @Stateless
-public class MensagemBean implements IMensagem{
+public class MensagemBean {
 
     @PersistenceContext
     private EntityManager entityManager;
     
+    @EJB
+    private IProjeto iProjeto;
+    @EJB
+    private IUsuario iUsuario;
+    
+    private Projeto projeto;
+    private Usuario usuario;
     private Mensagem mensagem;
     
-    private SessionManager sessionManager;
     
-    @Override
-    public void save(Mensagem mensagem) {
-        
+    public void save(int idProjeto, int idUsuario, String message) {
         try {
-            System.err.println("dddd");
-            sessionManager = new SessionManager();
-            mensagem = new Mensagem();
-            mensagem.setProjeto( (Projeto) sessionManager.get("projeto") );
-            mensagem.setUsuario((Usuario) sessionManager.get("usuario"));
+              
+            this.projeto = iProjeto.selectProjetoById(idProjeto);
+            this.usuario = iUsuario.selectUsuarioById(idUsuario);
+            System.err.println(" idP "+this.projeto.getNome()+ " idU"+this.usuario.getNome());
+            
+            this.mensagem = new Mensagem();
+             this.mensagem.setUsuario(this.usuario);
+             this.mensagem.setProjeto(this.projeto);
+             this.mensagem.setDataRecebido(new Date());
+             this.mensagem.setTexto(message);
             
             
-            entityManager.persist(mensagem);
+            entityManager.persist( this.mensagem);
             
         } catch (Exception error) {
-            System.err.println(" Falha: "+error.getMessage());
+            
+            throw  new NoPersistException("Falha ao salvar mensagem "+error.getMessage());
         }
     }
 

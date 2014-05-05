@@ -15,16 +15,12 @@ import java.util.Date;
 public class ChatMessage {
 
     
-    private  int  id;
     private String message;
     private String author;
     private Date dateReceived;
+    private int idProjeto;
+    private int idUsuario;
     
-    
-    public void setId(int id)
-    {
-        this.id = id;
-    }
     
     public void setMessage(String message)
     {
@@ -41,10 +37,16 @@ public class ChatMessage {
         this.author = author;
     }
     
-    public int getId()
+    public void setIdProjeto(int idProjeto)
     {
-        return this.id;
+      this.idProjeto = idProjeto;   
     }
+    
+    public void setIdUsuario(int idUsuario)
+    {
+      this.idUsuario = idUsuario;   
+    }
+    
     
     public String getAuthor()
     {
@@ -60,4 +62,15 @@ public class ChatMessage {
     {
         return this.dateReceived;
     }
+    
+    public int getIdProjeto()
+    {
+        return this.idProjeto;
+    }
+    
+    public int getIdUsuario()
+    {
+        return this.idUsuario;
+    }
+    
 }
