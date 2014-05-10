@@ -38,6 +38,12 @@ public class MensagemPK implements Serializable {
         this.idProjeto = idProjeto;
         this.idUsuario = idUsuario;
     }
+    
+    public MensagemPK(int idProjeto, int idUsuario)
+    {
+        this.idProjeto = idProjeto;
+        this.idUsuario = idUsuario;
+    }
 
     public int getId() {
         return id;

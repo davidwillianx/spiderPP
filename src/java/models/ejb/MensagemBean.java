@@ -46,19 +46,12 @@ public class MensagemBean {
     
     public void save(int idProjeto, int idUsuario, String message) {
         try {
-              
-            this.projeto = iProjeto.selectProjetoById(idProjeto);
-            this.usuario = iUsuario.selectUsuarioById(idUsuario);
-            System.err.println(" idP "+this.projeto.getNome()+ " idU"+this.usuario.getNome());
             
-            this.mensagem = new Mensagem();
-             this.mensagem.setUsuario(this.usuario);
-             this.mensagem.setProjeto(this.projeto);
-             this.mensagem.setDataRecebido(new Date());
-             this.mensagem.setTexto(message);
+            this.mensagem = new Mensagem(idProjeto, idUsuario);
+            this.mensagem.setDataRecebido(new Date());
+            this.mensagem.setTexto(message);
             
-            
-            entityManager.persist( this.mensagem);
+            entityManager.persist(this.mensagem);
             
         } catch (Exception error) {
             

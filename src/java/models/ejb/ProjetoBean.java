@@ -109,8 +109,10 @@ public class ProjetoBean implements IProjeto {
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Projeto selectProjetoById(int idProjeto) {
         try {
-            this.projeto = this.entityManager.find(Projeto.class, idProjeto);
+            
+            this.projeto = entityManager.find(Projeto.class, idProjeto);
             return this.projeto;
+            
         } catch (Exception error) {
             throw new BusinessException("Falha na consulta do projeto");
         }

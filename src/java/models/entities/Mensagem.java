@@ -63,7 +63,12 @@ public class Mensagem implements Serializable {
     public Mensagem(int id, int idProjeto, int idUsuario) {
         this.mensagemPK = new MensagemPK(id, idProjeto, idUsuario);
     }
-
+    
+    public Mensagem(int idProjeto, int idUsuario)
+    {
+        this.mensagemPK = new MensagemPK(idProjeto, idUsuario);
+    }
+    
     public MensagemPK getMensagemPK() {
         return mensagemPK;
     }
