@@ -16,12 +16,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import libs.SessionManager;
 import libs.exception.NoPersistException;
+import libs.exception.NotFoundException;
 import models.ejbs.interfaces.IMensagem;
 import models.ejbs.interfaces.IProjeto;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Mensagem;
 import models.entities.Projeto;
 import models.entities.Usuario;
+import socket.ChatMessage;
 
 /**
  *
@@ -33,35 +35,41 @@ public class MensagemBean {
 
     @PersistenceContext
     private EntityManager entityManager;
-    
-    @EJB
-    private IProjeto iProjeto;
-    @EJB
-    private IUsuario iUsuario;
-    
-    private Projeto projeto;
-    private Usuario usuario;
     private Mensagem mensagem;
+    private List<Mensagem> mensagens;
     
     
-    public void save(int idProjeto, int idUsuario, String message) {
+    public void save(ChatMessage message) {
         try {
             
-            this.mensagem = new Mensagem(idProjeto, idUsuario);
+            this.mensagem = new Mensagem(message.getIdProjeto() , message.getIdUsuario());
             this.mensagem.setDataRecebido(new Date());
-            this.mensagem.setTexto(message);
+            this.mensagem.setTexto(message.getMessage());
+            this.mensagem.setAutor(message.getAuthor());
+            
             
             entityManager.persist(this.mensagem);
             
         } catch (Exception error) {
-            
             throw  new NoPersistException("Falha ao salvar mensagem "+error.getMessage());
         }
     }
 
-//    @Override
-//    public List<Mensagem> getMensagensByProjeto() {
-//    }
+    
+    public List<Mensagem> getMensagensByProjeto(int idProjeto) {
+
+        try {
+
+            this.mensagens = entityManager.createNamedQuery("Mensagem.findByIdProjeto")
+                    .setParameter("idProjeto", idProjeto)
+                    .getResultList();
+
+            return this.mensagens;
+
+        } catch (Exception error) {
+            throw new NotFoundException("Falha ao encontrar informaçoes");
+        }
+    }
     
     
     

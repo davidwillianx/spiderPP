@@ -21,6 +21,10 @@
                var  host = "ws://localhost:8080/spiderPP/spiderSocketGame/";
                var spiderSocket = new WebSocket(host+room);
                
+               spiderSocket.onopen = function(){
+                   
+               }
+               
                $("#chat-message-input").keypress(function(messageContent){
                      if(messageContent.keyCode === 13){
                          messageContent.preventDefault();
@@ -39,6 +43,9 @@
                
                spiderSocket.onmessage = function(event)
                {
+                   
+                   
+                   console.log("some message are icoming");
                    chatMessage = JSON.parse(event.data);
                    appendMessageReceived(chatMessage.message);
                    scrollToFinish();

@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Mensagem.findByIdUsuario", query = "SELECT m FROM Mensagem m WHERE m.mensagemPK.idUsuario = :idUsuario"),
     @NamedQuery(name = "Mensagem.findByDataRecebido", query = "SELECT m FROM Mensagem m WHERE m.dataRecebido = :dataRecebido")})
 public class Mensagem implements Serializable {
+    @Size(max = 222)
+    @Column(name = "autor")
+    private String autor;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected MensagemPK mensagemPK;
@@ -132,6 +135,14 @@ public class Mensagem implements Serializable {
     @Override
     public String toString() {
         return "models.entities.Mensagem[ mensagemPK=" + mensagemPK + " ]";
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
     }
     
 }
