@@ -11,6 +11,186 @@
     <ui:define name="content-dashboard" >
         <h:outputScript library="styles" name="assets/js/gamescript.js"/>   
         
+        <div class="row">
+        
+        <div class="col-md-5 hidden-xlg">
+            
+            <div class="row tiles-container  m-b-20 hidden-xlg">
+                <div class="m-l-10 ">
+                    <div class="tiles grey p-t-15 p-b-15 p-l-25 ">
+                        <h4 class="text-black semi-bold">Estorias</h4>
+                    </div>
+                    <div class="tiles white ">
+                        
+                        <ui:repeat value="#{estoriaController.estorias}" var="estoria" id="index">
+                             <div class="p-t-20 p-b-15 b-b b-grey">
+                            <div class="post overlap-left-10">
+                                <div class="user-profile-pic-wrapper">
+                                    <div class="user-profile-pic-2x tiles blue white-border">
+                                        <div class="text-white inherit-size p-t-10 p-l-15"> 
+                                            <!--<i class="fa fa-map-marker fa-lg"></i>--> 
+                                            go!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-wrapper small-width">
+                                    <div class="info text-black ">
+                                        <p>#{estoria.descricao}</p>
+                                        <p class="muted small-text"> data de criacao </p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="inline pull-right">
+                                    <div class="tiles text-white p-t-5 p-l-5 p-b-5 p-r-5 inline"> <i class="fa fa-heart-o fa-lg"></i> </div>
+                                    <div class="tiles white p-t-5 p-l-5 p-b-5 p-r-5 inline"> <i class="fa fa-comment-o fa-lg"></i> </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        
+                        </ui:repeat>
+                        
+                    </div>
+<!--                    <div class="tiles grey p-t-5 p-b-5 ">
+                        <p class="text-center"> <a href="javascript:;" class="text-black semi-bold  small-text">Load More</a></p>
+                    </div>-->
+                </div>
+            </div>
+        </div> 
+        
+       
+            <div class="col-md-5">
+                <div class="grid simple">
+                    <div class="grid-title">
+                        <h4 class="text-black semi-bold">Estimativas</h4>
+                    </div>
+                    <div class="grid-body">
+
+                        <div class="row ">    
+
+                            <div class="col-md-2 col-xs-5 no-padding m-r-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10">5</h2>
+                                    <div class="tiles-title blend p-b-25 text-white">David</div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="row">
+            <div class="col-md-10 m-t-60">
+                <div class="grid  simple ">
+                    <div class="grid-title">
+                        <h3>Escolha seu card!</h3>
+                    </div>
+                    <div class="grid-body">
+                        
+                        <div class="row ">
+                                
+                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">2</h2>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">5</h2>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5" >
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">8</h2>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">10</h2>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">12</h2>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                </div>
+                            </div>
+
+                            
+                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                </div>
+                            </div>
+                            
+                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                </div>
+                            </div>
+                            
+                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                </div>
+                            </div>
+                            
+                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                </div>
+                            </div>
+                            
+                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                </div>
+                            </div>
+                            
+                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                </div>
+                            </div>
+                            
+                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                </div>
+                            </div>
+                            
+                            
+                            
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        
          <script type="text/javascript">
              
             $(document).ready(socketStart);
@@ -43,11 +223,12 @@
                
                spiderSocket.onmessage = function(event)
                {
-                   
-                   
                    console.log("some message are icoming");
                    chatMessage = JSON.parse(event.data);
-                   appendMessageReceived(chatMessage.message);
+                   if(chatMessage.idUsuario === #{usuario.id})
+                            appendMessageSent(chatMessage.message)
+                   else  appendMessageReceived(chatMessage.message);
+                   
                    scrollToFinish();
                };
             }

@@ -27,7 +27,7 @@ function appendMessageSent(msg) {
     boxMessage.append('<div class="user-details-wrapper pull-right animated fadeIn">' +
             '<div class="user-details">' +
             '<div class="bubble old sender">' +
-            msg.message +
+            msg+
             '</div>' +
             '</div>' +
             '<div class="clearfix"></div>' +
@@ -58,7 +58,7 @@ function sendMessage(socket, chatMessage)
 {
     
     socket.send(JSON.stringify(chatMessage));
-    appendMessageSent(chatMessage);
+    appendMessageSent(chatMessage.message);
     scrollToFinish();
     inputMessage.val(null).focus();
 }

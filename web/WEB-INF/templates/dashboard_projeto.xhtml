@@ -73,7 +73,14 @@
                     </h:panelGroup>
                     
                     <h:panelGroup layout="block" class="pull-right">
-                        
+                        <h:panelGroup layout="block" style="padding-top:  6px" rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) == 1}">
+                            <a href ="poker.xhtml" class="btn btn-primary btn-large">Iniciar Estimativa</a>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" class="pull-right">
+                        <h:panelGroup layout="block" style="padding-top:  6px" rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) != 1}">
+                            <a href ="poker.xhtml" class="btn btn-primary btn-large">Participar da Estimativa</a>
+                        </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>
                 

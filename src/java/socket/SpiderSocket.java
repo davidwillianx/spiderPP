@@ -75,7 +75,6 @@ public class SpiderSocket implements Serializable {
                 chatMessage.setIdProjeto(mensagem.getProjeto().getId());
                 chatMessage.setIdUsuario(mensagem.getUsuario().getId());
                 
-                System.err.println(" Mensagem "+mensagem.getAutor());
                 session.getBasicRemote().sendObject(chatMessage);
             }
         } catch (NotFoundException error) {
