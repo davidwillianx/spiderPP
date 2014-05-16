@@ -40,7 +40,10 @@ import models.entities.Usuario;
  * @author smartphonne
  */
 @Singleton
-@ServerEndpoint(value = "/spiderSocketGame/{room}", encoders = {MessageEncoder.class}, decoders = {MessageDecoder.class})
+@ServerEndpoint(value = "/spiderSocketGame/{room}", 
+             encoders = {ChatMessageEncoder.class}
+            ,decoders = {MessageDecoder.class}
+        )
 public class SpiderSocket implements Serializable {
 
     @Inject
@@ -57,53 +60,91 @@ public class SpiderSocket implements Serializable {
      *verificar sua sala e carregar as mensagens antigas
      *
      */
-    @OnOpen
-    public void onOpen(Session session, @PathParam("room") String room) throws IOException, EncodeException {
+//    @OnOpen
+//    public void onOpen(Session session, @PathParam("room") String room) throws IOException, EncodeException {
+//
+//        try {
+//            session.getUserProperties().put("room", room);
+//            sessions.add(session);
+//
+//            this.mensagens = mensagemBean.getMensagensByProjeto(Integer.parseInt(room));
+//
+//            for(Mensagem mensagem : this.mensagens)
+//            {
+//                ChatMessage chatMessage = new ChatMessage();
+//                chatMessage.setAuthor(mensagem.getAutor());
+//                chatMessage.setMessage(mensagem.getTexto());
+//                chatMessage.setDateReceived(mensagem.getDataRecebido());
+//                chatMessage.setIdProjeto(mensagem.getProjeto().getId());
+//                chatMessage.setIdUsuario(mensagem.getUsuario().getId());
+//                
+//                session.getBasicRemote().sendObject(chatMessage);
+//            }
+//        } catch (NotFoundException error) {
+//            System.err.println(" ERROR " + error.getMessage());
+//        }
+//
+//    } 
 
-        try {
+    @OnOpen
+    public void onOpen(Session session , @PathParam("room") String room)
+    {
             session.getUserProperties().put("room", room);
             sessions.add(session);
-
-            this.mensagens = mensagemBean.getMensagensByProjeto(Integer.parseInt(room));
-
-            for(Mensagem mensagem : this.mensagens)
-            {
-                ChatMessage chatMessage = new ChatMessage();
-                chatMessage.setAuthor(mensagem.getAutor());
-                chatMessage.setMessage(mensagem.getTexto());
-                chatMessage.setDateReceived(mensagem.getDataRecebido());
-                chatMessage.setIdProjeto(mensagem.getProjeto().getId());
-                chatMessage.setIdUsuario(mensagem.getUsuario().getId());
-                
-                session.getBasicRemote().sendObject(chatMessage);
-            }
-        } catch (NotFoundException error) {
-            System.err.println(" ERROR " + error.getMessage());
-        }
-
+            
+            System.err.println("Acessando");
     }
-
+    
+    
+//    @OnMessage
+//    public void onMessage(ChatMessage message, Session senderSession) {
+//        room = (String) senderSession.getUserProperties().get("room");
+//
+//        try {
+//            mensagemBean.save(message);
+//
+//            for (Session session : sessions) {
+//                if (room.equals(session.getUserProperties().get("room"))) {
+//                    if (!senderSession.equals(session)) {
+//                        session.getBasicRemote().sendObject(message);
+//                    }
+//                }
+//            }
+//        } catch (IOException | EncodeException | NoPersistException error) {
+//            System.err.println("Algo ocorreu " + error.getMessage());
+//        }
+//    }
+    
     @OnMessage
-    public void onMessage(ChatMessage message, Session senderSession) {
-        room = (String) senderSession.getUserProperties().get("room");
-
+    public void onMessage(Session senderSession, Message message){
         try {
-            mensagemBean.save(message);
+            System.err.println("Sending");
+            
+            if (message instanceof ChatMessage) 
+               this.sendChatMessage(senderSession, message);
 
-            for (Session session : sessions) {
-                if (room.equals(session.getUserProperties().get("room"))) {
-                    if (!senderSession.equals(session)) {
-                        session.getBasicRemote().sendObject(message);
-                    }
-                }
-            }
-        } catch (IOException | EncodeException | NoPersistException error) {
-            System.err.println("Algo ocorreu " + error.getMessage());
+        } catch (IOException | EncodeException error) {
+            System.err.println("Falha" + error.getMessage());
         }
+
     }
 
     @OnClose
     public void onClose(Session session) {
         sessions.remove(session);
+    }
+    
+    private void sendChatMessage(Session senderSession, Message message) throws IOException, EncodeException {
+        ChatMessage chatMessage = (ChatMessage) message;
+        mensagemBean.save(chatMessage);
+        String room = (String) senderSession.getUserProperties().get("room");
+
+        for (Session session : sessions) {
+            if (room.equals(session.getUserProperties().get("room"))) {
+                if (!senderSession.equals(session)) {
+                    session.getBasicRemote().sendObject(chatMessage);
+                }
+            }
+        }
     }
 }

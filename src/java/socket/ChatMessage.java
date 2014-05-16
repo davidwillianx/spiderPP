@@ -7,12 +7,13 @@
 package socket;
 
 import java.util.Date;
+import javax.json.JsonObject;
 
 /**
  *
  * @author smp
  */
-public class ChatMessage {
+public class ChatMessage extends Message{
 
     
     private String message;
@@ -20,6 +21,15 @@ public class ChatMessage {
     private Date dateReceived;
     private int idProjeto;
     private int idUsuario;
+
+    public ChatMessage(JsonObject json) {
+        super(json);
+        this.setMessage(json.getString("message"));
+        this.setAuthor(json.getString("author"));
+        this.setIdProjeto(json.getInt("idProjeto"));
+        this.setIdUsuario(json.getInt("idUsuario"));
+        this.setDateReceived(new Date());
+    }
     
     
     public void setMessage(String message)

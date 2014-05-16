@@ -18,21 +18,25 @@ import javax.websocket.EndpointConfig;
  *
  * @author smp
  */
-public class MessageDecoder implements  Decoder.Text<ChatMessage>{
+public class MessageDecoder implements  Decoder.Text<Message>{
 
     @Override
-    public ChatMessage decode(String dataReceived) throws DecodeException{
+    public Message decode(String dataReceived) throws DecodeException{
 
-            ChatMessage chatMessage = new ChatMessage();
-
+            Message message = null;
+            
             JsonObject jsonReceived = Json.createReader(new StringReader(dataReceived)).readObject();
             
-            chatMessage.setIdUsuario(jsonReceived.getInt("idUsuario"));
-            chatMessage.setIdProjeto(jsonReceived.getInt("idProjeto"));
-            chatMessage.setAuthor(jsonReceived.getString("author"));
-            chatMessage.setMessage(jsonReceived.getString("message"));
-            chatMessage.setDateReceived(new Date());
-            return chatMessage;
+            
+            switch(jsonReceived.getString("type"))
+            {
+                case "message" : {
+                    message = new ChatMessage(jsonReceived);
+                }break;
+            }
+            
+            
+           return message;
     }
 
 
