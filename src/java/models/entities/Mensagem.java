@@ -40,7 +40,8 @@ public class Mensagem implements Serializable {
     @Column(name = "autor")
     private String autor;
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
+    
+    @EmbeddedId 
     protected MensagemPK mensagemPK;
     @Lob
     @Size(max = 65535)

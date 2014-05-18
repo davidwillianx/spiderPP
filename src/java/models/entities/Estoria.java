@@ -1,17 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package models.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.Lob;
@@ -36,21 +34,33 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estoria.findById", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id = :id"),
     @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.idProjeto = :idProjeto"),
     @NamedQuery(name = "Estoria.findByNome", query = "SELECT e FROM Estoria e WHERE e.nome = :nome"),
-    @NamedQuery(name = "Estoria.findByEstimativa", query = "SELECT e FROM Estoria e WHERE e.estimativa = :estimativa"),
     @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status")})
 public class Estoria implements Serializable {
+ 
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estoria")
+    private Collection<Estimativa> estimativaCollection;
+    
+    @ManyToOne
+    @JoinColumns({
+        @JoinColumn(name = "id_estoria", referencedColumnName = "id", insertable = false, updatable = false),
+        @JoinColumn(name = "id", referencedColumnName = "id",insertable = false, updatable = false)
+    })
+    private Estoria idEstoria;
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
+   
+    @EmbeddedId 
     protected EstoriaPK estoriaPK;
+    
     @Size(max = 30)
     @Column(name = "nome")
-    private String nome;
+    private String nome; 
     @Lob
     @Size(max = 2147483647,message = "Esta descrição excede o tamanho aceitado, por favor resuma seu texto")
     @Column(name = "descricao")
     private String descricao;
-    @Column(name = "estimativa")
-    private Integer estimativa;
+   
+    
     @Column(name = "status")
     private Boolean status;
     @JoinColumn(name = "id_projeto", nullable = false , referencedColumnName = "id", insertable = false, updatable = false)
@@ -58,15 +68,8 @@ public class Estoria implements Serializable {
     private Projeto projeto;
     @OneToMany(mappedBy = "idEstoria")
     private Collection<Estoria> estoriaCollection;
-    @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "id_estoria", referencedColumnName = "id", insertable = false, updatable = false),
-        @JoinColumn(name = "id", referencedColumnName = "id",insertable = false, updatable = false)
-    })
-    private Estoria idEstoria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estoria")
-    private Collection<JogarRodada> jogarRodadaCollection;
 
+    
     public Estoria() {
     }
 
@@ -102,14 +105,6 @@ public class Estoria implements Serializable {
         this.descricao = descricao;
     }
 
-    public Integer getEstimativa() {
-        return estimativa;
-    }
-
-    public void setEstimativa(Integer estimativa) {
-        this.estimativa = estimativa;
-    }
-
     public Boolean getStatus() {
         return status;
     }
@@ -143,15 +138,6 @@ public class Estoria implements Serializable {
         this.idEstoria = idEstoria;
     }
 
-    @XmlTransient
-    public Collection<JogarRodada> getJogarRodadaCollection() {
-        return jogarRodadaCollection;
-    }
-
-    public void setJogarRodadaCollection(Collection<JogarRodada> jogarRodadaCollection) {
-        this.jogarRodadaCollection = jogarRodadaCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -175,6 +161,16 @@ public class Estoria implements Serializable {
     @Override
     public String toString() {
         return "models.entities.Estoria[ estoriaPK=" + estoriaPK + " ]";
+    }
+
+
+    @XmlTransient
+    public Collection<Estimativa> getEstimativaCollection() {
+        return estimativaCollection;
+    }
+
+    public void setEstimativaCollection(Collection<Estimativa> estimativaCollection) {
+        this.estimativaCollection = estimativaCollection;
     }
     
 }

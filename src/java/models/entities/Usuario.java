@@ -46,6 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findUsuarioOfProjetoId", query = "SELECT u FROM Usuario u JOIN u.acessarCollection a WHERE a.projeto.id = :id_projeto AND u.status = TRUE")})
 
 public class Usuario implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private Collection<Estimativa> estimativaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Mensagem> mensagemCollection;
     @Size(max = 140)
@@ -86,8 +89,6 @@ public class Usuario implements Serializable {
         @JoinColumn(name = "id_usuario", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "id_area_atuacao", referencedColumnName = "id")})
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<JogarRodada> jogarRodadaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Acessar> acessarCollection;
 
@@ -139,14 +140,6 @@ public class Usuario implements Serializable {
 
     
 
-    @XmlTransient
-    public Collection<JogarRodada> getJogarRodadaCollection() {
-        return jogarRodadaCollection;
-    }
-
-    public void setJogarRodadaCollection(Collection<JogarRodada> jogarRodadaCollection) {
-        this.jogarRodadaCollection = jogarRodadaCollection;
-    }
 
     @XmlTransient
     public Collection<Acessar> getAcessarCollection() {
@@ -214,6 +207,16 @@ public class Usuario implements Serializable {
     public void setMensagemCollection(Collection<Mensagem> mensagemCollection) {
         this.mensagemCollection = mensagemCollection;
     }
+
+    @XmlTransient
+    public Collection<Estimativa> getEstimativaCollection() {
+        return estimativaCollection;
+    }
+
+    public void setEstimativaCollection(Collection<Estimativa> estimativaCollection) {
+        this.estimativaCollection = estimativaCollection;
+    }
+
 }
    
     
