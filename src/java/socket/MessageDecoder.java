@@ -27,12 +27,14 @@ public class MessageDecoder implements  Decoder.Text<Message>{
             
             JsonObject jsonReceived = Json.createReader(new StringReader(dataReceived)).readObject();
             
-            
             switch(jsonReceived.getString("type"))
             {
-                case "message" : {
+                case "message" : 
                     message = new ChatMessage(jsonReceived);
-                }break;
+                    break;
+                case "gameStart" :
+                    message = new GameMessage(jsonReceived);
+                    break;  
             }
             
             

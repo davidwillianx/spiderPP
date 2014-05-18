@@ -89,6 +89,7 @@
                 <div class="grid  simple ">
                     <div class="grid-title">
                         <h3>Escolha seu card!</h3>
+                        <a href="#" id="gameStart" class="btn btn-primary">Iniciar</a>
                     </div>
                     <div class="grid-body">
                         
@@ -225,13 +226,33 @@
                spiderSocket.onmessage = function(event)
                {
                    console.log("some message are icoming");
-                   chatMessage = JSON.parse(event.data);
-                   if(chatMessage.idUsuario === #{usuario.id})
-                            appendMessageSent(chatMessage.message)
-                   else  appendMessageReceived(chatMessage.message);
+                   message = JSON.parse(event.data);
                    
-                   scrollToFinish();
+                   if(message.type === "message"){
+                     
+                     if(message.idUsuario === #{usuario.id})
+                       appendMessageSent(message.message)
+                     else  appendMessageReceived(message.message);
+                   
+                     scrollToFinish();
+                   }
+                   
+                   if(message.type === "gameStart")
+                   {
+                       alert('vamos iniciar o gameAAAAAAHHH');
+                   }
+                   
                };
+               
+               $("#gameStart").click(function(e){
+                   e.preventDefault();
+                      gameStart = {
+                       "type": "gameStart",
+                       "start": "startTime"
+                   };
+                   console.log("enviando");
+                   spiderSocket.send(JSON.stringify(gameStart));
+               });
             }
          
          </script>

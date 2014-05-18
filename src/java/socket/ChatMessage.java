@@ -16,6 +16,7 @@ import javax.json.JsonObject;
 public class ChatMessage extends Message{
 
     
+    private final String type = "message";
     private String message;
     private String author;
     private Date dateReceived;
@@ -23,7 +24,6 @@ public class ChatMessage extends Message{
     private int idUsuario;
 
     public ChatMessage(JsonObject json) {
-        super(json);
         this.setMessage(json.getString("message"));
         this.setAuthor(json.getString("author"));
         this.setIdProjeto(json.getInt("idProjeto"));
@@ -81,6 +81,11 @@ public class ChatMessage extends Message{
     public int getIdUsuario()
     {
         return this.idUsuario;
+    }
+    
+    public String getType()
+    {
+        return type;
     }
     
 }

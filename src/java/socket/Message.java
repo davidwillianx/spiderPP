@@ -17,9 +17,14 @@ public class Message {
 
     private JsonObject json;
 
+    public Message(){
+    }
+     
     public Message(JsonObject json) {
         this.json = json;
     }
+    
+   
 
     public void setJson(JsonObject json) {
         this.json = json;

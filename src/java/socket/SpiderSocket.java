@@ -32,7 +32,7 @@ import models.entities.Mensagem;
  */
 @Singleton
 @ServerEndpoint(value = "/spiderSocketGame/{room}",
-        encoders = {ChatMessageEncoder.class}, decoders = {MessageDecoder.class}
+        encoders = {ChatMessageEncoder.class, GameStartEncoder.class}, decoders = {MessageDecoder.class}
 )
 public class SpiderSocket implements Serializable {
 
@@ -71,10 +71,22 @@ public class SpiderSocket implements Serializable {
     @OnMessage
     public void onMessage(Session senderSession, Message message) {
         try {
-            System.err.println("Sending");
 
             if (message instanceof ChatMessage) {
                 this.sendChatMessage(senderSession, message);
+            }
+            
+            if(message instanceof GameMessage){
+                
+                GameMessage gameMessage = (GameMessage) message;
+                String room = (String) senderSession.getUserProperties().get("room");
+                
+                for (Session session : sessions) {
+                    if (room.equals(session.getUserProperties().get("room"))) {
+                        System.err.println("XXX");
+                        session.getBasicRemote().sendObject(gameMessage);
+                    }
+                }
             }
 
         } catch (IOException | EncodeException error) {
@@ -103,4 +115,6 @@ public class SpiderSocket implements Serializable {
             }
         }
     }
+    
+    
 }

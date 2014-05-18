@@ -11,29 +11,23 @@
 package socket;
 
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
-/**
+/** 
  *
  * @author smartphonne
  */
-
-public class ChatMessageEncoder implements Encoder.Text<ChatMessage>{
+public class GameStartEncoder implements Encoder.Text<GameMessage>
+{
 
     @Override
-    public String encode(ChatMessage chatMessage) throws EncodeException {
+    public String encode(GameMessage gameMessage) throws EncodeException {
         return Json.createObjectBuilder()
-                    .add("message", chatMessage.getMessage())
-                    .add("author", chatMessage.getAuthor())
-                    .add("dataReceived", chatMessage.getDateReceived().toString())
-                    .add("idProjeto", chatMessage.getIdProjeto())
-                    .add("idUsuario", chatMessage.getIdUsuario())
-                    .add("type", "message")
+                    .add("start", gameMessage.getStartTime())
+                    .add("type", "gameStart")
                     .build().toString();
-    
     }
 
     @Override
