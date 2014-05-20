@@ -9,7 +9,8 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="content-dashboard" >
-        <h:outputScript library="styles" name="assets/js/gamescript.js"/>   
+        <h:outputScript library="styles" name="assets/js/jquery.countdown360.js"/>
+        <h:outputScript library="styles" name="assets/js/gamescript.js"/>  
         
         <div class="row">
         
@@ -69,11 +70,12 @@
                         <div class="row ">    
 
                             <div class="col-md-2 col-xs-5 no-padding m-r-5">
-                                <div class="tiles green text-center">
+                                
+<!--                                <div class="tiles green text-center">
                                     <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10">5</h2>
                                     <div class="tiles-title blend p-b-25 text-white">David</div>
                                     <div class="clearfix"></div>
-                                </div>
+                                </div>-->
                             </div>
 
                         </div>
@@ -97,14 +99,14 @@
                                 
                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">2</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="0">0</h2>
                                 </div>
                             </div>
 
 
                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">5</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="1">1</h2>
                                 </div>
                             </div>
 
@@ -112,77 +114,61 @@
 
                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5" >
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">8</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="2">2</h2>
                                 </div>
                             </div>
 
 
                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">10</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="3">3</h2>
                                 </div>
                             </div>
 
 
                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">12</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="5">5</h2>
                                 </div>
                             </div>
 
 
                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="8">8</h2>
                                 </div>
                             </div>
 
                             
                              <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="13">13</h2>
                                 </div>
                             </div>
                             
                              <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="15">15</h2>
                                 </div>
                             </div>
                             
                              <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="20">20</h2>
                                 </div>
                             </div>
                             
                              <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="40">40</h2>
                                 </div>
                             </div>
                             
                              <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
+                                    <h2 class="opt-card semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="100">100</h2>
                                 </div>
                             </div>
-                            
-                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
-                                </div>
-                            </div>
-                            
-                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50">15</h2>
-                                </div>
-                            </div>
-                            
-                            
-                            
-
 
                         </div>
                     </div>
@@ -239,7 +225,12 @@
                    
                    if(message.type === "gameStart")
                    {
-                       alert('vamos iniciar o gameAAAAAAHHH');
+                       $("#timerGame").countdown360({
+                           seconds : 300,
+                           onComplete: function(){
+                               //Mostrar as cartas
+                           }
+                       });
                    }
                    
                };
@@ -252,6 +243,15 @@
                    };
                    console.log("enviando");
                    spiderSocket.send(JSON.stringify(gameStart));
+               });
+               
+               $('.opt-card ').click(function(){
+                   card = {
+                     type: "card",
+                     value : $(this).val()
+                   };
+                   
+                   spiderSocket.send(JSON.stringify(card));
                });
             }
          
