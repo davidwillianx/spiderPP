@@ -64,6 +64,19 @@ function sendMessage(socket, chatMessage)
     inputMessage.val(null).focus();
 }
 
+
+function buildCardSelected(card)
+{
+   return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5">'
+
+            + '<div class="tiles green text-center " id="myOption">'
+            + '<h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10" id="myOptionValue">' + card.value + '</h2>'
+            + '<div class="tiles-title blend p-b-25 text-white">'+card.userNameOption+'</div>'
+            + '<div class="clearfix"></div>'
+            + '</div>'
+            + '</div>';
+    
+}
 function myCardSelection(card)
 {
     showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5">'
@@ -83,11 +96,24 @@ function myCardSelection(card)
 
 function userCardSelection(card)
 {
-    
-    for (var indexList = 0; indexList < cardsTurn.length; indexList++)
-        if(cardsTurn[indexList].id === card.id)
-            cardsTurn[indexList].value = card.value;
-        else
-            cardsTurn.push(card);
-    
+    if (cardsTurn.length !== 0)
+    {
+        for (var indexList = 0; indexList < cardsTurn.length; indexList++)
+            if (cardsTurn[indexList].idUsuario === card.idUsuario)
+                    cardsTurn[indexList].value = card.value;
+    }
+    cardsTurn.push(card);
+}
+
+function openGameCardSelection()
+{
+    cardsTurn.length = 0;
+}
+
+function showCardsSelected()
+{   listOfCardsSelected = '';
+    for (var indexList = 0 ; indexList < cardsTurn.length ; indexList++)
+        listOfCardsSelected  += buildCardSelected(cardsTurn[indexList]);
+
+    $('#rowSeleted').append(listOfCardsSelected);
 }

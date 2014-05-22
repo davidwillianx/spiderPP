@@ -84,7 +84,7 @@
                 <div class="grid  simple ">
                     <div class="grid-title">
                         <h3>Escolha seu card!</h3>
-                        <a href="#" id="gameStart" class="btn btn-primary">Iniciar</a>
+                        <a href="#" id="gameStart" class="btn btn-primary " disabled="">Iniciar</a>
                     </div>
                     <div class="grid-body">
                         
@@ -218,12 +218,23 @@
                    
                    if(message.type === "gameStart")
                    {
+                       openGameCardSelection();
+                       //TODO - Limpar a lista de cartas
+                       
+                       $("#gameStart").attr("disabled","disabled");
                        $("#timerGame").countdown360({
                            seconds : 300,
                            onComplete: function(){
-                               //Mostrar as cartas
+                                showCardsSelected();   
+                                $("#gameStart").attr("disabled","");
                            }
                        });
+                   }
+                   
+                   if(message.type === "cardSelected")
+                   {
+                       card = JSON.parse(event.data); 
+                       userCardSelection(card);
                    }
                    
                };
@@ -240,9 +251,10 @@
                
                $('.opt-card ').click(function(e){
                    card = {
-                     "type": "cardOption",
+                     "type": "cardSelected",
                      "value" : $(this).html(),
-                     "userNameOption": "#{usuario.nome}"
+                     "userNameOption": "#{usuario.nome}",
+                     "idUsuario":  #{usuario.id}
                    };
                    
                    myCardSelection(card);

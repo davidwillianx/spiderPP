@@ -22,7 +22,8 @@ public class CardEnconder implements Encoder.Text<Card>{
         return Json.createObjectBuilder()
                 .add("value", card.getValue())
                 .add("userNameOption", card.getUserNameOption())
-                .add("type", "cardOption")
+                .add("type", "cardSelected")
+                .add("idUsuario", card.getIdUsuario())
                 .build().toString();
     }
 

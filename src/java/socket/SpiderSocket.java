@@ -89,18 +89,16 @@ public class SpiderSocket implements Serializable {
             }
 
             if (message instanceof Card) {
-                Card  cardSelecteed = (Card) message;
-                senderSession.getUserProperties().put("cardSelected", cardSelecteed);
-                
+                Card  cardSelected = (Card) message;
                 
                 for(Session session : sessions)
                 {
                    String room = (String ) senderSession.getUserProperties().get("room");
+                   
                    if(room.equals(session.getUserProperties().get("room")))
-                   {
-                       
-                   }
-                       
+                       if(!senderSession.equals(session)){
+                            session.getBasicRemote().sendObject(cardSelected);
+                       }
                 }
             }
 
