@@ -6,7 +6,8 @@
 
 var boxMessage;
 var inputMessage;
-
+var cardsTurn = [];
+        
 $(document).ready(function() {
     inputMessage = $('#chat-message-input');
     boxMessage = $('.chat-messages');
@@ -61,4 +62,32 @@ function sendMessage(socket, chatMessage)
     appendMessageSent(chatMessage.message);
     scrollToFinish();
     inputMessage.val(null).focus();
+}
+
+function myCardSelection(card)
+{
+    showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5">'
+
+            + '<div class="tiles green text-center " id="myOption">'
+            + '<h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10" id="myOptionValue">' + card.value + '</h2>'
+            + '<div class="tiles-title blend p-b-25 text-white">Me</div>'
+            + '<div class="clearfix"></div>'
+            + '</div>'
+            + '</div>';
+
+    if ($('#myOption').length === 0)
+        $('#rowSeleted').append(showCard);
+    else
+        $('#myOption #myOptionValue').html(card.value);
+}
+
+function userCardSelection(card)
+{
+    
+    for (var indexList = 0; indexList < cardsTurn.length; indexList++)
+        if(cardsTurn[indexList].id === card.id)
+            cardsTurn[indexList].value = card.value;
+        else
+            cardsTurn.push(card);
+    
 }

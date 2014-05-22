@@ -67,16 +67,9 @@
                     </div>
                     <div class="grid-body">
 
-                        <div class="row ">    
+                        <div class="row " id="rowSeleted">    
 
-                            <div class="col-md-2 col-xs-5 no-padding m-r-5">
-                                
-<!--                                <div class="tiles green text-center">
-                                    <h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10">5</h2>
-                                    <div class="tiles-title blend p-b-25 text-white">David</div>
-                                    <div class="clearfix"></div>
-                                </div>-->
-                            </div>
+                            
 
                         </div>
 
@@ -245,12 +238,14 @@
                    spiderSocket.send(JSON.stringify(gameStart));
                });
                
-               $('.opt-card ').click(function(){
+               $('.opt-card ').click(function(e){
                    card = {
-                     type: "card",
-                     value : $(this).val()
+                     "type": "cardOption",
+                     "value" : $(this).html(),
+                     "userNameOption": "#{usuario.nome}"
                    };
                    
+                   myCardSelection(card);
                    spiderSocket.send(JSON.stringify(card));
                });
             }

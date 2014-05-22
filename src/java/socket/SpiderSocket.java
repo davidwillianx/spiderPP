@@ -32,7 +32,7 @@ import models.entities.Mensagem;
  */
 @Singleton
 @ServerEndpoint(value = "/spiderSocketGame/{room}",
-        encoders = {ChatMessageEncoder.class, GameStartEncoder.class}, decoders = {MessageDecoder.class}
+        encoders = {ChatMessageEncoder.class, GameStartEncoder.class, CardEnconder.class }, decoders = {MessageDecoder.class}
 )
 public class SpiderSocket implements Serializable {
 
@@ -61,6 +61,7 @@ public class SpiderSocket implements Serializable {
                         .build()
                 );
                 session.getBasicRemote().sendObject(chatMessage);
+                
             }
 
         } catch (NumberFormatException | IOException | EncodeException | NotFoundException error) {
@@ -71,21 +72,35 @@ public class SpiderSocket implements Serializable {
     @OnMessage
     public void onMessage(Session senderSession, Message message) {
         try {
-
             if (message instanceof ChatMessage) {
                 this.sendChatMessage(senderSession, message);
             }
-            
-            if(message instanceof GameMessage){
-                
+
+            if (message instanceof GameMessage) {
+
                 GameMessage gameMessage = (GameMessage) message;
                 String room = (String) senderSession.getUserProperties().get("room");
-                
+
                 for (Session session : sessions) {
                     if (room.equals(session.getUserProperties().get("room"))) {
-                        System.err.println("XXX");
                         session.getBasicRemote().sendObject(gameMessage);
                     }
+                }
+            }
+
+            if (message instanceof Card) {
+                Card  cardSelecteed = (Card) message;
+                senderSession.getUserProperties().put("cardSelected", cardSelecteed);
+                
+                
+                for(Session session : sessions)
+                {
+                   String room = (String ) senderSession.getUserProperties().get("room");
+                   if(room.equals(session.getUserProperties().get("room")))
+                   {
+                       
+                   }
+                       
                 }
             }
 
@@ -95,12 +110,10 @@ public class SpiderSocket implements Serializable {
 
     }
 
-      @OnClose
-      public void onClose(Session session){
+    @OnClose
+    public void onClose(Session session) {
         sessions.remove(session);
     }
-    
-    
 
     private void sendChatMessage(Session senderSession, Message message) throws IOException, EncodeException {
         ChatMessage chatMessage = (ChatMessage) message;
@@ -115,6 +128,5 @@ public class SpiderSocket implements Serializable {
             }
         }
     }
-    
-    
+
 }
