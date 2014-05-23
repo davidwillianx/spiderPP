@@ -52,6 +52,7 @@ public class EstoriaBean implements IEstoria {
             this.estoriaPK = new EstoriaPK(0, this.projeto.getId());
             estoria.setEstoriaPK(this.estoriaPK);
             estoria.setDataCriacao(currentDate());
+            estoria.setStatus(Boolean.FALSE);
             this.entityManager.persist(estoria);
             
         } catch (Exception error) {
@@ -118,7 +119,6 @@ public class EstoriaBean implements IEstoria {
             throw new NoPersistException("Falha na atualização da Estória");
         }
     }
-    
     
     //TODO adicionar em um lib
     public Date currentDate() throws ParseException {
