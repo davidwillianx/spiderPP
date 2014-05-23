@@ -48,6 +48,7 @@ public class EstoriaBean implements IEstoria {
             estoria.setProjeto(this.projeto);
             this.estoriaPK = new EstoriaPK(0, this.projeto.getId());
             estoria.setEstoriaPK(this.estoriaPK);
+            
             this.entityManager.persist(estoria);
             
         } catch (Exception error) {

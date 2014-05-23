@@ -2,6 +2,7 @@ package models.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -37,6 +40,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status")})
 public class Estoria implements Serializable {
  
+    @Column(name = "data_criacao")
+    @Temporal(TemporalType.DATE)
+    private Date dataCriacao;
+    
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estoria")
     private Collection<Estimativa> estimativaCollection;
@@ -171,6 +178,14 @@ public class Estoria implements Serializable {
 
     public void setEstimativaCollection(Collection<Estimativa> estimativaCollection) {
         this.estimativaCollection = estimativaCollection;
+    }
+    
+      public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
     
 }

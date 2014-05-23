@@ -116,7 +116,7 @@
                                             <f:facet name="header">Email</f:facet>
                                             <h4> #{usuarioOfProjeto.email}</h4> 
                                         </h:column>
-                                        <h:column class="">
+                                        <h:column class="" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
                                             <f:facet name="header">-</f:facet>
                                             <h:form>
                                                 <h:commandButton  class=" btn btn-purple btn-small" value="x" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.id)}">
