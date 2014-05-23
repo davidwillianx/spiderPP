@@ -46,11 +46,13 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header" class="sortable">Data de cria&ccedil;&atilde;o</f:facet>
+                            <h:outputText value="#{estoria.dataCriacao}">
+                                <f:convertDateTime pattern="d-MM-yyyy"/>
+                            </h:outputText>
                             <!--Esperando a nova tabela do BD
                                    <h:outputText value="">
                                 <f:convertDateTime pattern="d-m-yyyy"/>
                             </h:outputText>-->
-                            03/07/1990
                         </h:column>
                         <h:column >
                             <f:facet name="header" class="sortable">status</f:facet>

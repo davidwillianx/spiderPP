@@ -5,6 +5,9 @@
  */
 package models.ejb;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -48,7 +51,7 @@ public class EstoriaBean implements IEstoria {
             estoria.setProjeto(this.projeto);
             this.estoriaPK = new EstoriaPK(0, this.projeto.getId());
             estoria.setEstoriaPK(this.estoriaPK);
-            
+            estoria.setDataCriacao(currentDate());
             this.entityManager.persist(estoria);
             
         } catch (Exception error) {
@@ -114,6 +117,15 @@ public class EstoriaBean implements IEstoria {
             System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
             throw new NoPersistException("Falha na atualização da Estória");
         }
+    }
+    
+    
+    //TODO adicionar em um lib
+    public Date currentDate() throws ParseException {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); // posso usar outras mascaras para formatação
+           return simpleDateFormat.parse(simpleDateFormat.format(date));
+  
     }
 
 }

@@ -73,7 +73,6 @@ public class ProjetoBean implements IProjeto {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); // posso usar outras mascaras para formatação
         this.dateProjeto = simpleDateFormat.parse(simpleDateFormat.format(date));
-        System.out.println("Data Atual: " + this.dateProjeto);
         return this.dateProjeto;
     }
 
