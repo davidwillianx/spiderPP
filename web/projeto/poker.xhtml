@@ -9,6 +9,7 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="content-dashboard" >
+        <h:outputScript library="styles" name="assets/plugins/jquery-block-ui/jqueryblockui.js"/>
         <h:outputScript library="styles" name="assets/js/jquery.countdown360.js"/>
         <h:outputScript library="styles" name="assets/js/gamescript.js"/>  
         
@@ -41,17 +42,20 @@
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="inline pull-right">
-                                    <select class="form-control">
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>5</option>
-                                        <option>8</option>
-                                        <option>12</option>
-                                    </select>
-                                </div>
+                                <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                                    <div class="inline pull-right">
+                                        <select class="form-control">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>5</option>
+                                            <option>8</option>
+                                            <option>12</option>
+                                        </select>
+                                    </div>
+                                </h:panelGroup>
+
                                 <div class="clearfix"></div>
                             </div>
                         </div>
@@ -91,16 +95,25 @@
                 <div class="grid  simple ">
                     <div class="grid-title">
                         <h3>Escolha seu card!</h3>
+                        <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                            <a href="#" id="gameStart" class="btn btn-primary " disabled="">Iniciar</a>
+                        </h:panelGroup>
                         
-                        <a href="#" id="gameStart" class="btn btn-primary " disabled="">Iniciar</a>
                     </div>
-                    <div class="grid-body">
+                    <div class="grid-body" id="cardSection">
                         
                         <div class="row ">
                                 
                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
                                     <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="0">0</h2>
+                                </div>
+                            </div>
+                               
+
+                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                <div class="tiles green text-center">
+                                    <h2 class="opt-card  semi-bold text-white  weather-widget no-margin p-t-20 p-b-50" est="15">1/2</h2>
                                 </div>
                             </div>
 
@@ -147,11 +160,6 @@
                                 </div>
                             </div>
                             
-                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="15">15</h2>
-                                </div>
-                            </div>
                             
                              <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
@@ -184,7 +192,8 @@
             $(document).ready(socketStart);
         
             function socketStart(){
-                
+               disableCardArea();
+               
                var room = #{projeto.id};
                var  host = "ws://localhost:8080/spiderPP/spiderSocketGame/";
                var spiderSocket = new WebSocket(host+room);
@@ -227,13 +236,13 @@
                    if(message.type === "gameStart")
                    {
                        openGameCardSelection();
-                       //TODO - Limpar a lista de cartas
-                       
                        $("#gameStart").attr("disabled","disabled");
+                       enableCardArea();
                        $("#timerGame").countdown360({
                            seconds : 300,
                            onComplete: function(){
-                                showCardsSelected();   
+                                showCardsSelected();  
+                                disableCardArea();
                                 $("#gameStart").attr("disabled","");
                            }
                        });

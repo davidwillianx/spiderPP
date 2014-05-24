@@ -117,3 +117,15 @@ function showCardsSelected()
 
     $('#rowSeleted').append(listOfCardsSelected);
 }
+
+function disableCardArea()
+{
+    $("#cardSection").block({message:"aguarde o inicio da rodada"});
+    
+}
+
+function enableCardArea()
+{
+    
+     $("#cardSection").unblock();
+}
