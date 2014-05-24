@@ -44,15 +44,7 @@
                                 </div>
                                 <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
                                     <div class="inline pull-right">
-                                        <select class="form-control">
-                                            <option>0</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>5</option>
-                                            <option>8</option>
-                                            <option>12</option>
-                                        </select>
+                                        <ui:include src="/WEB-INF/templates/form_estimativa.xhtml"/>
                                     </div>
                                 </h:panelGroup>
 
@@ -110,12 +102,11 @@
                                 </div>
                             </div>
                                
-
-                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+<!--                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
                                     <h2 class="opt-card  semi-bold text-white  weather-widget no-margin p-t-20 p-b-50" est="15">1/2</h2>
                                 </div>
-                            </div>
+                            </div>-->
 
 
                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
