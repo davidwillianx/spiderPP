@@ -26,6 +26,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import models.entities.resultQueries.TeamMembership;
+
 
 /**
  *
@@ -43,7 +45,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByEmailAndSenha", query = "SELECT u FROM Usuario u WHERE  u.email = :email AND u.senha = :senha AND u.status = TRUE"),
     @NamedQuery(name = "Usuario.findByHashMail", query = "SELECT u FROM Usuario u WHERE u.hashmail = :hashmail"),
     @NamedQuery(name = "Usuario.findUsuarioOutOfProjetoId", query = "SELECT u FROM Usuario u WHERE u.id NOT IN (SELECT up.id FROM Usuario up JOIN up.acessarCollection a WHERE a.projeto.id = :id_projeto) AND u.status = TRUE"),
-    @NamedQuery(name = "Usuario.findUsuarioOfProjetoId", query = "SELECT u FROM Usuario u JOIN u.acessarCollection a WHERE a.projeto.id = :id_projeto AND u.status = TRUE")})
+    @NamedQuery(name = "Usuario.findUsuarioOfProjetoId", query = "SELECT u FROM Usuario u JOIN u.acessarCollection a WHERE a.projeto.id = :id_projeto AND u.status = TRUE"),
+    @NamedQuery(name = "Usuario.findMembershipsOfProjeto", query = "SELECT NEW TeamMembership (u.nome, u.email,u.descricao) FROM Usuario u")
+}) 
 
 public class Usuario implements Serializable {
 
@@ -62,7 +66,7 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "status")
     private boolean status;
-
+   
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
