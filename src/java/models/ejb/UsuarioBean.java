@@ -22,6 +22,7 @@ import models.ejbs.interfaces.IUsuario;
 import models.entities.Perfil;
 import models.entities.Projeto;
 import models.entities.Usuario;
+import models.entities.resultQueries.TeamMembership;
 
 /**
  *
@@ -192,22 +193,40 @@ public class UsuarioBean implements IUsuario{
         }
     }
 
+//    @Override
+//    public List<Usuario> selectUsuarioOfProjeto() 
+//    {
+//        try{
+//            this.sessionManager = new SessionManager();
+//            this.projeto =  (Projeto) this.sessionManager.get("projeto");
+//            this.usuarios =  this.entityManager.createNamedQuery("Usuario.findUsuarioOfProjetoId")
+//                              .setParameter("id_projeto", this.projeto.getId())
+//                              .getResultList();
+//            
+//            return this.usuarios;
+//                                
+//        }catch(Exception error){
+//            throw new NotFoundException("Falha ao executar a busca");
+//        }
+//    }
+//    
+    
     @Override
-    public List<Usuario> selectUsuarioOfProjeto() 
-    {
-        try{
-            this.sessionManager = new SessionManager();
-            this.projeto =  (Projeto) this.sessionManager.get("projeto");
-            this.usuarios =  this.entityManager.createNamedQuery("Usuario.findUsuarioOfProjetoId")
-                              .setParameter("id_projeto", this.projeto.getId())
-                              .getResultList();
-            
-            return this.usuarios;
-                                
-        }catch(Exception error){
-            throw new NotFoundException("Falha ao executar a busca");
-        }
-    }
+     public List<TeamMembership> selectUsuarioOfProjeto()
+     {
+         try{
+             sessionManager = new SessionManager();
+             projeto = (Projeto) sessionManager.get("projeto");
+             
+             return  entityManager.createNamedQuery("Usuario.findMembershipsOfProjeto")
+                                   .setParameter("id_projeto", projeto.getId())
+                                   .getResultList();
+         
+         }catch(Exception error){
+             throw  new NotFoundException("Falha ao encontrar resultados");
+         }
+     }
+    
 
     @Override
     public void removeUsuarioOfProjeto(int idUsuario) {

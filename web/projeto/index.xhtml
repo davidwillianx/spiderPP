@@ -112,6 +112,11 @@
                                             <f:facet name="header">Email</f:facet>
                                             <h4> #{usuarioOfProjeto.email}</h4> 
                                         </h:column>
+                                        <h:column class="">
+                                            <f:facet name="header">Papel</f:facet>
+                                            <!--<h4> #{usuarioOfProjeto.papel}</h4>--> 
+                                            <i class="fa-ambulance"></i>
+                                        </h:column>
                                         <h:column class="" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
                                             <f:facet name="header">-</f:facet>
                                             <h:form>

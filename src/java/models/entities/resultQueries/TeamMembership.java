@@ -14,9 +14,16 @@ public class TeamMembership {
     
     private String nome;
     private String email;
-//    private String papel;
+    private String papel;
     private String descricacao;
     
+    public TeamMembership(String nome, String email, String descricacao, String papel)
+    {
+        this.nome = nome;
+        this.email = email;
+        this.descricacao = descricacao;
+        this.papel = papel;
+    }
     
     public void setNome(String nome)
     {
@@ -38,15 +45,15 @@ public class TeamMembership {
         return this.email;
     }
     
-//    public void setPapel(String papel)
-//    {
-//        this.papel = papel;
-//    }
+    public void setPapel(String papel)
+    {
+        this.papel = papel;
+    }
     
-//    public String getPapel()
-//    {
-//        return this.papel;
-//    }
+    public String getPapel()
+    {
+        return this.papel;
+    }
     
     public void setDescricao(String descricacao)
     {

@@ -13,6 +13,7 @@ import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
+import models.entities.resultQueries.TeamMembership;
 
 /**
  *
@@ -25,7 +26,7 @@ public class UsuarioController {
     
     private Usuario usuario;
     private List<Usuario> usuariosOutOfProjeto;
-    private List<Usuario> usuariosOfProjeto;
+    private List<TeamMembership> usuariosOfProjeto;
     private int perfilSelected;
     
     
@@ -65,7 +66,7 @@ public class UsuarioController {
         return this.iUsuario.selectUsuarioOutOfProjectById();
     }
     
-    public List<Usuario>getUsuarioOfProjeto()
+    public List<TeamMembership>getUsuarioOfProjeto()
     {
        try{
            
@@ -94,7 +95,7 @@ public class UsuarioController {
                                        ,usuario.getNome()
                                        ,usuario.getHashmail()
                                        );
-           this.buildMessage.addInfo("Cadastro realizado com sucesso");
+           this.buildMessage.addInfo("Cadastro realizado com sucesso"); 
            this.usuario =  new Usuario();
           
        } catch (Exception e) {

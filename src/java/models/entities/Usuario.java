@@ -46,9 +46,9 @@ import models.entities.resultQueries.TeamMembership;
     @NamedQuery(name = "Usuario.findByHashMail", query = "SELECT u FROM Usuario u WHERE u.hashmail = :hashmail"),
     @NamedQuery(name = "Usuario.findUsuarioOutOfProjetoId", query = "SELECT u FROM Usuario u WHERE u.id NOT IN (SELECT up.id FROM Usuario up JOIN up.acessarCollection a WHERE a.projeto.id = :id_projeto) AND u.status = TRUE"),
     @NamedQuery(name = "Usuario.findUsuarioOfProjetoId", query = "SELECT u FROM Usuario u JOIN u.acessarCollection a WHERE a.projeto.id = :id_projeto AND u.status = TRUE"),
-    @NamedQuery(name = "Usuario.findMembershipsOfProjeto", query = "SELECT NEW TeamMembership (u.nome, u.email,u.descricao) FROM Usuario u")
+    @NamedQuery(name = "Usuario.findMembershipsOfProjeto", query = "SELECT NEW models.entities.resultQueries.TeamMembership (u.nome, u.email,u.descricao, ac.perfil.nome) FROM Usuario u JOIN u.acessarCollection ac WHERE ac.projeto.id = :id_projeto AND u.status = TRUE")
 }) 
-
+ 
 public class Usuario implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")

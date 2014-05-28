@@ -12,6 +12,7 @@ package models.ejbs.interfaces;
 
 import java.util.List;
 import models.entities.Usuario;
+import models.entities.resultQueries.TeamMembership;
 
 /**
  *
@@ -25,7 +26,8 @@ public interface IUsuario {
     boolean updatePassword(Usuario usuario, String haString);
     void updateUsuario(Usuario usuario);
     public List<Usuario> selectUsuarioOutOfProjectById();
-    public List<Usuario> selectUsuarioOfProjeto();
+//    public List<Usuario> selectUsuarioOfProjeto();
+    public List<TeamMembership> selectUsuarioOfProjeto();
     public void insertUsuarioToProjetoByPerfil(Usuario usuario, int idPerfil);
     public void removeUsuarioOfProjeto(int idUsuario);
     public Usuario selectUsuarioById(int idUsuario);
