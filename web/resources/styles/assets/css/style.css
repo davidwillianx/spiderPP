@@ -267,7 +267,7 @@ Page sidebar
 	width:29px;
 	height:29px;
 	/*background-image: url("../img/notification-alert.png");*/
-        background-image: url("#resouce['styles/img/notification-alert.png']");
+        background-image: url("#{resource['styles/img/notification-alert.png']}");
 	position:absolute;
 	float:right;
 	right:-15px;
@@ -1430,7 +1430,7 @@ span.iconset{
   width: 8px;
   height: 25px;
   /*background-image: url("../img/sidebar-menu-arrow.png");*/
-  background-image:  url("#resouce['styles/assets/img/sidebar-menu-arrow.png']");
+  background-image:  url("#{resource['styles/assets/img/sidebar-menu-arrow.png']}");
   float: right;
   position: absolute;
   right:-8px;
@@ -1592,7 +1592,7 @@ span.iconset{
 /*** Scroll to top *****/
 .scrollup{
 	/*background: url('../img/pullup.png') no-repeat;*/
-        background: url("#resouce['styles/assets/img/pullup.png']") no-repeat;
+        background: url("#{resource['styles/assets/img/pullup.png']}") no-repeat;
 	background-position:0px 0px;
     width: 27px; height: 27px;
     position:fixed;
@@ -3611,7 +3611,7 @@ border-left:4px solid #736086; border-top:none !important;
   margin-top: 3px;
 }
 .grid.box .grid-title .tools a{
-  background:url(../img/icon/portlet-tray.png) no-repeat;
+  background: url("#{resource['styles/assets/img/icon/portlet-tray.png']}");
   width:23px;
   height:23px
 }
@@ -3829,7 +3829,7 @@ border-left:4px solid #736086; border-top:none !important;
           transition: width 30.0s ease !important;
 }
 .status-icon{
-	background: url('../img/icon/status.png') no-repeat;
+        background: url("#{resource['styles/assets/img/icon/status.png']}");
 	position: relative;
 	display:inline-block;
 	margin-right:10px;
@@ -4016,7 +4016,7 @@ div.DTTT_print_info p {
  
  .tiles .controller a{
   	position:relative;
-	background: url('../img/icon/portlet-tray.png') no-repeat;
+        background: url("#{resource['styles/assets/img/icon/portlet-tray.png']}") no-repeat;
 	transition: all 0.1s linear 0s;	
 	display:inline-block;
 }
@@ -4389,7 +4389,7 @@ border:0;
  }
 .widget-item .controller a{
   	position:relative;
-	background: url('../img/icon/portlet-tray.png') no-repeat;
+        background: url("#{resource['styles/assets/img/icon/portlet-tray.png']}") no-repeat;
 	transition: all 0.1s linear 0s;	
 	display:inline-block;
 }
@@ -4505,7 +4505,7 @@ border:0;
  
  .widget .controller a{
   	position:relative;
-	background: url('../img/icon/portlet-tray.png') no-repeat;
+        background: url("#{resource['styles/assets/img/icon/portlet-tray.png']}") no-repeat;
 	transition: all 0.1s linear 0s;	
 	display:inline-block;
 }
@@ -5158,7 +5158,7 @@ border-bottom-right-radius: 3px;
 
 .nav .tools a{
   	position:relative;
-	background: url('../img/icon/portlet-tray.png') no-repeat;
+	background: url("#{resource['styles/assets/img/icon/portlet-tray.png']}") no-repeat;
 	transition: all 0.1s linear 0s;
 }
 .nav .tools > a.remove, 
@@ -5527,7 +5527,7 @@ box-shadow: inset 0px 1px 2px 0px rgba(0,0,0,0.11)!important;
 	top: 8px;
 }
 .alert .close{
-	background: url("../img/icon/noti-cross.png") no-repeat scroll 0 0 transparent;
+        background: url("#{resource['styles/assets/img/icon/noti-cross.png']}") no-repeat scroll 0 0 transparent;
 	background-position: -9px -10px;
 	width: 10px; height: 9px;
     position: relative;
