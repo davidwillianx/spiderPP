@@ -113,10 +113,21 @@
                                             <h4> #{usuarioOfProjeto.email}</h4> 
                                         </h:column>
                                         <h:column class="">
-                                            <f:facet name="header">Papel</f:facet>
-                                            <!--<h4> #{usuarioOfProjeto.papel}</h4>--> 
-                                            <i class="fa-ambulance"></i>
+                                             <f:facet name="header">Papel</f:facet>
+                                            <h:panelGroup layout="block" rendered="#{usuarioOfProjeto.idPerfil == 1}">
+                                                <span class="profile-team" data-toggle="tooltip" data-placement="top" title="#{usuarioOfProjeto.papel}"><h:graphicImage library="styles" name="assets/img/profiles/sm-icon.png"/></span>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" rendered="#{usuarioOfProjeto.idPerfil == 2}">
+                                                <span class="profile-team" data-toggle="tooltip" data-placement="top" title="#{usuarioOfProjeto.papel}"><h:graphicImage library="styles" name="assets/img/profiles/sm-icon.png"/></span>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" rendered="#{usuarioOfProjeto.idPerfil == 3}">
+                                                <span class="profile-team" data-toggle="tooltip" data-placement="top" title="#{usuarioOfProjeto.papel}"><h:graphicImage library="styles" name="assets/img/profiles/team-icon.png"/></span>
+                                            </h:panelGroup>
+                                             
+                                            
                                         </h:column>
+                                        
+                                        
                                         <h:column class="" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
                                             <f:facet name="header">-</f:facet>
                                             <h:form>

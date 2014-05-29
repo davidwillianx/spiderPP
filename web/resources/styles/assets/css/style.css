@@ -8073,4 +8073,15 @@ li form a {
     transition: color 0.1s linear 0s,background-color 0.1s linear 0s, opacity 0.1s linear 0s!important;
 }
 
+.profile-team{
+   background: url("#{resource['assets/styles/img/profiles/sm-icon.png']}");
+   height: 32px;
+   width: 32px;
+}
+
+.profile-sm{
+   background: url("#{resource['assets/styles/img/profiles/team-icon.png']}"); 
+   height: 32px;
+   width: 32px;
+}
 
