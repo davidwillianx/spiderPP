@@ -43,17 +43,31 @@
                                             <f:facet name="header">Email</f:facet>
                                             <h4> #{usuarioOfProjeto.email}</h4> 
                                         </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Papel</f:facet>
-                                            <h4>Lider</h4>
+                                        <h:column class="">
+                                             <f:facet name="header">Papel</f:facet>
+                                            <h:panelGroup layout="block" rendered="#{usuarioOfProjeto.idPerfil == 1}">
+                                                <span class="profile-team" data-toggle="tooltip" data-placement="top" title="#{usuarioOfProjeto.papel}"><h:graphicImage library="styles" name="assets/img/profiles/sm-icon.png"/></span>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" rendered="#{usuarioOfProjeto.idPerfil == 2}">
+                                                <span class="profile-team" data-toggle="tooltip" data-placement="top" title="#{usuarioOfProjeto.papel}"><h:graphicImage library="styles" name="assets/img/profiles/sm-icon.png"/></span>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" rendered="#{usuarioOfProjeto.idPerfil == 3}">
+                                                <span class="profile-team" data-toggle="tooltip" data-placement="top" title="#{usuarioOfProjeto.papel}"><h:graphicImage library="styles" name="assets/img/profiles/team-icon.png"/></span>
+                                            </h:panelGroup>
+                                             
+                                            
                                         </h:column>
                                         <h:column class="">
-                                            <f:facet name="header">-</f:facet>
-                                            <h:form>
-                                                <h:commandButton  class=" btn btn-success btn-small" value="x" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.id)}">
-                                                    <f:ajax render=":project_user_manager" />
-                                                </h:commandButton>
-                                            </h:form>
+                                            <h:column class="" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                                                <f:facet name="header">-</f:facet>
+                                                <h:panelGroup layout="block" rendered="#{ usuarioOfProjeto.idUsuario != usuario.id}">
+                                                    <h:form>
+                                                        <h:commandButton  class=" btn btn-purple btn-small" value="x" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.idUsuario)}">
+                                                            <f:ajax render=":grid_users" />
+                                                        </h:commandButton>
+                                                    </h:form>
+                                                </h:panelGroup>
+                                            </h:column>
                                         </h:column>
                                     </h:dataTable>
                                 </div>
@@ -73,18 +87,20 @@
                             <div class="row">
                                 <div class="dataTables_wrapper form-inline">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="">
-                                                <label>
+                                        <!--<div class="col-md-6">-->
+                                            <!--<div class="">-->
+                                                <!--<label>-->
                                                     <!--Espaco para busca -->
                                                     <!--                                                <div class="form-horizontal">
                                                                                                         <h:inputText class="input-sm"/>
                                                                                                         <h:button class="btn btn-small btn-default" value="search"/>
                                                                                                     </div>-->
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <h:dataTable value="#{usuarioController.usuariosOutOfProjeto}" var="usuarioOutOfProjeto"
+                                                <!--</label>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <h:panelGroup layout="block" rendered="#{not empty usuarioController.usuariosOutOfProjeto}">
+                                            
+                                            <h:dataTable value="#{usuarioController.usuariosOutOfProjeto}" var="usuarioOutOfProjeto"
                                                      class="table dataTable">
                                             <h:column>
                                                 <f:facet name="header">Nome</f:facet>
@@ -106,6 +122,16 @@
                                                 </h:form>
                                             </h:column>
                                         </h:dataTable>   
+                                            
+                                        </h:panelGroup>
+                                        
+                                        <h:panelGroup class="m-l-55" layout="block" rendered="#{empty usuarioController.usuariosOutOfProjeto}">
+                                            <a href="#novosmembros" class=" btn btn-danger">
+                                                não há membros para adicionar
+                                                <h3>convide agora mesmo!</h3>
+                                            </a>
+                                        </h:panelGroup>
+
 
                                     </div>
                                 </div>
@@ -116,7 +142,7 @@
             </div>
         </h:panelGroup> 
         <div class="row m-t-60 ">
-                <div class="col-md-12">
+                <div class="col-md-12" >
                     <div class="grid simple horizontal red ">
                         <div class="grid-title">
                             <h4>Novos Usuários</h4>
@@ -136,7 +162,7 @@
                                     <h:messages class="alert alert-error" showDetail="true" showSummary="false"></h:messages>
                                    
                                     
-                                    <h:form id="formRegister">  
+                                    <h:form id="formRegister" >  
                                         <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
                                             <h:outputLabel for="nome" value="Nome " class="form-label"/>
                                             <h:inputText id="nome" class="form-control" value="#{usuarioController.usuario.nome}"/>
@@ -168,7 +194,7 @@
                                             </h:inputSecret>  
                                         </h:panelGroup> 
                                       
-                                        <h:panelGroup layout="block" class="col-md-7">
+                                        <h:panelGroup layout="block" class="col-md-7 "   id="novosmembros" >
                                             <h:commandButton class="btn btn-primary btn-cons" value="Cadastrar" action="#{usuarioController.saveAndInviteUsuario(usuarioController.usuario)}"/>
                                         </h:panelGroup>
                                     </h:form>

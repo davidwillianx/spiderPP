@@ -12,19 +12,21 @@ package models.entities.resultQueries;
  */
 public class TeamMembership {
     
+    private int idUsuario;
     private int idPerfil;
     private String nome;
     private String email;
     private String papel;
     private String descricacao;
     
-    public TeamMembership(String nome, String email, String descricacao, String papel, int idPerfil)
+    public TeamMembership(String nome, String email, String descricacao, String papel, int idPerfil, int idUsuario)
     {
         this.nome = nome;
         this.email = email;
         this.descricacao = descricacao;
         this.papel = papel;
         this.idPerfil = idPerfil;
+        this.idUsuario = idUsuario;
     }
     
     public void setNome(String nome)
@@ -71,4 +73,9 @@ public class TeamMembership {
     {
         return this.idPerfil;
     } 
+    
+    public int getIdUsuario()
+    {
+        return this.idUsuario;
+    }
 }

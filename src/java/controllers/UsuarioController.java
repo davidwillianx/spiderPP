@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -11,6 +10,7 @@ import libs.Redirect;
 import libs.SessionManager;
 import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
+import libs.exception.NotFoundException;
 import models.ejbs.interfaces.IUsuario;
 import models.entities.Usuario;
 import models.entities.resultQueries.TeamMembership;
@@ -60,10 +60,16 @@ public class UsuarioController {
         return this.perfilSelected;
     }
     
-    //@TODO falta tratar a exception lancada
+    
     public List<Usuario> getUsuariosOutOfProjeto()
     {
-        return this.iUsuario.selectUsuarioOutOfProjectById();
+        try {
+            System.err.println("SSS");
+            return this.iUsuario.selectUsuarioOutOfProjectById();
+            
+        } catch (NotFoundException error) {
+            return null;
+        }
     }
     
     public List<TeamMembership>getUsuarioOfProjeto()
@@ -168,3 +174,4 @@ public class UsuarioController {
     
     
 }
+ 

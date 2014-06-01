@@ -170,7 +170,7 @@ public class UsuarioBean implements IUsuario{
            return this.usuarios;
             
         }catch(Exception error){
-            throw  new BusinessException("Falha na consulta de usuários");
+            throw  new NotFoundException("Falha na consulta de usuários");
         }
     } 
 
