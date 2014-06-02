@@ -206,7 +206,6 @@
                
                spiderSocket.onmessage = function(event)
                {
-                   console.log("some message are icoming");
                    message = JSON.parse(event.data);
                    
                    if(message.type === "message"){
@@ -224,12 +223,13 @@
                        $("#gameStart").attr("disabled","disabled");
                        enableCardArea();
                        $("#timerGame").countdown360({
-                           seconds : 300,
+                           //seconds : 300,
+                           seconds : 80,
                            onComplete: function(){
                                 showCardsSelected();  
                                 disableCardArea();
                                 $("#gameStart").attr("disabled",false);
-                                $(this).remove();
+                                $("#timerGame").fadeOut().remove();
                            }
                        });
                    }
