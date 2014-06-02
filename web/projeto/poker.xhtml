@@ -14,172 +14,166 @@
         <h:outputScript library="styles" name="assets/js/gamescript.js"/>  
         
         <div class="row">
-        
-        <div class="col-md-5 hidden-xlg">
-            
-            <div class="row tiles-container  m-b-20 hidden-xlg">
-                <div class="m-l-10 ">
-                    <div class="tiles grey p-t-15 p-b-15 p-l-25 ">
-                        <h4 class="text-black semi-bold">Estorias</h4>
-                    </div>
-                    <div class="tiles white ">
-                        
-                        <ui:repeat value="#{estoriaController.estorias}" var="estoria" id="index">
-                             <div class="p-t-20 p-b-15 b-b b-grey">
-                            <div class="post overlap-left-10">
-                                <div class="user-profile-pic-wrapper">
-                                    <div class="user-profile-pic-2x tiles blue white-border">
-                                        <div class="text-white inherit-size p-t-10 p-l-15"> 
-                                            <!--<i class="fa fa-map-marker fa-lg"></i>--> 
-                                            go!
+
+            <div class="col-md-5 hidden-xlg">
+
+                <div class="row tiles-container  m-b-20 hidden-xlg">
+                    <div class="m-l-10 ">
+                        <div class="tiles grey p-t-15 p-b-15 p-l-25 ">
+                            <h4 class="text-black semi-bold">Estorias</h4>
+                        </div>
+                        <div class="tiles white ">
+
+                            <ui:repeat value="#{estoriaController.estorias}" var="estoria" id="index">
+                                <div class="p-t-20 p-b-15 b-b b-grey">
+                                    <div class="post overlap-left-10">
+                                        <div class="user-profile-pic-wrapper">
+                                            <div class="user-profile-pic-2x tiles blue white-border">
+                                                <div class="text-white inherit-size p-t-10 p-l-15"> 
+                                                    <!--<i class="fa fa-map-marker fa-lg"></i>--> 
+                                                    go!
+                                                </div>
+                                            </div>
                                         </div>
+                                        <div class="info-wrapper small-width">
+                                            <div class="info text-black ">
+                                                <p>#{estoria.descricao}</p>
+                                                <p class="muted small-text"> data de criacao </p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                                            <div class="inline pull-right">
+                                                <ui:include src="/WEB-INF/templates/form_estimativa.xhtml"/>
+                                            </div>
+                                        </h:panelGroup>
+
+                                        <div class="clearfix"></div>
                                     </div>
                                 </div>
-                                <div class="info-wrapper small-width">
-                                    <div class="info text-black ">
-                                        <p>#{estoria.descricao}</p>
-                                        <p class="muted small-text"> data de criacao </p>
-                                    </div>
-                                    <div class="clearfix"></div>
+
+                            </ui:repeat>
+
+                        </div>
+                        <!--                    <div class="tiles grey p-t-5 p-b-5 ">
+                                                <p class="text-center"> <a href="javascript:;" class="text-black semi-bold  small-text">Load More</a></p>
+                                            </div>-->
+                    </div>
+                </div>
+            </div> 
+            <div class="row p-l-50">
+
+                <div class="col-md-5">
+                    <div class="grid simple">
+                        <div class="grid-title">
+                            <div class="row-fluid">
+                                <div class="">
+                                    <h4 class="text-black semi-bold">Estimativas</h4>
                                 </div>
-                                <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
-                                    <div class="inline pull-right">
-                                        <ui:include src="/WEB-INF/templates/form_estimativa.xhtml"/>
-                                    </div>
+                                <h:panelGroup layout="block" class="" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                                    <a href="#" id="gameStart" class="btn btn-primary " disabled="">Iniciar</a>
                                 </h:panelGroup>
-
-                                <div class="clearfix"></div>
                             </div>
+
                         </div>
-                        
-                        </ui:repeat>
-                        
-                    </div>
-<!--                    <div class="tiles grey p-t-5 p-b-5 ">
-                        <p class="text-center"> <a href="javascript:;" class="text-black semi-bold  small-text">Load More</a></p>
-                    </div>-->
-                </div>
-            </div>
-        </div> 
-        
-       
-            <div class="col-md-5">
-                <div class="grid simple">
-                    <div class="grid-title">
-                        <div class="row-fluid">
-                            <div class="">
-                                <h4 class="text-black semi-bold">Estimativas</h4>
+                        <div class="grid-body">
+
+                            <div class="row " id="rowSeleted">    
+
+
+
                             </div>
-                        <h:panelGroup layout="block" class="" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
-                            <a href="#" id="gameStart" class="btn btn-primary " disabled="">Iniciar</a>
-                        </h:panelGroup>
-                        </div>
-                        
-                    </div>
-                    <div class="grid-body">
-
-                        <div class="row " id="rowSeleted">    
-
-                            
 
                         </div>
-
                     </div>
                 </div>
+
+                <h:panelGroup class="col-md-5 " layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 3}">
+                    <div class="grid  simple ">
+                        <div class="grid-title">
+                            <h3>Escolha seu card!</h3>
+                        </div>
+
+                        <div class="grid-body" id="cardSection">
+                            <div class="row " >
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" est="0">0</h4>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" est="1">1</h4>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5" >
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" est="2">2</h4>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" est="3">3</h4>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" est="5">5</h4>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white  no-margin p-t-20 p-b-20" est="8">8</h4>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" est="13">13</h4>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" est="20">20</h4>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" est="40">40</h4>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card semi-bold text-white  no-margin p-t-20 p-b-20" est="100">100</h4>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>  
+
+                    </div>
+                </h:panelGroup>
             </div>
-            
+
         </div>
         
-        <h:panelGroup class="row" layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 3}">
-             <div class="col-md-10 m-t-60">
-                <div class="grid  simple ">
-                    <div class="grid-title">
-                        <h3>Escolha seu card!</h3>
-                    </div>
-                        
-                          <div class="row ">
-                                
-                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="0">0</h2>
-                                </div>
-                            </div>
-                               
-<!--                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget no-margin p-t-20 p-b-50" est="15">1/2</h2>
-                                </div>
-                            </div>-->
-
-
-                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="1">1</h2>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5" >
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="2">2</h2>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="3">3</h2>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="5">5</h2>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="8">8</h2>
-                                </div>
-                            </div>
-
-                            
-                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="13">13</h2>
-                                </div>
-                            </div>
-                            
-                            
-                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="20">20</h2>
-                                </div>
-                            </div>
-                            
-                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card  semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="40">40</h2>
-                                </div>
-                            </div>
-                            
-                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
-                                <div class="tiles green text-center">
-                                    <h2 class="opt-card semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-50" est="100">100</h2>
-                                </div>
-                            </div>
-
-                        </div>
-                        
-                        
-                    
-                </div>
-            </div>
-        </h:panelGroup>
+       
         
          <script type="text/javascript">
              

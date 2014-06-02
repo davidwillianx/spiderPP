@@ -57,7 +57,6 @@ function scrollToFinish()
 
 function sendMessage(socket, chatMessage)
 {
-    
     socket.send(JSON.stringify(chatMessage));
     appendMessageSent(chatMessage.message);
     scrollToFinish();
