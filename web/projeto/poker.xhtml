@@ -66,7 +66,15 @@
             <div class="col-md-5">
                 <div class="grid simple">
                     <div class="grid-title">
-                        <h4 class="text-black semi-bold">Estimativas</h4>
+                        <div class="row-fluid">
+                            <div class="">
+                                <h4 class="text-black semi-bold">Estimativas</h4>
+                            </div>
+                        <h:panelGroup layout="block" class="" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                            <a href="#" id="gameStart" class="btn btn-primary " disabled="">Iniciar</a>
+                        </h:panelGroup>
+                        </div>
+                        
                     </div>
                     <div class="grid-body">
 
@@ -82,19 +90,14 @@
             
         </div>
         
-        <div class="row">
-            <div class="col-md-10 m-t-60">
+        <h:panelGroup class="row" layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 3}">
+             <div class="col-md-10 m-t-60">
                 <div class="grid  simple ">
                     <div class="grid-title">
                         <h3>Escolha seu card!</h3>
-                        <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
-                            <a href="#" id="gameStart" class="btn btn-primary " disabled="">Iniciar</a>
-                        </h:panelGroup>
-                        
                     </div>
-                    <div class="grid-body" id="cardSection">
                         
-                        <div class="row ">
+                          <div class="row ">
                                 
                             <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
                                 <div class="tiles green text-center">
@@ -171,12 +174,12 @@
                             </div>
 
                         </div>
-                    </div>
+                        
+                        
+                    
                 </div>
             </div>
-            
-        </div>
-        
+        </h:panelGroup>
         
          <script type="text/javascript">
              

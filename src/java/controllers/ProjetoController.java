@@ -116,9 +116,16 @@ public class ProjetoController {
     
     public void exitProjeto()
     {
-        this.sessionManager =  new SessionManager();
-        this.sessionManager.remove("projeto");
-        this.sessionManager.remove("usuario");
-        this.redirect.redirectTo("/user/index.xhtml");
+        
+        try{
+            this.sessionManager =  new SessionManager();
+            this.sessionManager.remove("projeto");
+            this.redirect.redirectTo("/user/index.xhtml");
+        }catch(Exception error)
+        {
+            System.err.println("Falha ao sair");
+        }
+        
+        
     }
 }
