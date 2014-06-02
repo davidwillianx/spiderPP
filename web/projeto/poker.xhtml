@@ -55,9 +55,6 @@
                             </ui:repeat>
 
                         </div>
-                        <!--                    <div class="tiles grey p-t-5 p-b-5 ">
-                                                <p class="text-center"> <a href="javascript:;" class="text-black semi-bold  small-text">Load More</a></p>
-                                            </div>-->
                     </div>
                 </div>
             </div> 
@@ -187,7 +184,7 @@
                var spiderSocket = new WebSocket(host+room);
                
                spiderSocket.onopen = function(){
-                   
+                   //IF estimativa recebe tempo e as estimativas
                }
                
                $("#chat-message-input").keypress(function(messageContent){
@@ -231,7 +228,8 @@
                            onComplete: function(){
                                 showCardsSelected();  
                                 disableCardArea();
-                                $("#gameStart").attr("disabled","");
+                                $("#gameStart").attr("disabled",false);
+                                $(this).remove();
                            }
                        });
                    }

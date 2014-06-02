@@ -7,12 +7,14 @@
 var boxMessage;
 var inputMessage;
 var cardsTurn = [];
+var rowSelected;
         
 $(document).ready(function() {
     inputMessage = $('#chat-message-input');
     boxMessage = $('.chat-messages');
     chatScrollStart();
     inputMessage.focus();
+    rowSelected = $('#rowSeleted');
 });
 
 
@@ -62,7 +64,20 @@ function sendMessage(socket, chatMessage)
     scrollToFinish();
     inputMessage.val(null).focus();
 }
+//@TODO  OS BUILDS DE CARDS TEM MESMO HTML (EXALTAR EM UMA VARIAVEL)
 
+function buildCardHidden()
+{
+    return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5">'
+
+            + '<div class="tiles green text-center ">'
+            + '<h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10" >?</h2>'
+            + '<div class="tiles-title blend p-b-25 text-white">' + card.userNameOption + '</div>'
+            + '<div class="clearfix"></div>'
+            + '</div>'
+            + '</div>';
+
+}
 
 function buildCardSelected(card)
 {
@@ -88,20 +103,31 @@ function myCardSelection(card)
             + '</div>';
 
     if ($('#myOption').length === 0)
-        $('#rowSeleted').append(showCard);
+        rowSelected.prepend(showCard);
     else
         $('#myOption #myOptionValue').html(card.value);
 }
 
 function userCardSelection(card)
 {
+    
     if (cardsTurn.length !== 0)
     {
         for (var indexList = 0; indexList < cardsTurn.length; indexList++)
-            if (cardsTurn[indexList].idUsuario === card.idUsuario)
+            if (cardsTurn[indexList].idUsuario === card.idUsuario){
                     cardsTurn[indexList].value = card.value;
+                    return;
+            }
+                
+            else{
+                cardsTurn.push(card);
+                 rowSelected.append(buildCardHidden());
+            }
+            
+    }else{
+        cardsTurn.push(card);
+        rowSelected.append(buildCardHidden());
     }
-    cardsTurn.push(card);
 }
 
 function openGameCardSelection()
@@ -114,7 +140,7 @@ function showCardsSelected()
     for (var indexList = 0 ; indexList < cardsTurn.length ; indexList++)
         listOfCardsSelected  += buildCardSelected(cardsTurn[indexList]);
 
-    $('#rowSeleted').append(listOfCardsSelected);
+    $('#rowSeleted').html(listOfCardsSelected).fadeIn();
 }
 
 function disableCardArea()
@@ -125,6 +151,5 @@ function disableCardArea()
 
 function enableCardArea()
 {
-    
      $("#cardSection").unblock();
 }
