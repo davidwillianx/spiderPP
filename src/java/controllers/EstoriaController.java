@@ -83,4 +83,12 @@ public class EstoriaController {
         this.redirect = new Redirect();
         this.redirect.redirectTo("/projeto/editarestoria.xhtml?estoria=" + estoria.getEstoriaPK().getId());
     }
+    
+    public int showTotalEstimativaByEstorias (){
+        return this.iEstoria.totalEstimativaProjeto();
+    }
+    
+    public float showMeanEstimativasByEstoria (){
+        return this.iEstoria.meanEstorias();
+    }
 }

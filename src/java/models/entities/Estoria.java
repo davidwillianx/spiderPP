@@ -22,9 +22,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
- * @author Bruno
- */
+*
+* @author Bruno
+*/
 @Entity
 @Table(name = "estoria")
 @XmlRootElement
@@ -52,12 +52,12 @@ public class Estoria implements Serializable {
     private Estoria idEstoria;
     private static final long serialVersionUID = 1L;
    
-    @EmbeddedId 
+    @EmbeddedId
     protected EstoriaPK estoriaPK;
     
     @Size(max = 30)
     @Column(name = "nome")
-    private String nome; 
+    private String nome;
     @Lob
     @Size(max = 2147483647,message = "Esta descrição excede o tamanho aceitado, por favor resuma seu texto")
     @Column(name = "descricao")
@@ -183,5 +183,15 @@ public class Estoria implements Serializable {
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+        
+    @Column(name = "estimativa")
+    private Integer estimativa;
     
+     public Integer getEstimativa() {
+        return estimativa;
+    }
+
+    public void setEstimativa(Integer estimativa) {
+        this.estimativa = estimativa;
+    }
 }

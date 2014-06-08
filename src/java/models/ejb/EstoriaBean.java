@@ -37,6 +37,7 @@ public class EstoriaBean implements IEstoria {
     private Estoria estoria;
     private EstoriaPK estoriaPK;
 
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -95,6 +96,7 @@ public class EstoriaBean implements IEstoria {
             this.estoria = (Estoria) this.entityManager.createNamedQuery("Estoria.findById")
                                                        .setParameter("id", Integer.parseInt(idEstoria))
                                                        .getSingleResult();
+            
             return this.estoria;
         } catch (Exception error) {
             System.err.println("Error em EstoriaBean-selecEstoriaById-->" + error.getMessage());
@@ -128,4 +130,33 @@ public class EstoriaBean implements IEstoria {
   
     }
 
+    @Override
+    public int totalEstimativaProjeto(){
+        try {
+            int total = 0;
+            this.estorias = selectEstorias();
+            for (Estoria estoria1 : this.estorias) {
+                this.estoria = estoria1;
+                if (this.estoria.getEstimativa() != null)
+                    total = total + this.estoria.getEstimativa();
+            }
+            System.err.println("---->TotalEstorias: " + total);
+            return total;
+        } catch (Exception error){
+            System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
+            throw new NoPersistException("Falha no metodo que gera o total das estimativas");
+        }
+    }
+    
+    @Override
+    public float meanEstorias (){
+        try {
+            float media = totalEstimativaProjeto() /  this.selectEstorias().size();
+            System.err.println("---->MédiaEstorias: " + media);
+            return media;
+        } catch (Exception error) {
+            System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
+            throw new NoPersistException("Falha no metodo que gera a media do projeto");
+        }
+    }
 }

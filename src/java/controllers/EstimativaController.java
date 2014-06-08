@@ -7,6 +7,7 @@
 package controllers;
 
 import javax.inject.Named;
+import models.ejbs.interfaces.IEstimativa;
 import models.entities.Estimativa;
 
 /**
@@ -19,6 +20,7 @@ public class EstimativaController {
     private Estimativa estimativa;
     private int estimativaSelected;
     private  int[] estimativas = {0,1,2,3,5,8,13,20,40,100};
+    private IEstimativa iEstimativa;
     
     
     
@@ -39,5 +41,11 @@ public class EstimativaController {
     public int[] getEstimativas()
     {
         return estimativas;
+    }
+    
+    public Estimativa giveEstimativa (int idEstoria){
+        this.estimativa = this.iEstimativa.SelectEstimativaByIdEstoria(idEstoria);
+        System.err.println("Estimativa:" + this.estimativa.getEstimativa());
+        return this.estimativa;
     }
 }
