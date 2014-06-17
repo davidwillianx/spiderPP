@@ -151,8 +151,11 @@ public class EstoriaBean implements IEstoria {
     @Override
     public float meanEstorias (){
         try {
-            float media = totalEstimativaProjeto() /  this.selectEstorias().size();
-            System.err.println("---->MédiaEstorias: " + media);
+            float media = 0;
+            if (this.selectEstorias().size() != 0){
+                media = totalEstimativaProjeto() /  this.selectEstorias().size();
+                System.err.println("---->MédiaEstorias: " + media);
+            }
             return media;
         } catch (Exception error) {
             System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
