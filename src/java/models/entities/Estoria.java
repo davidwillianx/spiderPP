@@ -55,7 +55,7 @@ public class Estoria implements Serializable {
     @EmbeddedId
     protected EstoriaPK estoriaPK;
     
-    @Size(max = 30)
+    @Size(max = 100,message = "O título não pode exceder a 100 caracteres")
     @Column(name = "nome")
     private String nome;
     @Lob

@@ -65,6 +65,7 @@ public class ProjetoController {
         try {
             this.iProjeto.saveProjeto(projeto);
             this.buildMessage.addInfo("Projeto cadastrado com Sucesso");
+            this.projeto = new Projeto();
         
         } catch (Exception error) {
             this.buildMessage.addError("Erro ao cadastrar Projeto.");

@@ -60,7 +60,7 @@ public class EstoriaController {
         try {
 
             this.iEstoria.persistEstoria(estoria);
-            this.buildMessage.addInfo("Estória criada");
+            this.buildMessage.addInfo("Estória cadastrada coom sucesso!");
             this.estoria = new Estoria();
 
         } catch (Exception error) {
