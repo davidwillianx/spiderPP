@@ -14,8 +14,7 @@
         <h:outputScript library="styles" name="assets/js/gamescript.js"/>  
         
         <div class="row">
-
-            <div class="col-md-5 hidden-xlg">
+            <div class="col-md-5 ">
 
                 <div class="row tiles-container  m-b-20 hidden-xlg">
                     <div class="m-l-10 ">
@@ -23,14 +22,14 @@
                             <h4 class="text-black semi-bold">Estorias</h4>
                         </div>
                         <div class="tiles white ">
-
+                                
                             <ui:repeat value="#{estoriaController.estorias}" var="estoria" id="index">
                                 <div class="p-t-20 p-b-15 b-b b-grey">
                                     <div class="post overlap-left-10">
                                         <div class="user-profile-pic-wrapper">
                                             <div class="user-profile-pic-2x tiles blue white-border">
                                                 <div class="text-white inherit-size p-t-10 p-l-15"> 
-                                                    <!--<i class="fa fa-map-marker fa-lg"></i>--> 
+                                                    <i class="fa fa-map-marker fa-lg"></i> 
                                                     go!
                                                 </div>
                                             </div>
@@ -58,8 +57,8 @@
                     </div>
                 </div>
             </div> 
+            
             <div class="row p-l-50">
-
                 <div class="col-md-5">
                     <div class="grid simple">
                         <div class="grid-title">
@@ -77,10 +76,7 @@
 
                             <div class="row " id="rowSeleted">    
 
-
-
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -51,6 +51,7 @@ public class EstoriaController {
         try {
             return this.iEstoria.selectEstorias();
         } catch (Exception error) {
+            
             return null;
         }
     }

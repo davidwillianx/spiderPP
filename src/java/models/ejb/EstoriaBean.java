@@ -73,6 +73,8 @@ public class EstoriaBean implements IEstoria {
         }
     }
     
+    
+    /*TODO Evitar buscas constates quando o resultado não muda*/
     @Override
     public List<Estoria> selectEstorias() {
         try {
@@ -81,6 +83,7 @@ public class EstoriaBean implements IEstoria {
             this.estorias = this.entityManager.createNamedQuery("Estoria.findByIdProjeto", Estoria.class)
                                               .setParameter("idProjeto", this.projeto.getId())
                                               .getResultList();
+            
             return this.estorias;
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
