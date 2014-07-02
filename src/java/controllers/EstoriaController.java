@@ -49,9 +49,10 @@ public class EstoriaController {
 
     public List<Estoria> getEstorias() {
         try {
-            return this.iEstoria.selectEstorias();
-        } catch (Exception error) {
             
+            estorias =  this.iEstoria.selectEstorias();
+            return estorias;
+        } catch (Exception error) {
             return null;
         }
     }
