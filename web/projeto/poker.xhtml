@@ -13,6 +13,8 @@
         <h:outputScript library="styles" name="assets/js/jquery.countdown360.js"/>
         <h:outputScript library="styles" name="assets/js/gamescript.js"/>  
         
+        
+        
         <div class="row">
             <div class="col-md-5 ">
                 <div class="row tiles-container  m-b-20 ">
@@ -21,6 +23,7 @@
                             <h4 class="text-black semi-bold">Estorias</h4>
                         </div>
                         <div class="tiles white ">
+                            
                                 
                             <ui:repeat value="#{estoriaController.estorias}" var="estoria" id="index">
                                 <div class="p-t-20 p-b-15 b-b b-grey">
@@ -36,7 +39,12 @@
                                         <div class="info-wrapper small-width">
                                             <div class="info text-black ">
                                                 <p>#{estoria.descricao}</p>
-                                                <p class="muted small-text"> data de criacao </p>
+                                                <p class="muted small-text"> 
+                                                    <h:outputText value="#{estoria.dataCriacao}">
+                                                        <f:convertDateTime pattern="d-m-yyyy"/> 
+                                                    </h:outputText> 
+                                                </p>
+                                                    
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>
@@ -174,9 +182,10 @@
             function socketStart(){
                disableCardArea();
                
-               var room = #{projeto.id};
-               var  host = "ws://localhost:8080/spiderPP/spiderSocketGame/";
-               var spiderSocket = new WebSocket(host+room);
+               var room = "#{param.rm}";
+               var perfil = "#{param.pr}";
+               var  host = "ws://localhost:8080/spiderPP/spiderSocketGame";
+               var spiderSocket = new WebSocket(host+"/"+room+"/"+perfil);
                
                spiderSocket.onopen = function(){
                    //IF estimativa recebe tempo e as estimativas

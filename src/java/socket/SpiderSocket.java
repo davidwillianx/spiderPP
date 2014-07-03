@@ -31,7 +31,7 @@ import models.entities.Mensagem;
  * @author smartphonne
  */
 @Singleton
-@ServerEndpoint(value = "/spiderSocketGame/{room}",
+@ServerEndpoint(value = "/spiderSocketGame/{room}/{perfil}",
         encoders = {ChatMessageEncoder.class, GameStartEncoder.class, CardEnconder.class }, decoders = {MessageDecoder.class}
 )
 public class SpiderSocket implements Serializable {
@@ -43,13 +43,15 @@ public class SpiderSocket implements Serializable {
             = Collections.synchronizedSet(new HashSet<Session>());
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("room") String room) {
+    public void onOpen(Session session, @PathParam("room") String room, @PathParam("perfil") String perfil) {
 
         try {
             session.getUserProperties().put("room", room);
             sessions.add(session);
 
-            this.mensagens = mensagemBean.getMensagensByProjeto(Integer.parseInt(room));
+            this.mensagens = mensagemBean.getMensagensByProjeto(Integer.parseInt(
+                        room.substring(room.length() -1)
+                    ));
 
             for (Mensagem mensagem : this.mensagens) {
 
@@ -64,8 +66,8 @@ public class SpiderSocket implements Serializable {
                 
             }
 
-        } catch (NumberFormatException | IOException | EncodeException | NotFoundException error) {
-            System.err.println("Error" + error.getMessage());
+        } catch (NumberFormatException | IOException |   EncodeException  | NotFoundException error ) {
+            System.err.println("Error " + error.getMessage());
         }
     }
 

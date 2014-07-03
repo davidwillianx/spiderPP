@@ -1,9 +1,11 @@
 package controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import libs.BuildHash;
 import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
@@ -117,7 +119,6 @@ public class ProjetoController {
     
     public void exitProjeto()
     {
-        
         try{
             this.sessionManager =  new SessionManager();
             this.sessionManager.remove("projeto");
@@ -126,7 +127,18 @@ public class ProjetoController {
         {
             System.err.println("Falha ao sair");
         }
-        
-        
+    }
+    
+    public String showHashProject(int idProjeto) throws UnsupportedEncodingException
+    {
+        BuildHash hashBuilder = new BuildHash();
+        return hashBuilder.buildHashStringURL(String.valueOf(idProjeto));
+    }
+    
+    public String showHashPerfil(int idUsuario, int idProjeto) throws UnsupportedEncodingException
+    {
+        int idPerfil =  this.showUserProjetoPersmission(idProjeto, idUsuario);
+        BuildHash buildHash = new BuildHash();
+        return buildHash.buildHashStringURL(String.valueOf(idPerfil));
     }
 }
