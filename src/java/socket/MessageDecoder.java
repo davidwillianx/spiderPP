@@ -36,8 +36,11 @@ public class MessageDecoder implements  Decoder.Text<Message>{
                     message = new GameMessage(jsonReceived);
                     break;  
                 case "cardSelected":
-                       message = new Card(jsonReceived);
-                       break;
+                    message = new Card(jsonReceived);
+                    break;
+                case "notice": 
+                    message = new Notice(jsonReceived);
+                    break;
             }
             
            return message;

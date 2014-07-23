@@ -228,7 +228,7 @@
                        enableCardArea();
                        $("#timerGame").countdown360({
                            //seconds : 300,
-                           seconds : 80,
+                           seconds : 10,
                            onComplete: function(){
                                 showCardsSelected();  
                                 disableCardArea();
@@ -244,6 +244,12 @@
                        userCardSelection(card);
                    }
                    
+                   if(message.type === "notice")
+                   {
+                       console.log("estamos errados"+message.message);
+                       window.location = "../projeto"; 
+                   }
+                       
                };
                
                $("#gameStart").click(function(e){
@@ -252,7 +258,6 @@
                        "type": "gameStart",
                        "start": "startTime"
                    };
-                   console.log("enviando");
                    spiderSocket.send(JSON.stringify(gameStart));
                });
                

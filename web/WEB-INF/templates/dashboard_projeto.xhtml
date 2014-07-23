@@ -83,7 +83,11 @@
                     </h:panelGroup>
                     <h:panelGroup layout="block" class="pull-right">
                         <h:panelGroup layout="block" style="padding-top:  6px" rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) != 1}">
-                            <a href ="poker.xhtml" class="btn btn-primary btn-large">Participar da Estimativa</a>
+                             <h:outputLink  class="btn btn-primary btn-large" value="poker.xhtml">
+                                Participar da Estimativa
+                                <f:param name="rm" value="#{projetoController.showHashProject(projeto.id)}"/>
+                                <f:param name="pr" value="#{projetoController.showHashPerfil(usuario.id,projeto.id)}"/>
+                            </h:outputLink>
                         </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>

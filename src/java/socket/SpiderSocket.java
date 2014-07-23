@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
@@ -32,7 +33,7 @@ import models.entities.Mensagem;
  */
 @Singleton
 @ServerEndpoint(value = "/spiderSocketGame/{room}/{perfil}",
-        encoders = {ChatMessageEncoder.class, GameStartEncoder.class, CardEnconder.class }, decoders = {MessageDecoder.class}
+        encoders = {ChatMessageEncoder.class, GameStartEncoder.class, CardEnconder.class,NoticeEncoder.class }, decoders = {MessageDecoder.class}
 )
 public class SpiderSocket implements Serializable {
 
@@ -41,17 +42,52 @@ public class SpiderSocket implements Serializable {
     private List<Mensagem> mensagens;
     private static final Set<Session> sessions
             = Collections.synchronizedSet(new HashSet<Session>());
+    
+    private boolean teamConnectionPermission  = false;
 
     @OnOpen
     public void onOpen(Session session, @PathParam("room") String room, @PathParam("perfil") String perfil) {
 
         try {
-            session.getUserProperties().put("room", room);
-            sessions.add(session);
+            
+            if(this.parseDataConnection(perfil) == 1)
+            {
+                session.getUserProperties().put("room", room);
+                session.getUserProperties().put("perfil", this.parseDataConnection(perfil));
+                sessions.add(session);
+            }
+            
+            if(this.parseDataConnection(perfil) == 2 | this.parseDataConnection(perfil) == 3)
+            {
+                for(Session sessionOpned : sessions)
+                {
+                    User userOpened = new User(sessionOpned.getUserProperties());
+                    
+                    if(userOpened.isMyRoom(room) && userOpened.isScrumMaster())
+                    {
+                      session.getUserProperties().put("room", room);
+                      session.getUserProperties().put("perfil", this.parseDataConnection(perfil));
+                      sessions.add(session);
+                      this.teamConnectionPermission = true;
+                    }
+                }
+                
+                if(!this.teamConnectionPermission)
+                {
+                    Notice notice = new Notice(
+                                Json.createObjectBuilder()
+                                    .add("message", "este projeto não possui estimativa em andamento")
+                                     .build()
+                    );
+                    
+                    session.getBasicRemote().sendObject(notice);
+                }
+                    
+            }
+            
+            
 
-            this.mensagens = mensagemBean.getMensagensByProjeto(Integer.parseInt(
-                        room.substring(room.length() -1)
-                    ));
+            this.mensagens = mensagemBean.getMensagensByProjeto(this.parseDataConnection(room));
 
             for (Mensagem mensagem : this.mensagens) {
 
@@ -81,6 +117,7 @@ public class SpiderSocket implements Serializable {
             if (message instanceof GameMessage) {
 
                 GameMessage gameMessage = (GameMessage) message;
+                senderSession.getUserProperties().put("gameOpened", true);
                 String room = (String) senderSession.getUserProperties().get("room");
 
                 for (Session session : sessions) {
@@ -127,5 +164,12 @@ public class SpiderSocket implements Serializable {
                 }
             }
         }
+    }
+    
+    
+    private int parseDataConnection(String information)
+    {
+        String dataOutOfHash = information.substring(information.length() - 1);
+        return Integer.parseInt(dataOutOfHash);
     }
 }

@@ -104,7 +104,6 @@ function myCardSelection(card)
 
 function userCardSelection(card)
 {
-    
     if (cardsTurn.length !== 0)
     {
         for (var indexList = 0; indexList < cardsTurn.length; indexList++)
@@ -131,17 +130,23 @@ function openGameCardSelection()
 }
 
 function showCardsSelected()
-{   listOfCardsSelected = '';
+{   
+    listOfCardsSelected = '';
     for (var indexList = 0 ; indexList < cardsTurn.length ; indexList++)
         listOfCardsSelected  += buildCardSelected(cardsTurn[indexList]);
-
-        var divElements = rowSelected.children();
-        console.log("elements "+divElements);
-        rowSelected.append(listOfCardsSelected).fadeIn();
+    
+    if(userCardSelected.value)
+    {
+        console.log(userCardSelected);
+        rowSelected.html(userCardSelected).append(listOfCardsSelected).fadeIn();
+    }
+        
+    else
+        rowSelected.html(listOfCardsSelected).fadeIn();
 }
 
 function disableCardArea()
-{
+{ 
     $("#cardSection").block({message:"aguarde o inicio da rodada"});
     
 }
