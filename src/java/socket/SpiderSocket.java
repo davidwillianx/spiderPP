@@ -44,6 +44,7 @@ public class SpiderSocket implements Serializable {
             = Collections.synchronizedSet(new HashSet<Session>());
     
     private boolean teamConnectionPermission  = false;
+    
 
     @OnOpen
     public void onOpen(Session session, @PathParam("room") String room, @PathParam("perfil") String perfil) {
@@ -82,7 +83,6 @@ public class SpiderSocket implements Serializable {
                     
                     session.getBasicRemote().sendObject(notice);
                 }
-                    
             }
             
             
