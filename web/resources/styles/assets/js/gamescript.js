@@ -8,7 +8,7 @@ var boxMessage;
 var inputMessage;
 var cardsTurn = [];
 var rowSelected;
-var userCardSelected;
+var userCardSelected = {};
         
 $(document).ready(function() {
     inputMessage = $('#chat-message-input');
@@ -135,7 +135,7 @@ function showCardsSelected()
     for (var indexList = 0 ; indexList < cardsTurn.length ; indexList++)
         listOfCardsSelected  += buildCardSelected(cardsTurn[indexList]);
     
-    if(userCardSelected.value)
+    if(userCardSelected.length !== 0)
     {
         console.log(userCardSelected);
         rowSelected.html(userCardSelected).append(listOfCardsSelected).fadeIn();

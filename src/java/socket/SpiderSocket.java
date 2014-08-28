@@ -32,7 +32,7 @@ import models.entities.Mensagem;
  * @author smartphonne
  */
 @Singleton
-@ServerEndpoint(value = "/spiderSocketGame/{room}/{perfil}",
+@ServerEndpoint(value = "/spiderSocketGamex/",
         encoders = {ChatMessageEncoder.class, GameStartEncoder.class, CardEnconder.class,NoticeEncoder.class }, decoders = {MessageDecoder.class}
 )
 public class SpiderSocket implements Serializable {

@@ -24,7 +24,7 @@ public class Message {
         this.json = json;
     }
     
-   
+    
 
     public void setJson(JsonObject json) {
         this.json = json;

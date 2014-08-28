@@ -22,30 +22,10 @@ public class MessageDecoder implements  Decoder.Text<Message>{
 
     @Override
     public Message decode(String dataReceived) throws DecodeException{
-
-            Message message = null;
-            
-            JsonObject jsonReceived = Json.createReader(new StringReader(dataReceived)).readObject();
-            
-            switch(jsonReceived.getString("type"))
-            {
-                case "message" : 
-                    message = new ChatMessage(jsonReceived);
-                    break;
-                case "gameStart" :
-                    message = new GameMessage(jsonReceived);
-                    break;  
-                case "cardSelected":
-                    message = new Card(jsonReceived);
-                    break;
-                case "notice": 
-                    message = new Notice(jsonReceived);
-                    break;
-            }
-            
-           return message;
+        JsonObject jsonObject  = Json.createReader(new StringReader(dataReceived)).readObject();
+        return new Message(jsonObject);
     }
-
+ 
 
     @Override
     public void init(EndpointConfig config) {

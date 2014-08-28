@@ -11,6 +11,7 @@
 package socket;
 
 import javax.json.JsonObject;
+import javax.websocket.Session;
 
 /**
  *
@@ -22,14 +23,14 @@ public class Card extends Message{
     
     private int value;
     private String userNameOption;
-    private int idUsuario;
+    private Session participantSession;
+    
     
     
     public Card(JsonObject json)
     {
          this.setValue(Integer.parseInt(json.getString("value")));
          this.setUserNameOtion(json.getString("userNameOption"));
-         this.setIdUsuario(json.getInt("idUsuario"));
     }
     
     public void setValue(int value)
@@ -51,14 +52,10 @@ public class Card extends Message{
     {
         return this.userNameOption;
     }
-           
-    public void setIdUsuario(int idUsuario)
-    {
-        this.idUsuario = idUsuario;
-    }
     
-    public int getIdUsuario()
+    public Session getParticipantSession()
     {
-        return this.idUsuario;
+        return this.participantSession;
     }
+           
 }

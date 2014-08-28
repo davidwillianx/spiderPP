@@ -6,24 +6,19 @@
 
 package socket;
 
-import javax.json.Json;
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
 /**
  *
- * @author smartphonne
+ * @author smartphonnee
  */
-public class CardEnconder implements Encoder.Text<Card>{
+public class MessageEncoder implements Encoder.Text<Message>{
 
     @Override
-    public String encode(Card card) throws EncodeException {
-        return Json.createObjectBuilder()
-                .add("value", card.getValue())
-                .add("userNameOption", card.getUserNameOption())
-                .add("type", "cardSelected")
-                .build().toString();
+    public String encode(Message message) throws EncodeException {
+        return message.getJson().toString();
     }
 
     @Override
