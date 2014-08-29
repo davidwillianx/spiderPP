@@ -13,8 +13,6 @@
         <h:outputScript library="styles" name="assets/js/jquery.countdown360.js"/>
         <h:outputScript library="styles" name="assets/js/gamescript.js"/>  
         
-        
-        
         <div class="row" id="main">
             <div class="col-md-5 ">
                 <div class="row tiles-container  m-b-20 ">
@@ -23,17 +21,17 @@
                             <h4 class="text-black semi-bold">Estorias</h4>
                         </div>
                         <div class="tiles white ">
-                            
-                                
                             <ui:repeat value="#{estoriaController.estorias}" var="estoria" id="index">
                                 <div class="p-t-20 p-b-15 b-b b-grey">
                                     <div class="post overlap-left-10">
                                         <div class="user-profile-pic-wrapper">
                                             <div class="user-profile-pic-2x tiles blue white-border">
-                                                <div class="text-white inherit-size p-t-10 p-l-15"> 
-                                                    <!--<i class="fa fa-map-marker fa-lg"></i>--> 
-                                                    go!
-                                                </div>
+                                                <a href="#" id="#{estoria.estoriaPK.id}"> 
+                                                    <div class="text-white inherit-size p-t-10 p-l-15"> 
+                                                        <!--<i class="fa fa-map-marker fa-lg"></i>--> 
+                                                        go!
+                                                    </div>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="info-wrapper small-width">
@@ -44,7 +42,6 @@
                                                         <f:convertDateTime pattern="d-m-yyyy"/> 
                                                     </h:outputText> 
                                                 </p>
-                                                    
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>
@@ -166,7 +163,6 @@
 
                             </div>
                         </div>  
-
                     </div>
                 </h:panelGroup>
             </div>
@@ -188,7 +184,6 @@
                var spiderSocket = new WebSocket(host+"/"+room+"/"+perfil);
                
                spiderSocket.onopen = function(){
-                   
                    //IF estimativa recebe tempo e as estimativas
                }
                
