@@ -20,34 +20,41 @@
                         <div class="tiles grey p-t-15 p-b-15 p-l-25 ">
                             <h4 class="text-black semi-bold">Estorias</h4>
                         </div>
-                        <div class="tiles white ">
+                        <div class="tiles white" id="description">
                             <ui:repeat value="#{estoriaController.estorias}" var="estoria" id="index">
                                 <div class="p-t-20 p-b-15 b-b b-grey">
                                     <div class="post overlap-left-10">
                                         <div class="user-profile-pic-wrapper">
-                                            <div class="user-profile-pic-2x tiles blue white-border">
+                                            <h:panelGroup layout="block"  class="user-profile-pic-2x tiles blue white-border" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
                                                 <a href="#" id="#{estoria.estoriaPK.id}"> 
                                                     <div class="text-white inherit-size p-t-10 p-l-15"> 
                                                         <!--<i class="fa fa-map-marker fa-lg"></i>--> 
-                                                        go!
-                                                    </div>
+                                                        Go!
+                                                    </div> 
                                                 </a>
-                                            </div>
+                                            </h:panelGroup>
+                                             
+                                            <h:panelGroup class="user-profile-pic-2x tiles blue white-border"  layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) != 1}">
+                                                <div class="text-white inherit-size p-t-10 p-l-15" id="#{estoria.estoriaPK.id}" > 
+                                                  
+                                                </div> 
+                                            </h:panelGroup>
                                         </div>
+                                        
                                         <div class="info-wrapper small-width">
                                             <div class="info text-black ">
                                                 <p>#{estoria.descricao}</p>
                                                 <p class="muted small-text"> 
                                                     <h:outputText value="#{estoria.dataCriacao}">
-                                                        <f:convertDateTime pattern="d-m-yyyy"/> 
+                                                        <f:convertDateTime pattern="d-MM-yyyy"/> 
                                                     </h:outputText> 
                                                 </p>
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>
-                                        <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
-                                            <div class="inline pull-right">
-                                                <!--<ui:include src="/WEB-INF/templates/form_estimativa.xhtml"/>-->
+                                        <h:panelGroup class="setScore" layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                                            <div class="inline pull-right hide" >
+                                                <ui:include src="/WEB-INF/templates/form_estimativa.xhtml"/>
                                             </div>
                                         </h:panelGroup>
 
@@ -182,6 +189,8 @@
                var perfil = "#{param.pr}";
                var  host = "ws://localhost:8080/spiderPP/spiderSocketGame";
                var spiderSocket = new WebSocket(host+"/"+room+"/"+perfil);
+               var storySelected = "";
+               var smStorySelected = "";
                
                spiderSocket.onopen = function(){
                    //IF estimativa recebe tempo e as estimativas
@@ -230,7 +239,8 @@
                            onComplete: function(){
                                 showCardsSelected();  
                                 disableCardArea();
-                              gameUnlock = {"type": "gameUnlock"};
+                                registerScore(smStorySelected);
+                                gameUnlock = {"type": "gameUnlock"};
                                 spiderSocket.send(JSON.stringify(gameUnlock));
                                 
                                 $("#gameStart").attr("disabled",false);
@@ -260,6 +270,18 @@
                    {
                        $("#main").block({message:"aguarde o inicio da rodada"});
                    }
+                   
+                   if(message.type === "story")
+                   {
+                       id = '#'+message.id;
+                       story = $(id);
+                        if(storySelected.length !== 0)
+                             storySelected.parent().removeClass('green').addClass('blue');
+                       
+                        story.parent().removeClass('blue').addClass('green');
+                        storySelected = story;
+                   }
+ 
                        
                };
                
@@ -283,9 +305,31 @@
                    myCardSelection(card);
                    spiderSocket.send(JSON.stringify(card));
                });
+               
+               $('#description a').click(function()
+               {
+                  story = {
+                      "id": $(this).attr("id"),
+                      "type":"story"
+                  };
+                  if(smStorySelected.length !== 0)
+                      smStorySelected.parent().removeClass('green').addClass('blue');
+                  link = $(this);
+                  parent =  link.parent();
+                  parent.removeClass('blue').addClass('green');
+                  link.children().html("vai");
+                  spiderSocket.send(JSON.stringify(story));
+                  smStorySelected = link;
+               });
             }
             
-            
+            function registerScore(smStorySelected)
+            {
+//                divContent = smStorySelected.parent().siblings();
+                smStorySelected.parent().parent().siblings(".setScore").children().removeClass('hide');
+                   
+                   
+            }
             
 //         window.onbeforeunload = function()
 //         {
