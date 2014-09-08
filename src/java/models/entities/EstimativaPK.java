@@ -21,10 +21,7 @@ public class EstimativaPK implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private int id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_usuario")
-    private int idUsuario;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_estoria")
@@ -33,9 +30,8 @@ public class EstimativaPK implements Serializable {
     public EstimativaPK() {
     }
 
-    public EstimativaPK(int id, int idUsuario, int idEstoria) {
+    public EstimativaPK(int id, int idEstoria) {
         this.id = id;
-        this.idUsuario = idUsuario;
         this.idEstoria = idEstoria;
     }
 
@@ -47,13 +43,6 @@ public class EstimativaPK implements Serializable {
         this.id = id;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     public int getIdEstoria() {
         return idEstoria;
@@ -67,7 +56,6 @@ public class EstimativaPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) id;
-        hash += (int) idUsuario;
         hash += (int) idEstoria;
         return hash;
     }
@@ -82,9 +70,6 @@ public class EstimativaPK implements Serializable {
         if (this.id != other.id) {
             return false;
         }
-        if (this.idUsuario != other.idUsuario) {
-            return false;
-        }
         if (this.idEstoria != other.idEstoria) {
             return false;
         }
@@ -93,7 +78,7 @@ public class EstimativaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "models.entities.EstimativaPK[ id=" + id + ", idUsuario=" + idUsuario + ", idEstoria=" + idEstoria + " ]";
+        return "models.entities.EstimativaPK[ id=" + id + ", idEstoria=" + idEstoria + " ]";
     }
     
 }

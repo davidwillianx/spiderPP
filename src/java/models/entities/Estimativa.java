@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Estimativa.findAll", query = "SELECT e FROM Estimativa e"),
     @NamedQuery(name = "Estimativa.findById", query = "SELECT e FROM Estimativa e WHERE e.estimativaPK.id = :id"),
-    @NamedQuery(name = "Estimativa.findByIdUsuario", query = "SELECT e FROM Estimativa e WHERE e.estimativaPK.idUsuario = :idUsuario"),
     @NamedQuery(name = "Estimativa.findByIdEstoria", query = "SELECT e FROM Estimativa e WHERE e.estimativaPK.idEstoria = :idEstoria"),
     @NamedQuery(name = "Estimativa.findByEstimativa", query = "SELECT e FROM Estimativa e WHERE e.estimativa = :estimativa"),
     @NamedQuery(name = "Estimativa.findByData", query = "SELECT e FROM Estimativa e WHERE e.data = :data")})
@@ -56,9 +55,6 @@ public class Estimativa implements Serializable {
     @Column(name = "estimativa")
     private Integer estimativa; 
 
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Usuario usuario;
     
 
     public Estimativa() {
@@ -68,8 +64,8 @@ public class Estimativa implements Serializable {
         this.estimativaPK = estimativaPK;
     }
 
-    public Estimativa(int id, int idUsuario, int idEstoria) {
-        this.estimativaPK = new EstimativaPK(id, idUsuario, idEstoria);
+    public Estimativa(int id, int idEstoria) {
+        this.estimativaPK = new EstimativaPK(id,idEstoria);
     }
 
     public EstimativaPK getEstimativaPK() {
@@ -94,14 +90,6 @@ public class Estimativa implements Serializable {
 
     public void setData(Date data) {
         this.data = data;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public Estoria getEstoria() {

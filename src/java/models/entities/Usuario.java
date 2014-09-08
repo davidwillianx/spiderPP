@@ -16,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,7 +25,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import models.entities.resultQueries.TeamMembership;
 
 
 /**
@@ -52,8 +50,6 @@ import models.entities.resultQueries.TeamMembership;
  
 public class Usuario implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<Estimativa> estimativaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Mensagem> mensagemCollection;
     @Size(max = 140)
@@ -212,16 +208,6 @@ public class Usuario implements Serializable {
     public void setMensagemCollection(Collection<Mensagem> mensagemCollection) {
         this.mensagemCollection = mensagemCollection;
     }
-
-    @XmlTransient
-    public Collection<Estimativa> getEstimativaCollection() {
-        return estimativaCollection;
-    }
-
-    public void setEstimativaCollection(Collection<Estimativa> estimativaCollection) {
-        this.estimativaCollection = estimativaCollection;
-    }
-
 }
    
     

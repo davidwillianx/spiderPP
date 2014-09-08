@@ -15,4 +15,5 @@ import models.entities.Estimativa;
 public interface IEstimativa {
     
      public Estimativa SelectEstimativaByIdEstoria (int idEstoria);
+     public void persistEstimativa(int idEstoria, int score);
 }

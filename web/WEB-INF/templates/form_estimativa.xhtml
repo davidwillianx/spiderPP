@@ -13,7 +13,8 @@
                 <f:selectItems value="#{estimativaController.estimativas}" var="estimativa" itemLabel="#{estimativa}" itemValue="#{estimativa}"/>
             </h:selectOneMenu>
 
-            <h:commandButton class="btn btn-primary btn-small" action="#{estimativaController.registrarEstimativa(estimativaController.estimativaSelected)}" value="Estimar"/>
+            <h:commandButton class="btn btn-primary btn-small" action="#{estimativaController.registrarEstimativa(estoria.estoriaPK.id)}" value="Estimar"/>
         </h:form>
     </h:panelGroup>
 </ui:composition>
+ 
