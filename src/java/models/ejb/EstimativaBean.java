@@ -8,6 +8,7 @@ package models.ejb;
 
 import java.util.Date;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,8 +16,11 @@ import javax.persistence.PersistenceContext;
 import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
 import models.ejbs.interfaces.IEstimativa;
+import models.ejbs.interfaces.IEstoria;
 import models.entities.Estimativa;
+import models.entities.EstimativaPK; 
 import models.entities.Estoria;
+import models.entities.EstoriaPK;
 
 
 /** 
@@ -29,6 +33,9 @@ public class EstimativaBean implements IEstimativa{
     
     private Estimativa estimativa; 
     private Estoria estoria;
+    
+    @EJB
+    IEstoria iEstoria;
     
     @PersistenceContext
     private EntityManager entityManager;    
@@ -52,13 +59,12 @@ public class EstimativaBean implements IEstimativa{
     @Override
     public void persistEstimativa(int idEstoria, int score) {
         try {
-                estoria = (Estoria) entityManager.createNamedQuery("Estoria.findById")
-                                                 .setParameter("id", idEstoria)
-                                                 .getSingleResult();
+            
+            estoria =  iEstoria.selectEstoriaByIdS(idEstoria);
             estimativa = new Estimativa();
             estimativa.setData(new Date());
-            estimativa.setEstoria(estoria);
             estimativa.setPontuacao(score);
+            estimativa.setEstimativaPK(new EstimativaPK(0, estoria.getEstoriaPK().getId()));
             entityManager.persist(estimativa);
                 
         } catch (Exception e) {
@@ -66,3 +72,4 @@ public class EstimativaBean implements IEstimativa{
         }
     }
 }
+ 

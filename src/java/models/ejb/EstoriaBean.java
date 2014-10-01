@@ -80,10 +80,22 @@ public class EstoriaBean implements IEstoria {
         try {
             this.sessionManager = new SessionManager();
             this.projeto = (Projeto) this.sessionManager.get("projeto");
-            this.estorias = this.entityManager.createNamedQuery("Estoria.findByIdProjeto", Estoria.class)
+            List<Object[]> result =  this.entityManager.createNamedQuery("Estoria.findEstoriaAndEstimativaByIdProjeto")
                                               .setParameter("idProjeto", this.projeto.getId())
                                               .getResultList();
+//            this.estorias = this.entityManager.createNamedQuery("Estoria.findEstoriaAndEstimativaByIdProjeto", Estoria.class)
+//                                              .setParameter("idProjeto", this.projeto.getId())
+//                                              .getResultList();
             
+            if(result.size() != 0)
+            {
+                for (Object[] row : result)
+                {
+                    Estoria estoria   = (Estoria) row[0];
+                    System.err.println(".>>>>"+estoria.getEstimativaCollection().size());
+                    System.err.println(">>" + row[1]);
+                }
+            }
             return this.estorias;
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
@@ -92,6 +104,7 @@ public class EstoriaBean implements IEstoria {
         }
     }
 
+    //TODO as classes realizam mesma operação, precisa mapear para refatorar
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Estoria selectEstoriaById(String idEstoria) {
@@ -100,6 +113,19 @@ public class EstoriaBean implements IEstoria {
                                                        .setParameter("id", Integer.parseInt(idEstoria))
                                                        .getSingleResult();
             
+            return this.estoria;
+        } catch (Exception error) {
+            System.err.println("Error em EstoriaBean-selecEstoriaById-->" + error.getMessage());
+            throw new BusinessException("Falha ao consultar estória");
+        }
+    }
+    
+    @Override
+    public Estoria selectEstoriaByIdS(int idEstoria){
+           try {
+            this.estoria = (Estoria) this.entityManager.createNamedQuery("Estoria.findEstoriaAndEstimativaByIdProjeto")
+                                                       .setParameter("id",idEstoria)
+                                                       .getSingleResult();
             return this.estoria;
         } catch (Exception error) {
             System.err.println("Error em EstoriaBean-selecEstoriaById-->" + error.getMessage());

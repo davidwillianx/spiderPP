@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlRootElement; 
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -31,9 +31,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Estoria.findAll", query = "SELECT e FROM Estoria e"),
     @NamedQuery(name = "Estoria.findById", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id = :id"),
-    @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.idProjeto = :idProjeto"),
+    @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.projeto.id = :idProjeto"),
+    @NamedQuery(name = "Estoria.findEstoriaAndEstimativaByIdProjeto", query = "SELECT e,ec FROM  Estoria e LEFT JOIN e.estoriaCollection ec  WHERE e.projeto.id = :idProjeto"), 
     @NamedQuery(name = "Estoria.findByNome", query = "SELECT e FROM Estoria e WHERE e.nome = :nome"),
-    @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status")})
+    @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status")}) 
 public class Estoria implements Serializable {
  
     @Column(name = "data_criacao")

@@ -64,7 +64,6 @@ public class EstimativaController {
     
     public Estimativa giveEstimativa (int idEstoria){
         this.estimativa = this.iEstimativa.SelectEstimativaByIdEstoria(idEstoria);
-        System.err.println("Estimativa:" + this.estimativa.getEstimativa());
         return this.estimativa;
     }
 }

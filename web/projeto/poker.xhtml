@@ -45,9 +45,11 @@
                                             <div class="info text-black ">
                                                 <p>#{estoria.descricao}</p>
                                                 <p class="muted small-text"> 
-                                                    <h:outputText value="#{estoria.dataCriacao}">
-                                                        <f:convertDateTime pattern="d-MM-yyyy"/> 
+                                                    <h:outputText value="#{estoria.dataCriacao}"> 
+                                                        <f:convertDateTime pattern="d-MM-yyyy"/>
                                                     </h:outputText> 
+                                                    <span class="badge badge-important">#{estoria.estimativaCollection.size()}</span> 
+                                                    
                                                 </p>
                                             </div>
                                             <div class="clearfix"></div>

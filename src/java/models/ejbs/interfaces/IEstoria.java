@@ -25,4 +25,6 @@ public interface IEstoria {
     public void updateEstoria(Estoria estoria, String id);
     public int totalEstimativaProjeto();
     public float meanEstorias ();
+    public Estoria selectEstoriaByIdS(int idEstoria);
+    
 }
