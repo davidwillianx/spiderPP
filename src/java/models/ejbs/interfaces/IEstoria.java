@@ -26,5 +26,5 @@ public interface IEstoria {
     public int totalEstimativaProjeto();
     public float meanEstorias ();
     public Estoria selectEstoriaByIdS(int idEstoria);
-    
+    public List<Estoria> selectAllChildren(int idEstoria);
 }

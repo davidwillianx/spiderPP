@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
-*
-* @author Bruno
+*  
+* @author Bruno 
 */
 @Entity
 @Table(name = "estoria")
@@ -31,8 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Estoria.findAll", query = "SELECT e FROM Estoria e"),
     @NamedQuery(name = "Estoria.findById", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id = :id"),
-    @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.projeto.id = :idProjeto"),
-    @NamedQuery(name = "Estoria.findEstoriaAndEstimativaByIdProjeto", query = "SELECT e,ec FROM  Estoria e LEFT JOIN e.estoriaCollection ec  WHERE e.projeto.id = :idProjeto"), 
+    @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.projeto.id = :idProjeto AND e.parentPath IS NULL"),
+    @NamedQuery(name = "Estoria.findAllChildren", query = "SELECT e FROM  Estoria e JOIN e.subtasks sub WHERE e.estoriaPK.id = :idEstoria"), 
     @NamedQuery(name = "Estoria.findByNome", query = "SELECT e FROM Estoria e WHERE e.nome = :nome"),
     @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status")}) 
 public class Estoria implements Serializable {
@@ -46,14 +46,13 @@ public class Estoria implements Serializable {
     private Collection<Estimativa> estimativaCollection;
     
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "id_estoria", referencedColumnName = "id", insertable = false, updatable = false),
-        @JoinColumn(name = "id", referencedColumnName = "id",insertable = false, updatable = false)
-    })
-    private Estoria idEstoria;
+    @JoinColumns({ @JoinColumn(name = "id" , referencedColumnName = "id" , insertable = false, updatable = false)
+                  ,@JoinColumn(name = "id_estoria", referencedColumnName = "id", updatable = false, insertable = false, nullable = true)})
+    private Estoria subtask;
+    
     private static final long serialVersionUID = 1L;
    
-    @EmbeddedId
+    @EmbeddedId 
     protected EstoriaPK estoriaPK;
     
     @Size(max = 100,message = "O título não pode exceder a 100 caracteres")
@@ -63,15 +62,18 @@ public class Estoria implements Serializable {
     @Size(max = 2147483647,message = "Esta descrição excede o tamanho aceitado, por favor resuma seu texto")
     @Column(name = "descricao")
     private String descricao;
-   
+    
+    @Column(name = "parent_path")
+    private String parentPath;
     
     @Column(name = "status")
     private Boolean status;
     @JoinColumn(name = "id_projeto", nullable = false , referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Projeto projeto;
-    @OneToMany(mappedBy = "idEstoria")
-    private Collection<Estoria> estoriaCollection;
+    
+    @OneToMany(mappedBy = "subtask")
+    private Collection<Estoria> subtasks;
 
     
     public Estoria() {
@@ -84,7 +86,7 @@ public class Estoria implements Serializable {
     public Estoria(int id, int idProjeto) {
         this.estoriaPK = new EstoriaPK(id, idProjeto);
     }
-
+ 
     public EstoriaPK getEstoriaPK() {
         return estoriaPK;
     }
@@ -126,20 +128,20 @@ public class Estoria implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Estoria> getEstoriaCollection() {
-        return estoriaCollection;
+    public Collection<Estoria> getSubtasks() {
+        return subtasks;
     }
 
-    public void setEstoriaCollection(Collection<Estoria> estoriaCollection) {
-        this.estoriaCollection = estoriaCollection;
+    public void setSubtasks(Collection<Estoria> estoriaCollection) {
+        this.subtasks = estoriaCollection;
     }
 
-    public Estoria getIdEstoria() {
-        return idEstoria;
+    public Estoria getSubtask() {
+        return subtask;
     }
 
-    public void setIdEstoria(Estoria idEstoria) {
-        this.idEstoria = idEstoria;
+    public void setSubtask(Estoria subtask) {
+        this.subtask = subtask;
     }
 
     @Override
@@ -194,5 +196,15 @@ public class Estoria implements Serializable {
 
     public void setEstimativa(Integer estimativa) {
         this.estimativa = estimativa;
+    }
+    
+    public void setParentPath(String parentPath)
+    {
+        this.parentPath = parentPath;
+    }
+    
+    public String getParentPath()
+    {
+        return this.parentPath;
     }
 }

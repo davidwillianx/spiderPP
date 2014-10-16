@@ -27,6 +27,9 @@ public class EstoriaPK implements Serializable {
     @Column(name = "id_projeto",unique=true,nullable=false)
     private int idProjeto;
 
+    
+    
+    
     public EstoriaPK() {
     }
 
@@ -34,6 +37,7 @@ public class EstoriaPK implements Serializable {
         this.id = id;
         this.idProjeto = idProjeto;
     }
+    
 
     public int getId() {
         return id;
@@ -50,6 +54,7 @@ public class EstoriaPK implements Serializable {
     public void setIdProjeto(int idProjeto) {
         this.idProjeto = idProjeto;
     }
+    
 
     @Override
     public int hashCode() {
@@ -72,12 +77,13 @@ public class EstoriaPK implements Serializable {
         if (this.idProjeto != other.idProjeto) {
             return false;
         }
+        
         return true;
     }
 
     @Override
     public String toString() {
-        return "models.entities.EstoriaPK[ id=" + id + ", idProjeto=" + idProjeto + " ]";
+        return "models.entities.EstoriaPK[ id=" + id + ", idProjeto=" + idProjeto +"]";
     }
     
 }

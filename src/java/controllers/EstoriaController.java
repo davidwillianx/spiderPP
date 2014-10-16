@@ -28,8 +28,11 @@ public class EstoriaController {
     private SessionManager sessionManager;
     private Projeto projeto;
     private List<Estoria> estorias;
+    private List<Estoria> subtasks;
     private Redirect redirect;
     private Estoria estoria;
+    private int idEstoria;
+    private boolean  isHasSubtask;
  
     @EJB
     private IEstoria iEstoria;
@@ -46,6 +49,11 @@ public class EstoriaController {
     public Projeto getProjeto() {
         return this.projeto;
     }
+    
+    public int getIdEstoria()
+    {
+        return idEstoria;
+    }
 
     public List<Estoria> getEstorias() {
         try {
@@ -53,6 +61,14 @@ public class EstoriaController {
             estorias =  this.iEstoria.selectEstorias();
             return estorias;
         } catch (Exception error) {
+            return null;
+        } 
+    }
+    
+    public List<Estoria> getSubtasks(){
+        try {
+            return iEstoria.selectAllChildren(this.idEstoria);
+        } catch (Exception e) {
             return null;
         }
     }
@@ -92,5 +108,38 @@ public class EstoriaController {
     
     public float showMeanEstimativasByEstoria (){
         return this.iEstoria.meanEstorias();
+    } 
+    
+    
+    
+    //-----------------------------------
+    
+    public void setSubTasks(int idEstoria) {
+        System.err.println("Something different happend");
+        this.subtasks = iEstoria.selectAllChildren(idEstoria);
+        
+        if (!this.subtasks.isEmpty()) {
+            this.idEstoria = idEstoria; 
+            this.isHasSubtask = true;
+        }
     }
+    
+    
+    public boolean isSubTask(){
+        return isHasSubtask;
+    }
+    
+    public boolean hasSubTask(int idEstoria) {
+        try {
+            this.idEstoria = idEstoria;
+            this.subtasks = iEstoria.selectAllChildren(idEstoria);
+            
+            System.err.println("::: SIZE "+this.subtasks.size()+" id "+idEstoria);
+
+            return !this.subtasks.isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

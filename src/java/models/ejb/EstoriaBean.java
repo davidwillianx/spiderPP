@@ -19,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import libs.SessionManager;
 import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
+import libs.exception.NotFoundException;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.EstoriaPK;
@@ -37,7 +38,6 @@ public class EstoriaBean implements IEstoria {
     private Estoria estoria;
     private EstoriaPK estoriaPK;
 
-
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -55,7 +55,7 @@ public class EstoriaBean implements IEstoria {
             estoria.setDataCriacao(currentDate());
             estoria.setStatus(Boolean.FALSE);
             this.entityManager.persist(estoria);
-            
+
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
         }
@@ -64,37 +64,28 @@ public class EstoriaBean implements IEstoria {
     @Override
     public void removeEstoria(Estoria estoria) {
         try {
-            
-           this.estoria = this.entityManager.merge(estoria);
+
+            this.estoria = this.entityManager.merge(estoria);
             this.entityManager.remove(this.estoria);
-        } catch (Exception error)
-        {
+        } catch (Exception error) {
             System.err.println("Erro em EstoriaBean-removeEstoria-->" + error.getMessage());
         }
     }
-    
-    
+
     /*TODO Evitar buscas constates quando o resultado não muda*/
     @Override
     public List<Estoria> selectEstorias() {
         try {
             this.sessionManager = new SessionManager();
             this.projeto = (Projeto) this.sessionManager.get("projeto");
-            List<Object[]> result =  this.entityManager.createNamedQuery("Estoria.findEstoriaAndEstimativaByIdProjeto")
-                                              .setParameter("idProjeto", this.projeto.getId())
-                                              .getResultList();
-//            this.estorias = this.entityManager.createNamedQuery("Estoria.findEstoriaAndEstimativaByIdProjeto", Estoria.class)
-//                                              .setParameter("idProjeto", this.projeto.getId())
-//                                              .getResultList();
+
+            this.estorias = this.entityManager.createNamedQuery("Estoria.findByIdProjeto", Estoria.class)
+                    .setParameter("idProjeto", this.projeto.getId())
+                    .getResultList();
             
-            if(result.size() != 0)
-            {
-                for (Object[] row : result)
-                {
-                    Estoria estoria   = (Estoria) row[0];
-                    System.err.println(".>>>>"+estoria.getEstimativaCollection().size());
-                    System.err.println(">>" + row[1]);
-                }
+
+            if (this.estorias.isEmpty()) {
+                System.err.println(">>> alright");
             }
             return this.estorias;
         } catch (Exception error) {
@@ -110,24 +101,24 @@ public class EstoriaBean implements IEstoria {
     public Estoria selectEstoriaById(String idEstoria) {
         try {
             this.estoria = (Estoria) this.entityManager.createNamedQuery("Estoria.findById")
-                                                       .setParameter("id", Integer.parseInt(idEstoria))
-                                                       .getSingleResult();
-            
+                    .setParameter("id", Integer.parseInt(idEstoria))
+                    .getSingleResult();
+
             return this.estoria;
         } catch (Exception error) {
             System.err.println("Error em EstoriaBean-selecEstoriaById-->" + error.getMessage());
             throw new BusinessException("Falha ao consultar estória");
         }
     }
-    
+
     @Override
-    public Estoria selectEstoriaByIdS(int idEstoria){
-           try {
+    public Estoria selectEstoriaByIdS(int idEstoria) {
+        try {
             this.estoria = (Estoria) this.entityManager.createNamedQuery("Estoria.findEstoriaAndEstimativaByIdProjeto")
-                                                       .setParameter("id",idEstoria)
-                                                       .getSingleResult();
+                    .setParameter("id", idEstoria)
+                    .getSingleResult();
             return this.estoria;
-        } catch (Exception error) {
+        } catch (Exception error) { 
             System.err.println("Error em EstoriaBean-selecEstoriaById-->" + error.getMessage());
             throw new BusinessException("Falha ao consultar estória");
         }
@@ -140,7 +131,7 @@ public class EstoriaBean implements IEstoria {
             this.projeto = (Projeto) this.sessionManager.get("projeto");
             this.estoriaPK = new EstoriaPK(Integer.parseInt(id), this.projeto.getId());
             estoria.setEstoriaPK(this.estoriaPK);
-            
+
             System.err.println("id-->" + id);
             System.err.println("this.projeto.getId()-->" + this.projeto.getId());
             System.err.println("this.estoriaPK-->" + this.estoriaPK);
@@ -150,39 +141,40 @@ public class EstoriaBean implements IEstoria {
             throw new NoPersistException("Falha na atualização da Estória");
         }
     }
-    
+
     //TODO adicionar em um lib
     public Date currentDate() throws ParseException {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); // posso usar outras mascaras para formatação
-           return simpleDateFormat.parse(simpleDateFormat.format(date));
-  
+        return simpleDateFormat.parse(simpleDateFormat.format(date));
+
     }
 
     @Override
-    public int totalEstimativaProjeto(){
+    public int totalEstimativaProjeto() {
         try {
             int total = 0;
             this.estorias = selectEstorias();
             for (Estoria estoria1 : this.estorias) {
                 this.estoria = estoria1;
-                if (this.estoria.getEstimativa() != null)
+                if (this.estoria.getEstimativa() != null) {
                     total = total + this.estoria.getEstimativa();
+                }
             }
             System.err.println("---->TotalEstorias: " + total);
             return total;
-        } catch (Exception error){
+        } catch (Exception error) {
             System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
             throw new NoPersistException("Falha no metodo que gera o total das estimativas");
         }
     }
-    
+
     @Override
-    public float meanEstorias (){
+    public float meanEstorias() {
         try {
             float media = 0;
-            if (this.selectEstorias().size() != 0){
-                media = totalEstimativaProjeto() /  this.selectEstorias().size();
+            if (this.selectEstorias().size() != 0) {
+                media = totalEstimativaProjeto() / this.selectEstorias().size();
                 System.err.println("---->MédiaEstorias: " + media);
             }
             return media;
@@ -191,4 +183,23 @@ public class EstoriaBean implements IEstoria {
             throw new NoPersistException("Falha no metodo que gera a media do projeto");
         }
     }
+  
+    @Override 
+    public List<Estoria> selectAllChildren(int idEstoria) {
+        try {
+            estoria = (Estoria) entityManager.createNamedQuery("Estoria.findById").setParameter("id", idEstoria).getSingleResult();
+
+            estorias =  entityManager.createNamedQuery("Estoria.findAllChildren", Estoria.class)
+                                        .setParameter("idEstoria", estoria.getEstoriaPK().getId())
+                                        .getResultList();
+            
+            return estorias;
+        } catch (Exception e) {
+            System.err.println(">>>>>> >>> "+ e.getMessage());
+            throw  new NotFoundException("fala ao realizar operação");
+        } 
+    }
+    
+    
+
 }

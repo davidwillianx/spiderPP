@@ -21,61 +21,22 @@
                             <h4 class="text-black semi-bold">Estorias</h4>
                         </div>
                         <div class="tiles white" id="description">
-                            <ui:repeat value="#{estoriaController.estorias}" var="estoria" id="index">
-                                <div class="p-t-20 p-b-15 b-b b-grey">
-                                    <div class="post overlap-left-10">
-                                        <div class="user-profile-pic-wrapper">
-                                            <h:panelGroup layout="block"  class="user-profile-pic-2x tiles blue white-border" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
-                                                <a href="#" id="#{estoria.estoriaPK.id}"> 
-                                                    <div class="text-white inherit-size p-t-10 p-l-15"> 
-                                                        <!--<i class="fa fa-map-marker fa-lg"></i>--> 
-                                                        Go!
-                                                    </div> 
-                                                </a>
-                                            </h:panelGroup>
-                                             
-                                            <h:panelGroup class="user-profile-pic-2x tiles blue white-border"  layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) != 1}">
-                                                <div class="text-white inherit-size p-t-10 p-l-15" id="#{estoria.estoriaPK.id}" > 
-                                                  
-                                                </div> 
-                                            </h:panelGroup>
-                                        </div>
-                                        
-                                        <div class="info-wrapper small-width">
-                                            <div class="info text-black ">
-                                                <p>#{estoria.descricao}</p>
-                                                <p class="muted small-text"> 
-                                                    <h:outputText value="#{estoria.dataCriacao}"> 
-                                                        <f:convertDateTime pattern="d-MM-yyyy"/>
-                                                    </h:outputText> 
-                                                    <span class="badge badge-important">#{estoria.estimativaCollection.size()}</span> 
-                                                    
-                                                </p>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <h:panelGroup class="setScore hide" layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
-                                            <h:panelGroup layout="block" class="form-inline">
-                                                <h:form class="form-inline">
-                                                    <h:selectOneMenu class="form-control" value="#{estimativaController.estimativaSelected}" id="estimativaSeleted">
-                                                        <!--<f:selectItem itemLabel="-"   noSelectionOption="true"/>-->
-                                                        <f:selectItems value="#{estimativaController.estimativas}" var="estimativa" itemLabel="#{estimativa}" itemValue="#{estimativa}"/>
-                                                    </h:selectOneMenu>
-
-                                                    <h:commandButton class="btn btn-primary btn-small" action="#{estimativaController.registrarEstimativa(estoria.estoriaPK.id)}" value="Estimar">
-                                                        <f:ajax execute="@form" />
-                                                    </h:commandButton>
-                                                </h:form>
-                                            </h:panelGroup> 
-                                        </h:panelGroup>
-
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-
-                            </ui:repeat>
-
-                        </div>
+                           <!--Lista de estorias -->
+                           <ul>
+                               
+                           
+                               <c:forEach items="#{estoriaController.estorias}" var="estoria">
+                                   
+                                   <ui:include src="/WEB-INF/templates/subtask.xhtml">
+                                       <ui:param name="estoria" value="#{estoria}"/>
+                                   </ui:include>
+                               </c:forEach>
+                               
+                               </ul>
+                           
+                           
+                           
+                        </div> 
                     </div>
                 </div>
             </div> 
