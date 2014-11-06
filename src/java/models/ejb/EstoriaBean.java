@@ -136,7 +136,7 @@ public class EstoriaBean implements IEstoria {
             System.err.println("this.projeto.getId()-->" + this.projeto.getId());
             System.err.println("this.estoriaPK-->" + this.estoriaPK);
             this.entityManager.merge(estoria);
-        } catch (Exception error) {
+        } catch (NumberFormatException error) {
             System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
             throw new NoPersistException("Falha na atualização da Estória");
         }
@@ -187,11 +187,12 @@ public class EstoriaBean implements IEstoria {
     @Override 
     public List<Estoria> selectAllChildren(int idEstoria) {
         try {
-            estoria = (Estoria) entityManager.createNamedQuery("Estoria.findById").setParameter("id", idEstoria).getSingleResult();
+//            estoria = (Estoria) entityManager.createNamedQuery("Estoria.findById").setParameter("id", idEstoria).getSingleResult();
 
             estorias =  entityManager.createNamedQuery("Estoria.findAllChildren", Estoria.class)
-                                        .setParameter("idEstoria", estoria.getEstoriaPK().getId())
+                                        .setParameter("id", idEstoria)
                                         .getResultList();
+            
             
             return estorias;
         } catch (Exception e) {
@@ -200,6 +201,15 @@ public class EstoriaBean implements IEstoria {
         } 
     }
     
+    @Override
+    public List<Estoria> selectParentEstorias()
+    {
+        try {
+            return entityManager.createNamedQuery("Estoria.findAllParents").getResultList();
+        } catch (Exception e) {
+            throw new NotFoundException("Nenhum Resultado");
+        }
+    }
     
 
 }

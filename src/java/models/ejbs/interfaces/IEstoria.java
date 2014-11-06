@@ -8,7 +8,6 @@ package models.ejbs.interfaces;
 
 import java.util.List;
 import models.entities.Estoria;
-import models.entities.EstoriaPK;
 
 
 /**
@@ -27,4 +26,7 @@ public interface IEstoria {
     public float meanEstorias ();
     public Estoria selectEstoriaByIdS(int idEstoria);
     public List<Estoria> selectAllChildren(int idEstoria);
+    
+    
+    public List<Estoria> selectParentEstorias();
 }

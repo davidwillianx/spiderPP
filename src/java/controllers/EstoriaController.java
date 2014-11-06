@@ -11,7 +11,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import libs.BuildMessage;
 import libs.Redirect;
-import libs.SessionManager;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Projeto;
@@ -25,10 +24,11 @@ import models.entities.Projeto;
 public class EstoriaController {
 
     private BuildMessage buildMessage;
-    private SessionManager sessionManager;
     private Projeto projeto;
     private List<Estoria> estorias;
     private List<Estoria> subtasks;
+    private List<Estoria> parentEstorias;
+    
     private Redirect redirect;
     private Estoria estoria;
     private int idEstoria;
@@ -57,7 +57,6 @@ public class EstoriaController {
 
     public List<Estoria> getEstorias() {
         try {
-            
             estorias =  this.iEstoria.selectEstorias();
             return estorias;
         } catch (Exception error) {
@@ -67,7 +66,7 @@ public class EstoriaController {
     
     public List<Estoria> getSubtasks(){
         try {
-            return iEstoria.selectAllChildren(this.idEstoria);
+              return this.subtasks;
         } catch (Exception e) {
             return null;
         }
@@ -129,16 +128,34 @@ public class EstoriaController {
         return isHasSubtask;
     }
     
+    
     public boolean hasSubTask(int idEstoria) {
         try {
-            this.idEstoria = idEstoria;
-            this.subtasks = iEstoria.selectAllChildren(idEstoria);
-            
-            System.err.println("::: SIZE "+this.subtasks.size()+" id "+idEstoria);
-
-            return !this.subtasks.isEmpty();
+           return !this.getAllSubtaskByParentId(idEstoria).isEmpty();
         } catch (Exception e) {
             return false;
+        }
+    }
+    
+    
+    public List<Estoria> getParentEstorias()
+    {
+        try {
+            return iEstoria.selectParentEstorias();
+        } catch (Exception e) {
+            System.err.println("<<< error >>>");
+            return null;
+        }
+    }
+    
+    
+    private List<Estoria> getAllSubtaskByParentId(int idEstoria)
+    {
+        try {
+            this.subtasks = iEstoria.selectAllChildren(idEstoria);
+            return this.subtasks;
+        } catch (Exception e) {
+            return null;
         }
     }
 

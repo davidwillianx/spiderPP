@@ -32,9 +32,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estoria.findAll", query = "SELECT e FROM Estoria e"),
     @NamedQuery(name = "Estoria.findById", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id = :id"),
     @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.projeto.id = :idProjeto AND e.parentPath IS NULL"),
-    @NamedQuery(name = "Estoria.findAllChildren", query = "SELECT e FROM  Estoria e JOIN e.subtasks sub WHERE e.estoriaPK.id = :idEstoria"), 
     @NamedQuery(name = "Estoria.findByNome", query = "SELECT e FROM Estoria e WHERE e.nome = :nome"),
-    @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status")}) 
+    @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status"),
+    @NamedQuery(name = "Estoria.findAllChildren", query = "SELECT s FROM Estoria e JOIN e.subtasks s WHERE e.estoriaPK.id = :id"),
+    @NamedQuery(name = "Estoria.findAllParents", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id NOT IN (SELECT s.estoriaPK.id FROM Estoria e JOIN e.subtasks s)")
+
+}) 
 public class Estoria implements Serializable {
  
     @Column(name = "data_criacao")
@@ -46,8 +49,8 @@ public class Estoria implements Serializable {
     private Collection<Estimativa> estimativaCollection;
     
     @ManyToOne
-    @JoinColumns({ @JoinColumn(name = "id" , referencedColumnName = "id" , insertable = false, updatable = false)
-                  ,@JoinColumn(name = "id_estoria", referencedColumnName = "id", updatable = false, insertable = false, nullable = true)})
+    @JoinColumns({@JoinColumn(name = "id_estoria", referencedColumnName = "id", updatable = false, insertable = false, nullable = true)
+                  ,@JoinColumn(name = "id_projeto" , referencedColumnName = "id_projeto" , insertable = false, updatable = false)})
     private Estoria subtask;
     
     private static final long serialVersionUID = 1L;
@@ -68,11 +71,12 @@ public class Estoria implements Serializable {
     
     @Column(name = "status")
     private Boolean status;
+    
     @JoinColumn(name = "id_projeto", nullable = false , referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Projeto projeto;
     
-    @OneToMany(mappedBy = "subtask")
+    @OneToMany(mappedBy = "subtask",cascade = CascadeType.ALL)
     private Collection<Estoria> subtasks;
 
     

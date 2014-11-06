@@ -21,18 +21,15 @@
                             <h4 class="text-black semi-bold">Estorias</h4>
                         </div>
                         <div class="tiles white" id="description">
+                            
                            <!--Lista de estorias -->
                            <ul>
-                               
-                           
                                <c:forEach items="#{estoriaController.estorias}" var="estoria">
-                                   
                                    <ui:include src="/WEB-INF/templates/subtask.xhtml">
                                        <ui:param name="estoria" value="#{estoria}"/>
                                    </ui:include>
                                </c:forEach>
-                               
-                               </ul>
+                           </ul>
                            
                            
                            
