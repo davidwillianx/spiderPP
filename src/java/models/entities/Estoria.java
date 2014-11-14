@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.Table; 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Estoria.findAll", query = "SELECT e FROM Estoria e"),
     @NamedQuery(name = "Estoria.findById", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id = :id"),
-    @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.projeto.id = :idProjeto AND e.parentPath IS NULL"),
+    @NamedQuery(name = "Estoria.findByIdProjeto", query = "SELECT e FROM Estoria e WHERE e.projeto.id = :idProjeto"),
     @NamedQuery(name = "Estoria.findByNome", query = "SELECT e FROM Estoria e WHERE e.nome = :nome"),
     @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status"),
     @NamedQuery(name = "Estoria.findAllChildren", query = "SELECT s FROM Estoria e JOIN e.subtasks s WHERE e.estoriaPK.id = :id"),
@@ -66,8 +66,7 @@ public class Estoria implements Serializable {
     @Column(name = "descricao")
     private String descricao;
     
-    @Column(name = "parent_path")
-    private String parentPath;
+    
     
     @Column(name = "status")
     private Boolean status;
@@ -202,13 +201,5 @@ public class Estoria implements Serializable {
         this.estimativa = estimativa;
     }
     
-    public void setParentPath(String parentPath)
-    {
-        this.parentPath = parentPath;
-    }
-    
-    public String getParentPath()
-    {
-        return this.parentPath;
-    }
+   
 }

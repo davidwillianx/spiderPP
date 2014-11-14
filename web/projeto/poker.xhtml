@@ -22,10 +22,7 @@
                         </div>
                         <div class="tiles white" id="description">
                             
-                           <!--Lista de estorias -->
-                           <ul>
-                          
-                               <c:forEach items="#{estoriaController.estorias}" var="estoria">
+                            <c:forEach items="#{estoriaController.parentEstorias}" var="estoria">
                                    <ui:fragment rendered="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}">
                                        <ui:include src="/WEB-INF/templates/subtask.xhtml">
                                            <ui:param name="estoria" value="#{estoria}"/>
@@ -33,10 +30,12 @@
                                    </ui:fragment>
                                    
                                    <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
-                                       <li>#{estoria.nome}</li>
+                                       <ui:include src="/WEB-INF/templates/storyElement.xhtml">
+                                           <ui:param name="estoria" value="#{estoria}"/>
+                                       </ui:include>
                                    </ui:fragment>
                                </c:forEach>
-                           </ul>
+
                         </div> 
                     </div>
                 </div>

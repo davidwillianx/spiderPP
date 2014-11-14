@@ -14,7 +14,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
+import javax.persistence.EntityManager; 
 import javax.persistence.PersistenceContext;
 import libs.exception.BusinessException;
 import libs.exception.NotFoundException;

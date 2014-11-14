@@ -66,9 +66,6 @@ public class EstoriaController {
      
     public List<Estoria> getSubtasks(){
         try {
-            for(Estoria sub : this.subtasks)
-                    System.err.println(">>>> Uma >>>> nome: "+sub.getDescricao());
-            
               return this.subtasks;
         } catch (Exception e) {
             return null;

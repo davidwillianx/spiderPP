@@ -8,14 +8,14 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html">
     
     
-    <li>#{estoria.nome}</li>
+    <ui:include src="/WEB-INF/templates/storyElement.xhtml">
+        <ui:param name="estoria" value="#{estoria}"/>
+    </ui:include>
         
     <c:forEach items="#{estoriaController.getAllSubtaskByParentId(estoria.estoriaPK.id)}" var="subtask">
-        <ul>
             <ui:include src="subtask.xhtml">
                 <ui:param name="estoria" value="#{subtask}"/>
             </ui:include>
-        </ul>
     </c:forEach>
 </ui:composition>
 
