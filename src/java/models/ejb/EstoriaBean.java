@@ -150,7 +150,56 @@ public class EstoriaBean implements IEstoria {
 
     }
 
+   
+  
+    @Override 
+    public List<Estoria> selectAllChildren(int idEstoria) {
+        try {
+            estorias =  entityManager.createNamedQuery("Estoria.findAllChildren", Estoria.class)
+                                        .setParameter("id", idEstoria)
+                                        .getResultList();
+            return estorias;
+        } catch (Exception e) {
+            throw  new NotFoundException("fala ao realizar operação");
+        } 
+    }
+    
     @Override
+    public List<Estoria> selectParentEstorias()
+    {
+        try {
+            return entityManager.createNamedQuery("Estoria.findAllParents").getResultList();
+        } catch (Exception e) {
+            throw new NotFoundException("Nenhum Resultado");
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //----------------------------- under supervision
+    
+     @Override
+    public float meanEstorias() {
+        try {
+            float media = 0;
+            if (this.selectEstorias().size() != 0) {
+                media = totalEstimativaProjeto() / this.selectEstorias().size();
+                System.err.println("---->MédiaEstorias: " + media);
+            }
+            return media;
+        } catch (Exception error) {
+            System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
+            throw new NoPersistException("Falha no metodo que gera a media do projeto");
+        }
+    }
+    
+     @Override
     public int totalEstimativaProjeto() {
         try {
             int total = 0;
@@ -169,47 +218,7 @@ public class EstoriaBean implements IEstoria {
         }
     }
 
-    @Override
-    public float meanEstorias() {
-        try {
-            float media = 0;
-            if (this.selectEstorias().size() != 0) {
-                media = totalEstimativaProjeto() / this.selectEstorias().size();
-                System.err.println("---->MédiaEstorias: " + media);
-            }
-            return media;
-        } catch (Exception error) {
-            System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
-            throw new NoPersistException("Falha no metodo que gera a media do projeto");
-        }
-    }
-  
-    @Override 
-    public List<Estoria> selectAllChildren(int idEstoria) {
-        try {
-//            estoria = (Estoria) entityManager.createNamedQuery("Estoria.findById").setParameter("id", idEstoria).getSingleResult();
-
-            estorias =  entityManager.createNamedQuery("Estoria.findAllChildren", Estoria.class)
-                                        .setParameter("id", idEstoria)
-                                        .getResultList();
-            
-            
-            return estorias;
-        } catch (Exception e) {
-            System.err.println(">>>>>> >>> "+ e.getMessage());
-            throw  new NotFoundException("fala ao realizar operação");
-        } 
-    }
-    
-    @Override
-    public List<Estoria> selectParentEstorias()
-    {
-        try {
-            return entityManager.createNamedQuery("Estoria.findAllParents").getResultList();
-        } catch (Exception e) {
-            throw new NotFoundException("Nenhum Resultado");
-        }
-    }
+   
     
 
 }

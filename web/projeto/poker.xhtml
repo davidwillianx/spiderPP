@@ -24,15 +24,19 @@
                             
                            <!--Lista de estorias -->
                            <ul>
+                          
                                <c:forEach items="#{estoriaController.estorias}" var="estoria">
-                                   <ui:include src="/WEB-INF/templates/subtask.xhtml">
-                                       <ui:param name="estoria" value="#{estoria}"/>
-                                   </ui:include>
+                                   <ui:fragment rendered="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}">
+                                       <ui:include src="/WEB-INF/templates/subtask.xhtml">
+                                           <ui:param name="estoria" value="#{estoria}"/>
+                                       </ui:include>
+                                   </ui:fragment>
+                                   
+                                   <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
+                                       <li>#{estoria.nome}</li>
+                                   </ui:fragment>
                                </c:forEach>
                            </ul>
-                           
-                           
-                           
                         </div> 
                     </div>
                 </div>

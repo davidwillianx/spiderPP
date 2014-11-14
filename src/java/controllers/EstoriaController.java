@@ -4,17 +4,17 @@
  * and open the template in the editor.
  */
 package controllers;
-
-import java.util.List;
-import javax.ejb.EJB;
+ 
+import java.util.List; 
+import javax.ejb.EJB; 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import libs.BuildMessage;
+import libs.BuildMessage; 
 import libs.Redirect;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Projeto;
-
+ 
 /**
  *
  * @author Bruno and Bleno
@@ -63,9 +63,12 @@ public class EstoriaController {
             return null;
         } 
     }
-    
+     
     public List<Estoria> getSubtasks(){
         try {
+            for(Estoria sub : this.subtasks)
+                    System.err.println(">>>> Uma >>>> nome: "+sub.getDescricao());
+            
               return this.subtasks;
         } catch (Exception e) {
             return null;
@@ -109,25 +112,13 @@ public class EstoriaController {
         return this.iEstoria.meanEstorias();
     } 
     
-    
-    
     //-----------------------------------
-    
-    public void setSubTasks(int idEstoria) {
-        System.err.println("Something different happend");
-        this.subtasks = iEstoria.selectAllChildren(idEstoria);
-        
-        if (!this.subtasks.isEmpty()) {
-            this.idEstoria = idEstoria; 
-            this.isHasSubtask = true;
-        }
-    }
     
     
     public boolean isSubTask(){
         return isHasSubtask;
     }
-    
+     
     
     public boolean hasSubTask(int idEstoria) {
         try {
@@ -143,14 +134,12 @@ public class EstoriaController {
         try {
             return iEstoria.selectParentEstorias();
         } catch (Exception e) {
-            System.err.println("<<< error >>>");
             return null;
         }
     }
     
-    
-    private List<Estoria> getAllSubtaskByParentId(int idEstoria)
-    {
+     
+    public List<Estoria> getAllSubtaskByParentId(int idEstoria) {
         try {
             this.subtasks = iEstoria.selectAllChildren(idEstoria);
             return this.subtasks;

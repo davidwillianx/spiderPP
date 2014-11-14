@@ -8,18 +8,15 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html">
     
     
-    <li> #{estoria.descricao}</li>
-    
-    <c:if test="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}">
+    <li>#{estoria.nome}</li>
+        
+    <c:forEach items="#{estoriaController.getAllSubtaskByParentId(estoria.estoriaPK.id)}" var="subtask">
         <ul>
-            <c:forEach items="#{estoriaController.subtasks}" var="subtask" id="index">
-<!--                <ui:include src="subtask.xhtml">
-                    <ui:param name="estoria" value="#{subtask}"/>
-                </ui:include>-->
-            </c:forEach>
+            <ui:include src="subtask.xhtml">
+                <ui:param name="estoria" value="#{subtask}"/>
+            </ui:include>
         </ul>
-    </c:if>
-
+    </c:forEach>
 </ui:composition>
 
 
