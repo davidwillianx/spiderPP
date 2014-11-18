@@ -48,7 +48,7 @@ public class SpiderSocket implements Serializable {
     public void onOpen(Session session, @PathParam("room") String room, @PathParam("perfil") String perfil) {
 
         try {
-            
+              
             if(this.parseDataConnection(perfil) == 1)
             {
                 session.getUserProperties().put("room", room);

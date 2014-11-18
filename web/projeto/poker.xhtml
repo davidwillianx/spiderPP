@@ -151,8 +151,9 @@
        
         
          <script type="text/javascript">
-             
-            $(document).ready(socketStart);
+               
+            
+           $(document).ready(socketStart);
         
             function socketStart(){
                disableCardArea();
@@ -163,6 +164,18 @@
                var spiderSocket = new WebSocket(host+"/"+room+"/"+perfil);
                var storySelected = "";
                var smStorySelected = "";
+               
+               
+               
+             
+               //Refactory Tab
+               var storyHtmlElementSelected = "";
+               
+               
+               
+               
+               
+               
                
                spiderSocket.onopen = function(){
                    //IF estimativa recebe tempo e as estimativas
@@ -246,12 +259,9 @@
                    if(message.type === "story")
                    {
                        id = '#'+message.id;
-                       story = $(id);
-                        if(storySelected.length !== 0)
-                             storySelected.parent().removeClass('green').addClass('blue');
-                       
-                        story.parent().removeClass('blue').addClass('green');
-                        storySelected = story;
+                       removeTargetStory(storyHtmlElementSelected);
+                            storyHtmlElementSelected = $(id);
+                       addTargetStory(storyHtmlElementSelected);
                    }
  
                        
@@ -278,38 +288,24 @@
                    spiderSocket.send(JSON.stringify(card));
                });
                
-               $('#description a').click(function()
-               {
-                  story = {
-                      "id": $(this).attr("id"),
-                      "type":"story"
-                  };
-                  if(smStorySelected.length !== 0)
-                      smStorySelected.parent().removeClass('green').addClass('blue');
-                  link = $(this);
-                  parent =  link.parent();
-                  parent.removeClass('blue').addClass('green');
-                  link.children().html("vai");
-                  spiderSocket.send(JSON.stringify(story));
-                  smStorySelected = link;
-               });
                
                $('.activity').click(function(){
-                   storyHtmlElementSelected = $(this);
-                   storyDataSelected = {
+                   
+                  removeTargetStory(storyHtmlElementSelected);
+                  storyHtmlElementSelected = $(this);
+                  
+                  storyDataSelected = {
                        "id":storyHtmlElementSelected.attr("id")
                         ,"type":"story"
                    };
                    
-                   if(smStorySelected.length !== 0)
-                       smStorySelected.childen(0).removeClass('green').addClass('blue');
-                   
-                   storyHtmlElementSelected.children(0).addClass('green');
+                   addTargetStory(storyHtmlElementSelected);
                    spiderSocket.send(JSON.stringify(storyDataSelected));
-                   smStorySelected = storyHtmlElementSelected;
                });
             }
             
+            
+            //UnderVerification
             function registerScore(smStorySelected)
             {
 //                divContent = smStorySelected.parent().siblings();
@@ -322,7 +318,21 @@
 //         {
 //           return  "Voce realmente deseja sair desta pagina?";
 //         }
+        
+           function removeTargetStory(storyHtmlElementSelected)
+           {
+               if(storyHtmlElementSelected.length !== 0)
+                    storyHtmlElementSelected.children(0).removeClass('green').addClass('blue');
+           }
+           
+           function addTargetStory(storyHtmlElementSelected)
+           {
+               storyHtmlElementSelected.children(0).addClass('green');
+           }
+         
          </script>
+        
+        
         
     </ui:define>
 
