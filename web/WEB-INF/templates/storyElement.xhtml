@@ -9,9 +9,9 @@
     
     
 
-    <div class="p-t-20 p-b-15 b-b b-grey">
+    <div class=" p-t-20 p-b-15 b-b b-grey" >
         <div class="post overlap-left-10">
-            <div class="user-profile-pic-wrapper">
+            <div class="activity user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="Selecione estoria clicando aqui" id="#{estoria.estoriaPK.id}">
                 <div class="user-profile-pic-2x tiles blue white-border">
                     <div class="text-white inherit-size p-t-10 p-l-15"> <i class="fa fa-map-marker fa-lg"></i> </div>
                 </div>
@@ -19,10 +19,9 @@
             <div class="info-wrapper small-width">
                 
                 <div class="info text-black ">
-                    <h4>#{estoria.nome}</h4>
-                    <p>#{estoria.descricao}</p>
-                     
+                    <h4>#{estoria.nome}</h4> <p>#{estoria.descricao}</p>
                     <p class="muted small-text"><h:outputText value="#{estoria.dataCriacao}">  <f:convertDateTime pattern="dd/MM/yyy" type="date"/></h:outputText></p>
+                    
                 </div>
                 <div class="clearfix"></div>
             </div>

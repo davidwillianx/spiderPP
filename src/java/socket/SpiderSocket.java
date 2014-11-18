@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
@@ -22,7 +21,6 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import libs.exception.NoPersistException;
 import libs.exception.NotFoundException;
 import models.ejb.MensagemBean;
 import models.entities.Mensagem;
@@ -84,7 +82,6 @@ public class SpiderSocket implements Serializable {
                     session.getBasicRemote().sendObject(notice);
                 }
             }
-            
             
 
             this.mensagens = mensagemBean.getMensagensByProjeto(this.parseDataConnection(room));

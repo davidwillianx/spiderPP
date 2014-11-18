@@ -166,7 +166,7 @@
                
                spiderSocket.onopen = function(){
                    //IF estimativa recebe tempo e as estimativas
-               }
+               };
                
                $("#chat-message-input").keypress(function(messageContent){
                      if(messageContent.keyCode === 13){
@@ -293,15 +293,30 @@
                   spiderSocket.send(JSON.stringify(story));
                   smStorySelected = link;
                });
+               
+               $('.activity').click(function(){
+                   storyHtmlElementSelected = $(this);
+                   storyDataSelected = {
+                       "id":storyHtmlElementSelected.attr("id")
+                        ,"type":"story"
+                   };
+                   
+                   if(smStorySelected.length !== 0)
+                       smStorySelected.childen(0).removeClass('green').addClass('blue');
+                   
+                   storyHtmlElementSelected.children(0).addClass('green');
+                   spiderSocket.send(JSON.stringify(storyDataSelected));
+                   smStorySelected = storyHtmlElementSelected;
+               });
             }
             
             function registerScore(smStorySelected)
             {
 //                divContent = smStorySelected.parent().siblings();
                 smStorySelected.parent().parent().siblings(".setScore").removeClass('hide');
-                   
-                   
             }
+            
+        
             
 //         window.onbeforeunload = function()
 //         {

@@ -54,7 +54,7 @@ public class Estoria implements Serializable {
     private Estoria subtask;
     
     private static final long serialVersionUID = 1L;
-   
+    
     @EmbeddedId 
     protected EstoriaPK estoriaPK;
     
