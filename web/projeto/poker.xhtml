@@ -165,16 +165,12 @@
                var storySelected = "";
                var smStorySelected = "";
                
-               
-               
-             
-               //Refactory Tab
-               var storyHtmlElementSelected = "";
-               
-               
-               
-               
-               
+               var storyHtmlEelementSelected = {
+                    id = ""
+                   ,boxMessage =""
+                   ,pointerSelected = ""
+                   ,init = function(id,boxMessage,pointerSelected){id = id;boxMessage = boxMessage; pointerSelected = pointerSelected}
+               };
                
                
                spiderSocket.onopen = function(){
@@ -308,7 +304,6 @@
             //UnderVerification
             function registerScore(smStorySelected)
             {
-//                divContent = smStorySelected.parent().siblings();
                 smStorySelected.parent().parent().siblings(".setScore").removeClass('hide');
             }
             

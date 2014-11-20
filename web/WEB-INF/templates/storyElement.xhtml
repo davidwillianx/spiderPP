@@ -11,12 +11,20 @@
 
     <div class=" p-t-20 p-b-15 b-b b-grey" >
         <div class="post overlap-left-10">
-            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id)}"></h:panelGroup>
-            <div class="activity user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="Selecione estoria clicando aqui" id="#{estoria.estoriaPK.id}">
-                <div class="user-profile-pic-2x tiles blue white-border">
-                    <div class="text-white inherit-size p-t-10 p-l-15"> <i class="fa fa-map-marker fa-lg"></i> </div>
+            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                <div class="activity user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="Selecione estoria clicando aqui" id="#{estoria.estoriaPK.id}">
+                    <div class="user-profile-pic-2x tiles blue white-border">
+                        <div class="text-white inherit-size p-t-10 p-l-15"> <i class="fa fa-map-marker fa-lg"></i> </div>
+                    </div>
                 </div>
-            </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) != 1}">
+                <div class="user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="Selecione estoria clicando aqui" id="#{estoria.estoriaPK.id}">
+                    <div class="user-profile-pic-2x tiles blue white-border">
+                        <div class="text-white inherit-size p-t-10 p-l-15"> <i class="fa fa-map-marker fa-lg"></i> </div>
+                    </div>
+                </div>
+            </h:panelGroup>
             <div class="info-wrapper small-width">
                 
                 <div class="info text-black ">
