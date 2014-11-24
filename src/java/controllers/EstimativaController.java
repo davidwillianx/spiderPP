@@ -13,7 +13,6 @@ import libs.BuildMessage;
 import libs.exception.NoPersistException;
 import models.ejbs.interfaces.IEstimativa;
 import models.entities.Estimativa;
-import models.entities.Mensagem;
 
 /**
  *
@@ -25,14 +24,15 @@ public class EstimativaController {
      
     private Estimativa estimativa;
     private int estimativaSelected;
-    private  int[] estimativas = {0,1,2,3,5,8,13,20,40,100};
+    private final  int[] estimativas;
     
     @EJB
     private IEstimativa iEstimativa;
     
     
     public EstimativaController()
-    {}
+    {   this.estimativas = new int[]{1, 2, 3, 5, 8, 13, 20, 40, 100};
+}
             
     
     public void setEstimativaSelected(int estimativaSelected)
@@ -42,12 +42,12 @@ public class EstimativaController {
  
     public int getEstimativaSelected()
     {
-        return this.estimativaSelected;
+        return this.estimativaSelected; 
     }
     
     public void registrarEstimativa(int idEstoria)
     {
-        BuildMessage buildMessage = new BuildMessage();
+        BuildMessage buildMessage = new BuildMessage();  
         try{
             iEstimativa.persistEstimativa(idEstoria, estimativaSelected);
             buildMessage.addInfo("Estimativa realizada com sucesso!");
@@ -62,8 +62,14 @@ public class EstimativaController {
         return estimativas;
     }
     
+    //Under Analysis
     public Estimativa giveEstimativa (int idEstoria){
         this.estimativa = this.iEstimativa.SelectEstimativaByIdEstoria(idEstoria);
+        return this.estimativa;
+    }
+    
+    public Estimativa getEstimativa()
+    {
         return this.estimativa;
     }
 }

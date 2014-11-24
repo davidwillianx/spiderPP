@@ -148,11 +148,7 @@
 
         </div>
         
-       
-        
          <script type="text/javascript">
-               
-            
            $(document).ready(socketStart);
         
             function socketStart(){
@@ -165,12 +161,7 @@
                var storySelected = "";
                var smStorySelected = "";
                
-               var storyHtmlEelementSelected = {
-                    id = ""
-                   ,boxMessage =""
-                   ,pointerSelected = ""
-                   ,init = function(id,boxMessage,pointerSelected){id = id;boxMessage = boxMessage; pointerSelected = pointerSelected}
-               };
+               var storyHtmlElementSelected = "";
                
                
                spiderSocket.onopen = function(){
@@ -220,7 +211,7 @@
                            onComplete: function(){
                                 showCardsSelected();  
                                 disableCardArea();
-                                registerScore(smStorySelected);
+                                registerScore(storyHtmlElementSelected);
                                 gameUnlock = {"type": "gameUnlock"};
                                 spiderSocket.send(JSON.stringify(gameUnlock));
                                 
@@ -302,12 +293,11 @@
             
             
             //UnderVerification
-            function registerScore(smStorySelected)
+            function registerScore(storyHtmlElementSelected)
             {
-                smStorySelected.parent().parent().siblings(".setScore").removeClass('hide');
+                storyHtmlElementSelected.siblings(".score").removeClass('hide');
+//                smStorySelected.parent().parent().siblings(".setScore").removeClass('hide');
             }
-            
-        
             
 //         window.onbeforeunload = function()
 //         {
