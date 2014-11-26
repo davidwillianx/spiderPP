@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+ 
 package controllers;
 
-import javax.ejb.EJB;
+import javax.ejb.EJB;  
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import libs.BuildMessage;
@@ -21,11 +21,11 @@ import models.entities.Estimativa;
 @Named
 @RequestScoped
 public class EstimativaController {
-     
+       
     private Estimativa estimativa;
     private int estimativaSelected;
     private final  int[] estimativas;
-    
+     
     @EJB
     private IEstimativa iEstimativa;
     
@@ -44,12 +44,12 @@ public class EstimativaController {
     {
         return this.estimativaSelected; 
     }
-    
-    public void registrarEstimativa(int idEstoria)
+     
+    public void registerEstimativa(int idEstoria) 
     {
         BuildMessage buildMessage = new BuildMessage();  
         try{
-            iEstimativa.persistEstimativa(idEstoria, estimativaSelected);
+            iEstimativa.persistEstimativa(idEstoria, this.estimativaSelected);
             buildMessage.addInfo("Estimativa realizada com sucesso!");
         }catch(NoPersistException error){
             buildMessage.addError("Falha ao realizar processo de estimativa");

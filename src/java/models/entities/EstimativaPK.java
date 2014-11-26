@@ -34,7 +34,12 @@ public class EstimativaPK implements Serializable {
         this.id = id;
         this.idEstoria = idEstoria;
     }
-
+    
+    public EstimativaPK(int idEstoria)
+    {
+        this.idEstoria = idEstoria;
+    }
+    
     public int getId() {
         return id;
     }

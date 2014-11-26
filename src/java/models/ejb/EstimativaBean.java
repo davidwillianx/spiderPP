@@ -8,7 +8,7 @@ package models.ejb;
 
 import java.util.Date;
 import javax.annotation.Resource;
-import javax.ejb.EJB;
+import javax.ejb.EJB; 
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,7 +17,7 @@ import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
 import models.ejbs.interfaces.IEstimativa;
 import models.ejbs.interfaces.IEstoria;
-import models.entities.Estimativa;
+import models.entities.Estimativa; 
 import models.entities.EstimativaPK; 
 import models.entities.Estoria;
 import models.entities.EstoriaPK;
@@ -57,14 +57,14 @@ public class EstimativaBean implements IEstimativa{
     } 
 
     @Override
-    public void persistEstimativa(int idEstoria, int score) {
+    public void persistEstimativa(int idEstoria, int pontuacao) {
         try {
-            
+            System.err.println(">>>>>>>>>>>>>>>>>> Score show what you got "+pontuacao);
             estoria =  iEstoria.selectEstoriaByIdS(idEstoria);
             estimativa = new Estimativa();
             estimativa.setData(new Date());
-            estimativa.setPontuacao(score);
-            estimativa.setEstimativaPK(new EstimativaPK(0, estoria.getEstoriaPK().getId()));
+            estimativa.setPontuacao(pontuacao);
+            estimativa.setEstimativaPK(new EstimativaPK(estoria.getEstoriaPK().getId()));
             entityManager.persist(estimativa);
                 
         } catch (Exception e) {

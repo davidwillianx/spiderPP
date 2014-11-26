@@ -86,17 +86,17 @@ public class Estimativa implements Serializable {
     public Estoria getEstoria() {
         return estoria;
     }
-
+ 
     public void setEstoria(Estoria estoria) {
         this.estoria = estoria;
     }
-
-    @Override
+ 
+    @Override   
     public int hashCode() {
-        int hash = 0;
+        int hash = 0;  
         hash += (estimativaPK != null ? estimativaPK.hashCode() : 0);
         return hash;
-    }
+    } 
  
     @Override
     public boolean equals(Object object) {

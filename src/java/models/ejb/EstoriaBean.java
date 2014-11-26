@@ -114,12 +114,11 @@ public class EstoriaBean implements IEstoria {
     @Override
     public Estoria selectEstoriaByIdS(int idEstoria) {
         try {
-            this.estoria = (Estoria) this.entityManager.createNamedQuery("Estoria.findEstoriaAndEstimativaByIdProjeto")
+            this.estoria = (Estoria) this.entityManager.createNamedQuery("Estoria.findById")
                     .setParameter("id", idEstoria)
                     .getSingleResult();
             return this.estoria;
         } catch (Exception error) { 
-            System.err.println("Error em EstoriaBean-selecEstoriaById-->" + error.getMessage());
             throw new BusinessException("Falha ao consultar estória");
         }
     }
