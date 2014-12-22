@@ -14,7 +14,7 @@
         <h:outputScript library="styles" name="assets/js/gamescript.js"/>  
         
         <div class="row" id="main">
-            <div class="col-md-5 ">
+            <div class="col-md-5" id="stories">
                 <h:messages></h:messages>
                 <div class="row tiles-container  m-b-20 ">
                     <div class="m-l-10 ">
@@ -24,19 +24,18 @@
                         <div class="tiles white" id="description">
                             
                             <c:forEach items="#{estoriaController.parentEstorias}" var="estoria">
-                                   <ui:fragment rendered="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}">
-                                       <ui:include src="/WEB-INF/templates/subtask.xhtml">
-                                           <ui:param name="estoria" value="#{estoria}"/>
-                                       </ui:include>
-                                   </ui:fragment>
-                                   
-                                   <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
-                                       <ui:include src="/WEB-INF/templates/storyElement.xhtml">
-                                           <ui:param name="estoria" value="#{estoria}"/>
-                                       </ui:include>
-                                   </ui:fragment>
-                               </c:forEach>
+                                <ui:fragment rendered="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}">
+                                    <ui:include src="/WEB-INF/templates/subtask.xhtml">
+                                        <ui:param name="estoria" value="#{estoria}"/>
+                                    </ui:include>
+                                </ui:fragment>
 
+                                <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
+                                    <ui:include src="/WEB-INF/templates/storyElement.xhtml">
+                                        <ui:param name="estoria" value="#{estoria}"/>
+                                    </ui:include>
+                                </ui:fragment>
+                            </c:forEach>
                         </div> 
                     </div>
                 </div>
@@ -146,7 +145,8 @@
                     </div>
                 </h:panelGroup>
             </div>
-
+            
+            
         </div>
         
          <script type="text/javascript">
@@ -208,16 +208,17 @@
                        enableCardArea();
                        $("#countdown360").countdown360({
 //                           seconds : 300,
-                           seconds : 100,
+                           seconds : 20,
                            onComplete: function(){
                                 showCardsSelected();  
                                 disableCardArea();
-                                registerScore(storyHtmlElementSelected);
+                                showFormRate(storyHtmlElementSelected);
                                 gameUnlock = {"type": "gameUnlock"};
                                 spiderSocket.send(JSON.stringify(gameUnlock));
                                 
                                 $("#gameStart").attr("disabled",false);
                                 $("#countdown360").fadeOut().remove();
+                                
                            }
                        });
                    }
@@ -251,8 +252,6 @@
                             storyHtmlElementSelected = $(id);
                        addTargetStory(storyHtmlElementSelected);
                    }
- 
-                       
                };
                
                $("#gameStart").click(function(e){
@@ -290,6 +289,23 @@
                    addTargetStory(storyHtmlElementSelected);
                    spiderSocket.send(JSON.stringify(storyDataSelected));
                });
+               
+               $('.score .form-rate').on("change","#rate-value",function(e){
+                   
+                    option = confirm('deseja confirmar estimativa ? ' );
+                    
+                    if(!option){return;}
+                    var estRateValue = $('#rate-value').val();
+                    var estim = {
+                        "type": "rate", 
+                        "score": estRateValue,
+                        "storyId": storyHtmlElementSelected.attr('id')
+                    };
+                    
+                    console.log(JSON.stringify(estim));
+                    spiderSocket.send(JSON.stringify(estim));
+                    
+               });
             }
             
             
@@ -297,7 +313,11 @@
             function registerScore(storyHtmlElementSelected)
             {
                 storyHtmlElementSelected.siblings(".score").removeClass('hide');
-//                smStorySelected.parent().parent().siblings(".setScore").removeClass('hide');
+            }
+            
+            function hideRegisterScoreComponent(storyHtmlElementSelected)
+            {
+                storyHtmlElementSelected.siblings(".score").addClass('hide');
             }
             
 //         window.onbeforeunload = function()
@@ -314,6 +334,13 @@
            function addTargetStory(storyHtmlElementSelected)
            {
                storyHtmlElementSelected.children(0).addClass('green');
+           }
+           
+           function showFormRate(storyHtmlElementSelected)
+           {               
+               if(storyHtmlElementSelected.length !== 0){
+                   storyHtmlElementSelected.siblings('.score').children('.form-rate').html('<select update=":main:stories"  class="form-controll" id="rate-value"><option value="0" label="0"/><option value="1" label="1"/><option value="2" label="2"/><option value="5" label="5"/><option value="8" label="8"/><option value="10" label="10"/><option value="20" label="20"/></select>');
+               }
            }
          
          </script>

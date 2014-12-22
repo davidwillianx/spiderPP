@@ -136,10 +136,7 @@ function showCardsSelected()
         listOfCardsSelected  += buildCardSelected(cardsTurn[indexList]);
     
     if(userCardSelected.length !== 0)
-    {
-        console.log(userCardSelected);
         rowSelected.html(userCardSelected).append(listOfCardsSelected).fadeIn();
-    }
         
     else
         rowSelected.html(listOfCardsSelected).fadeIn();

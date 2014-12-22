@@ -22,6 +22,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import models.ejb.MensagemBean;
+import models.ejbs.interfaces.IEstimativa;
 import models.entities.Mensagem; 
  
 /** 
@@ -33,8 +34,9 @@ import models.entities.Mensagem;
 )
 public class GameSocket implements Serializable {
 
-    @Inject
-    private MensagemBean mensagemBean;
+    @Inject private MensagemBean mensagemBean;
+    @Inject private IEstimativa iEstimativa;
+    
     private Game game;
     private static final List<Game> games = Collections.synchronizedList(new ArrayList<Game>());
     private Participant participant;
@@ -88,7 +90,7 @@ public class GameSocket implements Serializable {
                 //TODO pensando sobre sim ou não de armazenar esta informação no servidor
                 //Game game = this.getGame(session);
                 //game.addCard(message, session);
-                game.sendBroadcastMessageWithoutSender(session, message);
+                game.sendBroadcastMessageWithoutSender(session, message); 
             }
                  
             if("gameUnlock".equals(message.getJson().getString("type")))
@@ -103,7 +105,19 @@ public class GameSocket implements Serializable {
             { 
                 if(game.getParticipant(session).isScrumMaster())
                     game.sendBroadcastMessageWithoutSender(session, message);
-            }   
+            }  
+            
+            if("rate".equals(message.getJson().getString("type"))){
+                try {
+                    
+                    Estimativa estimativa = new Estimativa(message.getJson());
+                    iEstimativa.persistEstimativa(estimativa.getStoryId()
+                                                    ,estimativa.getScore());
+                    game.sendBroadcastMessage(session, message);
+                } catch (Exception e) {
+                    System.err.println("<<<<<<<<<<<<<<<<<<<<< ERROR >>>>>>>>>>>>>>>>>>>"+ e.getMessage());
+                }
+            }
 
         } catch (Exception e) {
             //Call on error and close connection

@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -23,20 +24,31 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import libs.exception.NotFoundException;
 import models.ejb.MensagemBean;
+import models.ejbs.interfaces.IEstimativa;  
 import models.entities.Mensagem;
-
+ 
 /**
  *
  * @author smartphonne
- */
-@Singleton
+ */ 
+
+
+
+                        /**CLASS HASNT BEEN USED*/
+
+
+
+
+
+@Singleton  
 @ServerEndpoint(value = "/spiderSocketGamex/",
-        encoders = {ChatMessageEncoder.class, GameStartEncoder.class, CardEnconder.class,NoticeEncoder.class }, decoders = {MessageDecoder.class}
+        encoders = {ChatMessageEncoder.class, GameStartEncoder.class, CardEnconder.class, NoticeEncoder.class, EstimativaEnconder.class }, decoders = {MessageDecoder.class}
 )
 public class SpiderSocket implements Serializable {
 
-    @Inject
-    private MensagemBean mensagemBean;
+    /** @TODO  create an interface for this class to put all visible methods there*/
+    @Inject private MensagemBean mensagemBean;
+    @EJB private IEstimativa iEstimativa;
     private List<Mensagem> mensagens;
     private static final Set<Session> sessions
             = Collections.synchronizedSet(new HashSet<Session>());
@@ -115,26 +127,22 @@ public class SpiderSocket implements Serializable {
 
                 GameMessage gameMessage = (GameMessage) message;
                 senderSession.getUserProperties().put("gameOpened", true);
-                String room = (String) senderSession.getUserProperties().get("room");
-
-                for (Session session : sessions) {
-                    if (room.equals(session.getUserProperties().get("room"))) {
-                        session.getBasicRemote().sendObject(gameMessage);
-                    }
-                }
-            }
+                this.sendGameMessageBroadcast(senderSession, gameMessage);
+                
+            } 
 
             if (message instanceof Card) {
                 Card  cardSelected = (Card) message;
-                
-                for(Session session : sessions)
-                {
-                   String room = (String ) senderSession.getUserProperties().get("room");
-                   
-                   if(room.equals(session.getUserProperties().get("room")))
-                       if(!senderSession.equals(session)){
-                            session.getBasicRemote().sendObject(cardSelected);
-                       }
+                this.sendCardSelectedBroadcast(senderSession, cardSelected);
+            }
+              
+            if (message instanceof Estimativa) {
+                try {
+                    Estimativa estimativa = (Estimativa) message;
+                    iEstimativa.persistEstimativa(estimativa.getStoryId(), estimativa.getScore());
+
+                } catch (Exception e) {
+                    System.err.println(" >>>>>>>>>>.. Something wrong happend");
                 }
             }
 
@@ -149,16 +157,36 @@ public class SpiderSocket implements Serializable {
         sessions.remove(session);
     }
 
+    
     private void sendChatMessage(Session senderSession, Message message) throws IOException, EncodeException {
         ChatMessage chatMessage = (ChatMessage) message;
         mensagemBean.save(chatMessage);
+        this.sendBroadcastMessage(senderSession, message); 
+    }
+    
+    private void sendCardSelectedBroadcast(Session senderSession,Card cardSelected) throws IOException, EncodeException{
+        this.sendBroadcastMessageExceptSender(senderSession, cardSelected);
+    }
+    
+    private void sendGameMessageBroadcast(Session senderSession, GameMessage gameMessage) throws IOException, EncodeException{
+        this.sendBroadcastMessage(senderSession, gameMessage);
+    }
+    
+    
+    private void sendBroadcastMessage(Session senderSession, Message message) throws IOException, EncodeException{
         String room = (String) senderSession.getUserProperties().get("room");
-
+        for(Session session : sessions){
+            if(room.equals(session.getUserProperties().get("room"))){
+                session.getBasicRemote().sendObject(message);
+            }
+        }
+    }
+    
+    private void sendBroadcastMessageExceptSender(Session senderSession, Message message) throws IOException, EncodeException {
+        String room = (String) senderSession.getUserProperties().get("room");
         for (Session session : sessions) {
             if (room.equals(session.getUserProperties().get("room"))) {
-                if (!senderSession.equals(session)) {
-                    session.getBasicRemote().sendObject(chatMessage);
-                }
+                session.getBasicRemote().sendObject(message);
             }
         }
     }

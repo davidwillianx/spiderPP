@@ -29,8 +29,8 @@ public class Card extends Message{
     
     public Card(JsonObject json)
     {
-         this.setValue(Integer.parseInt(json.getString("value")));
-         this.setUserNameOtion(json.getString("userNameOption"));
+         this.value =Integer.parseInt(json.getString("value"));
+         this.userNameOption = json.getString("userNameOption");
     }
     
     public void setValue(int value)
