@@ -7,6 +7,7 @@ package socket;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject; 
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.websocket.EncodeException; 
 import javax.websocket.OnClose; 
 import javax.websocket.OnMessage; 
@@ -21,6 +23,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import libs.exception.NoPersistException;
 import models.ejb.MensagemBean;
 import models.ejbs.interfaces.IEstimativa;
 import models.entities.Mensagem; 
@@ -114,8 +117,15 @@ public class GameSocket implements Serializable {
                     iEstimativa.persistEstimativa(estimativa.getStoryId()
                                                     ,estimativa.getScore());
                     game.sendBroadcastMessage(session, message);
-                } catch (Exception e) {
-                    System.err.println("<<<<<<<<<<<<<<<<<<<<< ERROR >>>>>>>>>>>>>>>>>>>"+ e.getMessage());
+                    
+                } catch (NoPersistException error) { 
+                    
+                    Message notice = new Message(Json.createObjectBuilder()  
+                                            .add("type", "notice")
+                                            .add("message", "Problema na estimativa"
+                                                    +"tente novamente")
+                                            .build());    
+                    game.sendBroadcastMessage(session, notice);
                 }
             }
 
@@ -172,4 +182,5 @@ public class GameSocket implements Serializable {
         //Possivelmente trocado por uma exception (NotFoundException)
         return null;
     }
+    
 }
