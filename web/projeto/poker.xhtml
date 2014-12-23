@@ -232,7 +232,21 @@
                    
                    if(message.type === "notice")
                    {
-                       $('#notice').html(message.message);
+                       $('body').prepend('<div class="modal fade" id="modal-info">'
+                                            +'<div class="modal-dialog">'
+                                            +'<div class="modal-content">'
+                                                +'<div class="modal-header">'
+                                                +'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'
+                                                +'Infomacao</div>'
+                                                +'<div class="modal-body">'
+                                                    +message.message
+                                                    +'</div><div class="modal-footer">'
+                                                        +'<button class="btn btn-primary" data-dismiss="modal">fechar</button>'
+                                                    +'</div>'
+                                                +'</div>'
+                                            +'</div></div>');
+                         $('#modal-info').modal();
+                       
                        //NOTICE GERENCIA AS MENSAGENS DE INFORMACAO :: CRITICO / ERROR / INFO
                        //console.log("estamos errados"+message.message);
                        //window.location = "../projeto"; 
@@ -304,8 +318,6 @@
                         "score": estRateValue,
                         "storyId": storyHtmlElementSelected.attr('id')
                     };
-                    
-                    console.log(JSON.stringify(estim));
                     spiderSocket.send(JSON.stringify(estim));
                     
                });

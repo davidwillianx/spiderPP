@@ -93,7 +93,7 @@ public class GameSocket implements Serializable {
                 //TODO pensando sobre sim ou não de armazenar esta informação no servidor
                 //Game game = this.getGame(session);
                 //game.addCard(message, session);
-                game.sendBroadcastMessageWithoutSender(session, message); 
+                game.sendBroadcastMessageWithoutSender(session, message);  
             }
                  
             if("gameUnlock".equals(message.getJson().getString("type")))
@@ -110,14 +110,14 @@ public class GameSocket implements Serializable {
                     game.sendBroadcastMessageWithoutSender(session, message);
             }  
             
-            if("rate".equals(message.getJson().getString("type"))){
+            if("rate".equals(message.getJson().getString("type"))){ 
                 try {
-                    
+                     
                     Estimativa estimativa = new Estimativa(message.getJson());
                     iEstimativa.persistEstimativa(estimativa.getStoryId()
                                                     ,estimativa.getScore());
                     game.sendBroadcastMessage(session, message);
-                    
+                    throw new NoPersistException("adssa");
                 } catch (NoPersistException error) { 
                     
                     Message notice = new Message(Json.createObjectBuilder()  
