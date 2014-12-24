@@ -7,7 +7,6 @@ package socket;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -103,7 +102,7 @@ public class GameSocket implements Serializable {
                         game.sendBroadcastMessageWithoutSender(session, message);
                 }   
             }
-             
+                
             if("story".equals(message.getJson().getString("type")))
             { 
                 if(game.getParticipant(session).isScrumMaster())
@@ -111,19 +110,24 @@ public class GameSocket implements Serializable {
             }  
             
             if("rate".equals(message.getJson().getString("type"))){ 
+                
+                
                 try {
                      
                     Estimativa estimativa = new Estimativa(message.getJson());
                     iEstimativa.persistEstimativa(estimativa.getStoryId()
                                                     ,estimativa.getScore());
-                    game.sendBroadcastMessage(session, message);
-                    throw new NoPersistException("adssa");
+                    
+                    game.sendBroadcastMessage(session, message);       
+                            
+                            
                 } catch (NoPersistException error) { 
                     
-                    Message notice = new Message(Json.createObjectBuilder()  
+                 Message  notice = new Message(Json.createObjectBuilder()  
                                             .add("type", "notice")
                                             .add("message", "Problema na estimativa"
                                                     +"tente novamente")
+                                            .add("kind", "error")
                                             .build());    
                     game.sendBroadcastMessage(session, notice);
                 }
@@ -139,9 +143,9 @@ public class GameSocket implements Serializable {
         try {
             //Fechar a conexão/Remover do game/ redirecionar/
             //Verifica o que pode ser o método closeReason.
-            session.close();
+            session.close();  
             System.err.println("Vai tomar DC");
-        } catch (IOException ex) {
+        } catch (IOException ex) { 
             Logger.getLogger(GameSocket.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

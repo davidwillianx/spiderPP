@@ -195,7 +195,7 @@
                    if(message.type === "message"){
                      
                      if(message.idUsuario === #{usuario.id})
-                       appendMessageSent(message.message)
+                       appendMessageSent(message.message);
                      else  appendMessageReceived(message.message);
                    
                      scrollToFinish();
@@ -204,7 +204,7 @@
                    if(message.type === "gameStart")
                    {
                        openGameCardSelection();
-                       $("#timerGamer").html('<div id="countdown360"></div>')
+                       $("#timerGamer").html('<div id="countdown360"></div>');
                        $("#gameStart").attr("disabled","disabled");
                        enableCardArea();
                        $("#countdown360").countdown360({
@@ -232,20 +232,8 @@
                    
                    if(message.type === "notice")
                    {
-                       $('body').prepend('<div class="modal fade" id="modal-info">'
-                                            +'<div class="modal-dialog">'
-                                            +'<div class="modal-content">'
-                                                +'<div class="modal-header">'
-                                                +'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'
-                                                +'Infomacao</div>'
-                                                +'<div class="modal-body">'
-                                                    +message.message
-                                                    +'</div><div class="modal-footer">'
-                                                        +'<button class="btn btn-primary" data-dismiss="modal">fechar</button>'
-                                                    +'</div>'
-                                                +'</div>'
-                                            +'</div></div>');
-                         $('#modal-info').modal();
+                       createModalInfo('modal-info',message.message);
+                       $('#modal-info').modal();
                        
                        //NOTICE GERENCIA AS MENSAGENS DE INFORMACAO :: CRITICO / ERROR / INFO
                        //console.log("estamos errados"+message.message);
@@ -268,6 +256,13 @@
                        removeTargetStory(storyHtmlElementSelected);
                             storyHtmlElementSelected = $(id);
                        addTargetStory(storyHtmlElementSelected);
+                   }
+                   
+                   
+                   if(message.type === "rate"){
+                       createModalInfo('new-rate-setted',"Registro da estimativa realizado "+ message.score);
+                       $('#new-rate-setted').modal();
+                       
                    }
                };
                
@@ -356,6 +351,24 @@
                if(storyHtmlElementSelected.length !== 0){
                    storyHtmlElementSelected.siblings('.score').children('.form-rate').html('<select update=":main:stories"  class="form-controll" id="rate-value"><option value="0" label="0"/><option value="1" label="1"/><option value="2" label="2"/><option value="5" label="5"/><option value="8" label="8"/><option value="10" label="10"/><option value="20" label="20"/></select>');
                }
+           }
+           
+           
+           function createModalInfo(id,message){
+             var modalHtml =  '<div class="modal fade" id="'+id+'">'
+                                            +'<div class="modal-dialog">'
+                                            +'<div class="modal-content">'
+                                                +'<div class="modal-header">'
+                                                +'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'
+                                                +'Infomacao</div>'
+                                                +'<div class="modal-body">'
+                                                    +message
+                                                    +'</div><div class="modal-footer">'
+                                                        +'<button class="btn btn-primary" data-dismiss="modal">fechar</button>'
+                                                    +'</div>'
+                                                +'</div>'
+                                            +'</div></div>';
+               $('body').prepend(modalHtml);                        
            }
          
          </script>
