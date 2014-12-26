@@ -7,6 +7,7 @@
 package models.ejb;
 
 import java.util.Date;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB; 
 import javax.ejb.SessionContext;
@@ -15,12 +16,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext; 
 import libs.exception.BusinessException;
 import libs.exception.NoPersistException;
+import libs.exception.NotFoundException;
 import models.ejbs.interfaces.IEstimativa;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estimativa; 
 import models.entities.EstimativaPK; 
 import models.entities.Estoria;
-import models.entities.EstoriaPK;
+
 
 
 /** 
@@ -59,7 +61,7 @@ public class EstimativaBean implements IEstimativa{
     @Override
     public void persistEstimativa(int idEstoria, int pontuacao) {
         try {
-            System.err.println(">>>>>>>>>>>>>>>>>> Score show what you got "+pontuacao);
+            
             estoria =  iEstoria.selectEstoriaByIdS(idEstoria);
             estimativa = new Estimativa();
             estimativa.setData(new Date());
@@ -69,6 +71,18 @@ public class EstimativaBean implements IEstimativa{
                 
         } catch (Exception e) {
             throw new NoPersistException("Falha ao relizar operação"); 
+        }
+    }
+ 
+    @Override
+    public List<Estimativa> selectEstimativaByIdEstoria(int idEstoria) {
+         try {
+            return entityManager.createNamedQuery("Estimativa.findByIdEstoria")
+                            .setParameter("idEstoria", idEstoria)
+                            .getResultList();
+            
+        } catch (Exception error) {
+            throw new NotFoundException("Falha ao encontrar");
         }
     }
 }

@@ -6,6 +6,7 @@
         
 package controllers;   
  
+import java.util.List;
 import javax.ejb.EJB;    
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -25,6 +26,8 @@ public class EstimativaController {
     private Estimativa estimativa;
     private int estimativaSelected;
     private final  int[] estimativas;
+    private List<Estimativa> storyEstimativas;
+    
      
     @EJB
     private IEstimativa iEstimativa;
@@ -62,9 +65,9 @@ public class EstimativaController {
     }
     
     //Under Analysis
-    public Estimativa giveEstimativa (int idEstoria){
-        this.estimativa = this.iEstimativa.SelectEstimativaByIdEstoria(idEstoria);
-        return this.estimativa;
+    public List<Estimativa> giveEstimativa (int idEstoria){
+        this.storyEstimativas = this.iEstimativa.selectEstimativaByIdEstoria(idEstoria);
+        return this.storyEstimativas; 
     }
     
     public Estimativa getEstimativa()
