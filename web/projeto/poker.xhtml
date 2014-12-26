@@ -260,8 +260,9 @@
                    
                    
                    if(message.type === "rate"){
-                       createModalInfo('new-rate-setted',"Registro da estimativa realizado "+ message.score);
+                       createModalInfo('new-rate-setted','Registro da estimativa realizado  <span class=" badge badge-important">'+ message.score+'</span>');
                        $('#new-rate-setted').modal();
+                       storyHtmlElementSelected.siblings('.score').children('.rate-box').append('<span class=" badge ">'+message.score+'</span>');
                        
                    }
                };
@@ -272,6 +273,7 @@
                        "type": "gameStart",
                        "start": "startTime"
                    };
+                   
                    spiderSocket.send(JSON.stringify(gameStart));
                });
                
@@ -314,6 +316,7 @@
                         "storyId": storyHtmlElementSelected.attr('id')
                     };
                     spiderSocket.send(JSON.stringify(estim));
+                    $('#rate-value').remove();
                     
                });
             }

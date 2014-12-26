@@ -30,25 +30,21 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id)  == 1}">
-                
-                <div class="inline pull-right col-lg-2 score">
-                    <!--<div class="p-t-5 p-l-5 p-b-5 p-r-5">-->
-                    <div class="col-lg-2">                 
-                        <ui:repeat value="#{estimativaController.giveEstimativa(estoria.estoriaPK.id)}" var="estimativa">
-                            <span class=" badge ">#{estimativa.pontuacao}</span>
-                        </ui:repeat>
-                        
-                        <span class=" badge ">1</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-                        <span class=" badge ">1</span>
-                    </div>
-                        
-                    <div class="input-group col-lg-2 inline form-rate">
-                            
-                    </div>
-                    <!--</div>-->
+            <div class="pull-right col-md-2 score">
+
+                <div class=" rate-box m-b-5">                 
+                    <ui:repeat value="#{estimativaController.giveEstimativa(estoria.estoriaPK.id)}" var="estimativa">
+                        <span class=" badge badge-important">#{estimativa.pontuacao}</span>
+                    </ui:repeat>
                 </div>
-            </h:panelGroup>
+                <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id)  == 1}">
+                    <div class="input-group col-lg-2 inline form-rate">
+
+                    </div>
+                </h:panelGroup>
+            </div>
+
+
             <div class="clearfix"></div>
         </div>
     </h:panelGroup>
