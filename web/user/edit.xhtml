@@ -30,6 +30,10 @@
                                     <h:outputLabel for="email" value="Email: " class="form-label"/>
                                     <h:inputText id="email" class="form-control" value="#{updateUsuarioController.usuario.email}"/>
                                 </h:panelGroup>
+                                <h:panelGroup layout="block" class="form-group col-md-6 col-lg-4">
+                                    <h:outputLabel for="nickname" value="Apelido: " class="form-label"/>
+                                    <h:inputText id="nickname" class="form-control" value="#{updateUsuarioController.usuario.nickname}"/>
+                                </h:panelGroup>
                                 <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
                                     <h:outputLabel for="descricao" value="Descrição: " class="form-label"/>
                                     <h:inputTextarea id="descricao" class="form-control" value="#{updateUsuarioController.usuario.descricao}"/>

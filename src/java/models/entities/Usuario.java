@@ -82,8 +82,15 @@ public class Usuario implements Serializable {
     private String email;
     @Basic(optional = false)
     @Size(min = 6, max = 122, message =" O campo senha deve conter no mínimo 6 caracteres")
+    
     @Column(name = "senha")
     private String senha;
+
+    
+    @Size(min = 6, max = 12, message ="O campo deve conter entre 6 e 12 caracteres")
+    @Basic(optional = false)
+    @Column(name = "nickname", unique = true)
+    private String nickname;
      
     
     @JoinTable(name = "usuario_area_atuacao", joinColumns = {
@@ -139,6 +146,14 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
+    public String getNickname(){
+        return this.nickname;
+    }
+    
+    public void setNickname(String nickname){
+        this.nickname = nickname;
+    }
+            
     
 
 

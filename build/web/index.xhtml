@@ -50,7 +50,7 @@
                                             Ferramenta de apoio a estimativas utilizando o m&eacute;todo Planning Poker
                                         </h2>
                                         <h3>
-                                            Tenha uma base histórica de estimativas acessível e segura, sendo visível de qualquer lugar.
+                                            Tenha uma base hist&oacute;rica de estimativas acess&iacute;vel e segura, sendo vis&iacute;vel de qualquer lugar.
                                             <button class="btn  btn-success btn-large" id="next" >Registre-se Agora!</button>
                                         </h3>
 
@@ -90,10 +90,15 @@
                                                         <h:inputText id="email" class="form-control" value="#{usuarioController.usuario.email}"/>
                                                     </h:panelGroup>
                                                     <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
-                                                        <h:outputLabel for="descricao" value="Descrição: " class="form-label"/>
+                                                        <h:outputLabel for="descricao" value="Descri&ccedil;&atilde;o:" class="form-label"/>
                                                         <h:inputTextarea id="descricao" class="form-control" value="#{usuarioController.usuario.descricao}"/>
                                                     </h:panelGroup>
                                                     <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
+                                                        <h:outputLabel for="nickname" value="Apelido: " class="form-label"/>
+                                                        <h:inputText id="nickname"  class="form-control" value="#{usuarioController.usuario.nickname}" />  
+                                                    </h:panelGroup> 
+                                                    <h:panelGroup layout="block" class="col-lg-12">
+                                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
                                                         <h:outputLabel for="novasenha" value="Senha: " class="form-label"/>
                                                         <h:inputSecret id="novasenha"  class="form-control" value="#{usuarioController.usuario.senha}" />  
                                                     </h:panelGroup> 
@@ -103,6 +108,8 @@
                                                             <f:validator validatorId="passvalidator"/>
                                                         </h:inputSecret>  
                                                     </h:panelGroup> 
+                                                    </h:panelGroup>
+                                                    
                                                     <h:panelGroup layout="block" class="col-md-7">
                                                         <h:commandButton class="btn btn-primary btn-cons" value="Cadastrar" action="#{usuarioController.save(usuarioController.usuario)}"/>
                                                     </h:panelGroup>
