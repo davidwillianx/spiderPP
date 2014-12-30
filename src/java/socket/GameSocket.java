@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 package socket;
-
+ 
 import java.io.IOException;
-import java.io.Serializable;
+import java.io.Serializable; 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject; 
 import javax.json.Json;
-import javax.json.JsonObject;
 import javax.websocket.EncodeException; 
 import javax.websocket.OnClose; 
 import javax.websocket.OnMessage; 
@@ -73,15 +72,15 @@ public class GameSocket implements Serializable {
     //BAM BAM BAM REFACTORY DETECTED PAY ATTENTION SR 
     @OnMessage
     public void OnMessage(Session session, Message message) {
-        try { 
-  
+        try {  
+    
               Game game  = this.getGame(session);
               
-            if ("message".equals(message.getJson().getString("type"))) {
+            if ("chatMessage".equals(message.getJson().getString("type"))) {
                 mensagemBean.save(new ChatMessage(message.getJson()));
                 game.sendBroadcastMessageWithoutSender(session, message);
-            }         
-     
+            }                
+      
             if ("gameStart".equals(message.getJson().getString("type"))) { 
                 game.start();
                 game.sendBroadcastMessage(session,message); 
@@ -90,10 +89,10 @@ public class GameSocket implements Serializable {
             if("cardSelected".equals(message.getJson().getString("type")))
             {
                 //TODO pensando sobre sim ou não de armazenar esta informação no servidor
-                //Game game = this.getGame(session);
+                //Game game = this.getGame(session); 
                 //game.addCard(message, session);
                 game.sendBroadcastMessageWithoutSender(session, message);  
-            }
+            } 
                  
             if("gameUnlock".equals(message.getJson().getString("type")))
             {
@@ -159,7 +158,7 @@ public class GameSocket implements Serializable {
                     .add("message", mensagem.getTexto())
                     .add("idProjeto", mensagem.getProjeto().getId())
                     .add("idUsuario", mensagem.getUsuario().getId())
-                    .add("type", "message")
+                    .add("type", "chatMessage")
                     .build()); 
             
             session.getBasicRemote().sendObject(message);

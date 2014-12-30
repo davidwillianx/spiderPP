@@ -2,7 +2,8 @@
 $(document).ready(socketStart());
 
 function socketStart(){
-               disableCardArea();
+
+            disableCardArea();
                
                var perfil = prPath; 
                var room  = rmPath;
@@ -20,31 +21,19 @@ function socketStart(){
                    //IF estimativa recebe tempo e as estimativas
                };
                
-               $("#chat-message-input").keypress(function(messageContent){
-                     if(messageContent.keyCode === 13){
-                         messageContent.preventDefault();
-                          
-                          chatMessage = {
-                               "idUsuario":  idUsuario,
-                               "idProjeto": idProjeto,
-                               "author" : author,
-                               "message":  $(this).val(),
-                               "type":  "message"
-                              };
-                          
-                          sendMessage(spiderSocket,chatMessage);
-                       }
-               });
                
+               
+                   
+                   
                spiderSocket.onmessage = function(event)
                {
                    message = JSON.parse(event.data);
                    
                    
-                   if(message.type === "message"){
+                   if(message.type === "chatMessage"){
                      
                      if(message.idUsuario === idUsuario)
-                       appendMessageSent(message.message);
+                         appendMessageSent(message.message);
                      else  appendMessageReceived(message.message);
                    
                      scrollToFinish();
@@ -127,10 +116,10 @@ function socketStart(){
                });
                
                $('.opt-card ').click(function(e){
-                   card = {
+                  var card = {
                      "type": "cardSelected",
                      "value" : $(this).html(),
-                     "userNameOption": "#{usuario.nome}",
+                     "userName": author,
                      "idUsuario":  idUsuario
                    };
                    
@@ -141,6 +130,7 @@ function socketStart(){
                
                $('.activity').click(function(){
                    
+                   $("#rate-value").fadeOut(function(){$(this).remove();});
                   removeTargetStory(storyHtmlElementSelected);
                   storyHtmlElementSelected = $(this);
                   
@@ -168,7 +158,25 @@ function socketStart(){
                     $('#rate-value').remove();
                     
                });
+               
+               $('body').on('keypress','#chat-message-input',function(txtElement){
+                    if(txtElement.which === 13){
+                         txtElement.preventDefault();
+                          
+                        var chatMessage = {
+                            "idUsuario":  idUsuario,
+                            "idProjeto": idProjeto,
+                            "author" : author,
+                            "message":  $(this).val(),
+                            "type":  "chatMessage"
+                            };
+                         
+                        sendMessage(spiderSocket,chatMessage);
+                    }
+                });
             }
+            
+            
             
             
             //UnderVerification

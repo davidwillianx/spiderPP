@@ -16,7 +16,7 @@ import javax.json.JsonObject;
 public class ChatMessage extends Message{
 
     
-    private final String type = "message";
+    private final String type = "chatMessage";
     private String message;
     private String author;
     private Date dateReceived;
@@ -24,11 +24,12 @@ public class ChatMessage extends Message{
     private int idUsuario;
 
     public ChatMessage(JsonObject json) {
-        this.setMessage(json.getString("message"));
-        this.setAuthor(json.getString("author"));
-        this.setIdProjeto(json.getInt("idProjeto"));
-        this.setIdUsuario(json.getInt("idUsuario"));
-        this.setDateReceived(new Date());
+        
+        this.message = json.getString("message");
+        this.author = json.getString("author");
+        this.idProjeto = json.getInt("idProjeto");
+        this.idUsuario = json.getInt("idUsuario");
+        this.dateReceived = new Date();
     }
     
     
