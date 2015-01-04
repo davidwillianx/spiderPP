@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 package socket;
- 
+  
 import java.io.IOException;
-import java.io.Serializable; 
-import java.util.ArrayList;
+import java.io.Serializable;    
+import java.util.ArrayList;       
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.Logger;    
 import javax.inject.Inject; 
-import javax.json.Json;
+import javax.json.Json;        
 import javax.websocket.EncodeException; 
 import javax.websocket.OnClose; 
 import javax.websocket.OnMessage; 
@@ -34,15 +34,15 @@ import models.entities.Mensagem;
         encoders = {MessageEncoder.class}, decoders = {MessageDecoder.class}
 )
 public class GameSocket implements Serializable {
-
+  
     @Inject private MensagemBean mensagemBean;
-    @Inject private IEstimativa iEstimativa;
-    
+    @Inject private IEstimativa iEstimativa;  
+       
     private Game game;
     private static final List<Game> games = Collections.synchronizedList(new ArrayList<Game>());
     private Participant participant;
 
-    @OnOpen
+    @OnOpen   
     public void onOpen(Session session, @PathParam("room") String room, @PathParam("perfil") String perfil) {
         try { 
             participant = new Participant(room, perfil, session);
@@ -63,7 +63,7 @@ public class GameSocket implements Serializable {
                     this.OnClose(session);
                 } 
             } 
-        } catch (IOException | EncodeException e) {
+        } catch (IOException | EncodeException e) {     
             //Call OnError 
             System.err.println("Do something" + e.getMessage());
         }  

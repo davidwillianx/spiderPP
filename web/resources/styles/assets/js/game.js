@@ -159,6 +159,10 @@ function socketStart(){
                     
                });
                
+               $('.score .for-rate').on('click','#set-rate',function(){
+                    
+               })
+               
                $('body').on('keypress','#chat-message-input',function(txtElement){
                     if(txtElement.which === 13){
                          txtElement.preventDefault();
@@ -207,9 +211,16 @@ function socketStart(){
            }
            
            function showFormRate(storyHtmlElementSelected)
-           {               
+           {   
                if(storyHtmlElementSelected.length !== 0){
-                   storyHtmlElementSelected.siblings('.score').children('.form-rate').html('<select update=":main:stories"  class="form-controll" id="rate-value"><option value="0" label="0"/><option value="1" label="1"/><option value="2" label="2"/><option value="5" label="5"/><option value="8" label="8"/><option value="10" label="10"/><option value="20" label="20"/></select>');
+                   $('<button id="set-rate" class="btn btn-success btn-small">est</button>\n\
+                    <button id="div-est" class="btn btn-warning btn-small">div</button>')
+                       .hide().appendTo(
+                                        storyHtmlElementSelected
+                                            .siblings('.score')
+                                            .children('.form-rate'))
+                                .fadeIn(999);
+
                }
            }
            
