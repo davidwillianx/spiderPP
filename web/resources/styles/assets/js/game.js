@@ -15,7 +15,7 @@ function socketStart(){
                var smStorySelected = "";
                
                var storyHtmlElementSelected = "";
-               
+               var rateValues = [0,2,5,8,13,20];
                
                spiderSocket.onopen = function(){
                    //IF estimativa recebe tempo e as estimativas
@@ -70,12 +70,11 @@ function socketStart(){
                    
                    if(message.type === "notice")
                    {
-                       createModalInfo('modal-info',message.message);
-                       $('#modal-info').modal();
-                       
+
                        //NOTICE GERENCIA AS MENSAGENS DE INFORMACAO :: CRITICO / ERROR / INFO
                        //console.log("estamos errados"+message.message);
                        //window.location = "../projeto"; 
+                        showModalDialog(message.message,'Informacao');
                    }
                    
                    
@@ -98,10 +97,8 @@ function socketStart(){
                    
                    
                    if(message.type === "rate"){
-                       createModalInfo('new-rate-setted','Registro da estimativa realizado  <span class=" badge badge-important">'+ message.score+'</span>');
-                       $('#new-rate-setted').modal();
-                       storyHtmlElementSelected.siblings('.score').children('.rate-box').append('<span class=" badge ">'+message.score+'</span>');
-                       
+                       showModalDialog('Registro da estimativa realizado  <span class=" badge badge-important">'+ message.score+'</span>', 'Sucesso');
+                       $('<span class=" badge ">'+message.score+'</span>').hide().appendTo(storyHtmlElementSelected.siblings('.score').children('.rate-box')).fadeIn();
                    }
                };
                
@@ -143,7 +140,7 @@ function socketStart(){
                    spiderSocket.send(JSON.stringify(storyDataSelected));
                });
                
-               $('.score .form-rate').on("change","#rate-value",function(e){
+               $('body').on("change","#rate-value",function(e){
                    
                     option = confirm('deseja confirmar estimativa ? ' );
                     
@@ -155,13 +152,21 @@ function socketStart(){
                         "storyId": storyHtmlElementSelected.attr('id')
                     };
                     spiderSocket.send(JSON.stringify(estim));
-                    $('#rate-value').remove();
+                    $('#modal-dialog').modal('hide');
                     
                });
                
-               $('.score .for-rate').on('click','#set-rate',function(){
-                    
-               })
+               $('.score .form-rate').on('click','#set-rate',function(){
+                   var optionRateValue = '<select id="rate-value">';
+                    $.each(rateValues,function(index,rateValue){
+                            optionRateValue += '<option>'+rateValue+'</option>';
+                     });
+                     optionRateValue +='</select>';
+                     
+                   showModalDialog(optionRateValue,'Escolha o valor da estimativa');
+//                   createModalInfo('modal-rate-value',optionRateValue);
+                   
+               });
                
                $('body').on('keypress','#chat-message-input',function(txtElement){
                     if(txtElement.which === 13){
@@ -241,6 +246,29 @@ function socketStart(){
                                             +'</div></div>';
                $('body').prepend(modalHtml);                        
            }
+           
+           function showModalDialog(message,head){
+               var modalHtml =  '<div class="modal fade" id="modal-dialog">'
+                                            +'<div class="modal-dialog">'
+                                            +'<div class="modal-content">'
+                                                +'<div class="modal-header">'
+                                                +'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'
+                                                +head
+                                                +'<div class="modal-body">'
+                                                    +message
+                                                    +'</div><div class="modal-footer">'
+                                                        +'<button class="btn btn-primary" data-dismiss="modal">fechar</button>'
+                                                    +'</div>'
+                                                +'</div>'
+                                            +'</div></div>';
+                $('body').prepend(modalHtml);
+                $('#modal-dialog').modal();
+           }
+           $('body').on('hidden.bs.modal','#modal-dialog',function (e) {
+                $(this).remove();
+            });
+           
+    
 
          
 

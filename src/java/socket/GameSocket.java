@@ -6,9 +6,9 @@
 package socket;
   
 import java.io.IOException;
-import java.io.Serializable;    
-import java.util.ArrayList;       
-import java.util.Collections;
+import java.io.Serializable;      
+import java.util.ArrayList;         
+import java.util.Collections;            
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;    
@@ -143,7 +143,7 @@ public class GameSocket implements Serializable {
             //Fechar a conexão/Remover do game/ redirecionar/
             //Verifica o que pode ser o método closeReason.
             session.close();  
-            System.err.println("Vai tomar DC");
+            System.err.println("Vai tomar DC");    
         } catch (IOException ex) { 
             Logger.getLogger(GameSocket.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -157,20 +157,20 @@ public class GameSocket implements Serializable {
                  Message message = new Message(Json.createObjectBuilder().add("author", mensagem.getUsuario().getNome())
                     .add("message", mensagem.getTexto())
                     .add("idProjeto", mensagem.getProjeto().getId())
-                    .add("idUsuario", mensagem.getUsuario().getId())
+                    .add("idUsuario", mensagem.getUsuario().getId()) 
                     .add("type", "chatMessage")
                     .build()); 
             
-            session.getBasicRemote().sendObject(message);
+            session.getBasicRemote().sendObject(message);       
         } 
     }
 
     private Game getGame(Session userSession) {
         for (Game game : games) {
-            if (game.isGameParticipant(userSession)) {
+            if (game.isGameParticipant(userSession)) { 
                 return game;
             }
-        }
+        }     
         //Possivelmente trocado por uma exception (NotFoundException)
         return null;
     }
