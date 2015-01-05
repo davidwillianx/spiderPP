@@ -4,35 +4,35 @@
  * and open the template in the editor.
  */
 package socket;
-  
+     
 import java.io.IOException;
-import java.io.Serializable;      
+import java.io.Serializable;         
 import java.util.ArrayList;         
-import java.util.Collections;            
-import java.util.List;
+import java.util.Collections;             
+import java.util.List; 
 import java.util.logging.Level;
 import java.util.logging.Logger;    
 import javax.inject.Inject; 
 import javax.json.Json;        
 import javax.websocket.EncodeException; 
-import javax.websocket.OnClose; 
+import javax.websocket.OnClose;    
 import javax.websocket.OnMessage; 
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
-import javax.websocket.server.ServerEndpoint;
+import javax.websocket.server.ServerEndpoint;   
 import libs.exception.NoPersistException;
 import models.ejb.MensagemBean;
 import models.ejbs.interfaces.IEstimativa;
 import models.entities.Mensagem; 
  
-/** 
+/**  
  *
  * @author smartphonnee
  */
 @ServerEndpoint(value = "/spiderSocketGame/{room}/{perfil}",
         encoders = {MessageEncoder.class}, decoders = {MessageDecoder.class}
-)
+)  
 public class GameSocket implements Serializable {
   
     @Inject private MensagemBean mensagemBean;
@@ -165,7 +165,7 @@ public class GameSocket implements Serializable {
         } 
     }
 
-    private Game getGame(Session userSession) {
+    private Game getGame(Session userSession) { 
         for (Game game : games) {
             if (game.isGameParticipant(userSession)) { 
                 return game;

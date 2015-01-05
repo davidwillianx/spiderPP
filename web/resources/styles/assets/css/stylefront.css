@@ -21,7 +21,7 @@ html{
 	font-size: 100%;
 }
 body { 
-  color: #6f7b8a; 
+  color: #44494F; 
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size:13px;
   padding: 0px !important;
@@ -1139,7 +1139,7 @@ line-height: 21px;
  .grid.simple .grid-title .tools a,.grid.solid .grid-title .tools a{
   	position:relative;
 	/*background: url('../img/icon/portlet-tray.png') no-repeat;*/
-        background:  url("#{resource['styles/assets/img/icon/portlet-tray.png']}") no-repeat;
+        background:  url("/spiderPP/javax.faces.resource/styles/assets/img/icon/portlet-tray.png.xhtml") no-repeat;
 	transition: all 0.1s linear 0s;
 }
 .grid.simple .grid-title .tools > a.remove, 
@@ -1285,7 +1285,7 @@ line-height: 21px;
 }
 .grid.box .grid-title .tools a{
   /*background:url(../img/icon/portlet-tray.png) no-repeat;*/
-  background:url("#{resource['styles/assets/img/icon/portlet-tray.png']}") no-repeat;
+  background:url("/spiderPP/javax.faces.resource/styles/assets/img/icon/portlet-tray.png.xhtml") no-repeat;
   width:23px;
   height:23px
 }
@@ -1444,7 +1444,7 @@ line-height: 21px;
   width: 8px;
   height: 25px;
 /*  background-image: url("../img/sidebar-menu-arrow.png");*/
-  background-image: url("#{resource['styles/assets/img/sidebar-menu-arrow.png']}");
+  background-image: url("/spiderPP/javax.faces.resource/styles/assets/img/sidebar-menu-arrow.png.xhtml");
   float: right;
   position: absolute;
   right:-8px;
@@ -2335,19 +2335,19 @@ form legend,
 /** Slides **/
 #working-section{
 	/*background-image: url(../img/work.jpg);*/
-        background-image: url("#{resource['styles/assets/img/work.jpg']}");
+        background-image: url("");
 	height: 400px;
 	background-attachment:fixed;
 }
 #pricing-section{
 	/*background-image: url(../img/pricing.jpg);*/
-        background-image: url("#{resource['styles/assets/img/princing.jpg']}");
+        background-image: url("");
 	height: 300px;
 	background-attachment:fixed;
 }
 #green{
 	/*background-image: url(../img/bg/green.png);*/
-        background-image: url("#{resource['styles/assets/img/bg/green.png']}");
+        background-image: url("");
 	height: 300px;
 	background-attachment:fixed;
 }

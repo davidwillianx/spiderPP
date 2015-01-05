@@ -98,7 +98,9 @@ function socketStart(){
                    
                    if(message.type === "rate"){
                        showModalDialog('Registro da estimativa realizado  <span class=" badge badge-important">'+ message.score+'</span>', 'Sucesso');
-                       $('<span class=" badge ">'+message.score+'</span>').hide().appendTo(storyHtmlElementSelected.siblings('.score').children('.rate-box')).fadeIn();
+                       $('<span class=" badge ">'+message.score+'</span>').hide().appendTo(storyHtmlElementSelected.siblings('.score').children('.rate-box')).fadeIn(999,function(){
+                            storyHtmlElementSelected.siblings('.score').children('.form-rate').html('');
+                       });
                    }
                };
                
@@ -159,13 +161,17 @@ function socketStart(){
                $('.score .form-rate').on('click','#set-rate',function(){
                    var optionRateValue = '<select id="rate-value">';
                     $.each(rateValues,function(index,rateValue){
-                            optionRateValue += '<option>'+rateValue+'</option>';
+                            optionRateValue += '<option value="'+rateValue+'">'+rateValue+'</option>';
                      });
                      optionRateValue +='</select>';
                      
                    showModalDialog(optionRateValue,'Escolha o valor da estimativa');
-//                   createModalInfo('modal-rate-value',optionRateValue);
-                   
+               });
+               
+               $('.score .form-rate').on('click','#div-est',function(){
+//                   var formDivStory = '<div class="form"><div class="form-group"><label>Nome: </label><input type="text" name="nome"/></div><div class="form-group"><label>Nome: </label><textarea name="descricao"></textarea></div></div>';
+                    var formDivStory  = '<div class="row form-row"><div class="col-md-8"><input type="text" class="form-control" placeholder="Nome para estoria"></div></div><div class="row form-row"><div class="col-md-9"><textarea name="descricao" class="form-control" placeholder="descreva a atividade"></textarea></div></div>';
+                    showModalDialog(formDivStory,'Inclua estorias');
                });
                
                $('body').on('keypress','#chat-message-input',function(txtElement){
@@ -178,7 +184,7 @@ function socketStart(){
                             "author" : author,
                             "message":  $(this).val(),
                             "type":  "chatMessage"
-                            };
+                            }; 
                          
                         sendMessage(spiderSocket,chatMessage);
                     }
@@ -229,24 +235,6 @@ function socketStart(){
                }
            }
            
-           
-           function createModalInfo(id,message){
-             var modalHtml =  '<div class="modal fade" id="'+id+'">'
-                                            +'<div class="modal-dialog">'
-                                            +'<div class="modal-content">'
-                                                +'<div class="modal-header">'
-                                                +'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'
-                                                +'Infomacao</div>'
-                                                +'<div class="modal-body">'
-                                                    +message
-                                                    +'</div><div class="modal-footer">'
-                                                        +'<button class="btn btn-primary" data-dismiss="modal">fechar</button>'
-                                                    +'</div>'
-                                                +'</div>'
-                                            +'</div></div>';
-               $('body').prepend(modalHtml);                        
-           }
-           
            function showModalDialog(message,head){
                var modalHtml =  '<div class="modal fade" id="modal-dialog">'
                                             +'<div class="modal-dialog">'
@@ -263,10 +251,12 @@ function socketStart(){
                                             +'</div></div>';
                 $('body').prepend(modalHtml);
                 $('#modal-dialog').modal();
+                
            }
+           
            $('body').on('hidden.bs.modal','#modal-dialog',function (e) {
                 $(this).remove();
-            });
+           });
            
     
 
