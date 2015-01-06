@@ -170,8 +170,8 @@ function socketStart(){
                
                $('.score .form-rate').on('click','#div-est',function(){
 //                   var formDivStory = '<div class="form"><div class="form-group"><label>Nome: </label><input type="text" name="nome"/></div><div class="form-group"><label>Nome: </label><textarea name="descricao"></textarea></div></div>';
-                    var formDivStory  = '<div class="row form-row"><div class="col-md-8"><input type="text" class="form-control" placeholder="Nome para estoria"></div></div><div class="row form-row"><div class="col-md-9"><textarea name="descricao" class="form-control" placeholder="descreva a atividade"></textarea></div></div>';
-                    showModalDialog(formDivStory,'Inclua estorias');
+                    var formDivStory  = '<div class="row form-row"><div class="col-md-8"><input type="text" class="form-control" placeholder="Nome para estoria"></div></div><div class="row form-row"><div class="col-md-9"><textarea row="10" name="descricao" class="form-control" placeholder="descreva a atividade"></textarea></div></div>';
+                    showModalDialog('<div class="grid simple ">'+formDivStory+'</div>','<h4>Inclua estorias</h4><button class="btn btn btn-primary">+add</button> <button class="btn btn btn-primary">salvar</button>');
                });
                
                $('body').on('keypress','#chat-message-input',function(txtElement){

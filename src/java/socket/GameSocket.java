@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package socket;
+package socket; 
      
 import java.io.IOException;
 import java.io.Serializable;         
@@ -42,12 +42,12 @@ public class GameSocket implements Serializable {
     private static final List<Game> games = Collections.synchronizedList(new ArrayList<Game>());
     private Participant participant;
 
-    @OnOpen   
+    @OnOpen    
     public void onOpen(Session session, @PathParam("room") String room, @PathParam("perfil") String perfil) {
         try { 
             participant = new Participant(room, perfil, session);
             if (participant.isScrumMaster()) {
-                Game game = new Game(participant); 
+                Game game = new Game(participant);  
                 games.add(game);  
                 this.loadPreviousMessage(session);
             } else { 
@@ -60,7 +60,7 @@ public class GameSocket implements Serializable {
                     game.addUser(participant);
                     this.loadPreviousMessage(session);
                 } else {
-                    this.OnClose(session);
+                    this.OnClose(session);       
                 } 
             } 
         } catch (IOException | EncodeException e) {     
@@ -68,7 +68,7 @@ public class GameSocket implements Serializable {
             System.err.println("Do something" + e.getMessage());
         }  
     }    
-     
+       
     //BAM BAM BAM REFACTORY DETECTED PAY ATTENTION SR 
     @OnMessage
     public void OnMessage(Session session, Message message) {
