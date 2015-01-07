@@ -13,6 +13,7 @@ function socketStart(){
                var spiderSocket = new WebSocket(host+"/"+room+"/"+perfil);
                var storySelected = "";
                var smStorySelected = "";
+               var formDivStory  = '<div class="row form-row"><div class="col-md-8"><input type="text" class="form-control" placeholder="Nome para estoria"></div></div><div class="row form-row"><div class="col-md-9"><textarea  name="descricao" class="form-control" style="width:34em;height:10em;" placeholder="descreva a atividade"></textarea></div></div>';
                
                var storyHtmlElementSelected = "";
                var rateValues = [0,2,5,8,13,20];
@@ -169,10 +170,26 @@ function socketStart(){
                });
                
                $('.score .form-rate').on('click','#div-est',function(){
-//                   var formDivStory = '<div class="form"><div class="form-group"><label>Nome: </label><input type="text" name="nome"/></div><div class="form-group"><label>Nome: </label><textarea name="descricao"></textarea></div></div>';
-                    var formDivStory  = '<div class="row form-row"><div class="col-md-8"><input type="text" class="form-control" placeholder="Nome para estoria"></div></div><div class="row form-row"><div class="col-md-9"><textarea row="10" name="descricao" class="form-control" placeholder="descreva a atividade"></textarea></div></div>';
-                    showModalDialog('<div class="grid simple ">'+formDivStory+'</div>','<h4>Inclua estorias</h4><button class="btn btn btn-primary">+add</button> <button class="btn btn btn-primary">salvar</button>');
+                    
+                    showModalDialog('<div class="grid simple ">'+formDivStory+'</div>','<h4>Inclua estorias</h4><button class="btn btn btn-primary" id="more-subtasks">+add</button> <button class="btn btn btn-primary" id="save-subtasks">salvar</button>');
                });
+               
+               $('body').on('click','#more-subtasks',function(){
+                    $(formDivStory).hide().appendTo($('#modal-dialog .modal-dialog .modal-content .modal-header .modal-body')).fadeIn(999);
+               });
+               
+               $('body').on('click','#save-subtasks',function(){
+                    var elementsUnknow  = $('#modal-dialog .modal-dialog .modal-content .modal-header .modal-body').children();
+                    var formStoryCollection = [];
+                    $.each(elementsUnknow,function(index,element){
+                        formStoryCollection = $(element).find('form-control');
+                    });
+                    
+                    $.each(formStoryCollection ,function(index,formStoryElement){
+                            console.log($(formStoryElement));
+                    });
+               });
+               
                
                $('body').on('keypress','#chat-message-input',function(txtElement){
                     if(txtElement.which === 13){

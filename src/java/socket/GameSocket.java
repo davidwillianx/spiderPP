@@ -1,30 +1,30 @@
-/*
+/*  
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package socket; 
      
-import java.io.IOException;
+import java.io.IOException;  
 import java.io.Serializable;         
-import java.util.ArrayList;         
-import java.util.Collections;             
+import java.util.ArrayList;             
+import java.util.Collections;                
 import java.util.List; 
-import java.util.logging.Level;
-import java.util.logging.Logger;    
-import javax.inject.Inject; 
-import javax.json.Json;        
+import java.util.logging.Level; 
+import java.util.logging.Logger;     
+import javax.inject.Inject;   
+import javax.json.Json;               
 import javax.websocket.EncodeException; 
 import javax.websocket.OnClose;    
 import javax.websocket.OnMessage; 
-import javax.websocket.OnOpen;
+import javax.websocket.OnOpen; 
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;   
 import libs.exception.NoPersistException;
 import models.ejb.MensagemBean;
 import models.ejbs.interfaces.IEstimativa;
-import models.entities.Mensagem; 
+import models.entities.Mensagem;     
  
 /**  
  *
@@ -57,11 +57,11 @@ public class GameSocket implements Serializable {
                         Message message = new Message(Json.createObjectBuilder().add("type", "gameLocked").build());
                         session.getBasicRemote().sendObject(message);
                     } 
-                    game.addUser(participant);
+                    game.addUser(participant);   
                     this.loadPreviousMessage(session);
-                } else {
+                } else { 
                     this.OnClose(session);       
-                } 
+                }  
             } 
         } catch (IOException | EncodeException e) {     
             //Call OnError 
