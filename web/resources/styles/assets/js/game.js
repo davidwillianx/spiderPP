@@ -13,7 +13,7 @@ function socketStart(){
                var spiderSocket = new WebSocket(host+"/"+room+"/"+perfil);
                var storySelected = "";
                var smStorySelected = "";
-               var formDivStory  = '<div class="row form-row"><div class="col-md-8"><input type="text" class="form-control" placeholder="Nome para estoria"></div></div><div class="row form-row"><div class="col-md-9"><textarea  name="descricao" class="form-control" style="width:34em;height:10em;" placeholder="descreva a atividade"></textarea></div></div>';
+               var formDivStory  = '<div class="grid" ><div class="row form-row"><div class="col-md-8"><input type="text" class="form-control" placeholder="Nome para estoria"></div></div><div class="row form-row"><div class="col-md-9"><textarea  name="descricao" class="form-control" style="width:34em;height:10em;" placeholder="descreva a atividade"></textarea></div></div></div>';
                
                var storyHtmlElementSelected = "";
                var rateValues = [0,2,5,8,13,20];
@@ -171,7 +171,7 @@ function socketStart(){
                
                $('.score .form-rate').on('click','#div-est',function(){
                     
-                    showModalDialog('<div class="grid simple ">'+formDivStory+'</div>','<h4>Inclua estorias</h4><button class="btn btn btn-primary" id="more-subtasks">+add</button> <button class="btn btn btn-primary" id="save-subtasks">salvar</button>');
+                    showModalDialog(formDivStory,'<h4>Inclua estorias</h4><button class="btn btn btn-primary" id="more-subtasks">+add</button> <button class="btn btn btn-primary" id="save-subtasks">salvar</button>');
                });
                
                $('body').on('click','#more-subtasks',function(){
@@ -179,14 +179,17 @@ function socketStart(){
                });
                
                $('body').on('click','#save-subtasks',function(){
+                  
                     var elementsUnknow  = $('#modal-dialog .modal-dialog .modal-content .modal-header .modal-body').children();
                     var formStoryCollection = [];
+                  
                     $.each(elementsUnknow,function(index,element){
-                        formStoryCollection = $(element).find('form-control');
+                        formStoryCollection.push($(element).children());
                     });
                     
-                    $.each(formStoryCollection ,function(index,formStoryElement){
-                            console.log($(formStoryElement));
+                    $.each(formStoryCollection,function(indexList,formStory){
+                        console.log('<<' + indexList);
+                        console.log(formStory.children());
                     });
                });
                
