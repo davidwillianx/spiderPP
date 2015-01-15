@@ -58,10 +58,31 @@ public class EstoriaBean implements IEstoria {
 
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
+            throw new NoPersistException("falha ao persistir estoria");
         }
     }
+    
+    @Override 
+    public void persistSubtask(int idEstoria,Estoria subtask) {
+        try {
+            estoria = this.entityManager.createNamedQuery("Estoria.findById",Estoria.class)
+                                .setParameter("id", idEstoria)
+                                .getSingleResult();
+            
+            subtask.setEstoriaPK(new EstoriaPK(0,estoria.getProjeto().getId())); 
+            subtask.setSubtask(estoria);
+            this.entityManager.persist(subtask);  
+            
+            
+        } catch (Exception e) {
+            throw new NoPersistException("falha ao persistir subtask");
+        } 
+    }
+    
+    
 
     @Override
+    
     public void removeEstoria(Estoria estoria) {
         try {
 
@@ -216,6 +237,8 @@ public class EstoriaBean implements IEstoria {
             throw new NoPersistException("Falha no metodo que gera o total das estimativas");
         }
     }
+
+    
 
    
     

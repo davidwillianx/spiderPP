@@ -18,6 +18,7 @@ import models.entities.Estoria;
 public interface IEstoria {
     
     public void persistEstoria(Estoria estoria);
+    public void persistSubtask(int idEstoria,Estoria subtask);
     public void removeEstoria(Estoria estoria);
     public List<Estoria> selectEstorias();
     public Estoria selectEstoriaById(String id);

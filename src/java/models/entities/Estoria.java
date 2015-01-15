@@ -66,7 +66,7 @@ public class Estoria implements Serializable {
     @Column(name = "descricao")
     private String descricao;
     
-    
+     
     
     @Column(name = "status")
     private Boolean status;
@@ -75,7 +75,7 @@ public class Estoria implements Serializable {
     @ManyToOne(optional = false)
     private Projeto projeto;
     
-    @OneToMany(mappedBy = "subtask",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subtask",cascade = CascadeType.ALL) 
     private Collection<Estoria> subtasks;
 
     

@@ -180,17 +180,29 @@ function socketStart(){
                
                $('body').on('click','#save-subtasks',function(){
                   
-                    var elementsUnknow  = $('#modal-dialog .modal-dialog .modal-content .modal-header .modal-body').children();
-                    var formStoryCollection = [];
+                    var modalElementFormCollection  = $('#modal-dialog .modal-dialog .modal-content .modal-header .modal-body').children();
+                    var formStoryAttibutes = [];
+                       var subtasks = [];
                   
-                    $.each(elementsUnknow,function(index,element){
-                        formStoryCollection.push($(element).children());
+                    $.each(modalElementFormCollection,function(index,elementForm){
+                        formStoryAttibutes.push($(elementForm).children().find('.form-control'));
                     });
                     
-                    $.each(formStoryCollection,function(indexList,formStory){
-                        console.log('<<' + indexList);
-                        console.log(formStory.children());
+                    $.each(formStoryAttibutes,function(index,formStoryAttribute){
+                            if(formStoryAttribute[0].value !== 0){
+                                if(formStoryAttribute[1].value !== 0){
+                                    var subtask = {
+                                        "name": formStoryAttribute[0].value,
+                                        "description": formStoryAttribute[1].value,
+                                        "storyId": storyHtmlElementSelected.attr('id'),
+                                        "projectId": idProjeto,
+                                        "type": "subtask"
+                                    };
+                                    spiderSocket.send(JSON.stringify(subtask));
+                                }
+                            }
                     });
+                    
                });
                
                
@@ -274,9 +286,12 @@ function socketStart(){
                 
            }
            
+           
+           
            $('body').on('hidden.bs.modal','#modal-dialog',function (e) {
                 $(this).remove();
            });
+           
            
     
 

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Serializable;         
 import java.util.ArrayList;             
 import java.util.Collections;                
+import java.util.Date;
 import java.util.List;  
 import java.util.logging.Level;  
 import java.util.logging.Logger;      
@@ -24,6 +25,9 @@ import javax.websocket.server.ServerEndpoint;
 import libs.exception.NoPersistException;
 import models.ejb.MensagemBean;
 import models.ejbs.interfaces.IEstimativa;
+import models.ejbs.interfaces.IEstoria;
+import models.entities.Estoria;
+import models.entities.EstoriaPK;
 import models.entities.Mensagem;     
  
 /**  
@@ -36,19 +40,20 @@ import models.entities.Mensagem;
 public class GameSocket implements Serializable {
   
     @Inject private MensagemBean mensagemBean;
-    @Inject private IEstimativa iEstimativa;     
+    @Inject private IEstimativa iEstimativa;   
+    @Inject private IEstoria iEstoria;
           
-    private Game game;
+    private Game game;  
     private static final List<Game> games = Collections.synchronizedList(new ArrayList<Game>());
-    private Participant participant; 
- 
-    @OnOpen      
+    private Participant participant;  
+      
+    @OnOpen       
     public void onOpen(Session session, @PathParam("room") String room, @PathParam("perfil") String perfil) {
         try { 
             participant = new Participant(room, perfil, session);  
             if (participant.isScrumMaster()) {
-                Game game = new Game(participant);  
-                games.add(game);       
+                Game game = new Game(participant);   
+                games.add(game);         
                 this.loadPreviousMessage(session);  
             } else { 
                 Game game = this.getGameByProject(participant.getIdProjeto());
@@ -102,21 +107,21 @@ public class GameSocket implements Serializable {
                 }    
             } 
                     
-            if("story".equals(message.getJson().getString("type")))
+            if("story".equals(message.getJson().getString("type"))) 
             { 
                 if(game.getParticipant(session).isScrumMaster())
                     game.sendBroadcastMessageWithoutSender(session, message);  
-            }    
-              
-            if("rate".equals(message.getJson().getString("type"))){ 
-                try { 
+            }     
+               
+            if("rate".equals(message.getJson().getString("type"))){   
+                try {  
                      
                     Estimativa estimativa = new Estimativa(message.getJson());
                     iEstimativa.persistEstimativa(estimativa.getStoryId()
                                                     ,estimativa.getScore());  
                      
                     game.sendBroadcastMessage(session, message);       
-                            
+                              
                             
                 } catch (NoPersistException error) { 
                     
@@ -124,10 +129,38 @@ public class GameSocket implements Serializable {
                                             .add("type", "notice")
                                             .add("message", "Problema na estimativa"
                                                     +"tente novamente")
-                                            .add("kind", "error")
+                                            .add("kind", "error")   
                                             .build());      
+                    game.sendBroadcastMessage(session, notice); 
+                }
+            }
+            
+            if("subtask".equals(message.getJson().getString("type"))){
+                try {
+                    
+                    Estoria subtask =  new Estoria();
+                    
+                    subtask.setDataCriacao(new Date());
+                    subtask.setDescricao(message.getJson().getString("description"));
+                    subtask.setNome(message.getJson().getString("name"));
+                    
+                    
+                    iEstoria.persistSubtask(Integer.parseInt(message.getJson().getString("storyId")),
+                                                subtask);
+                    
+                    
+                } catch (Exception error) {
+                    System.err.println(">>> Falha" + error);
+                    Message notice = new Message(Json.createObjectBuilder()
+                            .add("type", "notice")
+                            .add("message", "Problema na estimativa"
+                                    + "tente novamente")
+                            .add("kind", "error")
+                            .build());
                     game.sendBroadcastMessage(session, notice);
                 }
+                
+                
             }
 
         } catch (Exception e) {
