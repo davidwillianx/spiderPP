@@ -49,13 +49,13 @@ public class Estoria implements Serializable {
     private Collection<Estimativa> estimativaCollection;
     
     @ManyToOne
-    @JoinColumns({@JoinColumn(name = "id_estoria", referencedColumnName = "id", updatable = false, insertable = false, nullable = true)
+    @JoinColumns({@JoinColumn(name = "id_estoria", referencedColumnName = "id", updatable = false, insertable = true, nullable = true)
                   ,@JoinColumn(name = "id_projeto" , referencedColumnName = "id_projeto" , insertable = false, updatable = false)})
     private Estoria subtask;
     
     private static final long serialVersionUID = 1L;
     
-    @EmbeddedId 
+    @EmbeddedId  
     protected EstoriaPK estoriaPK;
     
     @Size(max = 100,message = "O título não pode exceder a 100 caracteres")
@@ -69,7 +69,7 @@ public class Estoria implements Serializable {
      
     
     @Column(name = "status")
-    private Boolean status;
+    private Boolean status = false;
     
     @JoinColumn(name = "id_projeto", nullable = false , referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)

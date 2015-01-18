@@ -124,16 +124,16 @@ public class GameSocket implements Serializable {
                               
                             
                 } catch (NoPersistException error) { 
-                    
+                     
                  Message  notice = new Message(Json.createObjectBuilder()  
                                             .add("type", "notice")
                                             .add("message", "Problema na estimativa"
                                                     +"tente novamente")
                                             .add("kind", "error")   
                                             .build());      
-                    game.sendBroadcastMessage(session, notice); 
+                    game.sendBroadcastMessage(session, notice);  
                 }
-            }
+            }    
             
             if("subtask".equals(message.getJson().getString("type"))){
                 try {
@@ -147,10 +147,15 @@ public class GameSocket implements Serializable {
                     
                     iEstoria.persistSubtask(Integer.parseInt(message.getJson().getString("storyId")),
                                                 subtask);
-                    
+                    Message notice = new Message(Json.createObjectBuilder()
+                            .add("type", "notice") 
+                            .add("message", "divisao realizada com sucesso")
+                            .add("kind", "rateSuccess")
+                            .build());
+                    game.sendBroadcastMessage(session, notice);
                     
                 } catch (Exception error) {
-                    System.err.println(">>> Falha" + error);
+                    
                     Message notice = new Message(Json.createObjectBuilder()
                             .add("type", "notice")
                             .add("message", "Problema na estimativa"

@@ -61,7 +61,7 @@ function socketStart(){
                                 
                            }
                        });
-                   }
+                   } 
                    
                    if(message.type === "cardSelected")
                    {
@@ -71,11 +71,15 @@ function socketStart(){
                    
                    if(message.type === "notice")
                    {
+                       if(message.kind === "rateSuccess"){
+                           $('#modal-dialog').modal('hide');
+                               showModalDialog(message.message,'Informacao');                           
+                       }
 
                        //NOTICE GERENCIA AS MENSAGENS DE INFORMACAO :: CRITICO / ERROR / INFO
                        //console.log("estamos errados"+message.message);
                        //window.location = "../projeto"; 
-                        showModalDialog(message.message,'Informacao');
+//                        showModalDialog(message.message,'Informacao');
                    }
                    
                    
