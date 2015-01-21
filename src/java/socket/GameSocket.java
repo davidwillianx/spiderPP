@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;      
 import javax.inject.Inject;    
 import javax.json.Json;               
+import javax.json.JsonArrayBuilder;
 import javax.websocket.EncodeException;  
 import javax.websocket.OnClose;    
 import javax.websocket.OnMessage; 
@@ -27,13 +28,13 @@ import models.ejb.MensagemBean;
 import models.ejbs.interfaces.IEstimativa;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
-import models.entities.EstoriaPK;
 import models.entities.Mensagem;     
  
 /**  
  *
  * @author smartphonnee
  */
+
 @ServerEndpoint(value = "/spiderSocketGame/{room}/{perfil}",
         encoders = {MessageEncoder.class}, decoders = {MessageDecoder.class}
 )  
@@ -130,7 +131,7 @@ public class GameSocket implements Serializable {
                                             .add("message", "Problema na estimativa"
                                                     +"tente novamente")
                                             .add("kind", "error")   
-                                            .build());      
+                                            .build());       
                     game.sendBroadcastMessage(session, notice);  
                 }
             }    
@@ -138,8 +139,11 @@ public class GameSocket implements Serializable {
             if("subtask".equals(message.getJson().getString("type"))){
                 try {
                     
-                    Estoria subtask =  new Estoria();
                     
+                    Estoria estoriaSubtasksOwner =  iEstoria.selectEstoriaByIdS(Integer.parseInt(message.getJson().getString("storyId")));
+                    
+                    
+                    Estoria subtask =  new Estoria();
                     subtask.setDataCriacao(new Date());
                     subtask.setDescricao(message.getJson().getString("description"));
                     subtask.setNome(message.getJson().getString("name"));
@@ -152,10 +156,25 @@ public class GameSocket implements Serializable {
                             .add("message", "divisao realizada com sucesso")
                             .add("kind", "rateSuccess")
                             .build());
+                    
                     game.sendBroadcastMessage(session, notice);
                     
-                } catch (Exception error) {
+                     JsonArrayBuilder  storiesJson = Json.createArrayBuilder().add("stories");
                     
+                    for (Estoria estoria : estoriaSubtasksOwner.getSubtasks()){ 
+                           storiesJson.add(Json.createObjectBuilder()
+                                                .add("id",estoria.getEstoriaPK().getId())
+                                                .add("name", estoria.getNome())
+                                                .add("description", estoria.getDescricao())
+                                                .add("date",estoria.getDescricao()));
+                    }
+                    
+                   game.sendBroadcastMessage(session, new Message(storiesJson.build())); 
+                   
+                    
+                } catch (Exception error) {
+                     System.err.println("  << Failure descriptio "+ error.getMessage());
+                     
                     Message notice = new Message(Json.createObjectBuilder()
                             .add("type", "notice")
                             .add("message", "Problema na estimativa"

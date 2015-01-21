@@ -7,6 +7,7 @@ package socket;
 
 import java.io.StringWriter;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 /**
@@ -16,12 +17,17 @@ import javax.json.JsonObject;
 public class Message {
 
     private JsonObject json;
+    private JsonArray jsonArray;
 
     public Message(){
     }
      
     public Message(JsonObject json) {
         this.json = json;
+    }
+    
+    public Message(JsonArray jsonArray){
+        this.jsonArray = jsonArray;
     }
     
     
@@ -33,11 +39,26 @@ public class Message {
     public JsonObject getJson() {
         return this.json;
     }
+    
+    public void setJson(JsonArray jsonArray){
+        this.jsonArray = jsonArray;
+    }
+    
+    public JsonArray getJsonArray(){
+        return this.jsonArray;
+    }
 
-    @Override
+    @Override 
     public String toString() {
         StringWriter stringWriter = new StringWriter();
-        Json.createWriter(stringWriter).write(this.json);
+        
+        if(!this.json.isEmpty()){
+           Json.createWriter(stringWriter).write(this.json);
+        }
+        
+        if(!this.jsonArray.isEmpty()){
+            Json.createWriter(stringWriter).writeArray(this.jsonArray);
+        }
 
         return stringWriter.toString();
     }

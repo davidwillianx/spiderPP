@@ -73,7 +73,7 @@ function socketStart(){
                    {
                        if(message.kind === "rateSuccess"){
                            $('#modal-dialog').modal('hide');
-                               showModalDialog(message.message,'Informacao');                           
+                            showModalDialog(message.message,'Informacao');                           
                        }
 
                        //NOTICE GERENCIA AS MENSAGENS DE INFORMACAO :: CRITICO / ERROR / INFO
@@ -106,6 +106,12 @@ function socketStart(){
                        $('<span class=" badge ">'+message.score+'</span>').hide().appendTo(storyHtmlElementSelected.siblings('.score').children('.rate-box')).fadeIn(999,function(){
                             storyHtmlElementSelected.siblings('.score').children('.form-rate').html('');
                        });
+                   }
+                   
+                   if(message.type === "stories")
+                   {
+                       
+                       alert("AHHHHHHHHHHHHHHHH It can be reality its working ");
                    }
                };
                
