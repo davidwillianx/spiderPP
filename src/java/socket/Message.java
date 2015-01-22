@@ -30,22 +30,37 @@ public class Message {
         this.jsonArray = jsonArray;
     }
     
-    
 
     public void setJson(JsonObject json) {
         this.json = json;
     }
-
+ 
     public JsonObject getJson() {
         return this.json;
     }
     
-    public void setJson(JsonArray jsonArray){
+    public void setJsonArray(JsonArray jsonArray){
         this.jsonArray = jsonArray;
     }
     
     public JsonArray getJsonArray(){
         return this.jsonArray;
+    }
+    
+    public boolean isJsonArray(){
+        if(this.jsonArray != null){
+            if(!this.jsonArray.isEmpty())
+                return true;
+        }
+        return false;
+    }
+    
+    public boolean isJsonObject(){
+        if (this.json != null) {
+            if (!this.json.isEmpty())
+                return true;
+        }
+        return false;
     }
 
     @Override 

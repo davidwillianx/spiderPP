@@ -95,7 +95,7 @@ function socketStart(){
                    if(message.type === "story")
                    {
                        id = '#'+message.id;
-                       removeTargetStory(storyHtmlElementSelected);
+                       removeTargetStory(storyHtmlElementSelected); 
                             storyHtmlElementSelected = $(id);
                        addTargetStory(storyHtmlElementSelected);
                    }
@@ -108,10 +108,10 @@ function socketStart(){
                        });
                    }
                    
-                   if(message.type === "stories")
+                   if(message.stories)
                    {
+                       alert('happiness');
                        
-                       alert("AHHHHHHHHHHHHHHHH It can be reality its working ");
                    }
                };
                
@@ -188,11 +188,15 @@ function socketStart(){
                     $(formDivStory).hide().appendTo($('#modal-dialog .modal-dialog .modal-content .modal-header .modal-body')).fadeIn(999);
                });
                
+               
+               
                $('body').on('click','#save-subtasks',function(){
                   
                     var modalElementFormCollection  = $('#modal-dialog .modal-dialog .modal-content .modal-header .modal-body').children();
                     var formStoryAttibutes = [];
-                       var subtasks = [];
+                       var story = {
+                                "subtasks":[]
+                            };
                   
                     $.each(modalElementFormCollection,function(index,elementForm){
                         formStoryAttibutes.push($(elementForm).children().find('.form-control'));
@@ -208,11 +212,13 @@ function socketStart(){
                                         "projectId": idProjeto,
                                         "type": "subtask"
                                     };
-                                    spiderSocket.send(JSON.stringify(subtask));
+                                    story.subtasks.push(subtask);
+//                                  spiderSocket.send(JSON.stringify(subtask));
                                 }
                             }
                     });
-                    
+                    console.log(JSON.stringify(story));
+                    spiderSocket.send(JSON.stringify(story));
                });
                
                

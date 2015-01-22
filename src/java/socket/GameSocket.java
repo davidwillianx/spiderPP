@@ -15,7 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;      
 import javax.inject.Inject;    
 import javax.json.Json;               
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.websocket.EncodeException;  
 import javax.websocket.OnClose;    
 import javax.websocket.OnMessage; 
@@ -29,6 +32,7 @@ import models.ejbs.interfaces.IEstimativa;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Mensagem;     
+import org.primefaces.json.JSONObject;
  
 /**  
  *
@@ -59,7 +63,7 @@ public class GameSocket implements Serializable {
             } else { 
                 Game game = this.getGameByProject(participant.getIdProjeto());
                 if (game instanceof Game) {
-                    if (game.isOpen()) {
+                    if (game.isOpen()) { 
                         Message message = new Message(Json.createObjectBuilder().add("type", "gameLocked").build());
                         session.getBasicRemote().sendObject(message);
                     } 
@@ -81,6 +85,8 @@ public class GameSocket implements Serializable {
         try {  
     
               Game game  = this.getGame(session);
+              
+              
               
             if ("chatMessage".equals(message.getJson().getString("type"))) {
                 mensagemBean.save(new ChatMessage(message.getJson()));
@@ -134,58 +140,49 @@ public class GameSocket implements Serializable {
                                             .build());       
                     game.sendBroadcastMessage(session, notice);  
                 }
-            }    
+            }     
             
             if("subtask".equals(message.getJson().getString("type"))){
                 try {
                     
+                
                     
-                    Estoria estoriaSubtasksOwner =  iEstoria.selectEstoriaByIdS(Integer.parseInt(message.getJson().getString("storyId")));
+                    models.entities.Estoria estoriaSubtasksOwner =  iEstoria.selectEstoriaByIdS(Integer.parseInt(message.getJson().getString("storyId")));
+                    socket.Estoria storySocket = new socket.Estoria(message.getJson());
+                     
+                    Estoria subtask =  storySocket.buildEstoriaEntity();
+                     
+                    iEstoria.persistSubtask(estoriaSubtasksOwner.getEstoriaPK().getId(),subtask);
                     
-                    
-                    Estoria subtask =  new Estoria();
-                    subtask.setDataCriacao(new Date());
-                    subtask.setDescricao(message.getJson().getString("description"));
-                    subtask.setNome(message.getJson().getString("name"));
-                    
-                    
-                    iEstoria.persistSubtask(Integer.parseInt(message.getJson().getString("storyId")),
-                                                subtask);
                     Message notice = new Message(Json.createObjectBuilder()
                             .add("type", "notice") 
                             .add("message", "divisao realizada com sucesso")
                             .add("kind", "rateSuccess")
-                            .build());
+                            .build()); 
                     
-                    game.sendBroadcastMessage(session, notice);
+                    game.sendBroadcastMessage(session, notice);  
+                    game.sendBroadcastMessage(session, new Message(buildJsonSubtaskList(estoriaSubtasksOwner))); 
                     
-                     JsonArrayBuilder  storiesJson = Json.createArrayBuilder().add("stories");
-                    
-                    for (Estoria estoria : estoriaSubtasksOwner.getSubtasks()){ 
-                           storiesJson.add(Json.createObjectBuilder()
-                                                .add("id",estoria.getEstoriaPK().getId())
-                                                .add("name", estoria.getNome())
-                                                .add("description", estoria.getDescricao())
-                                                .add("date",estoria.getDescricao()));
-                    }
-                    
-                   game.sendBroadcastMessage(session, new Message(storiesJson.build())); 
-                   
                     
                 } catch (Exception error) {
-                     System.err.println("  << Failure descriptio "+ error.getMessage());
                      
                     Message notice = new Message(Json.createObjectBuilder()
                             .add("type", "notice")
                             .add("message", "Problema na estimativa"
                                     + "tente novamente")
-                            .add("kind", "error")
+                            .add("kind", "error") 
                             .build());
                     game.sendBroadcastMessage(session, notice);
                 }
                 
-                
             }
+            
+            //DETECT SOme references of JSonarray
+            if(!message.getJson().getJsonArray("subtasks").isEmpty()){ 
+                System.err.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>..");
+            }
+             
+                
 
         } catch (Exception e) {
             //Call on error and close connection
@@ -241,4 +238,20 @@ public class GameSocket implements Serializable {
         return null;
     }
     
+    
+    private JsonObject buildJsonSubtaskList(Estoria estoriaSubtasksOwner) {
+
+        JsonArrayBuilder storiesJson = Json.createArrayBuilder();
+
+        for (Estoria estoria : estoriaSubtasksOwner.getSubtasks()) {
+
+            storiesJson.add(Json.createObjectBuilder()
+                    .add("id", estoria.getEstoriaPK().getId())
+                    .add("name", estoria.getNome())
+                    .add("description", estoria.getDescricao())
+                    .add("date", estoria.getDescricao()));
+        }
+
+        return Json.createObjectBuilder().add("stories", storiesJson).build();
+    }
 }

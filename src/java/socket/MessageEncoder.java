@@ -12,21 +12,24 @@ import javax.websocket.EndpointConfig;
  
 /**
  * 
- * @author smartphonnee
+ * @author smartphonnee 
  */
 public class MessageEncoder implements Encoder.Text<Message>{
-
+    
+private String jsonEncoded;
+    
     @Override
     public String encode(Message message) throws EncodeException {
-        String jsonEncoded = "";
-        
-        if(!message.getJson().isEmpty()){
-            jsonEncoded =  message.getJson().toString();
-        }else{ 
-            jsonEncoded = message.getJsonArray().toString();
+
+        if (message.isJsonObject()) {
+            this.jsonEncoded = message.getJson().toString();
         }
-        
-        return jsonEncoded;
+
+        if (message.isJsonArray()) {
+            this.jsonEncoded = message.getJsonArray().toString();
+        }
+
+        return this.jsonEncoded;
     }
 
     @Override

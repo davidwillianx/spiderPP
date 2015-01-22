@@ -111,7 +111,7 @@ public class Game {
                 if (!senderSession.equals(sessionParticipant)) {
                     sessionParticipant.getBasicRemote().sendObject(message);
                 }
-            }
+            }  
 
         } catch (IOException | EncodeException e) {
             System.err.println("Error : " + e.getMessage());
@@ -126,6 +126,7 @@ public class Game {
             }
 
         } catch (IOException | EncodeException e) {
+            
             System.err.println("Error : " + e.getMessage());
         }
     }
