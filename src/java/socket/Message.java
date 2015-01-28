@@ -67,13 +67,13 @@ public class Message {
     public String toString() {
         StringWriter stringWriter = new StringWriter();
         
-        if(!this.json.isEmpty()){
+//        if(isJsonObject()){
            Json.createWriter(stringWriter).write(this.json);
-        }
+//        }
         
-        if(!this.jsonArray.isEmpty()){
-            Json.createWriter(stringWriter).writeArray(this.jsonArray);
-        }
+//        if(isJsonArray()){
+//            Json.createWriter(stringWriter).writeArray(this.jsonArray);
+//        }
 
         return stringWriter.toString();
     }

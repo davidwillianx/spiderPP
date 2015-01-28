@@ -32,6 +32,7 @@ private String jsonEncoded;
         return this.jsonEncoded;
     }
 
+
     @Override
     public void init(EndpointConfig config) {
     }

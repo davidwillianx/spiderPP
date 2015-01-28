@@ -7,6 +7,7 @@ package models.ejb;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -80,7 +81,23 @@ public class EstoriaBean implements IEstoria {
     }
     
     
+    @Override
+    public void persistSubtasks(int idEstoria, Collection<Estoria> subtasks) {
+        try {
+            Estoria rootEstoria = entityManager.createNamedQuery("Estoria.findById", Estoria.class)
+                        .setParameter("id", idEstoria)
+                        .getSingleResult();
+            
+            rootEstoria.setSubtasks(subtasks);
+               
+        } catch (Exception e) {
+           throw new NoPersistException("Falha ao persistir estorias");
+        }
+    }
 
+
+    
+    
     @Override
     
     public void removeEstoria(Estoria estoria) {
@@ -237,6 +254,7 @@ public class EstoriaBean implements IEstoria {
             throw new NoPersistException("Falha no metodo que gera o total das estimativas");
         }
     }
+
 
     
 

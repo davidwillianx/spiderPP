@@ -6,6 +6,7 @@
 
 package models.ejbs.interfaces;
 
+import java.util.Collection;
 import java.util.List;
 import models.entities.Estoria;
 
@@ -18,6 +19,7 @@ import models.entities.Estoria;
 public interface IEstoria {
     
     public void persistEstoria(Estoria estoria);
+    public void persistSubtasks(int idEstoria, Collection<Estoria> subtasks);
     public void persistSubtask(int idEstoria,Estoria subtask);
     public void removeEstoria(Estoria estoria);
     public List<Estoria> selectEstorias();

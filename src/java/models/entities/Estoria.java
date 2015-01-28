@@ -1,6 +1,7 @@
 package models.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -70,12 +71,12 @@ public class Estoria implements Serializable {
     
     @Column(name = "status")
     private Boolean status = false;
-    
+     
     @JoinColumn(name = "id_projeto", nullable = false , referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Projeto projeto;
     
-    @OneToMany(mappedBy = "subtask",cascade = CascadeType.ALL) 
+    @OneToMany(mappedBy = "subtask",cascade = CascadeType.PERSIST) 
     private Collection<Estoria> subtasks;
 
     

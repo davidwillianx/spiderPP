@@ -8,6 +8,7 @@ package socket;
 import java.io.IOException;  
 import java.io.Serializable;         
 import java.util.ArrayList;             
+import java.util.Collection;
 import java.util.Collections;                
 import java.util.Date;
 import java.util.List;  
@@ -87,7 +88,6 @@ public class GameSocket implements Serializable {
               Game game  = this.getGame(session);
               
               
-              
             if ("chatMessage".equals(message.getJson().getString("type"))) {
                 mensagemBean.save(new ChatMessage(message.getJson()));
                 game.sendBroadcastMessageWithoutSender(session, message);
@@ -97,7 +97,7 @@ public class GameSocket implements Serializable {
                 game.start();
                 game.sendBroadcastMessage(session,message); 
             } 
-             
+              
             if("cardSelected".equals(message.getJson().getString("type")))
             {
                 //TODO pensando sobre sim ou não de armazenar esta informação no servidor
@@ -121,31 +121,14 @@ public class GameSocket implements Serializable {
             }     
                
             if("rate".equals(message.getJson().getString("type"))){   
-                try {  
-                     
                     Estimativa estimativa = new Estimativa(message.getJson());
                     iEstimativa.persistEstimativa(estimativa.getStoryId()
                                                     ,estimativa.getScore());  
                      
                     game.sendBroadcastMessage(session, message);       
-                              
-                            
-                } catch (NoPersistException error) { 
-                     
-                 Message  notice = new Message(Json.createObjectBuilder()  
-                                            .add("type", "notice")
-                                            .add("message", "Problema na estimativa"
-                                                    +"tente novamente")
-                                            .add("kind", "error")   
-                                            .build());       
-                    game.sendBroadcastMessage(session, notice);  
-                }
             }     
             
             if("subtask".equals(message.getJson().getString("type"))){
-                try {
-                    
-                
                     
                     models.entities.Estoria estoriaSubtasksOwner =  iEstoria.selectEstoriaByIdS(Integer.parseInt(message.getJson().getString("storyId")));
                     socket.Estoria storySocket = new socket.Estoria(message.getJson());
@@ -162,31 +145,37 @@ public class GameSocket implements Serializable {
                     
                     game.sendBroadcastMessage(session, notice);  
                     game.sendBroadcastMessage(session, new Message(buildJsonSubtaskList(estoriaSubtasksOwner))); 
-                    
-                    
-                } catch (Exception error) {
-                     
-                    Message notice = new Message(Json.createObjectBuilder()
-                            .add("type", "notice")
-                            .add("message", "Problema na estimativa"
-                                    + "tente novamente")
-                            .add("kind", "error") 
-                            .build());
-                    game.sendBroadcastMessage(session, notice);
-                }
-                
             }
             
-            //DETECT SOme references of JSonarray
-            if(!message.getJson().getJsonArray("subtasks").isEmpty()){ 
-                System.err.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>..");
-            }
-             
+            
+            if("subtasks".equals(message.getJson().getString("type"))){
+                Collection<models.entities.Estoria> subtasksEntity = new ArrayList<>();
                 
-
-        } catch (Exception e) {
-            //Call on error and close connection
-        } 
+                JsonArray subtasksJsonRequest = message.getJson().getJsonArray("subtasks");
+                if(!subtasksJsonRequest.isEmpty()){
+                    for ( int index = 0; index < subtasksJsonRequest.toArray().length; index++){
+                        socket.Estoria jsonEstoria = new socket.Estoria(subtasksJsonRequest.getJsonObject(index));
+                        subtasksEntity.add(jsonEstoria.buildEstoriaEntity());
+                    }
+                }
+                iEstoria.persistSubtasks(
+                                Integer.parseInt(message.getJson().getString("storyId"))
+                                , subtasksEntity);
+            }
+        }catch(Exception error){
+            System.err.println("Activity Failure "+error.getMessage());
+        }
+//        } catch (NoPersistException error) {
+//            //Call on error and close connection
+//            System.err.println("Problema" + error.getMessage());
+//            Message  notice = new Message(Json.createObjectBuilder()  
+//                                            .add("type", "notice")
+//                                            .add("message", "Problema na estimativa"
+//                                                    +"tente novamente")
+//                                            .add("kind", "error")   
+//                                            .build());       
+//                    game.sendBroadcastMessage(session, notice);  
+//        }  
     }  
   
     @OnClose   

@@ -24,7 +24,6 @@ public class MessageDecoder implements  Decoder.Text<Message>{
         JsonObject jsonObject  = Json.createReader(new StringReader(dataReceived)).readObject();
         return new Message(jsonObject);
     }
- 
 
     @Override
     public void init(EndpointConfig config) {

@@ -195,6 +195,8 @@ function socketStart(){
                     var modalElementFormCollection  = $('#modal-dialog .modal-dialog .modal-content .modal-header .modal-body').children();
                     var formStoryAttibutes = [];
                        var story = {
+                                "type":"subtasks",
+                                "storyId":storyHtmlElementSelected.attr('id'),
                                 "subtasks":[]
                             };
                   
