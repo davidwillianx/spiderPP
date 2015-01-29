@@ -88,6 +88,10 @@ public class EstoriaBean implements IEstoria {
                         .setParameter("id", idEstoria)
                         .getSingleResult();
             
+            
+            for(Estoria subtaks :  subtasks){
+                subtaks.setSubtask(rootEstoria);
+            }
             rootEstoria.setSubtasks(subtasks);
                
         } catch (Exception e) {

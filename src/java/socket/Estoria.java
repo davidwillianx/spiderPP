@@ -23,7 +23,7 @@ public class Estoria {
         this.description = description;
         this.creationDate = creationDate;
     }
-    
+     
     public Estoria(JsonObject jsonStory){
       this.name = jsonStory.getString("name");
       this.description = jsonStory.getString("description");
