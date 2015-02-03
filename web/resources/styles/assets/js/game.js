@@ -94,6 +94,7 @@ function socketStart(){
                    
                    if(message.type === "story")
                    {
+                       
                        id = '#'+message.id;
                        removeTargetStory(storyHtmlElementSelected); 
                             storyHtmlElementSelected = $(id);
@@ -110,11 +111,17 @@ function socketStart(){
                    
                    if(message.type === "subtasks")
                    {
-//                       if(message.reference === "sm"){ 
+                       if(message.reference === "sm"){ 
                            $.each(message.subtasks,function(index, subtask){
-                               appendSubtask($("#"+message.storyId).parent().parent(),subtask);
+                               appendSubtask($("#"+message.storyId).parent().parent(),subtask,message.reference);
                            });
-//                       }
+                           return;
+                       }
+                       
+                       $.each(message.subtasks,function(index,subtask){
+                            appendSubtask($("#"+message.storyId).parent().parent(),subtask,null);
+                       });
+
                    }
                };
                
@@ -140,12 +147,11 @@ function socketStart(){
                    spiderSocket.send(JSON.stringify(card));
                });
                
-               
-               $('.activity').click(function(){
-                   
+               $('#stories').on('click','.activity',function(e){
+                    
                    $("#rate-value").fadeOut(function(){$(this).remove();});
-                  removeTargetStory(storyHtmlElementSelected);
-                  storyHtmlElementSelected = $(this);
+                         removeTargetStory(storyHtmlElementSelected);
+                         storyHtmlElementSelected = $(this);
                   
                   storyDataSelected = {
                        "id":storyHtmlElementSelected.attr("id")
@@ -155,6 +161,7 @@ function socketStart(){
                    addTargetStory(storyHtmlElementSelected);
                    spiderSocket.send(JSON.stringify(storyDataSelected));
                });
+               
                
                $('body').on("change","#rate-value",function(e){
                    

@@ -167,15 +167,15 @@ function buildCurrentDateFormatDMY()
      return day+'/'+month+'/'+year;
 }
 
-function appendSubtask(rootId,subtask){
+function appendSubtask(rootId,subtask,reference){
     
     var htmlTaskTemplate = '<div class="p-t-20 p-b-15 b-b b-grey rateAvailable">'+
         '<div class="post overlap-left-10">'+
-                '<div class="activity user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="" id="'+subtask.storyId+'" data-original-title="Selecione estoria clicando aqui">'+
-                    '<div class="user-profile-pic-2x tiles blue white-border">'+
-                        '<div class="text-white inherit-size p-t-10 p-l-15"> <i class="fa fa-map-marker fa-lg"></i> </div>'+
-                    '</div>'+
+            '<div class=" user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="" id="'+subtask.storyId+'" data-original-title="Selecione estoria clicando aqui">'+
+                '<div class="user-profile-pic-2x tiles blue white-border">'+
+                    '<div class="text-white inherit-size p-t-10 p-l-15"> <i class="fa fa-map-marker fa-lg"></i> </div>'+
                 '</div>'+
+            '</div>'+
                 
             '<div class="info-wrapper small-width">'+
                 '<div class="info text-black ">'+
@@ -199,7 +199,10 @@ function appendSubtask(rootId,subtask){
 
             '<div class="clearfix"></div>'+
         '</div></div>';
+
     $(htmlTaskTemplate).hide().insertAfter(rootId).fadeIn(999);
-    
+    if(reference === "sm")
+        $('#'+subtask.storyId).setAttribute("class","activity");
+        
     
 }
