@@ -141,27 +141,61 @@ public class GameSocket implements Serializable {
                             .add("type", "notice") 
                             .add("message", "divisao realizada com sucesso")
                             .add("kind", "rateSuccess")
-                            .build()); 
+                            .build());  
                     
                     game.sendBroadcastMessage(session, notice);  
                     game.sendBroadcastMessage(session, new Message(buildJsonSubtaskList(estoriaSubtasksOwner))); 
-            }
-            
-            
+            }  
+              
+             
             if("subtasks".equals(message.getJson().getString("type"))){
-                Collection<models.entities.Estoria> subtasksEntity = new ArrayList<>();
-                
+                Collection<models.entities.Estoria> subtasksEntity = new ArrayList<>(); 
+                 
+                 
                 JsonArray subtasksJsonRequest = message.getJson().getJsonArray("subtasks");
                 if(!subtasksJsonRequest.isEmpty()){
                     for ( int index = 0; index < subtasksJsonRequest.toArray().length; index++){
                         socket.Estoria jsonEstoria = new socket.Estoria(subtasksJsonRequest.getJsonObject(index));
                         subtasksEntity.add(jsonEstoria.buildEstoriaEntity());
-                    }
-                }
+                    } 
+                }   
+                 
                 iEstoria.persistSubtasks(
-                                Integer.parseInt(message.getJson().getString("storyId"))
-                                , subtasksEntity);
-            }
+                                Integer.parseInt(message.getJson().getString("storyId")) 
+                                , subtasksEntity);  
+                game.sendBroadcastMessageWithoutSender(session, message);
+                session.getBasicRemote().sendObject(new Message(Json.createObjectBuilder().add("type", "subtasks")
+                                                            .add("subtasks", subtasksJsonRequest)
+                                                            .add("storyId", message.getJson().getString("storyId"))
+                                                            .add("reference","sm").build()));  
+                Estoria rootStory = iEstoria.selectEstoriaByIdS(Integer.parseInt(message.getJson().getString("storyId")));
+                 
+                JsonArrayBuilder subtasksJsonPersisted = null;
+                for (Estoria subtakEntity : subtasksEntity){   
+                    subtasksJsonPersisted.add(Json.createObjectBuilder()
+                                        .add("name", subtakEntity.getNome())
+                                        .add("description", subtakEntity.getDescricao())
+                                        .add("storyId", subtakEntity.getEstoriaPK().getId())
+                                         .add("projectId", subtakEntity.getProjeto().getId())
+                                        .add("type", "subtask").build());
+                }
+                 JsonObjectBuilder jsonSubtasksResponse = Json.createObjectBuilder()
+                                .add("type", "subtasks")
+                                .add("storyId", message.getJson().getString("storyId"));
+                         
+                         
+                game.sendBroadcastMessageWithoutSender(session, new Message(jsonSubtasksResponse.build()));
+                jsonSubtasksResponse.add("reference", "sm");
+                session.getBasicRemote().sendObject(new Message(jsonSubtasksResponse.build()));
+                
+                
+                
+                
+                
+                
+                
+                
+            } 
         }catch(Exception error){
             System.err.println("Activity Failure "+error.getMessage());
         }
@@ -222,12 +256,12 @@ public class GameSocket implements Serializable {
             if (game.getIdProjeto() == idProjeto) {
                 return game;
             }
-        }
+        }  
         //Possivelmente trocado por uma exception (NotFoundException)
         return null;
-    }
-    
-    
+    } 
+        
+      
     private JsonObject buildJsonSubtaskList(Estoria estoriaSubtasksOwner) {
 
         JsonArrayBuilder storiesJson = Json.createArrayBuilder();
@@ -244,3 +278,4 @@ public class GameSocket implements Serializable {
         return Json.createObjectBuilder().add("stories", storiesJson).build();
     }
 }
+   

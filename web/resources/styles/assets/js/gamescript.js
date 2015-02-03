@@ -9,6 +9,7 @@ var inputMessage;
 var cardsTurn = [];
 var rowSelected;
 var userCardSelected = {};
+
         
 $(document).ready(function() {
     inputMessage = $('#chat-message-input');
@@ -151,4 +152,54 @@ function disableCardArea()
 function enableCardArea()
 {
      $("#cardSection").unblock();
+}
+function buildCurrentDateFormatDMY()
+{
+    var today  =  new Date();
+    var year =  today.getFullYear();
+    var month =  today.getMonth()+1;
+    var day =  today.getDay();
+     
+     if(day < 10)
+         day ='0'+day;
+     if (month <10)
+         month = '0'+month;
+     return day+'/'+month+'/'+year;
+}
+
+function appendSubtask(rootId,subtask){
+    
+    var htmlTaskTemplate = '<div class="p-t-20 p-b-15 b-b b-grey rateAvailable">'+
+        '<div class="post overlap-left-10">'+
+                '<div class="activity user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="" id="'+subtask.storyId+'" data-original-title="Selecione estoria clicando aqui">'+
+                    '<div class="user-profile-pic-2x tiles blue white-border">'+
+                        '<div class="text-white inherit-size p-t-10 p-l-15"> <i class="fa fa-map-marker fa-lg"></i> </div>'+
+                    '</div>'+
+                '</div>'+
+                
+            '<div class="info-wrapper small-width">'+
+                '<div class="info text-black ">'+
+                    '<h4>'+subtask.name+'</h4> <p>'+subtask.description+'</p>'+
+                    '<p class="muted small-text">'+buildCurrentDateFormatDMY()+'</p>'+
+                '</div>'+
+                '<div class="clearfix"></div>'+
+            '</div>'+
+            '<div class="pull-right col-md-2 score">'+
+
+                '<div class=" rate-box m-b-5">'+
+                        
+                '</div>'+
+                    
+                '<div class="form-rate pull-right" display="none">'+
+                        
+                       
+                '</div>'+
+            '</div>'+
+
+
+            '<div class="clearfix"></div>'+
+        '</div></div>';
+    $(htmlTaskTemplate).hide().insertAfter(rootId).fadeIn(999);
+    
+    
 }

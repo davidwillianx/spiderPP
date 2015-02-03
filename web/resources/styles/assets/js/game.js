@@ -108,10 +108,13 @@ function socketStart(){
                        });
                    }
                    
-                   if(message.stories)
+                   if(message.type === "subtasks")
                    {
-                       alert('happiness');
-                       
+//                       if(message.reference === "sm"){ 
+                           $.each(message.subtasks,function(index, subtask){
+                               appendSubtask($("#"+message.storyId).parent().parent(),subtask);
+                           });
+//                       }
                    }
                };
                
@@ -219,7 +222,6 @@ function socketStart(){
                                 }
                             }
                     });
-                    console.log(JSON.stringify(story));
                     spiderSocket.send(JSON.stringify(story));
                });
                
