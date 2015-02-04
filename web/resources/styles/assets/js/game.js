@@ -111,13 +111,13 @@ function socketStart(){
                    
                    if(message.type === "subtasks")
                    {
+                       
                        if(message.reference === "sm"){ 
                            $.each(message.subtasks,function(index, subtask){
                                appendSubtask($("#"+message.storyId).parent().parent(),subtask,message.reference);
                            });
                            return;
                        }
-                       
                        $.each(message.subtasks,function(index,subtask){
                             appendSubtask($("#"+message.storyId).parent().parent(),subtask,null);
                        });
@@ -222,7 +222,8 @@ function socketStart(){
                                         "description": formStoryAttribute[1].value,
                                         "storyId": storyHtmlElementSelected.attr('id'),
                                         "projectId": idProjeto,
-                                        "type": "subtask"
+                                        "type": "subtask",
+                                        "creationDate":new Date()
                                     };
                                     story.subtasks.push(subtask);
 //                                  spiderSocket.send(JSON.stringify(subtask));

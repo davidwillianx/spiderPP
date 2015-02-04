@@ -8,9 +8,12 @@ package socket;
 
 import java.io.IOException;  
 import java.io.Serializable;         
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;             
 import java.util.Collection;
 import java.util.Collections;                
+import java.util.Date;
 
 import java.util.List;  
 import java.util.logging.Level;  
@@ -20,6 +23,8 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 
 import javax.websocket.EncodeException;  
 import javax.websocket.OnClose;    
@@ -153,8 +158,8 @@ public class GameSocket implements Serializable {
                 Collection<models.entities.Estoria> subtasksEntity = new ArrayList<>(); 
                  int rootStoryId = Integer.parseInt(message.getJson().getString("storyId"));
                  
-                Estoria rootStory = iEstoria.selectEstoriaByIdS(rootStoryId);
-                Collection<Estoria> subtasksAlreadyInserted = rootStory.getSubtasks();
+                
+               
                 
                 
                 JsonArray subtasksJsonRequest = message.getJson().getJsonArray("subtasks");
@@ -165,22 +170,33 @@ public class GameSocket implements Serializable {
                         subtasksEntity.add(jsonEstoria.buildEstoriaEntity());
                     } 
                 }   
-                   
+                      
                 iEstoria.persistSubtasks(rootStoryId, subtasksEntity);  
-                
-                game.sendBroadcastMessageWithoutSender(session, message);
-                session.getBasicRemote().sendObject(new Message(Json.createObjectBuilder().add("type", "subtasks")
-                                                            .add("subtasks", subtasksJsonRequest)
-                                                            .add("storyId", message.getJson().getString("storyId"))
-                                                            .add("reference","sm").build()));  
-                
-                
-                
+                 Collection<Estoria> subtasksAlreadyInserted = iEstoria.selectAllChildren(rootStoryId);
                  
-                                
-                
-                
-                
+                 JsonArrayBuilder allJsonSubtasks = Json.createArrayBuilder();
+                    
+                 DateFormat dateFormatter  = new SimpleDateFormat("dd/MM/yyyy");
+
+                 
+                 
+                 for(Estoria subtask : subtasksAlreadyInserted){
+                           JsonObjectBuilder subtaskJson = Json.createObjectBuilder()
+                            .add("storyId",subtask.getEstoriaPK().getId())
+                            .add("rootId", rootStoryId)
+                            .add("projectId", subtask.getEstoriaPK().getIdProjeto())
+                            .add("name", subtask.getNome())
+                            .add("description", subtask.getDescricao())
+                            .add("creationDate", dateFormatter.format(subtask.getDataCriacao())           );
+                           
+                           allJsonSubtasks.add(subtaskJson);
+                    }
+                 
+                 JsonObjectBuilder storyListResponse = Json.createObjectBuilder().add("type","subtasks").add("subtasks", allJsonSubtasks);
+                 game.sendBroadcastMessageWithoutSender(session, new Message(storyListResponse.build()));
+                 storyListResponse.add("reference", "sm");
+                 session.getBasicRemote().sendObject(new Message(storyListResponse.build()));
+                 
             } 
         }catch(Exception error){
             System.err.println("Activity Failure "+error.getMessage());

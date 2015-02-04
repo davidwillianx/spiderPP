@@ -5,6 +5,9 @@
  */
 package socket;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.json.JsonObject;
 import models.entities.EstoriaPK;
@@ -28,7 +31,7 @@ public class Estoria {
       this.name = jsonStory.getString("name");
       this.description = jsonStory.getString("description");
       this.idProjeto = jsonStory.getInt("projectId");
-      
+      this.creationDate = convertSocketDateToDatabaseForm(jsonStory.getString("creationDate"));
     }
 
     public void setCurrentDate(){
@@ -45,5 +48,14 @@ public class Estoria {
         return estoriaEntity;
     }
     
+    
+    private Date convertSocketDateToDatabaseForm(String dateIn){
+        try {
+            DateFormat format  = new SimpleDateFormat("YYYY-MM-dd");
+            return format.parse(dateIn);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
     
 }
