@@ -112,15 +112,18 @@ function socketStart(){
                    if(message.type === "subtasks")
                    {
                        
+//                       var rootHtmlELement = $('#'+message.rootId);
+//                       rootHtmlELement.children('.blue').children('typ').html('M');
+                        storyHtmlElementSelected.children('.blue').children('typ').html('M')
+                       $("#"+message.rootId).parent().parent().attr("parent","root:");
+                       
                        if(message.reference === "sm"){ 
-                           $.each(message.subtasks,function(index, subtask){
-                               appendSubtask($("#"+message.storyId).parent().parent(),subtask,message.reference);
+                           $.each(message.subtasks,function(index, subtask){ appendSubtask(subtask,message.reference);
                            });
                            return;
                        }
                        $.each(message.subtasks,function(index,subtask){
-                            appendSubtask($("#"+message.storyId).parent().parent(),subtask,null);
-                       });
+                            appendSubtask(subtask,null); });
 
                    }
                };

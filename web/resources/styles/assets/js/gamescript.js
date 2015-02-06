@@ -167,13 +167,13 @@ function buildCurrentDateFormatDMY()
      return day+'/'+month+'/'+year;
 }
 
-function appendSubtask(rootId,subtask,reference){
+function appendSubtask(subtask,reference){
     
-    var htmlTaskTemplate = '<div class="p-t-20 p-b-15 b-b b-grey rateAvailable">'+
+    var htmlTaskTemplate = '<div class="p-t-20 p-b-15 b-b b-grey " parent="root:'+subtask.rootId+'" >'+
         '<div class="post overlap-left-10">'+
             '<div class=" user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="" id="'+subtask.storyId+'" data-original-title="Selecione estoria clicando aqui">'+
                 '<div class="user-profile-pic-2x tiles blue white-border">'+
-                    '<div class="text-white inherit-size p-t-10 p-l-15"> <i class="fa fa-map-marker fa-lg"></i> </div>'+
+                    '<div class="text-white inherit-size p-t-10 p-l-15">T</div>'+
                 '</div>'+
             '</div>'+
                 
@@ -189,20 +189,23 @@ function appendSubtask(rootId,subtask,reference){
                 '<div class=" rate-box m-b-5">'+
                         
                 '</div>'+
-                    
-                '<div class="form-rate pull-right" display="none">'+
-                        
-                       
-                '</div>'+
             '</div>'+
 
 
             '<div class="clearfix"></div>'+
         '</div></div>';
 
-    $(htmlTaskTemplate).hide().insertAfter(rootId).fadeIn(999);
-    if(reference === "sm")
-        $('#'+subtask.storyId).setAttribute("class","activity");
+     var jqTask = $('#'+subtask.rootId).parent().parent();
+     
+    $(htmlTaskTemplate).hide().insertAfter(jqTask).fadeIn(999,function(){
+            if(reference === "sm"){
+                var jqSubtask = $('#'+subtask.storyId);
+                jqSubtask.addClass("activity");
+                $('<div class="form-rate pull-right" display="none"></div>').appendTo(jqSubtask.siblings('.score'));
+            }
+    });
+    
+        
         
     
 }

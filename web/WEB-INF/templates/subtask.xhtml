@@ -7,9 +7,10 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html">
     
-    
+     
     <ui:include src="/WEB-INF/templates/storyElement.xhtml">
         <ui:param name="estoria" value="#{estoria}"/>
+        <ui:param name="parent" value="root:#{parentId}"/>
     </ui:include>
         
     <c:forEach items="#{estoriaController.getAllSubtaskByParentId(estoria.estoriaPK.id)}" var="subtask">

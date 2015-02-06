@@ -157,29 +157,23 @@ public class GameSocket implements Serializable {
             if("subtasks".equals(message.getJson().getString("type"))){
                 Collection<models.entities.Estoria> subtasksEntity = new ArrayList<>(); 
                  int rootStoryId = Integer.parseInt(message.getJson().getString("storyId"));
-                 
                 
-               
+                JsonArray subtasksJsonRequest = message.getJson().getJsonArray("subtasks"); 
                 
-                
-                JsonArray subtasksJsonRequest = message.getJson().getJsonArray("subtasks");
-                
-                if(!subtasksJsonRequest.isEmpty()){
+                if(!subtasksJsonRequest.isEmpty()){ 
                     for ( int index = 0; index < subtasksJsonRequest.toArray().length; index++){
                         socket.Estoria jsonEstoria = new socket.Estoria(subtasksJsonRequest.getJsonObject(index));
                         subtasksEntity.add(jsonEstoria.buildEstoriaEntity());
                     } 
                 }   
-                      
-                iEstoria.persistSubtasks(rootStoryId, subtasksEntity);  
+                iEstoria.persistSubtasks(rootStoryId, subtasksEntity);
                  Collection<Estoria> subtasksAlreadyInserted = iEstoria.selectAllChildren(rootStoryId);
-                 
                  JsonArrayBuilder allJsonSubtasks = Json.createArrayBuilder();
                     
-                 DateFormat dateFormatter  = new SimpleDateFormat("dd/MM/yyyy");
+                 DateFormat dateFormatter  = new SimpleDateFormat("dd/MM/yyyy");   
 
-                 
-                 
+                   
+                    
                  for(Estoria subtask : subtasksAlreadyInserted){
                            JsonObjectBuilder subtaskJson = Json.createObjectBuilder()
                             .add("storyId",subtask.getEstoriaPK().getId())
@@ -187,20 +181,21 @@ public class GameSocket implements Serializable {
                             .add("projectId", subtask.getEstoriaPK().getIdProjeto())
                             .add("name", subtask.getNome())
                             .add("description", subtask.getDescricao())
-                            .add("creationDate", dateFormatter.format(subtask.getDataCriacao())           );
-                           
-                           allJsonSubtasks.add(subtaskJson);
+                            .add("creationDate", dateFormatter.format(subtask.getDataCriacao()));
+                            
+                           allJsonSubtasks.add(subtaskJson);  
                     }
                  
-                 JsonObjectBuilder storyListResponse = Json.createObjectBuilder().add("type","subtasks").add("subtasks", allJsonSubtasks);
+                 JsonObjectBuilder storyListResponse = Json.createObjectBuilder().add("type","subtasks").add("subtasks", allJsonSubtasks).add("rootId", rootStoryId);
                  game.sendBroadcastMessageWithoutSender(session, new Message(storyListResponse.build()));
+                 System.err.println(" JsonResponse " + storyListResponse.build().toString());
                  storyListResponse.add("reference", "sm");
                  session.getBasicRemote().sendObject(new Message(storyListResponse.build()));
                  
             } 
-        }catch(Exception error){
+        }catch(NumberFormatException | IOException | EncodeException error){
             System.err.println("Activity Failure "+error.getMessage());
-        }
+        } 
 //        } catch (NoPersistException error) {
 //            //Call on error and close connection
 //            System.err.println("Problema" + error.getMessage());
