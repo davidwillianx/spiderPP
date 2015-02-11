@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package socket;  
-     
+package socket;   
+           
 
 import java.io.IOException;  
 import java.io.Serializable;         
-import java.text.DateFormat;
+import java.text.DateFormat; 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;             
 import java.util.Collection;
-import java.util.Collections;                
+import java.util.Collections;                   
 import java.util.Date;
 
 import java.util.List;  
-import java.util.logging.Level;  
+import java.util.logging.Level;   
 import java.util.logging.Logger;      
 import javax.inject.Inject;    
 import javax.json.Json;               
@@ -40,7 +40,7 @@ import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Mensagem;     
 
- 
+  
 /**  
  *
  * @author smartphonnee

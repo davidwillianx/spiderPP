@@ -169,6 +169,7 @@ function buildCurrentDateFormatDMY()
 
 function appendSubtask(subtask,reference){
     
+    console.log('im in  >> ');
     var htmlTaskTemplate = '<div class="p-t-20 p-b-15 b-b b-grey " parent="root:'+subtask.rootId+'" >'+
         '<div class="post overlap-left-10">'+
             '<div class=" user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="" id="'+subtask.storyId+'" data-original-title="Selecione estoria clicando aqui">'+

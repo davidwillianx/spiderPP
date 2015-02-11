@@ -111,20 +111,18 @@ function socketStart(){
                    
                    if(message.type === "subtasks")
                    {
-                       
-//                       var rootHtmlELement = $('#'+message.rootId);
-//                       rootHtmlELement.children('.blue').children('typ').html('M');
-                        storyHtmlElementSelected.children('.blue').children('typ').html('M')
+                       storyHtmlElementSelected.children('.blue').children('.typ').html('M');
                        $("#"+message.rootId).parent().parent().attr("parent","root:");
                        
                        if(message.reference === "sm"){ 
                            $.each(message.subtasks,function(index, subtask){ appendSubtask(subtask,message.reference);
                            });
+                            showModalDialog('Divisao Realizada! ', 'Sucesso');
                            return;
                        }
-                       $.each(message.subtasks,function(index,subtask){
-                            appendSubtask(subtask,null); });
-
+                       
+                       $.each(message.subtasks,function(index,subtask){appendSubtask(subtask,null); });
+                       showModalDialog('Divisao Realizada! ', 'Sucesso');
                    }
                };
                
@@ -267,9 +265,9 @@ function socketStart(){
             {
                 storyHtmlElementSelected.siblings(".score").addClass('hide');
             }
-            
+             
 //         window.onbeforeunload = function()
-//         {
+//         { 
 //           return  "Voce realmente deseja sair desta pagina?";
 //         }
         
@@ -287,8 +285,8 @@ function socketStart(){
            function showFormRate(storyHtmlElementSelected)
            {   
                if(storyHtmlElementSelected.length !== 0){
-                   $('<button id="set-rate" class="btn btn-success btn-small">est</button>\n\
-                    <button id="div-est" class="btn btn-warning btn-small">div</button>')
+                   $('<div><button id="set-rate" class="btn btn-success btn-small">est</button>\n\
+                      <button id="div-est" class="btn btn-warning btn-small">div</button><div>')
                        .hide().appendTo(
                                         storyHtmlElementSelected
                                             .siblings('.score')
@@ -299,6 +297,9 @@ function socketStart(){
            }
            
            function showModalDialog(message,head){
+               if($('#modal-dialog').length !== 0){
+                   $('#modal-dialog').modal('hide');
+               }
                var modalHtml =  '<div class="modal fade" id="modal-dialog">'
                                             +'<div class="modal-dialog">'
                                             +'<div class="modal-content">'
@@ -317,11 +318,10 @@ function socketStart(){
                 
            }
            
-           
-           
            $('body').on('hidden.bs.modal','#modal-dialog',function (e) {
                 $(this).remove();
            });
+           
            
            
     
