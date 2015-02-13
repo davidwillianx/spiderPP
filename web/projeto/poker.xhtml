@@ -12,7 +12,6 @@
         <h:outputScript library="styles" name="assets/plugins/jquery-block-ui/jqueryblockui.js"/>
         <h:outputScript library="styles" name="assets/js/jquery.countdown360.js"/>
          
-         
         
         <div class="row" id="main">
             <h:panelGroup layout="block" class="col-md-5" id="stories">
@@ -27,16 +26,18 @@
                             
                             <c:forEach items="#{estoriaController.parentEstorias}" var="estoria">
                                 <ui:fragment rendered="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}">
-                                    <ui:include src="/WEB-INF/templates/subtask.xhtml">
+                                    <ui:include src="/WEB-INF/templates/storyWithItsSubtasks.xhtml">
                                         <ui:param name="estoria" value="#{estoria}"/>
                                     </ui:include>
                                 </ui:fragment>
 
-                                <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
+<!--                                <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
                                     <ui:include src="/WEB-INF/templates/storyElement.xhtml">
                                         <ui:param name="estoria" value="#{estoria}"/>
                                     </ui:include>
                                 </ui:fragment>
+                            -->
+                            
                             </c:forEach>
                             
                             
