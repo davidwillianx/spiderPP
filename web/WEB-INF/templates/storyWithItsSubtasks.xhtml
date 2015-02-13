@@ -8,18 +8,25 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core">   
     
     
-        <div  class='p-t-20 p-b-15 b-b b-grey'  parent="#{parent}">
-        
+        <div  class='p-t-20 p-b-15 b-b b-grey '  parent="#{parent}">
+            <a class="reff" href="javascript:;">LLLLLink</a>
         <div class="post overlap-left-10">
             <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                    
                 <div class="activity user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="Selecione estoria clicando aqui" id="#{estoria.estoriaPK.id}">
+                    
+                
                     <h:panelGroup layout="block" class="user-profile-pic-2x tiles  white-border" rendered="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}"> 
+                        
                         <div layout="block" class="text-white inherit-size p-t-10 p-l-15 typ">M</div>
                     </h:panelGroup>
                     <h:panelGroup layout="block" class="user-profile-pic-2x tiles blue white-border" rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
                         <div layout="block" class="text-white inherit-size p-t-10 p-l-15 typ">T</div>
                     </h:panelGroup>
+                    <span class="badge animated bounceIn">#{estoriaController.getAllSubtaskByParentId(estoria.estoriaPK.id).size()}</span>    
+                    <i class="fa fa-chevron-down"></i>
                 </div>
+                
             </h:panelGroup>
             <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) != 1}">
                 <div class="activity user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" id="#{estoria.estoriaPK.id}">
@@ -57,7 +64,20 @@
 
             <div class="clearfix"></div>
         </div>
+    </div> 
+
+    <div class="stasks">
+        <c:forEach items="#{estoriaController.getAllSubtaskByParentId(estoria.estoriaPK.id)}" var="subtask">
+            <ui:include src="storyElement.xhtml">
+                <ui:param name="parentId" value="#{estoria.estoriaPK.id != null? estoria.estoriaPK.id.toString(): null}"/>
+                <ui:param name="parentName" value="#{estoria.nome}"/>
+                <ui:param name="estoria" value="#{subtask}"/> 
+            </ui:include>
+        </c:forEach>
     </div>
+
+    
+    
     
     
     

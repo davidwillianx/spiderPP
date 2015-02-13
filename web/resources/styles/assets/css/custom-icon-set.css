@@ -1,11 +1,11 @@
 @font-face {
 	font-family: 'icomoon';
         
-        src:url("#{resource['styles/assets/fonts/custom-set.eot']}");
-        src:url("#{resource['styles/assets/fonts/custom-set.eot']}&#iefix") format('embedded-opentype'),
-            url("#{resource['styles/assets/fonts/custom-set.woff']}")  format('woff'),
-            url("#{resource['styles/assets/fonts/custom-set.ttf']}")  format('truetype'),
-            url("#{resource['styles/assets/fonts/custom-set.svg']}&#icomoon") format('svg');
+        src:url("#{resource['styles:assets/fonts/custom-set.eot']}");
+        src:url("#{resource['styles:assets/fonts/custom-set.eot']}&#iefix") format('embedded-opentype'),
+            url("#{resource['styles:assets/fonts/custom-set.woff']}")  format('woff'),
+            url("#{resource['styles:assets/fonts/custom-set.ttf']}")  format('truetype'),
+            url("#{resource['styles:assets/fonts/custom-set.svg']}&#icomoon") format('svg');
         
         
 /*	src:url('../fonts/custom-set.eot?#iefix') format('embedded-opentype'),

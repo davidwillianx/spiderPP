@@ -1,5 +1,9 @@
 
-$(document).ready(socketStart());
+$(document).ready(function(){
+         accordionSetUp(accordion);
+         socketStart();
+});
+   
 
 function socketStart(){
 
