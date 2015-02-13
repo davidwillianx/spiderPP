@@ -16,6 +16,7 @@
     <c:forEach items="#{estoriaController.getAllSubtaskByParentId(estoria.estoriaPK.id)}" var="subtask">
             <ui:include src="subtask.xhtml">
                 <ui:param name="parentId" value="#{estoria.estoriaPK.id != null? estoria.estoriaPK.id.toString(): null}"/>
+                <ui:param name="parentName" value="#{estoria.nome}"/>
                 <ui:param name="estoria" value="#{subtask}"/> 
             </ui:include>
     </c:forEach>

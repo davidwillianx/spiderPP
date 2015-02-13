@@ -35,22 +35,22 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;   
 
 import models.ejb.MensagemBean;
-import models.ejbs.interfaces.IEstimativa;
+import models.ejbs.interfaces.IEstimativa; 
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Mensagem;     
 
-  
-/**  
+   
+/**    
  *
- * @author smartphonnee
+ * @author smartphonnee  
  */
 
 @ServerEndpoint(value = "/spiderSocketGame/{room}/{perfil}",
         encoders = {MessageEncoder.class}, decoders = {MessageDecoder.class}
 )  
 public class GameSocket implements Serializable {
-  
+   
     @Inject private MensagemBean mensagemBean;
     @Inject private IEstimativa iEstimativa;   
     @Inject private IEstoria iEstoria;

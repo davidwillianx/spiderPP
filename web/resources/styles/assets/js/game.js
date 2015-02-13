@@ -96,6 +96,7 @@ function socketStart(){
                    {
                        
                        id = '#'+message.id;
+                       console.log('id is = '+id);
                        removeTargetStory(storyHtmlElementSelected); 
                             storyHtmlElementSelected = $(id);
                        addTargetStory(storyHtmlElementSelected);
@@ -114,15 +115,9 @@ function socketStart(){
                        storyHtmlElementSelected.children('.blue').children('.typ').html('M');
                        $("#"+message.rootId).parent().parent().attr("parent","root:");
                        
-                       if(message.reference === "sm"){ 
-                           $.each(message.subtasks,function(index, subtask){ appendSubtask(subtask,message.reference);
-                           });
+                           $.each(message.subtasks,function(index, subtask){appendSubtask(subtask,message.reference);});
                             showModalDialog('Divisao Realizada! ', 'Sucesso');
-                           return;
-                       }
-                       
-                       $.each(message.subtasks,function(index,subtask){appendSubtask(subtask,null); });
-                       showModalDialog('Divisao Realizada! ', 'Sucesso');
+                       $('#rate-box').remove();
                    }
                };
                
@@ -150,6 +145,11 @@ function socketStart(){
                
                $('#stories').on('click','.activity',function(e){
                     
+                    
+                    if($(this).parent().parent().attr('parent') === 'root:'){
+                        showModalDialog('Você não pode estimrar essa estoria', 'Informação');
+                        return;
+                    }
                    $("#rate-value").fadeOut(function(){$(this).remove();});
                          removeTargetStory(storyHtmlElementSelected);
                          storyHtmlElementSelected = $(this);
@@ -285,7 +285,7 @@ function socketStart(){
            function showFormRate(storyHtmlElementSelected)
            {   
                if(storyHtmlElementSelected.length !== 0){
-                   $('<div><button id="set-rate" class="btn btn-success btn-small">est</button>\n\
+                   $('<div id="rate-box"><button id="set-rate" class="btn btn-success btn-small">est</button>\n\
                       <button id="div-est" class="btn btn-warning btn-small">div</button><div>')
                        .hide().appendTo(
                                         storyHtmlElementSelected
