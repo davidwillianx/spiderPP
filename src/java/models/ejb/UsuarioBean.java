@@ -22,6 +22,7 @@ import models.ejbs.interfaces.IUsuario;
 import models.entities.Perfil;
 import models.entities.Projeto;
 import models.entities.Usuario;
+import models.entities.resultQueries.TeamMembership;
 
 /**
  *
@@ -139,6 +140,7 @@ public class UsuarioBean implements IUsuario{
     }
 
       /**
+     * @param usuario
        *@TODO lancar exception NoPersist pois já tem método para rollback
        */
     @Override
@@ -168,7 +170,7 @@ public class UsuarioBean implements IUsuario{
            return this.usuarios;
             
         }catch(Exception error){
-            throw  new BusinessException("Falha na consulta de usuários");
+            throw  new NotFoundException("Falha na consulta de usuários");
         }
     } 
 
@@ -191,22 +193,40 @@ public class UsuarioBean implements IUsuario{
         }
     }
 
+//    @Override
+//    public List<Usuario> selectUsuarioOfProjeto() 
+//    {
+//        try{
+//            this.sessionManager = new SessionManager();
+//            this.projeto =  (Projeto) this.sessionManager.get("projeto");
+//            this.usuarios =  this.entityManager.createNamedQuery("Usuario.findUsuarioOfProjetoId")
+//                              .setParameter("id_projeto", this.projeto.getId())
+//                              .getResultList();
+//            
+//            return this.usuarios;
+//                                
+//        }catch(Exception error){
+//            throw new NotFoundException("Falha ao executar a busca");
+//        }
+//    }
+//    
+    
     @Override
-    public List<Usuario> selectUsuarioOfProjeto() 
-    {
-        try{
-            this.sessionManager = new SessionManager();
-            this.projeto =  (Projeto) this.sessionManager.get("projeto");
-            this.usuarios =  this.entityManager.createNamedQuery("Usuario.findUsuarioOfProjetoId")
-                              .setParameter("id_projeto", this.projeto.getId())
-                              .getResultList();
-            
-            return this.usuarios;
-                                
-        }catch(Exception error){
-            throw new NotFoundException("Falha ao executar a busca");
-        }
-    }
+     public List<TeamMembership> selectUsuarioOfProjeto()
+     {
+         try{
+             sessionManager = new SessionManager();
+             projeto = (Projeto) sessionManager.get("projeto");
+             
+             return  entityManager.createNamedQuery("Usuario.findMembershipsOfProjeto")
+                                   .setParameter("id_projeto", projeto.getId())
+                                   .getResultList();
+         
+         }catch(Exception error){
+             throw  new NotFoundException("Falha ao encontrar resultados");
+         }
+     }
+    
 
     @Override
     public void removeUsuarioOfProjeto(int idUsuario) {
@@ -253,4 +273,16 @@ public class UsuarioBean implements IUsuario{
             throw new BusinessException("Falha na operação");
         }
     }
+
+    @Override
+    public Usuario selectUsuarioById(int idUsuario) {
+        
+        try{
+            return   entityManager.find(Usuario.class, idUsuario);
+        }catch(Exception error){
+            throw new NotFoundException("Falha ao encontrar usario");
+        }
+    }
+    
+    
 }

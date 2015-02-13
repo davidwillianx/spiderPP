@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+    template="/WEB-INF/templates/dashboard_projeto.xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content-dashborad" >
+        
+         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <!--        <div class="col-md-6">
+                    <h4>Grafico
+                        <span class="semi-bold"></span>
+                    </h4>
+                    <p>Grafico do Projeto relacionando Estória com suas respectivas estimativas</p>
+                    <div id="area-example" style="position: relative;">
+        
+                    </div>
+                </div>-->
+
+        <div class="col-md-7">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="grid simple">
+                        <div class="grid-title">
+                            <h4>Resultados
+                                <span class="semi-bold">
+                                    Estórias
+                                </span>
+                            </h4>
+                        </div>
+
+
+                        <div class="grid-body">
+                            <div id="example" class="dataTables_wrapper form-inline" role="grid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="example" class="dataTable_length">
+                                            <h:panelGroup layout="block" rendered="#{not empty estoriaController.estorias}">
+                                                <h:dataTable value="#{estoriaController.estorias}" var="estoria" 
+                                                             class="table table-striped dataTable" rowClasses="center-text">
+                                                    <h:column>
+                                                        <f:facet name="header" class="sortable"></f:facet>
+                                                        <a class="btn btn-success btn-small" onclick="showDetails('#{estoria.nome}', '#{estoria.descricao}');">
+                                                            <i class="icon-custom-thumb"/>
+                                                        </a>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header" class="sortable">T&iacute;tulo</f:facet>
+                                                            #{estoria.nome}
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header" class="sortable">Data de cria&ccedil;&atilde;o</f:facet>
+                                                        <h:outputText value="#{estoria.dataCriacao}">
+                                                            <f:convertDateTime pattern="d-MM-yyyy"/>
+                                                        </h:outputText>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name="header" class="sortable">Estimativa</f:facet>
+                                                            #{estoria.estimativa}
+                                                    </h:column>
+                                                </h:dataTable>
+
+                                            </h:panelGroup>
+
+                                            <h:panelGroup layout="block" rendered="#{empty estoriaController.estorias}">
+                                                <div class="row">
+                                                    <div class="p-t-25 p-b-25">
+                                                        <h3 class="semi-bold text-center">
+                                                            Estórias deste projeto ainda não foram Estimadas. 
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </h:panelGroup>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="tiles green added-margin m-b-20" style="max-height:345px">
+                            <div class="tiles-body">
+                                <h4 class="text-black no-margin semi-bold">
+                                    Total: 
+                                </h4>
+                                <h2 class="text-white bold">
+                                    <span class="animate-number" data-value="#{estoriaController.showTotalEstimativaByEstorias()}" 
+                                          data-animation-duration="900" >
+                                        #{estoriaController.showTotalEstimativaByEstorias()}
+                                         #{estoriaController.showMeanEstimativasByEstoria()}
+                                    </span>
+                                </h2>
+                                <h4 class="text-black semi-bold">
+                                    Estimativa do projeto 
+                                </h4>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-6">
+                        <div class="tiles blue added-margin m-b-20" style="max-height:345px">
+                            <div class="tiles-body">
+                                <h4 class="text-black no-margin semi-bold">
+                                    Média: 
+                                </h4>
+                                <h2 class="text-white bold">
+                                    <span class="animate-number" data-value="#{estoriaController.showMeanEstimativasByEstoria()}" 
+                                          data-animation-duration="900" >
+                                         #{estoriaController.showMeanEstimativasByEstoria()}
+                                    </span>
+                                </h2>
+                                <h4 class="text-black semi-bold">
+                                    Média aproximada do projeto 
+                                </h4>
+                            </div>
+                        </div>
+                    </div>  
+
+                     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                    <script type="text/javascript">
+                            google.load("visualization", "1", {packages:["corechart"]});
+                            google.setOnLoadCallback(drawChart);
+                            function drawChart() {
+                                
+                              var data = google.visualization.arrayToDataTable([
+                                ['Estória', 'Estimativa'],
+                                ['estória1', 3],
+                                ['estória2', 3],
+                                ['estória3', 3],
+                                ['estória4', 5],
+                                ['estória5', 8]
+                              ]);
+
+                              var options = {
+                                title: 'Estimativa do Projeto',
+                                pieHole: 0.4
+                              };
+
+                              var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                              chart.draw(data, options);
+                            }
+
+                    </script>
+                    <div class="col-md-7">
+                        <div id="piechart" style="width: 550px; height: 370px;"></div>   
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
+
+

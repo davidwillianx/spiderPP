@@ -10,7 +10,7 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="content-dashborad" >
- 
+
         <div class="row">
             <div class="grid simple col-md-7">
                 <div class="grid-title">
@@ -21,7 +21,9 @@
                     <div class="dataTables_wrapper">
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="criar_estoria.xhtml" class="btn btn-success">Adicionar Est&oacute;ria</a>
+                                <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 2}">
+                                    <a href="criar_estoria.xhtml" class="btn btn-success">Adicionar Est&oacute;ria</a>
+                                </h:panelGroup>
                                 <!-- ADICIONAR FILTRO DE QUANTIDADE-->
                             </div>
                             <div class="col-md-6">
@@ -29,50 +31,51 @@
                             </div>
                         </div>
                     </div>
-                    <h:dataTable value="#{estoriaController.estorias}" var="estoria" class="table table-striped dataTable" rowClasses="center-text">
-                        <h:column>
-                            <f:facet name="header" class="sortable">
-                            </f:facet>
-                            <a class="btn btn-success btn-small" onclick="showDetails('#{estoria.nome}','#{estoria.descricao}');">
-                                <i class="icon-custom-thumb"/>
-                            </a>
-                            <!--<i class="fa fa-plus-circle"></i>-->
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header" class="sortable">T&iacute;tulo</f:facet>
-                            #{estoria.nome}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header" class="sortable">Data de cria&ccedil;&atilde;o</f:facet>
-                            <!--Esperando a nova tabela do BD
-                                   <h:outputText value="">
-                                <f:convertDateTime pattern="d-m-yyyy"/>
-                            </h:outputText>-->
-                            03/07/1990
-                        </h:column>
-                        <h:column >
-                            <f:facet name="header" class="sortable">status</f:facet>
-                            <h:outputText rendered="#{estoria.status ==  true}">
-                                estimada
-                            </h:outputText>
-                            <h:outputText rendered="#{estoria.status == false}">
-                                nao estimada
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">pontos</f:facet>
-                            <h:outputText rendered="#{estoria.estimativa != 0}">
-                                <span class="badge " style="background-color: #fb3c4a; color: #fff;">#{estoria.estimativa}</span>
-                            </h:outputText>
-                            -
-                        </h:column>
-                    </h:dataTable>
+                    <h:panelGroup layout="block" rendered="#{not empty estoriaController.estorias}">
+                        <h:dataTable value="#{estoriaController.estorias}" var="estoria" class="table table-striped dataTable" rowClasses="center-text">
+                            <h:column>
+                                <f:facet name="header" class="sortable">
+                                </f:facet>
+                                <a class="btn btn-success btn-small" onclick="showDetails('#{estoria.nome}', '#{estoria.descricao}');">
+                                    <i class="icon-custom-thumb"/>
+                                </a>
+                                <!--<i class="fa fa-plus-circle"></i>-->
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header" class="sortable">T&iacute;tulo</f:facet>
+                                    #{estoria.nome}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header" class="sortable">Data de cria&ccedil;&atilde;o</f:facet>
+                                <h:outputText value="#{estoria.dataCriacao}">
+                                    <f:convertDateTime pattern="d-MM-yyyy"/>
+                                </h:outputText>
+                            </h:column>
+                            <h:column >
+                                <f:facet name="header" class="sortable">status</f:facet>
+                                <h:outputText rendered="#{estoria.status ==  true}" value="estimada"/>
+                                <h:outputText rendered="#{estoria.status == false}" value="nao estimada"/>
+
+
+                                <!-- Adicionar Item das estimativas -->
+                            </h:column>
+
+                        </h:dataTable>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{empty estoriaController.estorias}">
+                        <div class="row">
+                            <div class="p-t-25 p-b-25">
+                                <h3 class="semi-bold text-center">
+                                    Não há estórias neste projeto
+                                </h3>
+                                <h5 class="semi-bold text-center">Após cadastradas serão vistas aqui!</h5>
+                            </div>
+                        </div>
+                    </h:panelGroup>
                 </div>
             </div>
-            
-            
-            
-             <div class="col-md-5" >
+
+            <div class="col-md-5" >
                 <div class="row">
                     <div class="grid simple">
                         <div class="grid-title">
@@ -84,7 +87,7 @@
 
                             <h:panelGroup layout="block" id="grid_users" class="dataTables_wrapper form-inline">
                                 <div class="row">
-                                  
+
                                     <!-- Adicionar SELECT para quantidade-->
                                     <!--                                        <div class="col-md-6">
                                                                                 <div class="">
@@ -94,7 +97,10 @@
                                                                                 </div>
                                                                             </div>-->
                                     <div class="col-md-5">
-                                          <a href="incluir_membros_projeto.xhtml" class="btn btn-primary">Incluir Membros</a>
+                                        <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                                            <a href="incluir_membros_projeto.xhtml" class="btn btn-primary">Incluir Membros</a>
+                                        </h:panelGroup>
+
                                         <div class="">
                                             <label>
                                                 <!--Espaco para busca -->
@@ -117,12 +123,30 @@
                                             <h4> #{usuarioOfProjeto.email}</h4> 
                                         </h:column>
                                         <h:column class="">
+                                            <f:facet name="header">Papel</f:facet>
+                                            <h:panelGroup layout="block" rendered="#{usuarioOfProjeto.idPerfil == 1}">
+                                                <span class="profile-team" data-toggle="tooltip" data-placement="top" title="#{usuarioOfProjeto.papel}"><h:graphicImage library="styles" name="assets/img/profiles/sm-icon.png"/></span>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" rendered="#{usuarioOfProjeto.idPerfil == 2}">
+                                                <span class="profile-team" data-toggle="tooltip" data-placement="top" title="#{usuarioOfProjeto.papel}"><h:graphicImage library="styles" name="assets/img/profiles/sm-icon.png"/></span>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block" rendered="#{usuarioOfProjeto.idPerfil == 3}">
+                                                <span class="profile-team" data-toggle="tooltip" data-placement="top" title="#{usuarioOfProjeto.papel}"><h:graphicImage library="styles" name="assets/img/profiles/team-icon.png"/></span>
+                                            </h:panelGroup>
+
+
+                                        </h:column>
+
+
+                                        <h:column class="" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
                                             <f:facet name="header">-</f:facet>
-                                            <h:form>
-                                                <h:commandButton  class=" btn btn-purple btn-small" value="x" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.id)}">
-                                                    <f:ajax render=":grid_users" />
-                                                </h:commandButton>
-                                            </h:form>
+                                            <h:panelGroup layout="block" rendered="#{ usuarioOfProjeto.idUsuario != usuario.id}">
+                                                <h:form>
+                                                    <h:commandButton  class=" btn btn-purple btn-small" value="x" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.idUsuario)}">
+                                                        <f:ajax render=":grid_users" />
+                                                    </h:commandButton>
+                                                </h:form>
+                                            </h:panelGroup>
                                         </h:column>
                                     </h:dataTable>
                                 </div>
@@ -132,7 +156,7 @@
                 </div>
             </div>
         </div>
-        
+
     </ui:define>
 
 </ui:composition>

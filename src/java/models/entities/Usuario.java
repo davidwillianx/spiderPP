@@ -16,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,6 +25,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
 
 /**
  *
@@ -43,9 +43,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByEmailAndSenha", query = "SELECT u FROM Usuario u WHERE  u.email = :email AND u.senha = :senha AND u.status = TRUE"),
     @NamedQuery(name = "Usuario.findByHashMail", query = "SELECT u FROM Usuario u WHERE u.hashmail = :hashmail"),
     @NamedQuery(name = "Usuario.findUsuarioOutOfProjetoId", query = "SELECT u FROM Usuario u WHERE u.id NOT IN (SELECT up.id FROM Usuario up JOIN up.acessarCollection a WHERE a.projeto.id = :id_projeto) AND u.status = TRUE"),
-    @NamedQuery(name = "Usuario.findUsuarioOfProjetoId", query = "SELECT u FROM Usuario u JOIN u.acessarCollection a WHERE a.projeto.id = :id_projeto AND u.status = TRUE")})
-
+    @NamedQuery(name = "Usuario.findUsuarioOfProjetoId", query = "SELECT u FROM Usuario u JOIN u.acessarCollection a WHERE a.projeto.id = :id_projeto AND u.status = TRUE"),
+    @NamedQuery(name = "Usuario.findMembershipsOfProjeto", query = "SELECT NEW models.entities.resultQueries.TeamMembership (u.nome, u.email,u.descricao, ac.perfil.nome, ac.perfil.id,u.id) FROM Usuario u JOIN u.acessarCollection ac WHERE ac.projeto.id = :id_projeto AND u.status = TRUE")
+        
+}) 
+ 
 public class Usuario implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private Collection<Mensagem> mensagemCollection;
     @Size(max = 140)
     @Column(name = "descricao")
     private String descricao;
@@ -57,7 +63,7 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "status")
     private boolean status;
-
+   
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,16 +82,21 @@ public class Usuario implements Serializable {
     private String email;
     @Basic(optional = false)
     @Size(min = 6, max = 122, message =" O campo senha deve conter no mínimo 6 caracteres")
+    
     @Column(name = "senha")
     private String senha;
+
+    
+    @Size(min = 6, max = 12, message ="O campo deve conter entre 6 e 12 caracteres")
+    @Basic(optional = false)
+    @Column(name = "nickname", unique = true)
+    private String nickname;
      
     
     @JoinTable(name = "usuario_area_atuacao", joinColumns = {
         @JoinColumn(name = "id_usuario", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "id_area_atuacao", referencedColumnName = "id")})
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<JogarRodada> jogarRodadaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Acessar> acessarCollection;
 
@@ -135,16 +146,16 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
+    public String getNickname(){
+        return this.nickname;
+    }
+    
+    public void setNickname(String nickname){
+        this.nickname = nickname;
+    }
+            
     
 
-    @XmlTransient
-    public Collection<JogarRodada> getJogarRodadaCollection() {
-        return jogarRodadaCollection;
-    }
-
-    public void setJogarRodadaCollection(Collection<JogarRodada> jogarRodadaCollection) {
-        this.jogarRodadaCollection = jogarRodadaCollection;
-    }
 
     @XmlTransient
     public Collection<Acessar> getAcessarCollection() {
@@ -202,6 +213,15 @@ public class Usuario implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @XmlTransient
+    public Collection<Mensagem> getMensagemCollection() {
+        return mensagemCollection;
+    }
+
+    public void setMensagemCollection(Collection<Mensagem> mensagemCollection) {
+        this.mensagemCollection = mensagemCollection;
     }
 }
    

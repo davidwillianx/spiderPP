@@ -1,192 +1,195 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Página inicial do usuário</title> 
-    </h:head>
-    <ui:include src="scripts.xhtml"/>
-    <h:body class="">
-        <h:panelGroup layout="block" class="header navbar navbar-inverse">
-            <h:panelGroup layout="block" class="navbar-inner">
-                <h:panelGroup layout="block" class="header-seperation" style="display: block; height: 61px;">
-                    <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">	
-                        <li class="dropdown">
-                            <a id="main-menu-toggle" href="#main-menu" class="">
+ 
+    <f:view contentType="text/html; charset=ISO-8859-1">
+
+        <h:head>
+            <title>Pagina inicial do usuario</title> 
+        </h:head>
+        <ui:include src="scripts.xhtml"/>
+        <h:body class="">
+            <h:panelGroup layout="block" class="header navbar navbar-inverse">
+                <h:panelGroup layout="block" class="navbar-inner">
+                    <h:panelGroup layout="block" class="header-seperation" style="display: block; height: 61px;">
+                        <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">	
+                            <li class="dropdown">
+                                <a id="main-menu-toggle" href="#main-menu" class="">
                                     <div class="iconset top-menu-toggle-white"></div>
-                            </a>
-                        </li>		 
-                    </ul>
-                    <h:link outcome="index.xhtml">
-                        Logo HERE
-                        <!--<h:graphicImage class="logo" library="styles" name="assets/img/spider.png" width="106" height="44"/>-->
-                    </h:link>  
-                    
-                    <!-- AREA DE CONTROLLE DO ICONE MENSSAGE E HOME-->
-                    <ul class="nav pull-right notifcation-center">	
-			<li class="dropdown" id="header_task_bar">
-                            <a href="#" class="dropdown-toggle active" data-toggle="">
-				<div class="iconset top-home"></div>
-                            </a>
-			</li>
-			<li class="dropdown" id="header_inbox_bar">
-                            <a href="#" class="dropdown-toggle">
-                               	<div class="iconset top-messages"></div>
-				<span class="badge" id="msgs-badge">2</span>
-                            </a>
-			</li>
-				<!-- BEGIN MOBILE CHAT TOGGLER -->
-			<li class="dropdown" id="portrait-chat-toggler" style="display:none">
-                            <a href="#sidr" class="chat-menu-toggle">
-				<div class="iconset top-chat-white"></div>
-                            </a>
-			</li>
-				<!-- END MOBILE CHAT TOGGLER -->				        
-			</ul>
-                    <!-- FIM AREA DE CONTROLLE DO ICONE MENSSAGE E HOME-->
-                    
-                </h:panelGroup>
-                
-                <h:panelGroup layout="block" class="header-quick-nav">
-                    <h:panelGroup layout="block" class="pull-left">
-                        <ul class="nav quick-section">
-                            <li class="quicklinks">
-				<a href="#" class="" id="layout-condensed-toggle">
-                                    <div class="iconset top-menu-toggle-dark"></div>
-                        	</a>
-                            </li>
-			</ul>
-                        <!-- BEGIN HEADER QUICK LINKS -->
-			<ul class="nav quick-section">
-                            <li class="quicklinks"><a href="#" class=""><div class="iconset top-reload"></div></a></li>
-                            <li class="quicklinks"><span class="h-seperate"></span></li>
-                            <li class="quicklinks"><a href="#" class=""><div class="iconset top-tiles"></div></a></li>
-                            <!-- BEGIN SEARCH BOX -->
-                            <li class="m-r-10 input-prepend inside search-form no-boarder">
-				<span class="add-on"><span class="iconset top-search"></span></span>
-                                <h:inputText   class="no-boarder"  style="width:250px;"/>
-                            </li>
-				<!-- END SEARCH BOX -->
+                                </a>
+                            </li>		 
                         </ul>
+                        <h:link outcome="index.xhtml">
+                            Logo HERE
+                            <!--<h:graphicImage class="logo" library="styles" name="assets/img/spider.png" width="106" height="44"/>-->
+                        </h:link>  
+
+                        <!-- AREA DE CONTROLLE DO ICONE MENSSAGE E HOME-->
+                        <ul class="nav pull-right notifcation-center">	
+                            <li class="dropdown" id="header_task_bar">
+                                <a href="#" class="dropdown-toggle active" data-toggle="">
+                                    <div class="iconset top-home"></div>
+                                </a>
+                            </li>
+<!--                            <li class="dropdown" id="header_inbox_bar">
+                                <a href="#" class="dropdown-toggle">
+                                    <div class="iconset top-messages"></div>
+                                    <span class="badge" id="msgs-badge">2</span>
+                                </a>
+                            </li>-->
+                            <!-- BEGIN MOBILE CHAT TOGGLER -->
+                            <li class="dropdown" id="portrait-chat-toggler" style="display:none">
+                                <a href="#sidr" class="chat-menu-toggle">
+                                    <div class="iconset top-chat-white"></div>
+                                </a>
+                            </li>
+                            <!-- END MOBILE CHAT TOGGLER -->				        
+                        </ul>
+                        <!-- FIM AREA DE CONTROLLE DO ICONE MENSSAGE E HOME-->
+
                     </h:panelGroup>
-                    
-                    <h:panelGroup layout="block" class="pull-right">
-                        
-                    </h:panelGroup>
-                </h:panelGroup>
-                
-              </h:panelGroup>
-        </h:panelGroup>
-        
-        <h:panelGroup layout="block" class="page-container row-fluid" >
-            
-            <h:panelGroup layout="block" class="page-sidebar" id="main-menu">
-                    
-                <h:panelGroup layout="block" class="page-sidebar-wrapper" id="main-menu-wrapper">
-                    
-                    <h:panelGroup layout="block" class="user-info-wrapper">
-                        
-                        <h:panelGroup layout="block" class="profile-wrapper">
-                            <!--<h:graphicImage library="resouces" name="styles/assets/img/profiles/avatar.jpg" width="69" height="69"/>--> 
+
+                    <h:panelGroup layout="block" class="header-quick-nav">
+                        <h:panelGroup layout="block" class="pull-left">
+                            <ul class="nav quick-section">
+                                <li class="quicklinks">
+                                    <a href="#" class="" id="layout-condensed-toggle">
+                                        <div class="iconset top-menu-toggle-dark"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- BEGIN HEADER QUICK LINKS -->
+                            <ul class="nav quick-section">
+                                <li class="quicklinks"><a href="#" class=""><div class="iconset top-reload"></div></a></li>
+                                <!--<li class="quicklinks"><span class="h-seperate"></span></li>-->
+                                <!--<li class="quicklinks"><a href="#" class=""><div class="iconset top-tiles"></div></a></li>-->
+                                <!-- BEGIN SEARCH BOX -->
+<!--                                <li class="m-r-10 input-prepend inside search-form no-boarder">
+                                    <span class="add-on"><span class="iconset top-search"></span></span>
+                                    <h:inputText   class="no-boarder"  style="width:250px;"/>
+                                </li>-->
+                                <!-- END SEARCH BOX -->
+                            </ul>
                         </h:panelGroup>
-                        <h:panelGroup layout="block" class="user-info">
-                            <h:panelGroup layout="block" class="greeting">Bem Vindo</h:panelGroup>
-                            <h:panelGroup layout="block" class="username"><h:outputText value="#{usuario.nome}"/></h:panelGroup>
-                            <!--STATUS ON/OFF -->
+
+                        <h:panelGroup layout="block" class="pull-right">
+
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="page-container row-fluid" >
+
+                <h:panelGroup layout="block" class="page-sidebar" id="main-menu">
+
+                    <h:panelGroup layout="block" class="page-sidebar-wrapper" id="main-menu-wrapper">
+
+                        <h:panelGroup layout="block" class="user-info-wrapper">
+
+                            <h:panelGroup layout="block" class="profile-wrapper">
+                                <!--<h:graphicImage library="resouces" name="styles/assets/img/profiles/avatar.jpg" width="69" height="69"/>--> 
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" class="user-info">
+                                <h:panelGroup layout="block" class="greeting">Bem Vindo</h:panelGroup>
+                                <h:panelGroup layout="block" class="username"><h:outputText value="#{usuario.nome}"/></h:panelGroup>
+                                <!--STATUS ON/OFF -->
                                 <!--<h:panelGroup layout="block" class="status">
                                 <h:link outcome="index.xhtml"><h:panelGroup layout="block" class="status-icon green"></h:panelGroup>Online</h:link>
                                 </h:panelGroup>-->
-                            <!--STATUS ON/OFF -->
+                                <!--STATUS ON/OFF -->
+                            </h:panelGroup>
                         </h:panelGroup>
+                        <p class="menu-title">Op&ccedil;&otilde;es<span class="pull-right"></span></p>
+
+                        <ul>
+                            <li class="start active">
+                                <h:link outcome="index.xhtml">
+                                    <i class="icon-custom-home"></i>
+                                    <span class="title">Inicio</span>
+                                </h:link>
+                            </li>
+                            <!-- BEGIN BADGE LINK -->
+                            <li class="">
+                                <a href="#">
+                                    <i class="icon-custom-feedbacks"></i>
+                                    <span class="title">Projetos</span>
+                                    <span class=" badge badge-disable pull-right ">#{projetoController.projetos.size()}</span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <ui:repeat value="#{projetoController.projetos}" var="projeto">
+                                        <li class="">
+                                            <a href="#">
+                                                <i class="fa fa-envelope"></i>
+                                                <span class="title"><h:outputText value="#{projeto.nome}"/></span>
+                                            </a>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </li>
+                            <!-- END BADGE LINK -->  
+                            <!-- BEGIN BADGE LINK -->
+                            <li class="">
+                                <a href="cadastrar_projeto.xhtml">
+                                    <i class="icon-custom-newpage"></i>
+                                    <span class="title">Criar Projeto</span>
+                                </a>
+                            </li>
+                            <!-- END BADGE LINK -->  
+
+                            <!-- BEGIN BADGE LINK -->
+                            <li class="">
+                                <f:facet name="header">Edit</f:facet>
+                                <!-- 
+                                <h:form>
+                                    <h:commandLink  action="/user/edit.xhtml" class="title" >
+                                          <i class="icon-custom-new"></i>
+                                          <span class="title">Editar Registro</span>
+                                          <f:setPropertyActionListener value="#{usuario}" 
+                                             target="#{usuarioController.usuario}" />
+                                      </h:commandLink>
+                                  </h:form>-->
+                                <h:link class="title"  outcome="edit.xhtml">
+                                    <i class="icon-custom-new"></i>
+                                    <span class="title">Editar perfil</span>
+                                </h:link>
+                            </li>
+                            <!-- END BADGE LINK -->  
+                            <!-- BEGIN BADGE LINK -->
+
+                            <!--<h:form>-->
+                            <li class="">
+                                <h:form>
+                                    <h:commandLink action="#{usuarioController.exit}" class="title">
+                                        <i class="icon-custom-cross"></i>
+                                        <span class="title">Sair</span>
+                                    </h:commandLink>
+                                </h:form>
+                            </li>
+                            <!--</h:form>-->
+                            <!-- END BADGE LINK -->  
+
+                        </ul>
                     </h:panelGroup>
-                    <p class="menu-title">Op&ccedil;&otilde;es<span class="pull-right"></span></p>
 
-                    <ul>
-                        <li class="start active">
-                            <h:link outcome="index.xhtml">
-                                <i class="icon-custom-home"></i>
-                                <span class="title">Inicio</span>
-                            </h:link>
-                        </li>
-                         <!-- BEGIN BADGE LINK -->
-			<li class="">
-				<a href="#">
-					<i class="icon-custom-feedbacks"></i>
-					<span class="title">Projetos</span>
-                                        <span class=" badge badge-disable pull-right ">#{projetoController.projetos.size()}</span>
-				</a>
-                            <ul class="sub-menu">
-                                <ui:repeat value="#{projetoController.projetos}" var="projeto">
-                                    <li class="">
-                                        <a href="#">
-                                            <i class="fa fa-envelope"></i>
-                                            <span class="title"><h:outputText value="#{projeto.nome}"/></span>
-                                        </a>
-                                    </li>
-                                </ui:repeat>
-                            </ul>
-			</li>
-			<!-- END BADGE LINK -->  
-                        <!-- BEGIN BADGE LINK -->
-                        <li class="">
-                            <a href="cadastrar_projeto.xhtml">
-                                <i class="icon-custom-newpage"></i>
-                                <span class="title">Criar Projeto</span>
-                            </a>
-                        </li>
-			<!-- END BADGE LINK -->  
-                       
-                        <!-- BEGIN BADGE LINK -->
-			<li class="">
-                            <f:facet name="header">Edit</f:facet>
-                            <!-- 
-                            <h:form>
-                                <h:commandLink  action="/user/edit.xhtml" class="title" >
-                                      <i class="icon-custom-new"></i>
-                                      <span class="title">Editar Registro</span>
-                                      <f:setPropertyActionListener value="#{usuario}" 
-                                         target="#{usuarioController.usuario}" />
-                                  </h:commandLink>
-                              </h:form>-->
-                           <h:link class="title"  outcome="edit.xhtml">
-                               <i class="icon-custom-new"></i>
-                               <span class="title">Editar Registro</span>
-                          </h:link>
-			</li>
-			<!-- END BADGE LINK -->  
-                          <!-- BEGIN BADGE LINK -->
+                </h:panelGroup>
 
-                          <!--<h:form>-->
-                          <li class="">
-                              <h:form>
-                                  <h:commandLink action="#{usuarioController.exit}" class="title">
-                                      <i class="icon-custom-cross"></i>
-                                      <span class="title">Sair</span>
-                                  </h:commandLink>
-                              </h:form>
-                          </li>
-                          <!--</h:form>-->
-			<!-- END BADGE LINK -->  
-                        
-                    </ul>
+                <h:panelGroup layout="block" class="page-content">
+                    <h:panelGroup layout="block" class="content">
+
+
+                        <ui:insert name="content-dashboad">Adicione alguma informacao</ui:insert>
+
+
+                    </h:panelGroup>
                 </h:panelGroup>
-                
+
             </h:panelGroup>
-            
-            <h:panelGroup layout="block" class="page-content">
-                <h:panelGroup layout="block" class="content">
-                    
-                    
-                    <ui:insert name="content-dashboad">Adicione alguma informacao</ui:insert>
-                    
-                    
-                </h:panelGroup>
-            </h:panelGroup>
-            
-        </h:panelGroup>
-        
-            
-    </h:body>
+        </h:body>
+    </f:view>
+    
 </html>

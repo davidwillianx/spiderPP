@@ -15,7 +15,7 @@
                     <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">	
                         <li class="dropdown">
                             <a id="main-menu-toggle" href="#main-menu" class="">
-                                    <div class="iconset top-menu-toggle-white"></div>
+                                <div class="iconset top-menu-toggle-white"></div>
                             </a>
                         </li>		 
                     </ul>
@@ -23,71 +23,86 @@
                         Logo HERE
                         <!--<h:graphicImage class="logo" library="styles" name="assets/img/spider.png" width="106" height="44"/>-->
                     </h:link>  
-                    
+
                     <!-- AREA DE CONTROLLE DO ICONE MENSSAGE E HOME-->
                     <ul class="nav pull-right notifcation-center">	
-			<li class="dropdown" id="header_task_bar">
+                        <li class="dropdown" id="header_task_bar">
                             <a href="#" class="dropdown-toggle active" data-toggle="">
-				<div class="iconset top-home"></div>
+                                <div class="iconset top-home"></div>
                             </a>
-			</li>
-			<li class="dropdown" id="header_inbox_bar">
-                            <a href="#" class="dropdown-toggle">
-                               	<div class="iconset top-messages"></div>
-				<span class="badge" id="msgs-badge">2</span>
-                            </a>
-			</li>
-				<!-- BEGIN MOBILE CHAT TOGGLER -->
-			<li class="dropdown" id="portrait-chat-toggler" style="display:none">
+                        </li>
+                        <!--			<li class="dropdown" id="header_inbox_bar">
+                                                    <a href="#" class="dropdown-toggle">
+                                                        <div class="iconset top-messages"></div>
+                                                        <span class="badge" id="msgs-badge">2</span>
+                                                    </a>
+                                                </li>-->
+                        <!-- BEGIN MOBILE CHAT TOGGLER -->
+                        <li class="dropdown" id="portrait-chat-toggler" style="display:none">
                             <a href="#sidr" class="chat-menu-toggle">
-				<div class="iconset top-chat-white"></div>
+                                <div class="iconset top-chat-white"></div>
                             </a>
-			</li>
-				<!-- END MOBILE CHAT TOGGLER -->				        
-			</ul>
+                        </li>
+                        <!-- END MOBILE CHAT TOGGLER -->				        
+                    </ul>
                     <!-- FIM AREA DE CONTROLLE DO ICONE MENSSAGE E HOME-->
-                    
+
                 </h:panelGroup>
-                
+
                 <h:panelGroup layout="block" class="header-quick-nav">
                     <h:panelGroup layout="block" class="pull-left">
                         <ul class="nav quick-section">
                             <li class="quicklinks">
-				<a href="#" class="" id="layout-condensed-toggle">
+                                <a href="#" class="" id="layout-condensed-toggle">
                                     <div class="iconset top-menu-toggle-dark"></div>
-                        	</a>
+                                </a>
                             </li>
-			</ul>
+                        </ul>
                         <!-- BEGIN HEADER QUICK LINKS -->
-			<ul class="nav quick-section">
+                        <ul class="nav quick-section">
                             <li class="quicklinks"><a href="#" class=""><div class="iconset top-reload"></div></a></li>
-                            <li class="quicklinks"><span class="h-seperate"></span></li>
-                            <li class="quicklinks"><a href="#" class=""><div class="iconset top-tiles"></div></a></li>
+                            <!--<li class="quicklinks"><span class="h-seperate"></span></li>-->
+                            <!--<li class="quicklinks"><a href="#" class=""><div class="iconset top-tiles"></div></a></li>-->
                             <!-- BEGIN SEARCH BOX -->
-                            <li class="m-r-10 input-prepend inside search-form no-boarder">
-				<span class="add-on"><span class="iconset top-search"></span></span>
-                                <h:inputText   class="no-boarder"  style="width:250px;"/>
-                            </li>
-				<!-- END SEARCH BOX -->
+                            <!--                            <li class="m-r-10 input-prepend inside search-form no-boarder">
+                                                            <span class="add-on"><span class="iconset top-search"></span></span>
+                                                            <h:inputText   class="no-boarder"  style="width:250px;"/>
+                                                        </li>-->
+                            <!-- END SEARCH BOX -->
                         </ul>
                     </h:panelGroup>
-                    
+
                     <h:panelGroup layout="block" class="pull-right">
-                        
+                        <h:panelGroup layout="block" style="padding-top:  6px" rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) == 1}">
+                            <h:outputLink  class="btn btn-primary btn-large" value="poker.xhtml">
+                                Iniciar Estimativa
+                                <f:param name="rm" value="#{projetoController.showHashProject(projeto.id)}"/>
+                                <f:param name="pr" value="#{projetoController.showHashPerfil(usuario.id,projeto.id)}"/>
+                            </h:outputLink>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" class="pull-right">
+                        <h:panelGroup layout="block" style="padding-top:  6px" rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) != 1}">
+                             <h:outputLink  class="btn btn-primary btn-large" value="poker.xhtml">
+                                Participar da Estimativa
+                                <f:param name="rm" value="#{projetoController.showHashProject(projeto.id)}"/>
+                                <f:param name="pr" value="#{projetoController.showHashPerfil(usuario.id,projeto.id)}"/>
+                            </h:outputLink>
+                        </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>
-                
-              </h:panelGroup>
+
+            </h:panelGroup>
         </h:panelGroup>
-        
+
         <h:panelGroup layout="block" class="page-container row-fluid" >
-            
+
             <h:panelGroup layout="block" class="page-sidebar" id="main-menu">
-                    
+
                 <h:panelGroup layout="block" class="page-sidebar-wrapper" id="main-menu-wrapper">
-                    
+
                     <h:panelGroup layout="block" class="user-info-wrapper">
-                        
+
                         <h:panelGroup layout="block" class="profile-wrapper">
                             <!--<h:graphicImage library="resouces" name="styles/assets/img/profiles/avatar.jpg" width="69" height="69"/>--> 
                         </h:panelGroup>
@@ -95,9 +110,9 @@
                             <h:panelGroup layout="block" class="greeting">#{projeto.nome}</h:panelGroup>
                             <h:panelGroup layout="block" class="username"><h:outputText value="#{usuario.nome}"/></h:panelGroup>
                             <!--STATUS ON/OFF -->
-                                <!--<h:panelGroup layout="block" class="status">
-                                <h:link outcome="index.xhtml"><h:panelGroup layout="block" class="status-icon green"></h:panelGroup>Online</h:link>
-                                </h:panelGroup>-->
+                            <!--<h:panelGroup layout="block" class="status">
+                            <h:link outcome="index.xhtml"><h:panelGroup layout="block" class="status-icon green"></h:panelGroup>Online</h:link>
+                            </h:panelGroup>-->
                             <!--STATUS ON/OFF -->
                         </h:panelGroup>
                     </h:panelGroup>
@@ -110,79 +125,91 @@
                                 <span class="title">Inicio</span>
                             </h:link>
                         </li>
-                         <!-- BEGIN BADGE LINK -->
-			<li class="">
-				<a href="#">
-					<i class="icon-custom-feedbacks"></i>
-                                        <span class="title">Est&oacute;rias</span>
-                                         <span class=" badge badge-disable pull-right ">#{estoriaController.estorias.size()}</span>
-				</a>
+                        <!-- BEGIN BADGE LINK -->
+                        <li class="">
+                            <a href="#">
+                                <i class="icon-custom-feedbacks"></i>
+                                <span class="title">Est&oacute;rias</span>
+                                <span class=" badge badge-disable pull-right ">#{estoriaController.estorias.size()}</span>
+                            </a>
                             <ul class="sub-menu">
                                 <ui:repeat value="#{estoriaController.estorias}" var="estoria">
                                     <li class="">
-                                        <a href="#" onclick="showDetails('#{estoria.nome}','#{estoria.descricao}')">
+                                        <a href="#" onclick="showDetails('#{estoria.nome}', '#{estoria.descricao}')">
                                             <i class="fa fa-envelope"></i>
                                             <span class="title"><h:outputText value="#{estoria.nome}"/></span>
                                         </a>
                                     </li>
                                 </ui:repeat>
                             </ul>
-			</li>
-			<!-- END BADGE LINK -->  
+                        </li>
+                        <!-- END BADGE LINK -->  
                         <!-- BEGIN BADGE LINK -->
                         <li class="">
-                            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 3}">
+                            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 2}">
                                 <h:link outcome="criar_estoria.xhtml">
                                     <i class="icon-custom-newpage"></i>
                                     <span class="title">Adicionar Estorias</span>
                                 </h:link>
                             </h:panelGroup>
                         </li>
-			<!-- END BADGE LINK -->  
+
+                        <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                            <li class="">
+                                <a href="incluir_membros_projeto.xhtml">
+                                    <i class="icon-custom-portlets"></i>
+                                    <span class="title">Gerenciar  Membros</span>
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a href="editar.xhtml">
+                                    <i class="icon-custom-new"></i>
+                                    <span class="title">Editar Projeto</span>
+                                </a>
+                            </li>
+
+                        </h:panelGroup>
+
                         <li class="">
-                            <a href="incluir_membros_projeto.xhtml">
-                                <i class="icon-custom-portlets"></i>
-                                <span class="title">Gerenciar  Membros</span>
-                            </a>
-                        </li>
-                        
-                        <!-- BEGIN BADGE LINK -->
+
+                            <h:form>
+                                <h:commandLink action="resultados" class="title">
+                                    <i class="icon-custom-newpage"></i>
+                                    <span class="title">Resultados</span>
+                                </h:commandLink>
+                            </h:form>
+                        </li> 
+
                         <li class="">
-                            <a href="editar.xhtml">
-                                <i class="icon-custom-new"></i>
-                                <span class="title">Editar Projeto</span>
-                            </a>
-                        </li>
-			<!-- END BADGE LINK -->  
-                        <!-- BEGIN BADGE LINK -->
-                        <li class="">
+
                             <h:form>
                                 <h:commandLink action="#{projetoController.exitProjeto}" class="title">
                                     <i class="icon-custom-cross"></i>
                                     <span class="title">Sair</span>
                                 </h:commandLink>
                             </h:form>
-                        </li>
+                        </li> 
                         <!--</h:form>-->
-			<!-- END BADGE LINK -->  
-                        
+                        <!-- END BADGE LINK -->  
+
                     </ul>
                 </h:panelGroup>
-                
+
             </h:panelGroup>
-            
+
             <h:panelGroup layout="block" class="page-content">
                 <h:panelGroup layout="block" class="content">
-                    
-                    
+
+
                     <ui:insert name="content-dashborad">Adicione alguma informacao</ui:insert>
-                    
-                    
+
+
                 </h:panelGroup>
             </h:panelGroup>
-            
+
         </h:panelGroup>
-        
-            
+
+
     </h:body>
 </html>

@@ -1,4 +1,5 @@
-$(document).ready(function() {		
+$(document).ready(function() {
+        tooltipActivator();
 	calculateHeight();
 	$(".remove-widget").click(function() {		
 		$(this).parent().parent().parent().addClass('animated fadeOut');
@@ -559,5 +560,10 @@ $(document).ready(function() {
                             </div>\n\
                         </div>\n\
                      </div>';
+        }
+        
+        function tooltipActivator()
+        {   
+            $('[data-toggle="tooltip"]').tooltip();
         }
         

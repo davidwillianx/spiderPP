@@ -1,9 +1,11 @@
 package controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import libs.BuildHash;
 import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
@@ -18,7 +20,7 @@ import models.entities.Projeto;
 @Named
 @RequestScoped
 public class ProjetoController {
-
+    
     private Projeto projeto = new Projeto();
     private Redirect redirect;
     private BuildMessage buildMessage;
@@ -65,6 +67,7 @@ public class ProjetoController {
         try {
             this.iProjeto.saveProjeto(projeto);
             this.buildMessage.addInfo("Projeto cadastrado com Sucesso");
+            this.projeto = new Projeto();
         
         } catch (Exception error) {
             this.buildMessage.addError("Erro ao cadastrar Projeto.");
@@ -116,9 +119,26 @@ public class ProjetoController {
     
     public void exitProjeto()
     {
-        this.sessionManager =  new SessionManager();
-        this.sessionManager.remove("projeto");
-        this.sessionManager.remove("usuario");
-        this.redirect.redirectTo("/user/index.xhtml");
+        try{
+            this.sessionManager =  new SessionManager();
+            this.sessionManager.remove("projeto");
+            this.redirect.redirectTo("/user/index.xhtml");
+        }catch(Exception error)
+        {
+            System.err.println("Falha ao sair");
+        }
+    }
+    
+    public String showHashProject(int idProjeto) throws UnsupportedEncodingException
+    {
+        BuildHash hashBuilder = new BuildHash();
+        return hashBuilder.buildHashStringURL(String.valueOf(idProjeto));
+    }
+    
+    public String showHashPerfil(int idUsuario, int idProjeto) throws UnsupportedEncodingException
+    {
+        int idPerfil =  this.showUserProjetoPersmission(idProjeto, idUsuario);
+        BuildHash buildHash = new BuildHash();
+        return buildHash.buildHashStringURL(String.valueOf(idPerfil));
     }
 }

@@ -4,18 +4,17 @@
  * and open the template in the editor.
  */
 package controllers;
-
-import java.util.List;
-import javax.ejb.EJB;
+ 
+import java.util.List; 
+import javax.ejb.EJB; 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import libs.BuildMessage;
+import libs.BuildMessage; 
 import libs.Redirect;
-import libs.SessionManager;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Projeto;
-
+ 
 /**
  *
  * @author Bruno and Bleno
@@ -25,11 +24,15 @@ import models.entities.Projeto;
 public class EstoriaController {
 
     private BuildMessage buildMessage;
-    private SessionManager sessionManager;
     private Projeto projeto;
     private List<Estoria> estorias;
+    private List<Estoria> subtasks;
+    private List<Estoria> parentEstorias;
+    
     private Redirect redirect;
     private Estoria estoria;
+    private int idEstoria;
+    private boolean  isHasSubtask;
  
     @EJB
     private IEstoria iEstoria;
@@ -46,11 +49,25 @@ public class EstoriaController {
     public Projeto getProjeto() {
         return this.projeto;
     }
+    
+    public int getIdEstoria()
+    {
+        return idEstoria;
+    }
 
     public List<Estoria> getEstorias() {
         try {
-            return this.iEstoria.selectEstorias();
+            estorias =  this.iEstoria.selectEstorias();
+            return estorias;
         } catch (Exception error) {
+            return null;
+        } 
+    }
+     
+    public List<Estoria> getSubtasks(){
+        try {
+              return this.subtasks;
+        } catch (Exception e) {
             return null;
         }
     }
@@ -60,7 +77,7 @@ public class EstoriaController {
         try {
 
             this.iEstoria.persistEstoria(estoria);
-            this.buildMessage.addInfo("Estória criada");
+            this.buildMessage.addInfo("Estória cadastrada coom sucesso!");
             this.estoria = new Estoria();
 
         } catch (Exception error) {
@@ -83,4 +100,49 @@ public class EstoriaController {
         this.redirect = new Redirect();
         this.redirect.redirectTo("/projeto/editarestoria.xhtml?estoria=" + estoria.getEstoriaPK().getId());
     }
+    
+    public int showTotalEstimativaByEstorias (){
+        return this.iEstoria.totalEstimativaProjeto();
+    }
+    
+    public float showMeanEstimativasByEstoria (){
+        return this.iEstoria.meanEstorias();
+    } 
+    
+    //-----------------------------------
+    
+    
+    public boolean isSubTask(){
+        return isHasSubtask;
+    }
+     
+    
+    public boolean hasSubTask(int idEstoria) {
+        try {
+           return !this.getAllSubtaskByParentId(idEstoria).isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    
+    public List<Estoria> getParentEstorias()
+    {
+        try {
+            return iEstoria.selectParentEstorias();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+     
+    public List<Estoria> getAllSubtaskByParentId(int idEstoria) {
+        try {
+            this.subtasks = iEstoria.selectAllChildren(idEstoria);
+            return this.subtasks;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

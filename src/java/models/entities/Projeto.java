@@ -43,6 +43,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Projeto.findAllByUserId", query = "SELECT p FROM Projeto p JOIN p.acessarCollection a WHERE a.usuario.id = :id_usuario"),
     @NamedQuery(name = "Projeto.findByDataFim", query = "SELECT p FROM Projeto p WHERE p.dataFim = :dataFim")})
 public class Projeto implements Serializable {
+    
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProjeto")
+//    private Collection<Estimativa> estimativaCollection;
+//    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projeto")
+    private Collection<Mensagem> mensagemCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,7 +94,7 @@ public class Projeto implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Integer id) { 
         this.id = id;
     }
 
@@ -166,5 +172,23 @@ public class Projeto implements Serializable {
     public String toString() {
         return "models.entities.Projeto[ id=" + id + " ]";
     }
+
+    @XmlTransient
+    public Collection<Mensagem> getMensagemCollection() {
+        return mensagemCollection;
+    }
+
+    public void setMensagemCollection(Collection<Mensagem> mensagemCollection) {
+        this.mensagemCollection = mensagemCollection;
+    }
+
+//    @XmlTransient
+//    public Collection<Estimativa> getEstimativaCollection() {
+//        return estimativaCollection;
+//    }
+//
+//    public void setEstimativaCollection(Collection<Estimativa> estimativaCollection) {
+//        this.estimativaCollection = estimativaCollection;
+//    }
     
 }

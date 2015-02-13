@@ -73,7 +73,6 @@ public class ProjetoBean implements IProjeto {
         Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); // posso usar outras mascaras para formatação
         this.dateProjeto = simpleDateFormat.parse(simpleDateFormat.format(date));
-        System.out.println("Data Atual: " + this.dateProjeto);
         return this.dateProjeto;
     }
 
@@ -109,8 +108,10 @@ public class ProjetoBean implements IProjeto {
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Projeto selectProjetoById(int idProjeto) {
         try {
-            this.projeto = this.entityManager.find(Projeto.class, idProjeto);
+            
+            this.projeto = entityManager.find(Projeto.class, idProjeto);
             return this.projeto;
+            
         } catch (Exception error) {
             throw new BusinessException("Falha na consulta do projeto");
         }

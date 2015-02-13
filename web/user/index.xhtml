@@ -20,7 +20,9 @@
                             <h:panelGroup layout="block" class="tiles green" style="max-height:345px">
                                 <h:panelGroup layout="block" class="tiles-body">
                                     <h3 class="text-white m-t-30 m-b-30 m-r-20">
-                                        <span class="semi-bold"><h:outputText value="#{projeto.nome}"/></span>
+                                        <span class="semi-bold">
+                                            <h:outputText value="#{projeto.nome}"/>
+                                        </span>
                                     </h3>
                                     <h:form>
                                         <h:commandButton class="btn btn-info btn-small" action="#{projetoController.signProjeto(projeto.id)}" value="Acessar" />
@@ -52,15 +54,14 @@
                                                         </span>
                                                     </p>
                                                 </h:panelGroup>
+                                                
                                             </h:panelGroup>
-                                            <h:panelGroup layout="block" class="p-l-15 p-t-15 p-r-20 " >
-                                                <h:panelGroup layout="block" class="slimScrollDiv">
-                                                    <h:panelGroup layout="block" class="scroller">
+                                            <div class="clearfix"></div>
+                                            <h:panelGroup layout="block" class="p-l-15 p-t-10 p-r-20" >
+                                                <!--scroll com menor altura-->
+                                                    <h:panelGroup layout="block" class="scrollerx">
                                                         <p><h:outputText value="#{projeto.descricao}"/> </p>
                                                     </h:panelGroup>
-
-                                                </h:panelGroup>
-
                                             </h:panelGroup>
                                         </h:panelGroup>
                                     </h:panelGroup>

@@ -1,135 +1,145 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
-    <h:head>
-        <title>Spider Planning poker</title>
-    </h:head>
-    <ui:include src="WEB-INF/templates/scripts.xhtml"/>
-    
-    <h:body class="pace-done">
-        <h:panelGroup layout="block" class="main-wrapper">
-            <h:panelGroup layout="block" class="section ha-waypoint">
-                <h:panelGroup layout="block"  class="navbar  navbar-top">
-                    <h:panelGroup layout="block" class="container">
-                        <h:panelGroup layout="block" class="compressed">
-                            <h:panelGroup layout="block" class="navbar-header">
+    <f:view contentType="text/html;  charset=ISO-8859-1">
+        <h:head>
+            <title>Spider Planning poker</title>
+        </h:head>
+        <ui:include src="WEB-INF/templates/scripts.xhtml"/>
 
-                                <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
+        <h:body class="pace-done">
+            <h:panelGroup layout="block" class="main-wrapper">
+                <h:panelGroup layout="block" class="section ha-waypoint">
+                    <h:panelGroup layout="block"  class="navbar  navbar-top">
+                        <h:panelGroup layout="block" class="container">
+                            <h:panelGroup layout="block" class="compressed">
+                                <h:panelGroup layout="block" class="navbar-header">
 
-                                 <h:graphicImage library="styles" name="assets/img/spider.png" width="200"/>
-                            </h:panelGroup>
-                            <h:panelGroup layout="block" class="navbar-collapse collapse">
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li><h:link outcome="index.xhtml" >Home</h:link></li>
-                                    <li><h:link outcome="index.xhtml" id="prev" >Acesso</h:link></li>
-                                    <li><h:link outcome="index.xhtml">O projeto</h:link> </li>
-                                    <li><h:outputLink value="http://www.spider.ufpa.br/" target="_blanck">Lab. Spider</h:outputLink></li>
-                                </ul>
-                            </h:panelGroup>
-                        </h:panelGroup>
-                     </h:panelGroup>    
-                </h:panelGroup>
-              </h:panelGroup>
-            <h:panelGroup layout="block" class="section black">
-                <h:panelGroup layout="block" class="container">
-                    <h:panelGroup layout="block" class="p-t-80 p-b-65">
-                        <h:panelGroup layout="block" class="section">
-                            <h:panelGroup layout="block" class="col-md-12 feature-list">
-                                <h:panelGroup layout="block" class=" p-t-80 p-b-65 col-md-7 col-lg-5">
-                                    <h2 class="text-center text-white m-b-20">Spider <b>Planning Poker</b>,
-                                        Ferramenta de apio a estimativas utilizando o m&eacute;todo Planning Poker
-                                    </h2>
-                                    <!--<h3>Ferramenta de apio a estimativas utilizando o m&eacute;todo Planning Poker</h3>-->
-                                    <h3>
-                                        Tenha uma base histórica de estimativas acessível e segura, sendo visível de qualquer lugar.
-                                        <button class="btn  btn-success btn-large" id="next" >Registre-se Agora!</button>
-                                    </h3>
-                                   
+                                    <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+
+                                    <h:graphicImage library="styles" name="assets/img/spider.png" width="200"/>
                                 </h:panelGroup>
-                                
-                                
-                                <h:panelGroup layout="block" class="p-t-80 p-b-65 col-md-5 col-lg-6">
-                                    <h:panelGroup layout="block" class="p-b-5">
-                                        <h:messages class="alert" showDetail="true" showSummary="false" >
-                                     </h:messages>
-                                    </h:panelGroup>
-                                     <h:panelGroup layout="block" id="formAccess">
-                                         
-                                            <h:panelGroup layout="block">
-                                                    <h:form class="p-l-30">    
-                                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
-                                                            <h:outputLabel for="email" value="Email: " class="form-label"/>
-                                                            <h:inputText id="email" class="form-control" value="#{usuarioController.usuario.email}"/>
-                                                        </h:panelGroup>
-                                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
-                                                            <h:outputLabel for="password" value="Senha: " class="form-label"/>
-                                                            <h:inputSecret id="password"  class="form-control" value="#{usuarioController.usuario.senha}" />  
-                                                        </h:panelGroup> 
-                                                        <h:panelGroup layout="block" class="col-md-7">
-                                                            <h:commandButton class="btn btn-primary btn-cons" value="Entrar" action="#{usuarioController.authenticator(usuarioController.usuario)}"/>
-                                                        </h:panelGroup>
-                                                    </h:form>
-                                            </h:panelGroup>
-                                             <h:panelGroup layout="block">
-                                                 <h:form class="p-l-30" id="formRegister">  
-                                                         <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
-                                                            <h:outputLabel for="nome" value="Nome " class="form-label"/>
-                                                            <h:inputText id="nome" class="form-control" value="#{usuarioController.usuario.nome}"/>
-                                                        </h:panelGroup>
-                                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
-                                                            <h:outputLabel for="email" value="Email: " class="form-label"/>
-                                                            <h:inputText id="email" class="form-control" value="#{usuarioController.usuario.email}"/>
-                                                        </h:panelGroup>
-                                                         <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
-                                                            <h:outputLabel for="descricao" value="Descrição: " class="form-label"/>
-                                                            <h:inputTextarea id="descricao" class="form-control" value="#{usuarioController.usuario.descricao}"/>
-                                                        </h:panelGroup>
-                                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
-                                                            <h:outputLabel for="novasenha" value="Senha: " class="form-label"/>
-                                                            <h:inputSecret id="novasenha"  class="form-control" value="#{usuarioController.usuario.senha}" />  
-                                                        </h:panelGroup> 
-                                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
-                                                            <h:outputLabel for="confpassword" value="Confir. Senha: " class="form-label"/>
-                                                            <h:inputSecret id="confpassword"  class="form-control" >
-                                                                <f:validator validatorId="passvalidator"/>
-                                                            </h:inputSecret>  
-                                                        </h:panelGroup> 
-                                                        <h:panelGroup layout="block" class="col-md-7">
-                                                            <h:commandButton class="btn btn-primary btn-cons" value="Cadastrar" action="#{usuarioController.save(usuarioController.usuario)}"/>
-                                                        </h:panelGroup>
-                                                    </h:form>
-                                                </h:panelGroup>
-                                         
-                                    </h:panelGroup>
-                                    <!--<a href="#" style="position: absolute; top: 205px; margin-top: -20px; right: 0px;" class="next"  id="prev" ></a>-->
-                                 </h:panelGroup>
-                                    
-                                
-                                
-                                
+                                <h:panelGroup layout="block" class="navbar-collapse collapse">
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><h:link outcome="index.xhtml" >Home</h:link></li>
+                                        <li><h:link outcome="index.xhtml" id="prev" >Acesso</h:link></li>
+                                        <li><h:link outcome="index.xhtml">O projeto</h:link> </li>
+                                        <li><h:outputLink value="http://www.spider.ufpa.br/" target="_blanck">Lab. Spider</h:outputLink></li>
+                                    </ul>
                                 </h:panelGroup>
-                        </h:panelGroup>
-                            
-                       </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>    
                     </h:panelGroup>
                 </h:panelGroup>
-            <h:panelGroup layout="block" class="section white footer">
-                <h:panelGroup layout="block" class="container">
-                        
-                    
-                    
+                <h:panelGroup layout="block" class="section black">
+                    <h:panelGroup layout="block" class="container">
+                        <h:panelGroup layout="block" class="p-t-80 p-b-65">
+                            <h:panelGroup layout="block" class="section">
+                                <h:panelGroup layout="block" class="col-md-12 feature-list">
+                                    <h:panelGroup layout="block" class=" p-t-80 p-b-65 col-md-7 col-lg-5">
+                                        <h2 class="text-center text-white m-b-20">Spider <b>Planning Poker</b>,
+                                            Ferramenta de apoio a estimativas utilizando o m&eacute;todo Planning Poker
+                                        </h2>
+                                        <h3>
+                                            Tenha uma base hist&oacute;rica de estimativas acess&iacute;vel e segura, sendo vis&iacute;vel de qualquer lugar.
+                                            <button class="btn  btn-success btn-large" id="next" >Registre-se Agora!</button>
+                                        </h3>
+
+                                    </h:panelGroup>
+
+
+                                    <h:panelGroup layout="block" class="p-t-80 p-b-65 col-md-5 col-lg-6">
+                                        <h:panelGroup layout="block" class="p-b-5">
+                                            <h:messages class="alert" showDetail="true" showSummary="false" >
+                                            </h:messages>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" id="formAccess">
+
+                                            <h:panelGroup layout="block">
+                                                <h:form class="p-l-30" acceptcharset="ISO-8859-1">    
+                                                    <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                                        <h:outputLabel for="email" value="Email: " class="form-label"/>
+                                                        <h:inputText id="email" class="form-control" value="#{usuarioController.usuario.email}"/>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
+                                                        <h:outputLabel for="password" value="Senha: " class="form-label"/>
+                                                        <h:inputSecret id="password"  class="form-control" value="#{usuarioController.usuario.senha}" />  
+                                                    </h:panelGroup> 
+                                                    <h:panelGroup layout="block" class="col-md-7">
+                                                        <h:commandButton class="btn btn-primary btn-cons" value="Entrar" action="#{usuarioController.authenticator(usuarioController.usuario)}"/>
+                                                    </h:panelGroup>
+                                                </h:form>
+                                            </h:panelGroup>
+                                            <h:panelGroup layout="block">
+                                                <h:form class="p-l-30" id="formRegister" acceptcharset="ISO-8859-1">  
+                                                    <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                                        <h:outputLabel for="nome" value="Nome " class="form-label"/>
+                                                        <h:inputText id="nome" class="form-control" value="#{usuarioController.usuario.nome}"/>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                                        <h:outputLabel for="email" value="Email: " class="form-label"/>
+                                                        <h:inputText id="email" class="form-control" value="#{usuarioController.usuario.email}"/>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" class="form-group col-md-6 col-lg-12">
+                                                        <h:outputLabel for="descricao" value="Descri&ccedil;&atilde;o:" class="form-label"/>
+                                                        <h:inputTextarea id="descricao" class="form-control" value="#{usuarioController.usuario.descricao}"/>
+                                                    </h:panelGroup>
+                                                    <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
+                                                        <h:outputLabel for="nickname" value="Apelido: " class="form-label"/>
+                                                        <h:inputText id="nickname"  class="form-control" value="#{usuarioController.usuario.nickname}" />  
+                                                    </h:panelGroup> 
+                                                    <h:panelGroup layout="block" class="col-lg-12">
+                                                        <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
+                                                        <h:outputLabel for="novasenha" value="Senha: " class="form-label"/>
+                                                        <h:inputSecret id="novasenha"  class="form-control" value="#{usuarioController.usuario.senha}" />  
+                                                    </h:panelGroup> 
+                                                    <h:panelGroup layout="block" class="form-group col-md-6 col-lg-6">
+                                                        <h:outputLabel for="confpassword" value="Confir. Senha: " class="form-label"/>
+                                                        <h:inputSecret id="confpassword"  class="form-control" >
+                                                            <f:validator validatorId="passvalidator"/>
+                                                        </h:inputSecret>  
+                                                    </h:panelGroup> 
+                                                    </h:panelGroup>
+                                                    
+                                                    <h:panelGroup layout="block" class="col-md-7">
+                                                        <h:commandButton class="btn btn-primary btn-cons" value="Cadastrar" action="#{usuarioController.save(usuarioController.usuario)}"/>
+                                                    </h:panelGroup>
+                                                </h:form>
+                                            </h:panelGroup>
+
+                                        </h:panelGroup>
+                                        <!--<a href="#" style="position: absolute; top: 205px; margin-top: -20px; right: 0px;" class="next"  id="prev" ></a>-->
+                                    </h:panelGroup>
+
+
+
+
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="section white footer">
+                    <h:panelGroup layout="block" class="container">
+
+
+
+                    </h:panelGroup>
                 </h:panelGroup>
             </h:panelGroup>
-            </h:panelGroup>
-    </h:body>
+        </h:body>
+
+    </f:view>
+
 </html>
 

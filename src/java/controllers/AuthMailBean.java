@@ -26,6 +26,7 @@ public class AuthMailBean {
     @EJB
     private IUsuario iUsuario;
     
+    
     public void setHashMail(String hashMail)
     {
         this.hashMail = hashMail;
