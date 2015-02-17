@@ -31,13 +31,11 @@
                                     </ui:include>
                                 </ui:fragment>
 
-<!--                                <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
+                                <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
                                     <ui:include src="/WEB-INF/templates/storyElement.xhtml">
                                         <ui:param name="estoria" value="#{estoria}"/>
                                     </ui:include>
                                 </ui:fragment>
-                            -->
-                            
                             </c:forEach>
                             
                             
@@ -156,7 +154,7 @@
         </div>
         
          <script type="text/javascript">
-             
+              
              var  rmPath = "#{param.rm}";
              var prPath = "#{param.pr}";
              var  host = "ws://localhost:8080/spiderPP/spiderSocketGame";
@@ -168,7 +166,8 @@
          </script>
         
         <h:outputScript library="styles" name="assets/js/gamescript.js"/> 
-        <h:outputScript library="styles" name="assets/js/game.js"/>
+        <!--<h:outputScript library="styles" name="assets/js/game.js"/>-->
+        <h:outputScript library="styles" name="assets/js/spider_socket.js"/>
         
         
     </ui:define>

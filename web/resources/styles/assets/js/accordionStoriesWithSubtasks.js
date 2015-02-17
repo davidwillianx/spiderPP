@@ -4,15 +4,15 @@
 
 
 function accordion(){
-    $('#description .reff').click(function(e){
-      var task =   $(this).parent();
+    $('#description').find('.reff').click(function(e){
+      var task = $(this).parents().eq(2);
           task.next('.stasks').slideToggle();
     });
 }
 
 function accordionSetUp(accordionStart){
-    $('#description .reff').each(function(index, rootStory){
-        var task = $(rootStory).parent();
+    $('#description').find('.reff').each(function(index, rootStory){
+        var task = $(rootStory).parents().eq(2);
         task.next('.stasks').slideUp();
     });
     
