@@ -59,10 +59,9 @@ function scrollToFinish()
     boxMessage.slimScroll({scrollTo: scrollFinish});
 }
 
-function sendMessage(socket, chatMessage)
+function bindMessage(message)
 {
-    socket.send(JSON.stringify(chatMessage));
-    appendMessageSent(chatMessage.message);
+    appendMessageSent(message);
     scrollToFinish();
     inputMessage.val(null).focus();
 }

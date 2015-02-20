@@ -14,7 +14,7 @@
          
         
         <div class="row" id="main">
-            <h:panelGroup layout="block" class="col-md-5" id="stories">
+            <h:panelGroup layout="block" class="col-md-5">
                 <h:messages></h:messages>
                 <div id="notice"></div>
                 <div class="row tiles-container  m-b-20 ">
@@ -22,7 +22,7 @@
                         <div class="tiles grey p-t-15 p-b-15 p-l-25 ">
                             <h4 class="text-black semi-bold">Estorias</h4>
                         </div>
-                        <div class="tiles white" id="description">
+                        <div class="tiles white" id="stories">
                             
                             <c:forEach items="#{estoriaController.parentEstorias}" var="estoria">
                                 <ui:fragment rendered="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}">
@@ -167,7 +167,9 @@
         
         <h:outputScript library="styles" name="assets/js/gamescript.js"/> 
         <!--<h:outputScript library="styles" name="assets/js/game.js"/>-->
+        <h:outputScript library="styles" name="assets/js/accordionStoriesWithSubtasks.js"/>
         <h:outputScript library="styles" name="assets/js/spider_socket.js"/>
+        
         
         
     </ui:define>

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package socket;   
-           
+            
 
 import java.io.IOException;  
 import java.io.Serializable;          
@@ -52,7 +52,7 @@ import models.entities.Mensagem;
 public class GameSocket implements Serializable {
    
     @Inject private MensagemBean mensagemBean;
-    @Inject private IEstimativa iEstimativa;   
+    @Inject private IEstimativa iEstimativa;     
     @Inject private IEstoria iEstoria;
           
     private Game game;  
@@ -64,11 +64,14 @@ public class GameSocket implements Serializable {
         try { 
             participant = new Participant(room, perfil, session);  
             if (participant.isScrumMaster()) {
+                
+                
                 Game game = new Game(participant);   
                 games.add(game);         
                 this.loadPreviousMessage(session);  
             } else { 
                 Game game = this.getGameByProject(participant.getIdProjeto());
+                
                 if (game instanceof Game) {
                     if (game.isOpen()) { 
                         Message message = new Message(Json.createObjectBuilder().add("type", "gameLocked").build());
@@ -95,6 +98,7 @@ public class GameSocket implements Serializable {
               
               
             if ("chatMessage".equals(message.getJson().getString("type"))) {
+                
                 mensagemBean.save(new ChatMessage(message.getJson()));
                 game.sendBroadcastMessageWithoutSender(session, message);
             }                
@@ -122,6 +126,7 @@ public class GameSocket implements Serializable {
                     
             if("story".equals(message.getJson().getString("type"))) 
             { 
+                System.err.println(" >>>>>>>>>>>>>>>>funcionando para recber");
                 if(game.getParticipant(session).isScrumMaster())
                     game.sendBroadcastMessageWithoutSender(session, message);  
             }     

@@ -23,6 +23,7 @@ function socketStart(){
                var rateValues = [0,2,5,8,13,20];
                
                spiderSocket.onopen = function(){
+                   console.log('>'+  spiderSocket.readyState);
                    //IF estimativa recebe tempo e as estimativas
                };
                
@@ -32,6 +33,7 @@ function socketStart(){
                    
                spiderSocket.onmessage = function(event)
                {
+                   console.log('>>>>>>'+  spiderSocket.readyState);
                    message = JSON.parse(event.data);
                    
                    
