@@ -7,7 +7,7 @@
 
 $(document).ready(function(){
     
-    
+    disableCardArea();
     accordionSetUp(accordion);
     
     gameSocket.connect();
@@ -42,27 +42,27 @@ $(document).ready(function(){
     });
     
     $('body').on('click','.activity',function(event){
-        story.htmlElement.circle = $(this);
-        story.htmlElement.line = $(this).parents().eq(1);
         
+        story.set($(this).parents().eq(1));
         
             if(story.isRoot())
             {
-                story.htmlElement.circle.children('.tiles').addClass('green');
+                story.setGreenStatus();
                 
-                
-                accordionElement(story.htmlElement.line,
+                accordionElement(story.htmlElement.row,
                 story.htmlElement.circle.popover({
                     content:'Esta estoria ja foi divida, escolha uma de suas subtarefas para estimar',
                     title:'Só pra lembrar... ;)'
                 }));
-                story.htmlElement.circle.parents().eq(1).attr('style','background-color:aliceblue');
+
+                story.setAliceBlueStatus();
                 return;
             }
-            story.htmlElement.circle.children('.tiles').addClass('green');
-            story.htmlElement.line.attr('style','background-color:aliceblue');
+            story.setGreenStatus();
+            story.setAliceBlueStatus();
+
             console.log('Preparando para enviar');
-            gameSocket.send({"id":story.htmlElement.line.attr('id'),"type":"story"});
+            gameSocket.send({"id":story.htmlElement.row.attr('id'),"type":"taskSelected"});
     });
 });
 
@@ -81,8 +81,9 @@ var gameSocket = {
           set: function(messageComming){this.data = messageComming;},
           launch: function(){
               try{
+                  console.log('>>'+this.data.type);
                   window[this.data.type](this.data);
-              }catch(error){console.log('Error at reflection clause');}
+              }catch(error){console.log('Error at reflection clause ' + error.message);}
           }
       },
 
@@ -100,21 +101,42 @@ var gameSocket = {
           var messageToSend = data;
           this.connection.send(JSON.stringify(messageToSend));
       }
-      
 };
 
 var story = {
     htmlElement:{
       circle:"",
-      line:""
+      row:""
     },
     isRoot: function(){
-        if(this.htmlElement.line.attr('parent') === 'root'){
+        if(this.htmlElement.row.attr('parent') === 'root'){
             return true;
         }
         return false;
+    },
+    set: function(jqStoryHtml){
+        if(this.htmlElement.row.length !== 0){
+            this.setBlueStatus();
+            this.setWhiteStatus();
+        }
+        this.htmlElement.circle = jqStoryHtml.find('.activity');
+        this.htmlElement.row = jqStoryHtml;
+    },
+    setGreenStatus: function(){
+        this.htmlElement.circle.children('.tiles').removeClass('blue').addClass('green');
+    },
+    setBlueStatus:function(){
+        this.htmlElement.circle.children('.tiles').removeClass('green').addClass('blue');
+    },
+     setAliceBlueStatus: function(){
+        this.htmlElement.row.attr('style','background-color:aliceblue');
+    },
+    setWhiteStatus: function(){
+        this.htmlElement.row.attr('style','background-color:white');
     }
 };
+
+
 
 function chatMessage(data) {
     
@@ -124,5 +146,14 @@ function chatMessage(data) {
         appendMessageReceived(data.message);
     scrollToFinish();
 }
+
+//Waiting for subtaks case ;D
+function taskSelected(data){
+    story.set($('#'+data.id));
+    story.setGreenStatus();
+    story.setAliceBlueStatus();
+    
+}
+
 
 

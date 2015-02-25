@@ -7,9 +7,9 @@ package socket;
             
 
 import java.io.IOException;  
-import java.io.Serializable;          
+import java.io.Serializable;            
 import java.text.DateFormat; 
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat; 
 import java.util.ArrayList;             
 import java.util.Collection;
 import java.util.Collections;                   
@@ -87,7 +87,7 @@ public class GameSocket implements Serializable {
             //Call OnError 
             System.err.println("Do something" + e.getMessage());
         }  
-    }    
+    }     
        
     //BAM BAM BAM REFACTORY DETECTED PAY ATTENTION SR 
     @OnMessage
@@ -95,7 +95,7 @@ public class GameSocket implements Serializable {
         try {  
     
               Game game  = this.getGame(session);
-              
+                 
               
             if ("chatMessage".equals(message.getJson().getString("type"))) {
                 
@@ -123,8 +123,8 @@ public class GameSocket implements Serializable {
                         game.sendBroadcastMessageWithoutSender(session, message);
                 }    
             } 
-                    
-            if("story".equals(message.getJson().getString("type"))) 
+                            
+            if("taskSelected".equals(message.getJson().getString("type"))) 
             { 
                 System.err.println(" >>>>>>>>>>>>>>>>funcionando para recber");
                 if(game.getParticipant(session).isScrumMaster())
@@ -239,8 +239,8 @@ public class GameSocket implements Serializable {
                     .build()); 
             
             session.getBasicRemote().sendObject(message);       
-        } 
-    }
+        }       
+     }
 
     private Game getGame(Session userSession) { 
         for (Game game : games) {
@@ -251,21 +251,21 @@ public class GameSocket implements Serializable {
         //Possivelmente trocado por uma exception (NotFoundException)
         return null;
     }
-    
+      
     private Game getGameByProject(int idProjeto)
     {
          for (Game game : games) {
             if (game.getIdProjeto() == idProjeto) {
-                return game;
-            }
-        }  
+                return game;         
+            } 
+        }   
         //Possivelmente trocado por uma exception (NotFoundException)
         return null;
-    } 
+    }      
         
       
     private JsonObject buildJsonSubtaskList(Estoria estoriaSubtasksOwner) {
-
+  
         JsonArrayBuilder storiesJson = Json.createArrayBuilder();
 
         for (Estoria estoria : estoriaSubtasksOwner.getSubtasks()) {
@@ -278,6 +278,6 @@ public class GameSocket implements Serializable {
         }
 
         return Json.createObjectBuilder().add("stories", storiesJson).build();
-    }
+    }  
 }
    

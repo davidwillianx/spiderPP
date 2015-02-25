@@ -144,13 +144,13 @@ function showCardsSelected()
 
 function disableCardArea()
 { 
-    $("#cardSection").block({message:"aguarde o inicio da rodada"});
+    $("#deck-section").block({message:"aguarde o inicio da rodada"});
     
 }
 
 function enableCardArea()
 {
-     $("#cardSection").unblock();
+     $("#deck-section").unblock();
 }
 function buildCurrentDateFormatDMY()
 {
