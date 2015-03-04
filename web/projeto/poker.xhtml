@@ -9,8 +9,8 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="content-dashboard" >
-        <h:outputScript library="styles" name="assets/plugins/jquery-block-ui/jqueryblockui.js"/>
-        <h:outputScript library="styles" name="assets/js/jquery.countdown360.js"/>
+        
+        
          
         
         <div class="row" id="main">
@@ -53,9 +53,17 @@
                                 <div class="">
                                     <h4 class="text-black semi-bold">Estimativas</h4>
                                 </div>
-                                <h:panelGroup layout="block" class="" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
-                                    <a href="#" id="gameStart" class="btn btn-primary " disabled="">Iniciar</a>
-                                </h:panelGroup>
+                                <div class="row m-l-5 m-r-10">
+                                    <h:panelGroup layout="block" class="col-md-2" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                                        <a href="#" id="game-start" class="btn btn-primary " disabled="">Iniciar</a>
+                                    </h:panelGroup>
+                                    
+                                    <!-- Resize doesnt work -->
+                                    <div class="col-md-3">
+                                        <div id="countdown"></div>
+                                    </div>
+                                </div>
+                                
                             </div>
 
                         </div>
@@ -165,8 +173,9 @@
              
          </script>
         
+        <h:outputScript library="styles" name="assets/plugins/jquery-block-ui/jqueryblockui.js"/>
+        <h:outputScript library="styles" name="assets/plugins/countdown360/jquery.countdown360.js"/>
         <h:outputScript library="styles" name="assets/js/gamescript.js"/> 
-        <!--<h:outputScript library="styles" name="assets/js/game.js"/>-->
         <h:outputScript library="styles" name="assets/js/accordionStoriesWithSubtasks.js"/>
         <h:outputScript library="styles" name="assets/js/spider_socket.js"/>
         

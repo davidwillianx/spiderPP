@@ -35,7 +35,7 @@ $(document).ready(function(){
                 "idUsuario": idUsuario,
                 "idProjeto": idProjeto,
                 "author": author,
-                "message": $(this).val(),
+                "message": $(this).val(), 
                 "type": "chatMessage"
            },bindMessage($(this).val()));
         }
@@ -63,6 +63,19 @@ $(document).ready(function(){
 
             console.log('Preparando para enviar');
             gameSocket.send({"id":story.htmlElement.row.attr('id'),"type":"taskSelected"});
+    });
+    
+    $('#game-start').click(function(e){
+        $("#countdown").countdown360({ 
+              radius:20.5,
+              label: false,
+              seconds: 20,
+              onComplete: function(){
+                  showCardsSelected();
+                  disableCardArea();
+                  showFormRate()
+              }
+        });
     });
 });
 
@@ -152,8 +165,5 @@ function taskSelected(data){
     story.set($('#'+data.id));
     story.setGreenStatus();
     story.setAliceBlueStatus();
-    
 }
-
-
 
