@@ -6,7 +6,7 @@
 package socket;   
              
 
-import java.io.IOException;  
+import java.io.IOException;   
 import java.io.Serializable;            
 import java.text.DateFormat; 
 import java.text.SimpleDateFormat;  
@@ -51,7 +51,7 @@ import models.entities.Mensagem;
 )  
 public class GameSocket implements Serializable {
    
-    @Inject private MensagemBean mensagemBean;
+    @Inject private MensagemBean mensagemBean;   
     @Inject private IEstimativa iEstimativa;     
     @Inject private IEstoria iEstoria;
           
@@ -93,22 +93,22 @@ public class GameSocket implements Serializable {
     @OnMessage
     public void OnMessage(Session session, Message message) {
         try {  
-    
+     
               Game game  = this.getGame(session);
-                 
-              
+                   
+                                  
             if ("chatMessage".equals(message.getJson().getString("type"))) {
                 
                 mensagemBean.save(new ChatMessage(message.getJson()));
                 game.sendBroadcastMessageWithoutSender(session, message);
             }                
-      
-            if ("gameStart".equals(message.getJson().getString("type"))) { 
+       
+            if ("round".equals(message.getJson().getString("type"))) { 
                 game.start();
                 game.sendBroadcastMessage(session,message); 
             }   
-                 
-            if("cardSelected".equals(message.getJson().getString("type")))
+                   
+            if("card".equals(message.getJson().getString("type")))
             {
                 //TODO pensando sobre sim ou não de armazenar esta informação no servidor
                 //Game game = this.getGame(session); 

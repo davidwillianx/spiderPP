@@ -127,6 +127,10 @@ function socketStart(){
                    }
                };
                
+               
+               
+               
+               
                $("#gameStart").click(function(e){
                    e.preventDefault();
                       gameStart = {
@@ -136,6 +140,16 @@ function socketStart(){
                    
                    spiderSocket.send(JSON.stringify(gameStart));
                });
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
                
                $('.opt-card ').click(function(e){
                   var card = {
