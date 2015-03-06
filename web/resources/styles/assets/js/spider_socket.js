@@ -173,25 +173,16 @@ var story = {
 
 
 function showCardsResult(){
-    var result = "";
+    var otherChoice = "";
     
     for (var index = 0; index < gameSocket.cards.anotherUsers.length; index++) {
-        result += buildCardSelected(gameSocket.cards.anotherUsers[index]);
+        otherChoice += buildCardSelected(gameSocket.cards.anotherUsers[index]);
     }
 
-    $('#row-selected').html(' ');
-    $(result).hide().appendTo('#row-selected').fadeIn(999);
+    $('#other-choice').html(' ');
+    $(otherChoice).hide().appendTo('#other-choice').fadeIn(999);
     
 }
-
-
-
-
-
-
-
-
-
 
 //SOCKET EVENTS
 
@@ -211,15 +202,17 @@ function round(data){
         return;
     }
     enableCardArea();
-    
+    $('#other-choice, #my-choice').html('');
+    $('.countdown').html('<div id="countdown"></div>');
     $("#countdown").countdown360({ 
         radius:20.5,
         label: false,
         seconds: 20,
+        fontColor: '#8ac575',
         onComplete: function(){
             disableCardArea();
             showCardsResult();
-            $('#countdown360_countdown').fadeOut().remove();
+            $('#countdown').fadeOut().remove();
        }
     });
 }
@@ -238,7 +231,7 @@ function card(otherUserCard){
     }
     gameSocket.cards.anotherUsers.push(otherUserCard);
     var cardBacking = buildCardHidden(otherUserCard.userName);
-    $(cardBacking).hide().appendTo('#row-selected').fadeIn(999);
+    $(cardBacking).hide().appendTo('#other-choice').fadeIn(999);
 }
 
 //Waiting for subtaks case ;D

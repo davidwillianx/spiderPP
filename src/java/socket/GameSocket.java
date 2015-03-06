@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package socket;   
-             
+                  
 
-import java.io.IOException;   
-import java.io.Serializable;            
-import java.text.DateFormat; 
+import java.io.IOException;     
+import java.io.Serializable;              
+import java.text.DateFormat;   
 import java.text.SimpleDateFormat;  
 import java.util.ArrayList;             
 import java.util.Collection;
@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import java.util.List;  
-import java.util.logging.Level;   
+import java.util.logging.Level;    
 import java.util.logging.Logger;      
 import javax.inject.Inject;    
 import javax.json.Json;               

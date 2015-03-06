@@ -16,7 +16,7 @@ $(document).ready(function() {
     boxMessage = $('.chat-messages');
     chatScrollStart();
     inputMessage.focus();
-    rowSelected = $('#row-selected');
+    rowSelected = $('#users-choices');
 });
 
 
@@ -97,7 +97,7 @@ function myCardSelection(card)
     userCardSelected = card;
     
     if ($('#myOption').length === 0)
-        rowSelected.prepend(buildCardSelected(card));
+        rowSelected.children('#my-choice').prepend(buildCardSelected(card));
     else
         $('#myOption #myOptionValue').html(card.value);
 }
