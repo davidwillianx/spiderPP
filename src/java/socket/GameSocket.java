@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package socket;   
-                  
-
+                     
+ 
 import java.io.IOException;     
 import java.io.Serializable;              
 import java.text.DateFormat;   
@@ -17,7 +17,7 @@ import java.util.Date;
 
 import java.util.List;  
 import java.util.logging.Level;    
-import java.util.logging.Logger;      
+import java.util.logging.Logger;       
 import javax.inject.Inject;    
 import javax.json.Json;               
 import javax.json.JsonArray;
@@ -27,7 +27,7 @@ import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
 import javax.websocket.EncodeException;  
-import javax.websocket.OnClose;    
+import javax.websocket.OnClose;        
 import javax.websocket.OnMessage; 
 import javax.websocket.OnOpen; 
 import javax.websocket.Session; 
@@ -107,7 +107,7 @@ public class GameSocket implements Serializable {
                 game.start();
                 game.sendBroadcastMessage(session,message); 
             }   
-                   
+                    
             if("card".equals(message.getJson().getString("type")))
             {
                 //TODO pensando sobre sim ou não de armazenar esta informação no servidor
@@ -121,21 +121,22 @@ public class GameSocket implements Serializable {
                 if(game.getParticipant(session).isScrumMaster()){
                         game.closeRound();
                         game.sendBroadcastMessageWithoutSender(session, message);
-                }    
+                }     
             } 
-                            
-            if("taskSelected".equals(message.getJson().getString("type"))) 
+                               
+            if("taskSelected".equals(message.getJson().getString("type")))  
             { 
-                System.err.println(" >>>>>>>>>>>>>>>>funcionando para recber");
+                
                 if(game.getParticipant(session).isScrumMaster())
                     game.sendBroadcastMessageWithoutSender(session, message);  
             }     
                
             if("rate".equals(message.getJson().getString("type"))){   
+                
                     Estimativa estimativa = new Estimativa(message.getJson());
                     iEstimativa.persistEstimativa(estimativa.getStoryId()
                                                     ,estimativa.getScore());  
-                     
+                            
                     game.sendBroadcastMessage(session, message);       
             }     
             
