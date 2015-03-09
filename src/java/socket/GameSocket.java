@@ -115,16 +115,16 @@ public class GameSocket implements Serializable {
                 //game.addCard(message, session);
                 game.sendBroadcastMessageWithoutSender(session, message);  
             } 
-                 
+                   
             if("gameUnlock".equals(message.getJson().getString("type")))
             {
                 if(game.getParticipant(session).isScrumMaster()){
                         game.closeRound();
                         game.sendBroadcastMessageWithoutSender(session, message);
-                }     
-            } 
-                               
-            if("taskSelected".equals(message.getJson().getString("type")))  
+                }                
+            }     
+                                 
+            if("taskSelected".equals(message.getJson().getString("type")))   
             { 
                 
                 if(game.getParticipant(session).isScrumMaster())

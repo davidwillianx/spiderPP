@@ -89,7 +89,12 @@ $(document).ready(function(){
     
     
     $('body').on('click','#div-est',function(){
-        
+
+        showModalDialog(story.formToDivide+story.formToDivide,'<h4>Inclua estorias</h4>\n\
+                                    <button class="btn btn btn-primary" \n\
+                                    id="more-subtasks">+add</button> \n\
+                                    <button class="btn btn btn-primary" \n\
+                                    id="save-subtasks">salvar</button>');
     });
     
     $('body').on('click','#set-rate',function(){
@@ -115,6 +120,50 @@ $(document).ready(function(){
                 ,"storyId": story.getId()
             });
     });
+    
+    $('body').on('click','#more-subtasks',function(){
+         $(story.formToDivide).hide()
+                .appendTo($('#modal-dialog .modal-dialog \n\
+                          .modal-content .modal-header .modal-body'))
+                .fadeIn(999);
+    });
+    
+     
+    
+    $('body').on('click', '#save-subtasks', function () {
+
+        var modalElementFormCollection = $('#modal-dialog .modal-dialog .modal-content .modal-header .modal-body').children();
+        var formStoryAttibutes = [];
+        var task = {
+            "type": "subtasks",
+            "storyId": story.getId(),
+            "subtasks": []
+        };
+
+        $.each(modalElementFormCollection, function (index, elementForm) {
+            formStoryAttibutes.push($(elementForm).children().find('.form-control'));
+        });
+
+        $.each(formStoryAttibutes, function (index, formStoryAttribute) {
+            if (formStoryAttribute[0].value !== 0) {
+                if (formStoryAttribute[1].value !== 0) {
+                    var subtask = {
+                        "name": formStoryAttribute[0].value,
+                        "description": formStoryAttribute[1].value,
+                        "storyId": story.getId(),
+                        "projectId": idProjeto,
+                        "type": "subtask",
+                        "creationDate": new Date()
+                    };
+                    task.subtasks.push(subtask);
+                }
+            }
+        });
+        gameSocket.send(task);
+        
+    });
+
+    
     
     
     
@@ -168,6 +217,15 @@ var story = {
       circle:"",
       row:""
     },
+    formToDivide:
+           '<div class="grid" ><div class="row form-row">\n\
+            <div class="col-md-8">\n\
+            <input type="text" class="form-control" placeholder="Nome para estoria">\n\
+            </div></div><div class="row form-row">\n\
+            <div class="col-md-9"><textarea  name="descricao"\n\
+            class="form-control" style="width:34em;height:10em;"\n\
+            placeholder="descreva a atividade">\n\
+            </textarea></div></div></div>',
     getId:function(){
         return this.htmlElement.row.attr('id');
     },
@@ -308,7 +366,19 @@ function rate(data){
                    story.htmlElement.row.find('.form-rate').html('');
     });
 }
-
+            
+function subtasks(newSubtasks){
+    story.htmlElement.row.find('.fa').removeClass('.fa-check-circle').addClass('fa-sitemap');
+    story.htmlElement.row.attr('parent','root');
+    
+    $(newSubtasks.subtasks).each(function(indexList,subtask){
+        appendSubtask(subtask,newSubtasks.reference);
+    });
+    
+    showModalDialog('Divisão Realizada','Sucesso !! ');
+    $('#rate-box').remove();
+    
+}
 //Waiting for subtaks case ;D
 function taskSelected(data){
     story.set($('#'+data.id));
