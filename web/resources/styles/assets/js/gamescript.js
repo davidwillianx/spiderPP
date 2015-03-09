@@ -173,7 +173,9 @@ function appendSubtask(subtask,reference){
         '<div class="post overlap-left-10">'+
             '<div class=" user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="" id="'+subtask.storyId+'" data-original-title="Selecione estoria clicando aqui">'+
                 '<div class="user-profile-pic-2x tiles blue white-border">'+
-                    '<div class="text-white inherit-size p-t-10 p-l-15">T</div>'+
+                    '<div class="text-white inherit-size p-t-10 p-l-15">\n\
+                      <i class="fa fa-check-circle"/> \n\
+                    </div>'+
                 '</div>'+
             '</div>'+
                 
@@ -195,9 +197,9 @@ function appendSubtask(subtask,reference){
             '<div class="clearfix"></div>'+
         '</div></div>';
 
-     var jqTask = $('#'+subtask.rootId).parent().parent();
+     var jqTask = $('#'+subtask.rootId).next('.stasks');
      
-    $(htmlTaskTemplate).hide().insertAfter(jqTask).fadeIn(999,function(){
+    $(htmlTaskTemplate).hide().appendTo(jqTask).fadeIn(999,function(){
             if(reference === "sm"){
                 var jqSubtask = $('#'+subtask.storyId);
                 jqSubtask.addClass("activity");

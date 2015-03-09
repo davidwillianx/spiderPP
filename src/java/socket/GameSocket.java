@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package socket;   
+package socket;      
                      
- 
-import java.io.IOException;     
+   
+import java.io.IOException;         
 import java.io.Serializable;              
-import java.text.DateFormat;   
+import java.text.DateFormat;     
 import java.text.SimpleDateFormat;  
 import java.util.ArrayList;             
 import java.util.Collection;
 import java.util.Collections;                   
-import java.util.Date;
+import java.util.Date;  
 
 import java.util.List;  
 import java.util.logging.Level;    
-import java.util.logging.Logger;       
+import java.util.logging.Logger;         
 import javax.inject.Inject;    
 import javax.json.Json;               
 import javax.json.JsonArray;
@@ -25,7 +25,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
-
+ 
 import javax.websocket.EncodeException;  
 import javax.websocket.OnClose;        
 import javax.websocket.OnMessage; 
@@ -39,7 +39,7 @@ import models.ejbs.interfaces.IEstimativa;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Mensagem;     
-
+   
    
 /**    
  *

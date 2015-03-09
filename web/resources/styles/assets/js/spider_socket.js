@@ -360,7 +360,8 @@ function card(otherUserCard){
 
 
 function rate(data){
-    showModalDialog('Registro da estimativa realizado  <span class=" badge badge-important">'+ data.score+'</span>', 'Sucesso');
+    showModalDialog('Registro da estimativa realizado \n\
+             <span class=" badge badge-important">'+ data.score+'</span>', 'Sucesso');
     var newRateValue =  $('<span class=" badge ">'+data.score+'</span>');
     newRateValue.appendTo(story.htmlElement.row.find('.rate-box')).fadeIn(999,function(){
                    story.htmlElement.row.find('.form-rate').html('');
@@ -371,12 +372,22 @@ function subtasks(newSubtasks){
     story.htmlElement.row.find('.fa').removeClass('.fa-check-circle').addClass('fa-sitemap');
     story.htmlElement.row.attr('parent','root');
     
+    if(story.htmlElement.row.next('.stasks').length === 0 )
+         $('<div class="stasks" style="display: block"></div>').insertAfter(story.htmlElement.row);
+     
     $(newSubtasks.subtasks).each(function(indexList,subtask){
-        appendSubtask(subtask,newSubtasks.reference);
+       appendSubtask(subtask,newSubtasks.reference);
     });
     
+    
     showModalDialog('Divisão Realizada','Sucesso !! ');
-    $('#rate-box').remove();
+    $('#rate-option').remove();
+    
+    var subtaskToggle = story.htmlElement.row.find('.subtask-toggle');
+    if(subtaskToggle.length === 0){
+      story.htmlElement.row.children('.post').prepend('<div class="p-b-5"><a class="reff " href="javascript:;"> <i class="fa fa-2x fa-level-down"></i> <span class="badge animated bounceIn">'+newSubtasks.subtasks.length+'</span> </a> </div>');
+        accordionElement(story.htmlElement.row);
+    }
     
 }
 //Waiting for subtaks case ;D

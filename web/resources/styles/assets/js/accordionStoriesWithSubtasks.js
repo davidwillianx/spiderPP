@@ -4,10 +4,14 @@
 
 
 function accordion(){
-    $('#stories').find('.reff').click(function(e){
-      var task = $(this).parents().eq(2);
-          task.next('.stasks').slideToggle();
+    $('body').on('click','.reff',function(){
+        var task = $(this).parents().eq(2);
+        task.next('.stasks').slideToggle();
     });
+    
+//    $('#stories').find('.reff').click(function(e){
+    
+//    });
 }
 
 function accordionSetUp(accordionStart){
