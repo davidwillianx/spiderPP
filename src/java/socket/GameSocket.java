@@ -25,7 +25,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
- 
+  
 import javax.websocket.EncodeException;  
 import javax.websocket.OnClose;        
 import javax.websocket.OnMessage; 
@@ -51,9 +51,9 @@ import models.entities.Mensagem;
 )  
 public class GameSocket implements Serializable {
    
-    @Inject private MensagemBean mensagemBean;   
+    @Inject private MensagemBean mensagemBean;          
     @Inject private IEstimativa iEstimativa;     
-    @Inject private IEstoria iEstoria;
+    @Inject private IEstoria iEstoria; 
           
     private Game game;  
     private static final List<Game> games = Collections.synchronizedList(new ArrayList<Game>());

@@ -393,7 +393,12 @@ function subtasks(newSubtasks){
 //Waiting for subtaks case ;D
 function taskSelected(data){
     story.set($('#'+data.id));
+    
+    if(story.htmlElement.row.parent().is('.stasks'))
+        accordioUpElement(story.htmlElement.row.parent().prev());
+    
     story.setGreenStatus();
     story.setAliceBlueStatus();
+    
 }
 

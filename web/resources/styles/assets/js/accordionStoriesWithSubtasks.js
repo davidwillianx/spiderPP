@@ -27,5 +27,9 @@ function accordionElement(storyHtml){
     storyHtml.next('.stasks').slideToggle();
 }
 
+function accordioUpElement(storyHtml){
+    
+    storyHtml.next('.stasks').slideDown();
+}
 
 
