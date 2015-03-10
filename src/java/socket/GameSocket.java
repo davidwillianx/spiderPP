@@ -142,20 +142,13 @@ public class GameSocket implements Serializable {
             
             if("subtask".equals(message.getJson().getString("type"))){
                     
-                    models.entities.Estoria estoriaSubtasksOwner =  iEstoria.selectEstoriaByIdS(Integer.parseInt(message.getJson().getString("storyId")));
+                    models.entities.Estoria estoriaSubtasksOwner =  iEstoria.selectEstoriaByIdS(Integer.parseInt(message.getJson().getString("storyId")));                                                                                                                  
                     socket.Estoria storySocket = new socket.Estoria(message.getJson());
                      
                     Estoria subtask =  storySocket.buildEstoriaEntity();
-                     
+                                                                                                                                                                                                                                        
                     iEstoria.persistSubtask(estoriaSubtasksOwner.getEstoriaPK().getId(),subtask);
-                    
-                    Message notice = new Message(Json.createObjectBuilder()
-                            .add("type", "notice") 
-                            .add("message", "divisao realizada com sucesso")
-                            .add("kind", "rateSuccess")
-                            .build());  
-                    
-                    game.sendBroadcastMessage(session, notice);  
+                                                                                                                                                                                                                                                                                                                                                                            
                     game.sendBroadcastMessage(session, new Message(buildJsonSubtaskList(estoriaSubtasksOwner))); 
             }  
                

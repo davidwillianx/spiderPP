@@ -414,8 +414,15 @@ function subtasks(newSubtasks){
                           
         accordionElement(story.htmlElement.row);
     }
-    
 }
+
+//I dont need notice yet, it's just to remeber ;)
+//function notice(message){
+//    showModalDialog(message.message,'Informação');
+//}
+
+
+
 //Waiting for subtaks case ;D
 function taskSelected(data){
     console.log('something wrong');
