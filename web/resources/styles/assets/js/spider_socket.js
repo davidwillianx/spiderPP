@@ -67,6 +67,7 @@ $(document).ready(function(){
     
     $('#game-start').click(function(e){
          e.preventDefault();
+         
          gameSocket.cards.anotherUsers.splice(0,gameSocket.cards.anotherUsers.length);
          
         if(!story.isSetted()){
@@ -153,7 +154,7 @@ $(document).ready(function(){
                         "storyId": story.getId(),
                         "projectId": idProjeto,
                         "type": "subtask",
-                        "creationDate": new Date()
+                        "creationDate": ""
                     };
                     task.subtasks.push(subtask);
                 }
@@ -229,6 +230,9 @@ var story = {
     getId:function(){
         return this.htmlElement.row.attr('id');
     },
+    getRoot:function(){
+      return this.htmlElement.row.parent().prev();
+    },
     isRoot: function(){
         if(this.htmlElement.row.attr('parent') === 'root'){
             return true;
@@ -241,6 +245,11 @@ var story = {
         }
         
         return true;
+    },
+    isSubtask: function(){
+        if(this.htmlElement.row.parent().is('.stasks'))
+            return true;
+        return false;
     },
     set: function(jqStoryHtml){
         if(this.isSetted()){
@@ -279,13 +288,22 @@ function showCardsResult(){
 }
 
 function showStoryActions(){
-    $('<div id="rate-option"><button \n\
-        id="set-rate" class="btn btn-success \n\
-        btn-small">est</button>\n\
-        <button id="div-est" class="btn \n\
-        btn-warning btn-small">div</button><div>').hide()
-        .appendTo($(story.htmlElement.row.find('.form-rate')))
-        .fadeIn(999);
+    var rateOption  = $('<div id="rate-option"></div>').hide()
+                .appendTo(story.htmlElement.row.find('.form-rate'));
+    
+    var htmlRateButton = '<div id="rate-option"><button \n\
+                             id="set-rate" class="btn btn-success\n\
+                           btn-small">est</button>';
+    var htmlDivisionButton = '<button id="div-est" class="btn\n\
+                                 btn-warning btn-small">div</button><div>';
+    
+    if(story.isSubtask()){
+        rateOption.append(htmlRateButton).fadeIn(999);
+        return;
+    }
+    
+    rateOption.append(htmlRateButton+htmlDivisionButton).fadeIn(999);
+
 }
 
 function showModalDialog(message,head){
@@ -325,6 +343,7 @@ function round(data){
         return;
     }
     enableCardArea();
+    var startButton =  $('#game-start').attr('disabled','disabled');
     $('#other-choice, #my-choice').html('');
     $('.countdown').html('<div id="countdown"></div>');
     $("#countdown").countdown360({ 
@@ -336,6 +355,7 @@ function round(data){
             disableCardArea();
             showCardsResult();
             $('#countdown').fadeOut().remove();
+            startButton.attr('disabled',false);
             showStoryActions();
        }
     });
@@ -385,17 +405,24 @@ function subtasks(newSubtasks){
     
     var subtaskToggle = story.htmlElement.row.find('.subtask-toggle');
     if(subtaskToggle.length === 0){
-      story.htmlElement.row.children('.post').prepend('<div class="p-b-5"><a class="reff " href="javascript:;"> <i class="fa fa-2x fa-level-down"></i> <span class="badge animated bounceIn">'+newSubtasks.subtasks.length+'</span> </a> </div>');
+      story.htmlElement.row.children('.post')
+                .prepend('<div class="p-b-5"><a class="reff \n\
+                          href="javascript:;"> <i class="fa fa-2x \n\
+                          fa-level-down"></i> <span class="badge \n\
+                          animated bounceIn">'
+                          +newSubtasks.subtasks.length+'</span> </a> </div>');
+                          
         accordionElement(story.htmlElement.row);
     }
     
 }
 //Waiting for subtaks case ;D
 function taskSelected(data){
+    console.log('something wrong');
     story.set($('#'+data.id));
     
-    if(story.htmlElement.row.parent().is('.stasks'))
-        accordioUpElement(story.htmlElement.row.parent().prev());
+    if(story.isSubtask())
+        accordioUpElement(story.getRoot());
     
     story.setGreenStatus();
     story.setAliceBlueStatus();

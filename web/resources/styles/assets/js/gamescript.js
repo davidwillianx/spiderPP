@@ -82,14 +82,22 @@ function buildCardHidden(name)
 
 function buildCardSelected(card)
 {
+    var playerName  = card.userName;
+    
+    if(card.userId === idUsuario)
+        playerName = 'Eu';
+    
    return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5">'
 
             + '<div class="tiles green text-center " id="myOption">'
             + '<h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10" id="myOptionValue">' + card.value + '</h2>'
-            + '<div class="tiles-title blend p-b-25 text-white"> '+card.userName+'</div>'
+            + '<div class="tiles-title blend p-b-25 text-white"> '+
+            playerName
+            +'</div>'
             + '<div class="clearfix"></div>'
             + '</div>'
             + '</div>';
+    
     
 }
 function myCardSelection(card)
@@ -152,23 +160,11 @@ function enableCardArea()
 {
      $("#deck-section").unblock();
 }
-function buildCurrentDateFormatDMY()
-{
-    var today  =  new Date();
-    var year =  today.getFullYear();
-    var month =  today.getMonth()+1;
-    var day =  today.getDay();
-     
-     if(day < 10)
-         day ='0'+day;
-     if (month <10)
-         month = '0'+month;
-     return day+'/'+month+'/'+year;
-}
+
 
 function appendSubtask(subtask,reference){
     
-    console.log('im in  >> ');
+
     var htmlTaskTemplate = '<div class="p-t-20 p-b-15 b-b b-grey " parent="root:'+subtask.rootId+'" >'+
         '<div class="post overlap-left-10">'+
             '<div class=" user-profile-pic-wrapper" data-toggle="tooltip" data-placement="right" title="" id="'+subtask.storyId+'" data-original-title="Selecione estoria clicando aqui">'+
@@ -182,7 +178,7 @@ function appendSubtask(subtask,reference){
             '<div class="info-wrapper small-width">'+
                 '<div class="info text-black ">'+
                     '<h4>'+subtask.name+'</h4> <p>'+subtask.description+'</p>'+
-                    '<p class="muted small-text">'+buildCurrentDateFormatDMY()+'</p>'+
+                    '<p class="muted small-text">'+subtask.creationDate+'</p>'+
                 '</div>'+
                 '<div class="clearfix"></div>'+
             '</div>'+

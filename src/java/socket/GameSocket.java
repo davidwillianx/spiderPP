@@ -44,7 +44,7 @@ import models.entities.Mensagem;
 /**    
  *
  * @author smartphonnee  
- */
+ */         
 
 @ServerEndpoint(value = "/spiderSocketGame/{room}/{perfil}",
         encoders = {MessageEncoder.class}, decoders = {MessageDecoder.class}
@@ -53,7 +53,7 @@ public class GameSocket implements Serializable {
    
     @Inject private MensagemBean mensagemBean;          
     @Inject private IEstimativa iEstimativa;     
-    @Inject private IEstoria iEstoria; 
+    @Inject private IEstoria iEstoria;      
           
     private Game game;  
     private static final List<Game> games = Collections.synchronizedList(new ArrayList<Game>());

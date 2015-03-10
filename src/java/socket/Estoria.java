@@ -28,16 +28,17 @@ public class Estoria {
     }
      
     public Estoria(JsonObject jsonStory){
-      this.name = jsonStory.getString("name");
+      this.name = jsonStory.getString("name"); 
       this.description = jsonStory.getString("description");
       this.idProjeto = jsonStory.getInt("projectId");
-      this.creationDate = convertSocketDateToDatabaseForm(jsonStory.getString("creationDate"));
+      this.creationDate = new Date();
+
     }
 
     public void setCurrentDate(){
         this.creationDate = new Date();
     }
-    
+     
     public models.entities.Estoria buildEstoriaEntity(){
         models.entities.Estoria estoriaEntity = new models.entities.Estoria();
         estoriaEntity.setNome(name);
