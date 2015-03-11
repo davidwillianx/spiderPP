@@ -49,17 +49,20 @@
                                         <f:validator validatorId="passvalidator"/>
                                     </h:inputSecret>  
                                 </h:panelGroup> 
-                                <h:panelGroup layout="block" class="col-md-7">
-                                    <h:commandButton class="btn btn-primary btn-cons" value="Atualizar" action="#{updateUsuarioController.edit(updateUsuarioController.usuario)}">
-                                    </h:commandButton>
-                                    
-                                </h:panelGroup>
                                 
+                                <h:panelGroup layout="block" class="col-md-7">
+                                    <div class="col-md-3 m-r-25">
+                                        <h:commandButton class="btn btn-primary btn-cons" value="Atualizar" action="#{updateUsuarioController.edit(updateUsuarioController.usuario)}"/>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <h:link outcome="index.xhtml" class="btn btn-dark">
+                                            <i class="icon-custom-home"></i>
+                                            <span class="title">P&aacute;gina Inicial</span>
+                                        </h:link>
+                                    </div>
+                                </h:panelGroup>
                             </h:form>
-                            <h:link outcome="index.xhtml" class="btn btn-dark">
-                                <i class="icon-custom-home"></i>
-                                <span class="title">P&aacute;gina Inicial</span>
-                            </h:link>
                         </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>
