@@ -124,11 +124,7 @@ public class EstoriaBean implements IEstoria {
             this.estorias = this.entityManager.createNamedQuery("Estoria.findByIdProjeto", Estoria.class)
                     .setParameter("idProjeto", this.projeto.getId())
                     .getResultList();
-            
 
-            if (this.estorias.isEmpty()) {
-                System.err.println(">>> alright");
-            }
             return this.estorias;
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();

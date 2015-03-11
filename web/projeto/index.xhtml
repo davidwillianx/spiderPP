@@ -32,35 +32,60 @@
                         </div>
                     </div>
                     <h:panelGroup layout="block" rendered="#{not empty estoriaController.estorias}">
-                        <h:dataTable value="#{estoriaController.estorias}" var="estoria" class="table table-striped dataTable" rowClasses="center-text">
-                            <h:column>
-                                <f:facet name="header" class="sortable">
-                                </f:facet>
-                                <a class="btn btn-success btn-small" onclick="showDetails('#{estoria.nome}', '#{estoria.descricao}');">
-                                    <i class="icon-custom-thumb"/>
-                                </a>
-                                <!--<i class="fa fa-plus-circle"></i>-->
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header" class="sortable">T&iacute;tulo</f:facet>
-                                    #{estoria.nome}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header" class="sortable">Data de cria&ccedil;&atilde;o</f:facet>
-                                <h:outputText value="#{estoria.dataCriacao}">
-                                    <f:convertDateTime pattern="d-MM-yyyy"/>
-                                </h:outputText>
-                            </h:column>
-                            <h:column >
-                                <f:facet name="header" class="sortable">status</f:facet>
-                                <h:outputText rendered="#{estoria.status ==  true}" value="estimada"/>
-                                <h:outputText rendered="#{estoria.status == false}" value="nao estimada"/>
-
-
-                                <!-- Adicionar Item das estimativas -->
-                            </h:column>
-
-                        </h:dataTable>
+                        <div class="table-responsive">
+                            <table class="table table-striped dataTable">
+                                <thead>
+                                    <th></th>
+                                    <th>Titulo</th>
+                                    <th>Data de Criação</th>
+                                    <th>Estimativa</th>
+                                </thead>
+                                <c:forEach items="#{estoriaController.parentEstorias}" var="estoria">
+                                    
+                                    <tr>
+                                        <td>
+                                            <a class="btn btn-success btn-small" onclick="showDetails('#{estoria.nome}', '#{estoria.descricao}');">
+                                                <i class=" fa fa-sitemap"/>
+                                            </a>
+                                        </td>
+                                        <td>#{estoria.nome}</td>
+                                        <td>
+                                            <h:outputText value="#{estoria.dataCriacao}">
+                                                <f:convertDateTime pattern="d-MM-yyyy"/>
+                                            </h:outputText>
+                                        </td>
+                                        <td>
+                                            <ui:repeat value="#{estimativaController.giveEstimativa(estoria.estoriaPK.id)}" var="estimativa">
+                                                <span class=" badge badge-important" title=" : #{estimativa.data}" >#{estimativa.pontuacao}</span>
+                                            </ui:repeat>
+                                        </td>
+                                    </tr>
+                                    
+                                    <c:if test="#{!estoriaController.getAllSubtaskByParentId(estoria.estoriaPK.id).isEmpty()}">
+                                        <c:forEach items="#{estoriaController.getAllSubtaskByParentId(estoria.estoriaPK.id)}" var="subtask">
+                                            <tr>
+                                                <td>
+                                                        <a class="btn btn-success btn-small" onclick="showDetails('#{estoria.nome}', '#{estoria.descricao}');">
+                                                        <i class=" fa fa-check-circle"/>
+                                                    </a>    
+                                                </td>
+                                                <td>#{subtask.nome}</td>
+                                                <td>
+                                                    <h:outputText value="#{subtask.dataCriacao}">
+                                                        <f:convertDateTime pattern="d-MM-yyyy"/>
+                                                    </h:outputText>
+                                                </td>
+                                                <td>
+                                                    <ui:repeat value="#{estimativaController.giveEstimativa(subtask.estoriaPK.id)}" var="estimativa">
+                                                        <span class=" badge badge-important" title=" : #{estimativa.data}">#{estimativa.pontuacao}</span>
+                                                    </ui:repeat>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:if>
+                                </c:forEach>
+                            </table>
+                        </div>
                     </h:panelGroup>
                     <h:panelGroup layout="block" rendered="#{empty estoriaController.estorias}">
                         <div class="row">
