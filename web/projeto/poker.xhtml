@@ -9,40 +9,106 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="content-dashboard" >
-        
+        <div class="row">
+            
+            <div class="col-md-6 p-t-5">
+                <div class="tiles grey p-t-15 p-b-15 p-l-25">
+                    <h3 class="text-black">Estórias</h3>
+                </div>
+                <div class="tiles white" id="stories">
+                    <!-- icld check design -->
+                    <c:forEach items="#{estoriaController.parentEstorias}" var="estoria">
+                        <ui:fragment rendered="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}">
+                            <ui:include src="/WEB-INF/templates/storyWithItsSubtasks.xhtml">
+                                <ui:param name="estoria" value="#{estoria}"/>
+                            </ui:include>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
+                            <ui:include src="/WEB-INF/templates/storyElement.xhtml">
+                                <ui:param name="estoria" value="#{estoria}"/>
+                            </ui:include>
+                        </ui:fragment>
+                    </c:forEach>
+                    <!--  icld -->
+                </div>
+            </div>
+            
+            
+            <div class="col-md-6 p-t-5"> 
+                <div class="grid simple">
+                    <div class="grid-title">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3><p class="text-black">Estimativas</p></h3>
+                            </div>
+                            <div class="col-md-9 p-t-10 p-b-10">
+                                <!-- clock360 -->
+                                <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                                    <a href="#" id="game-start" class="btn btn-danger-dark btn-cons " disabled="">
+                                        <i class="fa fa-play"/>
+                                        Iniciar
+                                    </a>
+                                </h:panelGroup>
+                                <div class="countdown col-md-6 pull-right">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="tools"></div>-->
+                    </div>
+                    <div class="grid-body">
+
+                        <div class="row" id="choices">
+                            
+                            <div id="my-choice">
+                                
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" rate="1">1</h4>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                            <div id="other-choice">
+                                
+                                
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" rate="1">1</h4>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+
+                        
+
+                        <div class="row b-t b-grey p-t-10">
+                            
+                            <c:forEach items="#{estimativaController.estimativas}" var="cardValue">
+                                <div class="col-md-1 col-xs-5 no-padding m-r-5 m-b-5">
+                                    <div class="tiles green text-center">
+                                        <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" rate="1">#{cardValue}</h4>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+        </div>
         
          
         
-        <div class="row" id="main">
-            <h:panelGroup layout="block" class="col-md-5">
-                <h:messages></h:messages>
-                <div id="notice"></div>
-                <div class="row tiles-container  m-b-20 ">
-                    <div class="m-l-10 ">
-                        <div class="tiles grey p-t-15 p-b-15 p-l-25 ">
-                            <h4 class="text-black semi-bold">Estorias</h4>
-                        </div>
-                        <div class="tiles white" id="stories">
-                            
-                            <c:forEach items="#{estoriaController.parentEstorias}" var="estoria">
-                                <ui:fragment rendered="#{estoriaController.hasSubTask(estoria.estoriaPK.id)}">
-                                    <ui:include src="/WEB-INF/templates/storyWithItsSubtasks.xhtml">
-                                        <ui:param name="estoria" value="#{estoria}"/>
-                                    </ui:include>
-                                </ui:fragment>
-
-                                <ui:fragment rendered="#{!estoriaController.hasSubTask(estoria.estoriaPK.id)}">
-                                    <ui:include src="/WEB-INF/templates/storyElement.xhtml">
-                                        <ui:param name="estoria" value="#{estoria}"/>
-                                    </ui:include>
-                                </ui:fragment>
-                            </c:forEach>
-                            
-                            
-                        </div> 
-                    </div>
-                </div>
-            </h:panelGroup>
+<!--        <div class="row" id="main">
+            <
 
             
             <div class="row p-l-50">
@@ -58,7 +124,7 @@
                                         <a href="#" id="game-start" class="btn btn-primary " disabled="">Iniciar</a>
                                     </h:panelGroup>
                                     
-                                    <!-- Resize doesnt work -->
+                                     Resize doesnt work 
                                     <div class="col-md-3 countdown">
                                         
                                     </div>
@@ -160,7 +226,7 @@
             </div>
             
             
-        </div>
+        </div>-->
         
          <script type="text/javascript">
               

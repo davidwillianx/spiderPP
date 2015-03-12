@@ -10,7 +10,8 @@
         <title>#{projeto.nome}</title>
     </h:head>
 
-    <body>
+   
+     <body>
         <div class="header navbar navbar-inverse">
             <div class="navbar-inner">
 
@@ -106,244 +107,33 @@
                         </li>
                         <li class="">
                             <a href="incluir_membros_projeto.xhtml">
-                                <i class="icon-custom-portlets"></i>
+                                <i class="fa  fa-group"></i>
                                 <span class="title">Gerenciar  Membros</span>
                             </a>
                         </li>
 
                         <li class="">
                             <a href="editar.xhtml">
-                                <i class="icon-custom-new"></i>
+                                <i class="fa fa-pencil-square"></i>
                                 <span class="title">Editar Projeto</span>
                             </a>
                         </li>
                         <li class="">
+                            <a href="editar.xhtml">
+                                <i class="fa fa-rocket"></i>
+                                <span class="title">Relatórios/Estatísticas</span>
+                            </a>
                         </li>
-
-                        
                     </ul>
 
                 </div>
-                
+            </div>
+            <div class="page-content">
+                <div class="clearfix"></div>
+                <div class="content">
+                    <ui:insert name="content-dashboard">Adicione alguma informacao</ui:insert>
+                </div>
             </div>
         </div>
     </body>
-
-
-    <!--    <h:head>
-        <title>#{projeto.nome}</title> 
-    </h:head>
-    <ui:include src="scripts.xhtml"/>
-    
-    <h:body class="grey">
-        <h:panelGroup layout="block" class="header navbar navbar-inverse">
-            <h:panelGroup layout="block" class="navbar-inner">
-                <h:panelGroup layout="block" class="header-seperation" style="display: none; height: 61px;">
-                    <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">	
-                        <li class="dropdown">
-                            <a id="main-menu-toggle" href="#main-menu" class="">
-                                    <div class="iconset top-menu-toggle-white"></div>
-                            </a>
-                        </li>		 
-                    </ul>
-                    <h:link outcome="index.xhtml">
-                        Logo HERE
-                        <h:graphicImage class="logo" library="styles" name="assets/img/spider.png" width="106" height="44"/>
-                    </h:link>  
-                    
-                     AREA DE CONTROLLE DO ICONE MENSSAGE E HOME
-                    <ul class="nav pull-right notifcation-center">	
-                        <li class="dropdown" id="header_task_bar">
-                            <a href="#" class="dropdown-toggle active" data-toggle="">
-                                <div class="iconset top-home"></div>
-                            </a>
-                        </li>
-                        <li class="dropdown" id="header_inbox_bar">
-                            <a href="#" class="dropdown-toggle">
-                               	<div class="iconset top-messages"></div>
-                                <span class="badge" id="msgs-badge">2</span>
-                            </a>
-                        </li>
-                                 BEGIN MOBILE CHAT TOGGLER 
-                        <li class="dropdown" id="portrait-chat-toggler" style="display:none">
-                            <a href="#sidr" class="chat-menu-toggle">
-                                <div class="iconset top-chat-white"></div>
-                            </a>
-                        </li>
-                                 END MOBILE CHAT TOGGLER 				        
-                        </ul>
-                     FIM AREA DE CONTROLLE DO ICONE MENSSAGE E HOME
-                    
-                </h:panelGroup>
-                
-                <h:panelGroup layout="block" class="header-quick-nav">
-                    <h:panelGroup layout="block" class="pull-left">
-                        <ul class="nav quick-section">
-                            <li class="quicklinks">
-                                <a href="#" class="" id="layout-condensed-toggle">
-                                    <div class="iconset top-menu-toggle-dark"></div>
-                                </a>
-                            </li>
-                        </ul>
-                         BEGIN HEADER QUICK LINKS 
-                        <ul class="nav quick-section">
-                            <li class="quicklinks"><a href="#" class=""><div class="iconset top-reload"></div></a></li>
-                            <li class="quicklinks"><span class="h-seperate"></span></li>
-                            <li class="quicklinks"><a href="#" class=""><div class="iconset top-tiles"></div></a></li>
-                            <li class="quicklinks"><span class="h-seperate"></span></li>
-                            <li class="quicklinks" id="timerGamer"></li>
-                           
-                             BEGIN SEARCH BOX 
-                            <li class="m-r-10 input-prepend inside search-form no-boarder">
-                                <span class="add-on"><span class="iconset top-search"></span></span>
-                                <h:inputText   class="no-boarder"  style="width:250px;"/>
-                            </li>
-                                 END SEARCH BOX 
-                        </ul>
-                    </h:panelGroup>
-                    
-                    <h:panelGroup layout="block" class="pull-right">
-                        <div class="nav quick-section">
-                            <div class="quicklinks">
-                                <a id="chat-menu-toggle" href="#sidr" class="chat-menu-toggle">
-                                    <div class="iconset top-chat-dark"></div>
-                                      Waaaaaaiting a message unread counter, one day.. 
-                                    <div class="iconset top-chat-dark "><span class="badge badge-important animated bounceIn" id="chat-message-count">1</span></div>
-                                </a>
-                            </div>
-                        </div>
-                    </h:panelGroup>
-                </h:panelGroup>
-                
-              </h:panelGroup>
-        </h:panelGroup>
-        
-        
-        <h:panelGroup layout="block" class="page-container row-fluid" >
-            
-            <h:panelGroup layout="block" class="page-sidebar mini" id="main-menu">
-                <h:panelGroup layout="block" class="page-sidebar-wrapper" id="main-menu-wrapper">
-                    
-                    <h:panelGroup layout="block" class="user-info-wrapper">
-                        
-                        <h:panelGroup layout="block" class="profile-wrapper">
-                            <h:graphicImage library="resouces" name="styles/assets/img/profiles/avatar.jpg" width="69" height="69"/> 
-                        </h:panelGroup>
-                        <h:panelGroup layout="block" class="user-info">
-                            <h:panelGroup layout="block" class="greeting">#{projeto.nome}</h:panelGroup>
-                            <h:panelGroup layout="block" class="username"><h:outputText value="#{usuario.nome}"/></h:panelGroup>
-                            STATUS ON/OFF 
-                                <h:panelGroup layout="block" class="status">
-                                <h:link outcome="index.xhtml"><h:panelGroup layout="block" class="status-icon green"></h:panelGroup>Online</h:link>
-                                </h:panelGroup>
-                            STATUS ON/OFF 
-                        </h:panelGroup>
-                    </h:panelGroup>
-                    <p class="menu-title">Op&ccedil;&otilde;es<span class="pull-right"></span></p>
-
-                    <ul>
-                        <li class="start active">
-                            <h:link outcome="index.xhtml">
-                                <i class="icon-custom-home"></i>
-                                <span class="title">Inicio</span>
-                            </h:link>
-                        </li>
-                          BEGIN BADGE LINK 
-                        <li class="">
-                                <a href="#">
-                                        <i class="icon-custom-feedbacks"></i>
-                                        <span class="title">Est&oacute;rias</span>
-                                         <span class=" badge badge-disable pull-right ">#{estoriaController.estorias.size()}</span>
-                                </a>
-                            <ul class="sub-menu">
-                                <ui:repeat value="#{estoriaController.estorias}" var="estoria">
-                                    <li class="">
-                                        <a href="#" onclick="showDetails('#{estoria.nome}','#{estoria.descricao}')">
-                                            <i class="fa fa-envelope"></i>
-                                            <span class="title"><h:outputText value="#{estoria.nome}"/></span>
-                                        </a>
-                                    </li>
-                                </ui:repeat>
-                            </ul>
-                        </li>
-                         END BADGE LINK   
-                         BEGIN BADGE LINK 
-                        <li class="">
-                            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 3}">
-                                <h:link outcome="criar_estoria.xhtml">
-                                    <i class="icon-custom-newpage"></i>
-                                    <span class="title">Adicionar Estorias</span>
-                                </h:link>
-                            </h:panelGroup>
-                        </li>
-                         END BADGE LINK   
-                        <li class="">
-                            <a href="incluir_membros_projeto.xhtml">
-                                <i class="icon-custom-portlets"></i>
-                                <span class="title">Gerenciar  Membros</span>
-                            </a>
-                        </li>
-                        
-                         BEGIN BADGE LINK 
-                        <li class="">
-                            <a href="editar.xhtml">
-                                <i class="icon-custom-new"></i>
-                                <span class="title">Editar Projeto</span>
-                            </a>
-                        </li>
-                         END BADGE LINK   
-                         BEGIN BADGE LINK 
-                        <li class="">
-                             ADICIONAR A FUNCIONALDADE SAIR 
-                        </li>
-                        </h:form>
-                         END BADGE LINK   
-                        
-                    </ul>
-                </h:panelGroup>
-            </h:panelGroup>
-            
-            <h:panelGroup layout="block" class="page-content condensed" id="game-content">
-                <h:panelGroup layout="block" class="content">
-                    
-                    
-                    <ui:insert name="content-dashboard">Adicione alguma informacao</ui:insert>
-                    
-                    
-                </h:panelGroup>
-            </h:panelGroup>
-            
-        </h:panelGroup>
-        
-        
-        
-        <div id="sidr" class="chat-window-wrapper sidr right" style="display: block; right: 0px;">
-            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 420px;"><div id="main-chat-wrapper" style="overflow: hidden; width: auto; height: 420px;">
-            <div class="chat-window-wrapper  fadeIn animated" id="messages-wrapper" >
-                <div class="chat-header">
-                    <div class="pull-left">
-                        <input type="text" placeholder="search">
-                    </div>
-                    <div class="pull-right"> <a href="#" class="">
-                            <div class="iconset top-settings-dark "></div>
-                        </a> </div>
-                </div>
-                <div class="clearfix"></div>
-
-                <div class="chat-messages-header">
-                    <div class="status online busy"></div>
-                    <span class="semi-bold">#{usuario.nome}</span> 
-                     ESPACO PARA ADICIONAR A INFORMACAO DOS USUARIOS ONLINE 
-                </div>
-
-                <div class="chat-messages">
-                </div>
-            </div>
-            <div class="chat-input-wrapper" style="">
-                <textarea id="chat-message-input" rows="1" placeholder="Type your message"></textarea>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-        
-    </h:body>-->
 </html>
