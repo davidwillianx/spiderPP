@@ -10,6 +10,7 @@ import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
 import libs.exception.BusinessException;
+import models.ejbs.interfaces.IAcessar;
 import models.ejbs.interfaces.IProjeto;
 import models.entities.Projeto;
 
@@ -29,9 +30,13 @@ public class ProjetoController {
     
     private SessionManager sessionManager;
 
-    // injeta o stateless
+    
     @EJB
     private IProjeto iProjeto;
+    @EJB
+    private IAcessar acessarBusiness;
+    
+    
 
     public ProjetoController() {
         this.redirect = new Redirect();
@@ -140,5 +145,13 @@ public class ProjetoController {
         int idPerfil =  this.showUserProjetoPersmission(idProjeto, idUsuario);
         BuildHash buildHash = new BuildHash();
         return buildHash.buildHashStringURL(String.valueOf(idPerfil));
+    }
+
+    public String showMemberProfileDescription(int idUsuario, int idProjeto){
+        try {
+             return acessarBusiness.findMemberProfile(idUsuario,idProjeto).getNome();
+        } catch (Exception e) {
+            return "Error: nao foi encontrado perfil para o usuario";
+        }
     }
 }

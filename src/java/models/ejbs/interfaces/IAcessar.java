@@ -7,6 +7,7 @@
 package models.ejbs.interfaces;
 
 
+
 import models.entities.Perfil;
 import models.entities.Projeto;
 import models.entities.Usuario;
@@ -18,4 +19,5 @@ import models.entities.Usuario;
 public interface IAcessar {
    void save(Perfil perfil, Usuario usuario, Projeto projeto);
    void remove(int idPerfil,int idUsuario, int idProjeto);
+   Perfil findMemberProfile(int idProjeto, int idUsuario);
 }

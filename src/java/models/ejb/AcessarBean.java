@@ -57,4 +57,18 @@ public class AcessarBean implements IAcessar{
        }
     }
     
+    
+    @Override
+    public Perfil findMemberProfile(int idUsuario, int idProjeto) {
+
+        this.acessar = (Acessar) this.entityManager
+                .createNamedQuery("Acessar.findByIdUsuarioAndIdProjeto")
+                .setParameter("id_projeto", idProjeto)
+                .setParameter("id_usuario", idUsuario)
+                .getSingleResult();
+
+        return acessar.getPerfil();
+    }
+    
+    
 }
