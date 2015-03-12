@@ -9,11 +9,11 @@
         <ui:include src="scripts.xhtml"/>
         <title>#{projeto.nome}</title>
     </h:head>
-    
+
     <body>
         <div class="header navbar navbar-inverse">
             <div class="navbar-inner">
-                
+
                 <div class="header-seperation">
                     <ul id="main-menu-toggle-wrapper" class="nav pull-left notifcation-center">
                         <li class="dropdown">
@@ -33,28 +33,23 @@
                 </div>
                 <div class="header-quick-nav">
 
-                        <div class="pull-left"> 
-                            <ul class="nav quick-section">
-                                <li class="quicklinks"> <a href="#" class="" id="layout-condensed-toggle">
-                                        <div class="iconset top-menu-toggle-dark"></div>
-                                    </a> </li>
-                            </ul>
-                            <ul class="nav quick-section">
-                                <li class="quicklinks">
-                                    <a href="#" class="">
-                                        <div class="iconset top-reload"></div>
-                                    </a> 
-                                </li>
-                            </ul>
-                        </div>
-                        
-                        
-                    
-                    
-                    
+                    <div class="pull-left"> 
+                        <ul class="nav quick-section">
+                            <li class="quicklinks"> <a href="#" class="" id="layout-condensed-toggle">
+                                    <div class="iconset top-menu-toggle-dark"></div>
+                                </a> </li>
+                        </ul>
+                        <ul class="nav quick-section">
+                            <li class="quicklinks">
+                                <a href="#" class="">
+                                    <div class="iconset top-reload"></div>
+                                </a> 
+                            </li>
+                        </ul>
+                    </div>
 
                     <div class="pull-right"> 
-                        
+
                         <ul class="nav quick-section ">
                             <li class="quicklinks"> <span class="h-seperate"></span></li> 
                             <li class="quicklinks"> 	
@@ -67,35 +62,74 @@
                             </li> 
                         </ul>
                     </div>
-
-
-
-
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                        
                 </div>
-                
+            </div>
+        </div>
+        
+        <div class="page-container  row-fluid">
+            <div id="main-menu" class="page-sidebar">
+                <div id="main-menu-wrapper" class="page-sidebar-wrapper">
+                    <div class="user-info-wrapper">
+                        <div class="user-info ">
+                            <div class="username">#{usuario.nome}</div>
+                        </div>
+                    </div>
+                    
+                    
+                    <ul>
+                        
+                        <li class="">
+                            <a href="#">
+                                <i class="icon-custom-feedbacks"></i>
+                                <span class="title">Est&oacute;rias</span>
+                                <span class=" badge  badge-success pull-right ">#{estoriaController.estorias.size()}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <ui:repeat value="#{estoriaController.estorias}" var="estoria">
+                                    <li>
+                                        <a href="#" onclick="showDetails('#{estoria.nome}','#{estoria.descricao}')">
+                                            
+                                            #{estoria.nome}
+                                            <i class="fa fa-expand"/>
+                                        </a>
+                                    </li>
+                                </ui:repeat>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 3}">
+                                <h:link outcome="criar_estoria.xhtml">
+                                    <i class="icon-custom-newpage"></i>
+                                    <span class="title">Adicionar Estorias</span>
+                                </h:link>
+                            </h:panelGroup>
+                        </li>
+                        <li class="">
+                            <a href="incluir_membros_projeto.xhtml">
+                                <i class="icon-custom-portlets"></i>
+                                <span class="title">Gerenciar  Membros</span>
+                            </a>
+                        </li>
+
+                        <li class="">
+                            <a href="editar.xhtml">
+                                <i class="icon-custom-new"></i>
+                                <span class="title">Editar Projeto</span>
+                            </a>
+                        </li>
+                        <li class="">
+                        </li>
+
+                        
+                    </ul>
+
+                </div>
                 
             </div>
         </div>
     </body>
-    
-    
+
+
     <!--    <h:head>
         <title>#{projeto.nome}</title> 
     </h:head>
@@ -119,25 +153,25 @@
                     
                      AREA DE CONTROLLE DO ICONE MENSSAGE E HOME
                     <ul class="nav pull-right notifcation-center">	
-			<li class="dropdown" id="header_task_bar">
+                        <li class="dropdown" id="header_task_bar">
                             <a href="#" class="dropdown-toggle active" data-toggle="">
-				<div class="iconset top-home"></div>
+                                <div class="iconset top-home"></div>
                             </a>
-			</li>
-			<li class="dropdown" id="header_inbox_bar">
+                        </li>
+                        <li class="dropdown" id="header_inbox_bar">
                             <a href="#" class="dropdown-toggle">
                                	<div class="iconset top-messages"></div>
-				<span class="badge" id="msgs-badge">2</span>
+                                <span class="badge" id="msgs-badge">2</span>
                             </a>
-			</li>
-				 BEGIN MOBILE CHAT TOGGLER 
-			<li class="dropdown" id="portrait-chat-toggler" style="display:none">
+                        </li>
+                                 BEGIN MOBILE CHAT TOGGLER 
+                        <li class="dropdown" id="portrait-chat-toggler" style="display:none">
                             <a href="#sidr" class="chat-menu-toggle">
-				<div class="iconset top-chat-white"></div>
+                                <div class="iconset top-chat-white"></div>
                             </a>
-			</li>
-				 END MOBILE CHAT TOGGLER 				        
-			</ul>
+                        </li>
+                                 END MOBILE CHAT TOGGLER 				        
+                        </ul>
                      FIM AREA DE CONTROLLE DO ICONE MENSSAGE E HOME
                     
                 </h:panelGroup>
@@ -146,13 +180,13 @@
                     <h:panelGroup layout="block" class="pull-left">
                         <ul class="nav quick-section">
                             <li class="quicklinks">
-				<a href="#" class="" id="layout-condensed-toggle">
+                                <a href="#" class="" id="layout-condensed-toggle">
                                     <div class="iconset top-menu-toggle-dark"></div>
-                        	</a>
+                                </a>
                             </li>
-			</ul>
+                        </ul>
                          BEGIN HEADER QUICK LINKS 
-			<ul class="nav quick-section">
+                        <ul class="nav quick-section">
                             <li class="quicklinks"><a href="#" class=""><div class="iconset top-reload"></div></a></li>
                             <li class="quicklinks"><span class="h-seperate"></span></li>
                             <li class="quicklinks"><a href="#" class=""><div class="iconset top-tiles"></div></a></li>
@@ -161,10 +195,10 @@
                            
                              BEGIN SEARCH BOX 
                             <li class="m-r-10 input-prepend inside search-form no-boarder">
-				<span class="add-on"><span class="iconset top-search"></span></span>
+                                <span class="add-on"><span class="iconset top-search"></span></span>
                                 <h:inputText   class="no-boarder"  style="width:250px;"/>
                             </li>
-				 END SEARCH BOX 
+                                 END SEARCH BOX 
                         </ul>
                     </h:panelGroup>
                     
@@ -215,12 +249,12 @@
                             </h:link>
                         </li>
                           BEGIN BADGE LINK 
-			<li class="">
-				<a href="#">
-					<i class="icon-custom-feedbacks"></i>
+                        <li class="">
+                                <a href="#">
+                                        <i class="icon-custom-feedbacks"></i>
                                         <span class="title">Est&oacute;rias</span>
                                          <span class=" badge badge-disable pull-right ">#{estoriaController.estorias.size()}</span>
-				</a>
+                                </a>
                             <ul class="sub-menu">
                                 <ui:repeat value="#{estoriaController.estorias}" var="estoria">
                                     <li class="">
@@ -231,8 +265,8 @@
                                     </li>
                                 </ui:repeat>
                             </ul>
-			</li>
-			 END BADGE LINK   
+                        </li>
+                         END BADGE LINK   
                          BEGIN BADGE LINK 
                         <li class="">
                             <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 3}">
@@ -242,7 +276,7 @@
                                 </h:link>
                             </h:panelGroup>
                         </li>
-			 END BADGE LINK   
+                         END BADGE LINK   
                         <li class="">
                             <a href="incluir_membros_projeto.xhtml">
                                 <i class="icon-custom-portlets"></i>
@@ -257,13 +291,13 @@
                                 <span class="title">Editar Projeto</span>
                             </a>
                         </li>
-			 END BADGE LINK   
+                         END BADGE LINK   
                          BEGIN BADGE LINK 
                         <li class="">
                              ADICIONAR A FUNCIONALDADE SAIR 
                         </li>
                         </h:form>
-			 END BADGE LINK   
+                         END BADGE LINK   
                         
                     </ul>
                 </h:panelGroup>
