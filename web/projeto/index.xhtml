@@ -167,7 +167,7 @@
                                             <f:facet name="header">-</f:facet>
                                             <h:panelGroup layout="block" rendered="#{ usuarioOfProjeto.idUsuario != usuario.id}">
                                                 <h:form>
-                                                    <h:commandButton  class=" btn btn-purple btn-small" value="x" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.idUsuario)}">
+                                                    <h:commandButton  class=" btn btn-purple btn-small" value="Remover" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.idUsuario)}">
                                                         <f:ajax render=":grid_users" />
                                                     </h:commandButton>
                                                 </h:form>
