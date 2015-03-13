@@ -10,6 +10,7 @@ $(document).ready(function(){
     disableCardArea();
     accordionSetUp(accordion);
     
+    
     gameSocket.connect();
     
     gameSocket.connection.onopen = function(){
@@ -74,7 +75,15 @@ $(document).ready(function(){
             console.log('story wasnt setted');
             return;
         }
-        gameSocket.send({'type':'round','value':'startTime'});
+        var time = 300;
+        
+        if(typeof  $('#count-value').val() === 'number')
+             time = $('#count-value').val();
+         
+        gameSocket.send({
+                          'type':'round'
+                          ,'value':'startTime'
+                          ,'time': time});
         console.log('Data was sent');
 
     });
@@ -96,6 +105,14 @@ $(document).ready(function(){
                                     id="more-subtasks">+add</button> \n\
                                     <button class="btn btn btn-primary" \n\
                                     id="save-subtasks">salvar</button>');
+    });
+    
+    $('#count-value').focus(function(e){
+        $(this).popover({
+            content:'Não crie rodadas muito longas #fikdik'
+            ,title:'Só pra lembrar'
+            ,dalay:{"show":500,"hide":100}
+        });
     });
     
     $('body').on('click','#set-rate',function(){
@@ -349,7 +366,7 @@ function round(data){
     $("#countdown").countdown360({ 
         radius:24.5,
         label: false,
-        seconds: 20,
+        seconds: data.time,
         fontColor: '#8ac575',
         onComplete: function(){
             disableCardArea();

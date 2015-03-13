@@ -42,15 +42,20 @@
                             <div class="col-md-3">
                                 <h3><p class="text-black">Estimativas</p></h3>
                             </div>
-                            <div class="col-md-9 p-t-10 p-b-10">
+                            <div class="col-md-6 p-t-10 p-b-10">
                                 <!-- clock360 -->
-                                <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
-                                    <a href="#" id="game-start" class="btn btn-danger-dark btn-cons " disabled="">
-                                        <i class="fa fa-play"/>
-                                        Iniciar
-                                    </a>
+                                <h:panelGroup layout="block"  rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
+                                    <div class="input-group col-md-4">
+                                        <input data-placement="top" id="count-value" type="text" class="form-control" placeholder="minutos"/>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success" id="game-start"  type="button">
+                                                <i class="fa fa-play"/>
+                                                jogar
+                                            </button>
+                                        </span>
+                                    </div>
                                 </h:panelGroup>
-                                <div class="countdown col-md-6 pull-right">
+                                <div class="countdown col-md-3 pull-right">
                                     
                                 </div>
                             </div>
@@ -72,11 +77,11 @@
                         
                         <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 3}">
 
-                            <div class="row b-t b-grey p-t-10">
+                            <div class="row b-t b-grey p-t-10" id="deck-section">
                                 <c:forEach items="#{estimativaController.estimativas}" var="cardValue">
                                     <div class="col-md-1 col-xs-1 no-padding m-r-5 ">
                                         <div class="tiles green text-center">
-                                            <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" rate="1">#{cardValue}</h4>
+                                            <h4 class="opt-card  semi-bold text-white   no-margin p-t-20 p-b-20" rate="#{cardValue}">#{cardValue}</h4>
                                         </div>
                                     </div>
                                 </c:forEach>

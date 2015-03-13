@@ -10,8 +10,8 @@
         <title>#{projeto.nome}</title>
     </h:head>
 
-   
-     <body>
+
+    <body>
         <div class="header navbar navbar-inverse">
             <div class="navbar-inner">
 
@@ -52,7 +52,6 @@
                     <div class="pull-right"> 
 
                         <ul class="nav quick-section ">
-                            <li class="quicklinks"> <span class="h-seperate"></span></li> 
                             <li class="quicklinks"> 	
                                 <a id="chat-menu-toggle" href="#sidr" class="chat-menu-toggle">
                                     <div class="iconset top-chat-dark ">
@@ -66,7 +65,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="page-container  row-fluid">
             <div id="main-menu" class="page-sidebar">
                 <div id="main-menu-wrapper" class="page-sidebar-wrapper">
@@ -75,10 +74,10 @@
                             <div class="username">#{usuario.nome}</div>
                         </div>
                     </div>
-                    
-                    
+
+
                     <ul>
-                        
+
                         <li class="">
                             <a href="#">
                                 <i class="icon-custom-feedbacks"></i>
@@ -88,8 +87,8 @@
                             <ul class="sub-menu">
                                 <ui:repeat value="#{estoriaController.estorias}" var="estoria">
                                     <li>
-                                        <a href="#" onclick="showDetails('#{estoria.nome}','#{estoria.descricao}')">
-                                            
+                                        <a href="#" onclick="showDetails('#{estoria.nome}', '#{estoria.descricao}')">
+
                                             #{estoria.nome}
                                             <i class="fa fa-expand"/>
                                         </a>
@@ -134,6 +133,33 @@
                     <ui:insert name="content-dashboard">Adicione alguma informacao</ui:insert>
                 </div>
             </div>
+            
+             
+            <!--Chat-->
+            <div  id="sidr">
+                <div class="chat-window-wrapper visible">
+                    <div class="inner-content" id="main-chat-wrapper">
+                        <div id="messages-wrapper" class="chat-window-wrapper visible">
+                            <div class="chat-header"></div>
+                            <div class="clearfix"></div>
+
+                            <div class="chat-messages-header">
+                                <span class="semi-bold">#{usuario.nome}</span>
+                            </div>
+                            <div class="chat-messages">
+                                
+                            </div>
+                            <div class="chat-input-wrapper">
+                                <textarea id="chat-message-input" placeholder="converse com sua equipe"></textarea>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>                      
+            </div>
+            
+            <!-- end Chat-->
+            
         </div>
     </body>
 </html>

@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.List;  
 import java.util.logging.Level;    
 import java.util.logging.Logger;         
-import javax.inject.Inject;    
+import javax.inject.Inject;     
 import javax.json.Json;               
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
