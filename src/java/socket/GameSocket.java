@@ -16,13 +16,13 @@ import java.util.Collections;
 import java.util.Date;  
 
 import java.util.List;  
-import java.util.logging.Level;    
+import java.util.logging.Level;       
 import java.util.logging.Logger;         
 import javax.inject.Inject;     
 import javax.json.Json;               
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
+import javax.json.JsonObject; 
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
   
@@ -52,7 +52,7 @@ import models.entities.Mensagem;
 public class GameSocket implements Serializable {
    
     @Inject private MensagemBean mensagemBean;          
-    @Inject private IEstimativa iEstimativa;     
+    @Inject private IEstimativa iEstimativa;          
     @Inject private IEstoria iEstoria;      
           
     private Game game;  

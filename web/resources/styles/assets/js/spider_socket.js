@@ -453,3 +453,13 @@ function taskSelected(data){
     
 }
 
+//DOM activities
+
+$(window).bind('beforeunload',function(e){
+     var returnValue;
+     
+     
+});
+
+
+
