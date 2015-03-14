@@ -200,6 +200,7 @@ var gameSocket = {
     dataConnection: {
           perfil: prPath,
           room: rmPath,
+          usr: usrPath,
           host: "ws://localhost:8080/spiderPP/spiderSocketGame"
       },
       
@@ -218,6 +219,7 @@ var gameSocket = {
           try{
                 this.connection =  new WebSocket(this.dataConnection.host+
                                                 "/"+this.dataConnection.room+
+                                                "/"+this.dataConnection.usr+
                                                 "/"+this.dataConnection.perfil);
           }catch(error){
               console.log("something wrong :: connection error:: "+error.message);
@@ -433,14 +435,13 @@ function subtasks(newSubtasks){
     }
 }
 
-//I dont need notice yet, it's just to remeber ;)
-//function notice(message){
-//    showModalDialog(message.message,'Informação');
-//}
+function notice(message){
+    showModalDialog(message.participantOut,'Alguem saiu');
+    
+}
+ 
 
 
-
-//Waiting for subtaks case ;D
 function taskSelected(data){
     console.log('something wrong');
     story.set($('#'+data.id));
@@ -456,8 +457,8 @@ function taskSelected(data){
 //DOM activities
 
 $(window).bind('beforeunload',function(e){
-     var returnValue;
-     
+    
+    return 'Ao sair você será retirado automativamente da rodada';
      
 });
 

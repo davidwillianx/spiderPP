@@ -146,6 +146,11 @@ public class ProjetoController {
         BuildHash buildHash = new BuildHash();
         return buildHash.buildHashStringURL(String.valueOf(idPerfil));
     }
+    
+    public String showHashUsuario(int idUsuario) throws UnsupportedEncodingException{
+        
+        return new BuildHash().buildHashStringURL(String.valueOf(idUsuario));
+    }
 
     public String showMemberProfileDescription(int idUsuario, int idProjeto){
         try {

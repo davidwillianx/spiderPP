@@ -76,8 +76,10 @@
                         <h:panelGroup layout="block" style="padding-top:  6px" rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) == 1}">
                             <h:outputLink  class="btn btn-primary btn-large" value="poker.xhtml">
                                 Iniciar Estimativa
-                                <f:param name="rm" value="#{projetoController.showHashProject(projeto.id)}"/>
                                 <f:param name="pr" value="#{projetoController.showHashPerfil(usuario.id,projeto.id)}"/>
+                                <f:param name="usr" value="#{projetoController.showHashUsuario(usuario.id)}"/>
+                                <f:param name="rm" value="#{projetoController.showHashProject(projeto.id)}"/>
+                                
                             </h:outputLink>
                         </h:panelGroup>
                     </h:panelGroup>

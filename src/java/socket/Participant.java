@@ -7,6 +7,7 @@ public class Participant {
 
     private int idProjeto;
     private int idPerfil;
+    private String id;
     private String hashRoom;
     private Session session;
     
@@ -15,13 +16,20 @@ public class Participant {
     static final int TM = 3;
 
     //Need pass userID/Perfil/HashRoom
-    public Participant(String hashRoom,String hashPerfil, Session session) {
-        this.setIdProjeto(this.getParticipantDataConnection(hashRoom));
-        this.setIdPerfil(this.getParticipantDataConnection(hashPerfil));
-        this.setHasRoom(hashRoom);
-        this.setSession(session);
+    public Participant(String hashRoom,String id, String hashPerfil, Session session) {
+        this.idProjeto = this.getParticipantDataConnection(hashRoom);
+        this.idPerfil = this.getParticipantDataConnection(hashPerfil);
+        this.hashRoom = hashRoom;
+        this.session = session;
+        this.id = id;
         
     }
+    
+    
+    public String getId(){
+        return this.id;
+    }
+    
     
     public void setIdProjeto(int idProjeto)
     {
@@ -64,6 +72,10 @@ public class Participant {
     public Session getSession()
     {
         return this.session;
+    }
+    
+    public int getIdParticipant(){
+        return this.getParticipantDataConnection(this.hashRoom);
     }
 
     private int getParticipantDataConnection(String hashConnection) {

@@ -46,7 +46,7 @@ import models.entities.Mensagem;
  * @author smartphonnee  
  */         
 
-@ServerEndpoint(value = "/spiderSocketGame/{room}/{perfil}",
+@ServerEndpoint(value = "/spiderSocketGame/{room}/{user}/{perfil}",
         encoders = {MessageEncoder.class}, decoders = {MessageDecoder.class}
 )  
 public class GameSocket implements Serializable {
@@ -60,11 +60,13 @@ public class GameSocket implements Serializable {
     private Participant participant;  
       
     @OnOpen       
-    public void onOpen(Session session, @PathParam("room") String room, @PathParam("perfil") String perfil) {
+    public void onOpen(Session session, @PathParam("room") String room,@PathParam("user") String id, @PathParam("perfil") String perfil) {
         try { 
-            participant = new Participant(room, perfil, session);  
+            
+            participant = new Participant(room, id, perfil, session);  
+            
             if (participant.isScrumMaster()) {
-                
+                System.err.println(">>>>>>>>>>>>>> he is");
                 
                 Game game = new Game(participant);   
                 games.add(game);         
@@ -208,14 +210,19 @@ public class GameSocket implements Serializable {
 //        }  
     }  
   
-    @OnClose   
+    @OnClose    
     public void OnClose(Session session) {
         try {
-            //Fechar a conexão/Remover do game/ redirecionar/
-            //Verifica o que pode ser o método closeReason.
-            session.close();  
-            System.err.println("Vai tomar DC");    
-        } catch (IOException ex) { 
+            
+            Game game = this.getGame(session);
+            participant = game.getParticipant(session);
+            
+            game.sendBroadcastMessageWithoutSender(session, new Message(Json.createObjectBuilder().add("type", "notice").add("noticeType", "disconnection").add("participantOut", participant.getIdParticipant()).build()));
+            session.close();
+             
+        } catch (IOException ex) {  
+            
+            System.err.println(" <<< "+ ex.getMessage()); 
             Logger.getLogger(GameSocket.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
