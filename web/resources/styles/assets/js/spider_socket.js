@@ -89,7 +89,8 @@ $(document).ready(function(){
     });
     
     $('.opt-card').click(function(e){
-        var card = {"type":"card","value":$(this).attr('rate'),"userName":author,"userId":gameSocket.dataConnection.usr};
+        var card = {"type":"card","value":$(this).attr('rate'),"userName":author,"userId":usrPath};
+        console.log('Escolhi '+ card.userId);
         gameSocket.cards.my = card;
         gameSocket.send(card);
         myCardSelection(card);
@@ -393,7 +394,7 @@ function card(otherUserCard){
         }
     }
     gameSocket.cards.anotherUsers.push(otherUserCard);
-    var cardBacking = buildCardHidden(otherUserCard.userName);
+    var cardBacking = buildCardHidden(otherUserCard);
     $(cardBacking).hide().appendTo('#other-choice').fadeIn(999);
 }
 
@@ -436,7 +437,15 @@ function subtasks(newSubtasks){
 }
 
 function notice(message){
-    showModalDialog(message.participantOut,'Alguem saiu');
+    
+    if(message.noticeType === 'disconnection')
+    {
+        if(message.participantOut.isSm)
+            showModalDialog(message.participantOut,'SM saiu');
+        
+        showModalDialog(message.participantOut,'TEAM saiu saiu');
+    }
+    
     
 }
  

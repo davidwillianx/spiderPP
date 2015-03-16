@@ -16,12 +16,12 @@ public class Participant {
     static final int TM = 3;
 
     //Need pass userID/Perfil/HashRoom
-    public Participant(String hashRoom,String id, String hashPerfil, Session session) {
+    public Participant(String hashRoom,String user, String hashPerfil, Session session) {
         this.idProjeto = this.getParticipantDataConnection(hashRoom);
         this.idPerfil = this.getParticipantDataConnection(hashPerfil);
         this.hashRoom = hashRoom;
         this.session = session;
-        this.id = id;
+        this.id = user;
         
     }
     
@@ -74,10 +74,6 @@ public class Participant {
         return this.session;
     }
     
-    public int getIdParticipant(){
-        return this.getParticipantDataConnection(this.hashRoom);
-    }
-
     private int getParticipantDataConnection(String hashConnection) {
         String data = hashConnection.substring(hashConnection.length() -1);
         return Integer.parseInt(data);

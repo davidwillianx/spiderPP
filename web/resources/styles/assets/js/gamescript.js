@@ -67,13 +67,13 @@ function bindMessage(message)
 }
 //@TODO  OS BUILDS DE CARDS TEM MESMO HTML (EXALTAR EM UMA VARIAVEL)
 
-function buildCardHidden(name)
+function buildCardHidden(otherUserCard)
 {
-    return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5">'
+    return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5" id="'+otherUserCard.userId+'">'
 
             + '<div class="tiles green text-center ">'
             + '<h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10" >?</h2>'
-            + '<div class="tiles-title blend p-b-25 text-white">' + name + '</div>'
+            + '<div class="tiles-title blend p-b-25 text-white">' + otherUserCard.userName + '</div>'
             + '<div class="clearfix"></div>'
             + '</div>'
             + '</div>';
@@ -86,8 +86,8 @@ function buildCardSelected(card)
     
     if(card.userId === usrPath)
         playerName = 'Eu';
-    
-   return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5">'
+    console.log(' MEU IDDD '+card.userId);
+   return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5" id="x'+card.userId+'">'
 
             + '<div class="tiles green text-center " id="myOption">'
             + '<h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10 card-value">' + card.value + '</h2>'

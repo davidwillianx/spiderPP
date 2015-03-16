@@ -60,10 +60,10 @@ public class GameSocket implements Serializable {
     private Participant participant;  
       
     @OnOpen       
-    public void onOpen(Session session, @PathParam("room") String room,@PathParam("user") String id, @PathParam("perfil") String perfil) {
+    public void onOpen(Session session, @PathParam("room") String room, @PathParam("user") String user, @PathParam("perfil") String perfil) {
         try { 
             
-            participant = new Participant(room, id, perfil, session);  
+            participant = new Participant(room, user, perfil, session);  
             
             if (participant.isScrumMaster()) {
                 
@@ -207,8 +207,8 @@ public class GameSocket implements Serializable {
 //                                            .build());       
 //                    game.sendBroadcastMessage(session, notice);  
 //        }  
-    }  
-  
+    }        
+   
     @OnClose    
     public void OnClose(Session session) {
         try {
@@ -216,11 +216,14 @@ public class GameSocket implements Serializable {
             Game game = this.getGame(session);
             participant = game.getParticipant(session);
             
-            game.sendBroadcastMessageWithoutSender(session, new Message(Json.createObjectBuilder().add("type", "notice").add("noticeType", "disconnection").add("participantOut", participant.getIdParticipant()).build()));
+            game.sendBroadcastMessageWithoutSender(session, new Message(Json.createObjectBuilder()
+                    .add("type", "notice")
+                    .add("noticeType", "disconnection")
+                    .add("participantOut", Json.createObjectBuilder().add("id", participant.getId())).add("isSm", participant.isScrumMaster()).build()));
             session.close();
              
         } catch (IOException ex) {  
-            
+             
             System.err.println(" <<< "+ ex.getMessage()); 
             Logger.getLogger(GameSocket.class.getName()).log(Level.SEVERE, null, ex);
         }
