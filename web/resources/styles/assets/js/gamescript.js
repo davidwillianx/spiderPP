@@ -84,13 +84,13 @@ function buildCardSelected(card)
 {
     var playerName  = card.userName;
     
-    if(card.userId === idUsuario)
+    if(card.userId === usrPath)
         playerName = 'Eu';
     
    return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5">'
 
             + '<div class="tiles green text-center " id="myOption">'
-            + '<h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10" id="myOptionValue">' + card.value + '</h2>'
+            + '<h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10 card-value">' + card.value + '</h2>'
             + '<div class="tiles-title blend p-b-25 text-white"> '+
             playerName
             +'</div>'
@@ -104,10 +104,13 @@ function myCardSelection(card)
 {
     userCardSelected = card;
     
-    if ($('#myOption').length === 0)
-        rowSelected.children('#my-choice').prepend(buildCardSelected(card));
-    else
-        $('#myOption #myOptionValue').html(card.value);
+    if ($.trim($('#my-choice').html()).length === 0){
+        $(buildCardSelected(card)).appendTo('#my-choice');
+        return;
+    }
+        
+    $('#my-choice .card-value').html(card.value);
+        
 }
 
 function userCardSelection(card)

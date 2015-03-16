@@ -66,7 +66,6 @@ public class GameSocket implements Serializable {
             participant = new Participant(room, id, perfil, session);  
             
             if (participant.isScrumMaster()) {
-                System.err.println(">>>>>>>>>>>>>> he is");
                 
                 Game game = new Game(participant);   
                 games.add(game);         
@@ -81,21 +80,21 @@ public class GameSocket implements Serializable {
                     } 
                     game.addUser(participant);   
                     this.loadPreviousMessage(session);
-                } else { 
+                } else {  
                     this.OnClose(session);       
                 }  
             } 
         } catch (IOException | EncodeException e) {     
-            //Call OnError 
-            System.err.println("Do something" + e.getMessage());
+            //Call OnError  
+            System.err.println("Do something" + e.getMessage()); 
         }  
-    }     
-       
+    }            
+        
     //BAM BAM BAM REFACTORY DETECTED PAY ATTENTION SR 
     @OnMessage
     public void OnMessage(Session session, Message message) {
-        try {  
-     
+        try {   
+      
               Game game  = this.getGame(session);
                    
                                   

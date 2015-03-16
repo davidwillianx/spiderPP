@@ -66,7 +66,7 @@ $(document).ready(function(){
             gameSocket.send({"id":story.getId(),"type":"taskSelected"});
     });
     
-    $('#game-start').click(function(e){
+    $(  '#game-start').click(function(e){
          e.preventDefault();
          
          gameSocket.cards.anotherUsers.splice(0,gameSocket.cards.anotherUsers.length);
@@ -89,7 +89,7 @@ $(document).ready(function(){
     });
     
     $('.opt-card').click(function(e){
-        var card = {"type":"card","value":$(this).attr('rate'),"userName":author,"userId":idUsuario};
+        var card = {"type":"card","value":$(this).attr('rate'),"userName":author,"userId":gameSocket.dataConnection.usr};
         gameSocket.cards.my = card;
         gameSocket.send(card);
         myCardSelection(card);
