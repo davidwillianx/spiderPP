@@ -87,7 +87,7 @@ function buildCardSelected(card)
     if(card.userId === usrPath)
         playerName = 'Eu';
     console.log(' MEU IDDD '+card.userId);
-   return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5" id="x'+card.userId+'">'
+   return  showCard = '<div class="col-md-2 col-xs-5 no-padding m-r-5" id="'+card.userId+'">'
 
             + '<div class="tiles green text-center " id="myOption">'
             + '<h2 class="semi-bold text-white  weather-widget-big-text no-margin p-t-20 p-b-10 card-value">' + card.value + '</h2>'

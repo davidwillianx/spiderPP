@@ -89,8 +89,13 @@ $(document).ready(function(){
     });
     
     $('.opt-card').click(function(e){
-        var card = {"type":"card","value":$(this).attr('rate'),"userName":author,"userId":usrPath};
-        console.log('Escolhi '+ card.userId);
+        var card = {
+            "type":"card"
+            ,"value": $(this).attr('rate')
+            ,"userName": author
+            ,"userId": usrPath};
+        
+        console.log('Escolhi '+ gameSocket.dataConnection.usr);
         gameSocket.cards.my = card;
         gameSocket.send(card);
         myCardSelection(card);

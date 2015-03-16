@@ -237,7 +237,7 @@ public class GameSocket implements Serializable {
                  Message message = new Message(Json.createObjectBuilder().add("author", mensagem.getUsuario().getNome())
                     .add("message", mensagem.getTexto())
                     .add("idProjeto", mensagem.getProjeto().getId())
-                    .add("idUsuario", mensagem.getUsuario().getId()) 
+                    .add("idUsuario", mensagem.getUsuario().getId())  
                     .add("type", "chatMessage")
                     .build()); 
             
@@ -264,7 +264,7 @@ public class GameSocket implements Serializable {
         }   
         //Possivelmente trocado por uma exception (NotFoundException)
         return null;
-    }      
+    }           
         
       
     private JsonObject buildJsonSubtaskList(Estoria estoriaSubtasksOwner) {
@@ -277,7 +277,7 @@ public class GameSocket implements Serializable {
                     .add("id", estoria.getEstoriaPK().getId())
                     .add("name", estoria.getNome())
                     .add("description", estoria.getDescricao())
-                    .add("date", estoria.getDescricao()));
+                    .add("date", estoria.getDescricao())); 
         }
 
         return Json.createObjectBuilder().add("stories", storiesJson).build();
