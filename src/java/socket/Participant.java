@@ -58,7 +58,7 @@ public class Participant {
     public int getIdPerfil() {
         return this.idPerfil;
     }
-
+ 
     public String getHashRoom()
     {
        return this.hashRoom;
@@ -66,9 +66,8 @@ public class Participant {
 
     public boolean  isScrumMaster()
     {
-        return this.idPerfil == this.SM;
-    }
-    
+         return this.idPerfil == Participant.SM;
+    }    
     public Session getSession()
     {
         return this.session;

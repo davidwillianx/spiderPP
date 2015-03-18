@@ -200,9 +200,9 @@ public class GameSocket implements Serializable {
 //            //Call on error and close connection
 //            System.err.println("Problema" + error.getMessage());
 //            Message  notice = new Message(Json.createObjectBuilder()  
-//                                            .add("type", "notice")
+//                                            .add("type", "notice") 
 //                                            .add("message", "Problema na estimativa"
-//                                                    +"tente novamente")
+//                                                    +"tente novamente") 
 //                                            .add("kind", "error")   
 //                                            .build());       
 //                    game.sendBroadcastMessage(session, notice);  
@@ -210,7 +210,7 @@ public class GameSocket implements Serializable {
     }        
    
     @OnClose    
-    public void OnClose(Session session) {
+    public void OnClose(Session session) { 
         try {
             
             Game game = this.getGame(session);
@@ -218,12 +218,17 @@ public class GameSocket implements Serializable {
             
             game.sendBroadcastMessageWithoutSender(session, new Message(Json.createObjectBuilder()
                     .add("type", "notice")
-                    .add("noticeType", "disconnection")
-                    .add("participantOut", Json.createObjectBuilder().add("id", participant.getId())).add("isSm", participant.isScrumMaster()).build()));
+                    .add("noticeType", "disconnection") 
+                    .add("participantOut", 
+                            Json.createObjectBuilder()
+                            .add("id", participant.getId())
+                            .add("isSM", participant.isScrumMaster()))
+                    .build()));
+            
             session.close();
-             
-        } catch (IOException ex) {  
-             
+                          
+        } catch (IOException ex) {   
+                     
             System.err.println(" <<< "+ ex.getMessage()); 
             Logger.getLogger(GameSocket.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -254,7 +259,7 @@ public class GameSocket implements Serializable {
         //Possivelmente trocado por uma exception (NotFoundException)
         return null;
     }
-      
+       
     private Game getGameByProject(int idProjeto)
     {
          for (Game game : games) {

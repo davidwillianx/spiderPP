@@ -281,7 +281,7 @@ var story = {
             this.setBlueStatus();
             this.setWhiteStatus();
         }
-        this.htmlElement.circle = jqStoryHtml.find('.activity');
+        this.htmlElement.circle = jqStoryHtml.find('.user-profile-pic-wrapper');
         this.htmlElement.row = jqStoryHtml;
     },
     setGreenStatus: function(){
@@ -445,13 +445,16 @@ function notice(message){
     
     if(message.noticeType === 'disconnection')
     {
-        if(message.participantOut.isSm)
-            showModalDialog(message.participantOut,'SM saiu');
+        if(message.participantOut.isSM)
+        {
+            showModalDialog('O Lider do projeto saiu, o jogo será encerrado <a href="../projeto" class="btn btn-success">Voltar</a>', 'Aviso');
+            $('.page-content').block({message:'ir para area do projeto <a href="../projeto" class="btn btn-success">Voltar</a>'});
+            return;
+        }
         
-        showModalDialog(message.participantOut,'TEAM saiu saiu');
+        showModalDialog('Participante da rodada saiu, sua estimativa será removida', 'Aviso');
+        $('#'+message.participantOut.id).fadeOut().remove();    
     }
-    
-    
 }
  
 
