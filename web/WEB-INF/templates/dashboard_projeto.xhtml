@@ -56,7 +56,7 @@
                             <!--<h:panelGroup layout="block" style="padding-top:  6px" rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) != 1}">-->
                                 <h:outputLink  class="btn btn-primary btn-large" value="poker.xhtml">
                                     <h:outputText value="Iniciar Estimativa " rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) == 1}"/> 
-                                    <h:outputText value="Iniciar Estimativa " rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) != 1}"/> 
+                                    <h:outputText value="Participar do Jogo " rendered="#{projetoController.showUserProjetoPersmission(projeto.id  ,usuario.id) != 1}"/> 
                                     <f:param name="rm" value="#{projetoController.showHashProject(projeto.id)}"/>
                                     <f:param name="usr" value="#{projetoController.showHashUsuario(usuario.id)}"/>
                                     <f:param name="pr" value="#{projetoController.showHashPerfil(usuario.id,projeto.id)}"/>
@@ -127,7 +127,7 @@
                             </li>
                         </h:panelGroup>
                         <li class="">
-                            <a href="editar.xhtml">
+                            <a href="resultados.xhtml">
                                 <i class="fa-2x fa fa-rocket"></i>
                                 <span class="title">Relatórios/Estatísticas</span>
                             </a>
