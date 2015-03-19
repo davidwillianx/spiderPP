@@ -144,5 +144,15 @@ public class EstoriaController {
             return null;
         }
     }
-
+    
+    public double showEstoriaPercentageRated(int idProjeto){
+        long numberOfRated = iEstoria.selectNumberOfRated(idProjeto);
+        int numbeOfEstoria = iEstoria.selectEstorias().size();
+        
+        double ratedPercentage = (100  * numberOfRated )/numbeOfEstoria;
+    
+        
+        return ratedPercentage;
+        
+    }
 }

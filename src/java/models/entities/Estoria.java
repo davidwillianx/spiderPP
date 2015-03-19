@@ -36,9 +36,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estoria.findByNome", query = "SELECT e FROM Estoria e WHERE e.nome = :nome"),
     @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status"),
     @NamedQuery(name = "Estoria.findAllChildren", query = "SELECT s FROM Estoria e JOIN e.subtasks s WHERE e.estoriaPK.id = :id"),
-    @NamedQuery(name = "Estoria.findAllParents", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id NOT IN (SELECT s.estoriaPK.id FROM Estoria e JOIN e.subtasks s)")
-
+    @NamedQuery(name = "Estoria.findAllParents", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id NOT IN (SELECT s.estoriaPK.id FROM Estoria e JOIN e.subtasks s)"),
+    @NamedQuery(name = "Estoria.numberOfRated", query = "SELECT COUNT(e.estoriaPK.id) FROM Estoria e JOIN e.estimativaCollection ec WHERE e.projeto.id = :idProjeto GROUP BY ec.estimativaPK.idEstoria")
 }) 
+
 public class Estoria implements Serializable {
  
     @Column(name = "data_criacao")

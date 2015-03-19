@@ -212,11 +212,14 @@ public class EstoriaBean implements IEstoria {
     }
     
     
-    
-    
-    
-    
-    
+    @Override
+    public long selectNumberOfRated(int idProjeto){
+        long numberRated = (Long) entityManager.createNamedQuery("Estoria.numberOfRated")
+                                .setParameter("idProjeto", idProjeto)
+                                .getSingleResult();
+        
+        return numberRated;
+    }
     
     
     //----------------------------- under supervision

@@ -29,7 +29,7 @@ public interface IEstoria {
     public float meanEstorias ();
     public Estoria selectEstoriaByIdS(int idEstoria);
     public List<Estoria> selectAllChildren(int idEstoria);
-    
+    public long selectNumberOfRated(int idProjeto);
     
     public List<Estoria> selectParentEstorias();
 }

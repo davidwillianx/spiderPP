@@ -37,7 +37,7 @@ public class Estimativa implements Serializable {
     
     @JoinColumns({
         @JoinColumn(name = "id_estoria", referencedColumnName = "id", insertable = false, updatable = false),
-        @JoinColumn(name = "id", referencedColumnName = "id",insertable = false, updatable = false)
+        @JoinColumn(name = "id_estoria", referencedColumnName = "id",insertable = false, updatable = false)
     })
     @ManyToOne(optional = false)
     private Estoria estoria;
