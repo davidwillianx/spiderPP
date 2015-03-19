@@ -104,34 +104,35 @@
                             </ul>
                         </li>
                         <li class="">
-                            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 3}">
+                            <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 2}">
                                 <h:link outcome="criar_estoria.xhtml">
                                     <i class="icon-custom-newpage"></i>
                                     <span class="title">Adicionar Estorias</span>
                                 </h:link>
                             </h:panelGroup>
                         </li>
-                        <h:panelGroup layout="block">
+                        <h:panelGroup layout="block" rendered="#{projetoController.showUserProjetoPersmission(projeto.id, usuario.id) == 1}">
                             <li class="">
-                            <a href="incluir_membros_projeto.xhtml">
-                                <i class="fa  fa-group"></i>
-                                <span class="title">Gerenciar  Membros</span>
-                            </a>
-                        </li>
+                                <a href="incluir_membros_projeto.xhtml">
+                                    <i class="fa  fa-group"></i>
+                                    <span class="title">Gerenciar  Membros</span>
+                                </a>
+                            </li>
 
-                        <li class="">
-                            <a href="editar.xhtml">
-                                <i class="fa fa-pencil-square"></i>
-                                <span class="title">Editar Projeto</span>
-                            </a>
-                        </li>
+                            <li class="">
+                                <a href="editar.xhtml">
+                                    <i class="fa fa-pencil-square"></i>
+                                    <span class="title">Editar Projeto</span>
+                                </a>
+                            </li>
+                        </h:panelGroup>
                         <li class="">
                             <a href="editar.xhtml">
                                 <i class="fa-2x fa fa-rocket"></i>
                                 <span class="title">Relatórios/Estatísticas</span>
                             </a>
                         </li>
-                        </h:panelGroup>
+                        
                         
                         
                         <li class="">
