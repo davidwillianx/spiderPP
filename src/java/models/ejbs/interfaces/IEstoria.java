@@ -9,6 +9,7 @@ package models.ejbs.interfaces;
 import java.util.Collection;
 import java.util.List;
 import models.entities.Estoria;
+import models.entities.resultQueries.RatePerDay;
 
 
 /**
@@ -31,5 +32,9 @@ public interface IEstoria {
     public List<Estoria> selectAllChildren(int idEstoria);
     public long selectNumberOfRated(int idProjeto);
     
+    
+    
     public List<Estoria> selectParentEstorias();
+    
+    public List<RatePerDay> selectSummedRatePerDay(int idProjeto);
 }

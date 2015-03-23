@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estoria.findByStatus", query = "SELECT e FROM Estoria e WHERE e.status = :status"),
     @NamedQuery(name = "Estoria.findAllChildren", query = "SELECT s FROM Estoria e JOIN e.subtasks s WHERE e.estoriaPK.id = :id"),
     @NamedQuery(name = "Estoria.findAllParents", query = "SELECT e FROM Estoria e WHERE e.estoriaPK.id NOT IN (SELECT s.estoriaPK.id FROM Estoria e JOIN e.subtasks s)"),
-    @NamedQuery(name = "Estoria.numberOfRated", query = "SELECT COUNT(e.estoriaPK.id) FROM Estoria e JOIN e.estimativaCollection ec WHERE e.projeto.id = :idProjeto GROUP BY ec.estimativaPK.idEstoria")
+    @NamedQuery(name = "Estoria.numberOfRated", query = "SELECT COUNT(e.estoriaPK.id) FROM Estoria e JOIN e.estimativaCollection ec WHERE e.projeto.id = :idProjeto GROUP BY e.estoriaPK.idProjeto"),
+    @NamedQuery(name = "Estoria.summedRateForEachDay " , query = "SELECT NEW models.entities.resultQueries.RatePerDay(SUM(es.pontuacao), es.data) FROM Estoria e JOIN e.estimativaCollection es WHERE e.estoriaPK.idProjeto = :idProjeto GROUP BY es.data")
 }) 
 
 public class Estoria implements Serializable {

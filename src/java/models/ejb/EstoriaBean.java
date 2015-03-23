@@ -25,6 +25,7 @@ import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.EstoriaPK;
 import models.entities.Projeto;
+import models.entities.resultQueries.RatePerDay;
 
 /**
  *
@@ -222,6 +223,17 @@ public class EstoriaBean implements IEstoria {
     }
     
     
+    
+    @Override
+    public List<RatePerDay> selectSummedRatePerDay(int idProjeto) {
+       List<RatePerDay> summedRatePerDays = entityManager.createNamedQuery("Estoria.summedRateForEachDay ")
+                            .setParameter("idProjeto", idProjeto).getResultList();
+       
+        
+       return summedRatePerDays;
+    }
+
+    
     //----------------------------- under supervision
     
      @Override
@@ -258,6 +270,7 @@ public class EstoriaBean implements IEstoria {
         }
     }
 
+    
 
     
 

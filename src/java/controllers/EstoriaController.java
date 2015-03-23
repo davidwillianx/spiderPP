@@ -14,6 +14,7 @@ import libs.Redirect;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Projeto;
+import models.entities.resultQueries.RatePerDay;
  
 /**
  *
@@ -153,6 +154,9 @@ public class EstoriaController {
     
         
         return ratedPercentage;
-        
+    }
+    
+    public  List<RatePerDay> showSummedRatePerDays( int idProjeto ){
+        return iEstoria.selectSummedRatePerDay(idProjeto);
     }
 }

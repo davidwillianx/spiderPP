@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Estimativa.findAll", query = "SELECT e FROM Estimativa e"),
     @NamedQuery(name = "Estimativa.findById", query = "SELECT e FROM Estimativa e WHERE e.estimativaPK.id = :id"),
     @NamedQuery(name = "Estimativa.findByIdEstoria", query = "SELECT e FROM Estimativa e WHERE e.estimativaPK.idEstoria = :idEstoria"),
-    @NamedQuery(name = "Estimativa.findByData", query = "SELECT e FROM Estimativa e WHERE e.data = :data")})
+    @NamedQuery(name = "Estimativa.findByData", query = "SELECT e FROM Estimativa e WHERE e.data = :data")
+})
 public class Estimativa implements Serializable {
     
     @JoinColumns({

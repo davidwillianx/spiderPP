@@ -25,12 +25,65 @@
             </div>
         </div>
         <div class="row">
-        
+
+            <div class="col-md-12">
+                <div class="grid simple">
+                    <div class="grid-title">
+                        <h4 class="semi-bold ">Being better</h4>
+                    </div>
+                    <div class="grid-body no-border">
+                        <div class="row">
+                            
+                            <div class="col-md-6">
+                            <h4>Morris <span class="semi-bold">Line Charts</span></h4>
+                            <p> Line graphs are probably the most widely used graph for showing trends.
+                                Chart.js has a ton of customisation features for line graphs, along with support for multiple datasets to be plotted on one chart. </p>
+                            <div id="x">
+                                <c:forEach items="#{estoriaController.showSummedRatePerDays(projeto.id)}" var="ratePerDay">
+                                    rate : #{ratePerDay.summedRate} / day : #{ratePerDay.day}
+                                </c:forEach>
+                            </div>
+                        </div>
+                        </div>
+                        
+
+ 
+                    </div>
+                </div>
+            </div>    
+            
+            
         </div>
         
-        
-            
-        
+        <h:outputScript library="styles" name="assets/plugins/raphael/raphael-min.js"/>  
+       <h:outputScript library="styles" name="assets/plugins/Chartjs/Chart.min.js"/>  
+       <h:outputStylesheet library="styles" name="assets/plugins/jquery-morris-chart/css/morris.min.css"/>
+       <h:outputScript library="styles" name="assets/plugins/jquery-morris-chart/js/morris.min.js"/>  
+       <h:outputScript library="styles" name="assets/plugins/jquery-sparkline/jquery-sparkline.min.js"/> 
+       
+       <script type="text/javascript ">
+
+       	Morris.Line({
+	  element: 'line-example',
+	  data: [
+		{ y: '2006', a: 50, b: 40 },
+		{ y: '2007', a: 65,  b: 55 },
+		{ y: '2008', a: 50,  b: 40 },
+		{ y: '2009', a: 75,  b: 65 },
+		{ y: '2010', a: 50,  b: 40 },
+		{ y: '2011', a: 75,  b: 65 },
+		{ y: '2012', a: 100, b: 90 }
+	  ],
+	  xkey: 'y',
+	  ykeys: ['a', 'b'],
+	  labels: ['Series A', 'Series B'],
+	  lineColors:['#0aa699','#d1dade'],
+	});
+	
+	
+
+       </script>
+       
     </ui:define>
 
 </ui:composition>
