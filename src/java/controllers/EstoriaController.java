@@ -9,12 +9,17 @@ import java.util.List;
 import javax.ejb.EJB; 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import libs.BuildMessage; 
 import libs.Redirect;
 import models.ejbs.interfaces.IEstoria;
 import models.entities.Estoria;
 import models.entities.Projeto;
-import models.entities.resultQueries.RatePerDay;
+import models.entities.resultQueries.ProjectStoryStatistic;
  
 /**
  *
@@ -156,7 +161,26 @@ public class EstoriaController {
         return ratedPercentage;
     }
     
-    public  List<RatePerDay> showSummedRatePerDays( int idProjeto ){
-        return iEstoria.selectSummedRatePerDay(idProjeto);
+    public  JsonArray showSummedRatePerDays( int idProjeto ){
+        try {
+            List<ProjectStoryStatistic> ratesPerDays = iEstoria.selectSummedRatePerDay(idProjeto);
+            
+            JsonArrayBuilder summedRatesPerDay = Json.createArrayBuilder();
+            
+            for (ProjectStoryStatistic ratePerDay : ratesPerDays ){
+                
+                JsonObjectBuilder jsonSummedRate = Json.createObjectBuilder()
+                                       .add("day", ratePerDay.getDay())
+                                       .add("sumdRate", ratePerDay.getSummedRate());
+                
+                summedRatesPerDay.add(jsonSummedRate);
+            }
+            
+            return summedRatesPerDay.build();
+            
+        } catch (Exception e) {
+            return null ;//LOOOOGGGGG
+        }
+        
     }
 }
