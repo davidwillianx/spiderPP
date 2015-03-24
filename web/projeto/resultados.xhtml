@@ -13,34 +13,46 @@
     <ui:define name="content-dashboard" >
             
         <div class="row  m-b-5">
-            <div class="tiles blue added-margin">
-                <div class="tiles-body">
 
-                    <div class="tiles-title"> <i class=" fa fa-2x fa-dashboard m-l-5"/> TOTAL DE ESTORIAS ESTIMADAS </div>
-                    <div class="heading"> <span class="animate-number" data-value="#{estoriaController.showEstoriaPercentageRated(projeto.id)}" data-animation-duration="1200">#{estoriaController.showEstoriaPercentageRated(projeto.id)}</span>% </div>
-                    <div class="progress transparent progress-small no-radius">
-                        <div style="width: 0%;" class="progress-bar progress-bar-white animate-progress-bar" data-percentage="#{estoriaController.showEstoriaPercentageRated(projeto.id)}"></div>
+            <div class="col-md-12">
+                <div class="tiles blue added-margin">
+                    <div class="tiles-body">
+
+                        <div class="tiles-title"> <i class=" fa fa-2x fa-dashboard m-l-5"/> TOTAL DE ESTORIAS ESTIMADAS </div>
+                        <div class="heading"> <span class="animate-number" data-value="#{estoriaController.showEstoriaPercentageRated(projeto.id)}" data-animation-duration="1200">#{estoriaController.showEstoriaPercentageRated(projeto.id)}</span>% </div>
+                        <div class="progress transparent progress-small no-radius">
+                            <div style="width: 0%;" class="progress-bar progress-bar-white animate-progress-bar" data-percentage="#{estoriaController.showEstoriaPercentageRated(projeto.id)}"></div>
+                        </div>
                     </div>
                 </div>
             </div>
+            
         </div>
         <div class="row">
 
             <div class="col-md-12">
                 <div class="grid simple">
                     <div class="grid-title">
-                        
                     </div>
                     <div class="grid-body no-border">
                         <div class="row">
                             
                             <div class="col-md-6">
-                            <h4>Soma das estimativas por dia</h4>
-                            <p> Aqui você pode obersar qual foi a quantidade de pontos atingida por dia de estimativa</p>
-                            <div id="summedrate-days">
-                                
+                                <h4>Soma das estimativas por dia</h4>
+                                <p> Aqui você pode obersar qual foi a quantidade de pontos atingida por dia de estimativa</p>
+                                <div id="summedrate-days">
+
+                                </div>
                             </div>
-                        </div>
+                            
+                            <div class="col-md-6">
+                                <h4>Quantidade de estorias por estimativa</h4>
+                                <p>Para cada estimativa quantas estórias com essa valor esta possui</p>
+                                <div id="rate-donut">
+
+                                </div>
+                            </div>
+                            
                         </div>
                         
 
@@ -60,6 +72,7 @@
        
        <script type="text/javascript ">
          var summedRatesPerDays = #{estoriaController.showSummedRatePerDays(projeto.id)};
+         var quantityForEachRate = #{estoriaController.showJsonQuantityForEachRate(projeto.id)};
          
          
        	Morris.Line({
@@ -70,6 +83,11 @@
 	  labels: ['Soma das Estimativas'],
 	  lineColors:['#0aa699','#d1dade'],
 	});
+        
+        Morris.Donut({
+          element: 'rate-donut',
+          data: quantityForEachRate
+        });
 	
 	
 

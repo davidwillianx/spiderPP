@@ -31,6 +31,7 @@ public interface IEstoria {
     public Estoria selectEstoriaByIdS(int idEstoria);
     public List<Estoria> selectAllChildren(int idEstoria);
     public long selectNumberOfRated(int idProjeto);
+    public List<Object[]> selectQuantityOfRate(int idProjeto);
     
     
     

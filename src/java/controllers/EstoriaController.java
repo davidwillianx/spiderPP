@@ -5,6 +5,7 @@
  */
 package controllers;
  
+import java.math.BigDecimal;
 import java.util.List; 
 import javax.ejb.EJB; 
 import javax.enterprise.context.RequestScoped;
@@ -181,6 +182,22 @@ public class EstoriaController {
         } catch (Exception e) {
             return null ;//LOOOOGGGGG
         }
-        
+    }
+    
+    public JsonArray showJsonQuantityForEachRate(int idProjeto){
+        try {
+            List<Object[]> quantityForEachRate = iEstoria.selectQuantityOfRate(idProjeto);
+            
+            JsonArrayBuilder jsonQuantity = Json.createArrayBuilder();
+            
+            for (Object[] quantityRate : quantityForEachRate){
+                JsonObjectBuilder jsonQuantiyRate = Json.createObjectBuilder().add("label", Integer.parseInt(quantityRate[0].toString())).add("value", Integer.parseInt(quantityRate[1].toString()));
+                jsonQuantity.add(jsonQuantiyRate);
+            }
+            
+            return jsonQuantity.build();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

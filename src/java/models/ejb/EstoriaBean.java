@@ -232,6 +232,12 @@ public class EstoriaBean implements IEstoria {
         
        return summedRatePerDays;
     }
+    
+    @Override
+    public List<Object[]> selectQuantityOfRate(int idProjeto) {
+        List<Object[]> quantityForEachRate = entityManager.createNamedQuery("Estoria.quantityForEachRate").setParameter("idProjeto", idProjeto).getResultList();
+        return quantityForEachRate;
+    }
 
     
     //----------------------------- under supervision
@@ -269,6 +275,8 @@ public class EstoriaBean implements IEstoria {
             throw new NoPersistException("Falha no metodo que gera o total das estimativas");
         }
     }
+
+
 
     
 
