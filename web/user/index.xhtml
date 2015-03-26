@@ -10,95 +10,48 @@
 
     <!-- ADICIONE CONTEUDO NESTA TAG -->
     <ui:define name="content-dashboard">
-
-        <h:panelGroup layout="block" class="row">
-            <h:panelGroup layout="block" class="col-lg-8">
-
-                <ui:repeat value="#{projetoController.projetos}" var="projeto">
-                    <h:panelGroup layout="block" class="col-lg-6 m-b-20">
-                        <h:panelGroup layout="block" class="widget-item">
-                            <h:panelGroup layout="block" class="tiles green" style="max-height:345px">
-                                <h:panelGroup layout="block" class="tiles-body">
-                                    <h3 class="text-white m-t-30 m-b-30 m-r-20">
-                                        <span class="semi-bold">
-                                            <h:outputText value="#{projeto.nome}"/>
-                                        </span>
-                                    </h3>
-                                    <h:form>
-                                        <h:commandButton class="btn btn-info btn-small" action="#{projetoController.signProjeto(projeto.id)}" value="Acessar" />
-                                    </h:form>
-                                        <h:panelGroup layout="block" class="overlayer bottom-right fullwidth">
-                                            <h:panelGroup layout="block" class="overlayer-wrapper">
-                                                <h:panelGroup layout="block" class=" p-l-20 p-r-20 p-b-20 p-t-20">
-                                                    <h:panelGroup layout="block" class="pull-right">
-                                                        <span data-toggle="tooltip" data-placement="right" title="Perfil de acesso" class="hashtags">
-                                                            #{projetoController.showMemberProfileDescription(usuario.id, projeto.id)}
-                                                        </span>
-                                                                                                               </h:panelGroup>
-                                                </h:panelGroup>
-                                            </h:panelGroup>
-                                        </h:panelGroup>
-                                        
-                                </h:panelGroup>
-                                <h:panelGroup layout="block" class="tiles white">
-                                    <h:panelGroup layout="block" class="tiles-body">
-                                        <h:panelGroup layout="block" class="row">
-                                            <h:panelGroup layout="block" class="user-comment-wrapper pull-left">
-                                                <h:panelGroup layout="block" class="comment">
-                                                    <p>
-                                                        <span class="user-name text-black bold">
-                                                            Descri&ccedil;&atilde;o
-                                                        </span>
-                                                        <span class="preview-wrapper">Inicio 
-                                                            <h:outputText value="#{projeto.dataInicio}">
-                                                                <f:convertDateTime parent="d-m-yyyy"/>
-                                                            </h:outputText>
-                                                        </span>
-                                                    </p>
-                                                </h:panelGroup>
-                                                
-                                            </h:panelGroup>
-                                            <div class="clearfix"></div>
-                                            <h:panelGroup layout="block" class="p-l-15 p-t-10 p-r-20" >
-                                                <!--scroll com menor altura-->
-                                                    <h:panelGroup layout="block" class="scrollerx">
-                                                        <p><h:outputText value="#{projeto.descricao}"/> </p>
-                                                    </h:panelGroup>
-                                            </h:panelGroup>
-                                        </h:panelGroup>
-                                    </h:panelGroup>
-                                </h:panelGroup>
-                            </h:panelGroup>
-                        </h:panelGroup>
-                    </h:panelGroup>
-                </ui:repeat>
-
-            </h:panelGroup>
-        </h:panelGroup>
             
         <div class="row">
             
             <c:forEach items="#{projetoController.projetos}" var="userProject">
-                
-                <div class="col-md-4">
-                    
-                    <!--<div class="widget-item">-->
-                    <div class="tiles green">
-                        <div class="tiles-body">
-                            <h3 class="text-white m-t-30 m-b-30">
-                                <span class="semi-bold">#{userProject.nome}</span>
-                            </h3>
-                            <h:form>
-                                <h:commandButton class="btn btn-info btn-small" action="#{projetoController.signProjeto(userProject.id)}" value="Acessar"/>
-                            </h:form>
-                            <div class="overlayer bottom-right fullwidth">
-                                Something Happened
+
+                <div class="col-md-3 m-b-5">
+
+                    <div class="widget-item">
+                        <div class="tiles green">
+                            <div class="tiles-body">
+                                <h3 class="text-white m-t-50 m-b-30 m-r-20">
+                                    <span class="semi-bold">#{userProject.nome}</span>
+                                </h3>
+                                <h:form>
+                                    <h:commandButton class="btn btn-info btn-small" action="#{projetoController.signProjeto(userProject.id)}" value="Acessar"/>
+                                </h:form>
                             </div>
                         </div>
+                        <div class="tiles white">
+                            <div class="tiles-body">
+                                <div class="row">
+                                    <div class="user-comment-wrapper pull-left">
+                                        <div class="comment">
+                                            <div class="user-name text-black bold">#{projetoController.showMemberProfileDescription(usuario.id, userProject.id)}</div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="pull-right m-r-20">
+                                        Início: 
+                                        <h:outputText value="#{userProject.dataInicio}">
+                                            <f:convertDateTime/>
+                                        </h:outputText>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="p-l-10 p-t-10 p-r-20">
+                                        <p>#{userProject.descricao}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                        
-                    <!--</div>-->
-                    
                 </div>
                 
             </c:forEach>
