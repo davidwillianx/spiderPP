@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package libs.exception;
 
 /**
  *
- * @author smp
+ * @author davidwillianx
  */
-public class NotFoundException extends RuntimeException{
-    public NotFoundException(String message, Throwable error)
-    {
+public class NotFoundProjetoException extends NotFoundException{
+
+    public NotFoundProjetoException(String message, Throwable error) {
         super(message, error);
     }
 }

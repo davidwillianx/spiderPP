@@ -15,8 +15,8 @@ package libs.exception;
  * @author smp
  */
 public class BusinessException extends RuntimeException{
-    public BusinessException(String message)
+    public BusinessException(String message, Throwable error)
     {
-        super(message);
+        super(message, error);
     }
 }

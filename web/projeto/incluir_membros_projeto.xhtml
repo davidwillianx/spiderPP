@@ -8,7 +8,7 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <ui:define name="content-dashborad">
+    <ui:define name="content-dashboard">
 
         <h:panelGroup layout="block" id="project_user_manager" class="row">
             <h:messages globalOnly="true" class="alert alert-info fade in" errorStyle="alert alert-info fade in" showSummary="false"  showDetail="true"/>
@@ -62,7 +62,7 @@
                                                 <f:facet name="header">-</f:facet>
                                                 <h:panelGroup layout="block" rendered="#{ usuarioOfProjeto.idUsuario != usuario.id}">
                                                     <h:form>
-                                                        <h:commandButton  class=" btn btn-purple btn-small" value="x" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.idUsuario)}">
+                                                        <h:commandButton  class=" btn btn-purple btn-small" value="remover" action="#{userProjetoController.removeUsuarioToProjeto(usuarioOfProjeto.idUsuario)}">
                                                             <f:ajax render=":grid_users" />
                                                         </h:commandButton>
                                                     </h:form>
@@ -115,7 +115,7 @@
                                                         <f:selectItems value="#{controllerPerfil.perfis}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil.id}"/>
                                                     </h:selectOneMenu>
 
-                                                    <h:commandButton class="m-l-10 btn btn-small btn-dark" value="+" action="#{userProjetoController.inviteUserProjetoWithPerfil(usuarioOutOfProjeto)}">
+                                                    <h:commandButton class="m-l-10 btn btn-small btn-dark" value="adicionar" action="#{userProjetoController.inviteUserProjetoWithPerfil(usuarioOutOfProjeto)}">
                                                         <f:ajax  execute="@form" render=":project_user_manager" />
                                                     </h:commandButton>
 

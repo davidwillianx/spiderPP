@@ -170,7 +170,7 @@ public class UsuarioBean implements IUsuario{
            return this.usuarios;
             
         }catch(Exception error){
-            throw  new NotFoundException("Falha na consulta de usuários");
+            throw  new NotFoundException("Falha na consulta de usuários", error);
         }
     } 
 
@@ -187,9 +187,9 @@ public class UsuarioBean implements IUsuario{
             this.iAcessar.save(perfil, this.usuario, this.projeto);
          
         }catch(NoPersistException error){
-            throw  new BusinessException("Falha na persistência");
+            throw  new BusinessException("Falha na persistência", error);
         }catch(Exception error){
-            throw new BusinessException("Falha na persistência");
+            throw new BusinessException("Falha na persistência", error);
         }
     }
 
@@ -223,7 +223,7 @@ public class UsuarioBean implements IUsuario{
                                    .getResultList();
          
          }catch(Exception error){
-             throw  new NotFoundException("Falha ao encontrar resultados");
+             throw  new NotFoundException("Falha ao encontrar resultados", error);
          }
      }
     
@@ -244,7 +244,7 @@ public class UsuarioBean implements IUsuario{
             
         }catch(NoRemoveException error)
         {
-            throw new BusinessException("Falha na exclusão");
+            throw new BusinessException("Falha na exclusão", error);
         }
         
         
@@ -270,7 +270,7 @@ public class UsuarioBean implements IUsuario{
             
         }catch(UnsupportedEncodingException error){
             
-            throw new BusinessException("Falha na operação");
+            throw new BusinessException("Falha na operação", error);
         }
     }
 
@@ -280,7 +280,7 @@ public class UsuarioBean implements IUsuario{
         try{
             return   entityManager.find(Usuario.class, idUsuario);
         }catch(Exception error){
-            throw new NotFoundException("Falha ao encontrar usario");
+            throw new NotFoundException("Falha ao encontrar usario", error);
         }
     }
     

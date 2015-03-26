@@ -16,5 +16,8 @@ import models.entities.Perfil;
 public interface IPerfil {
     Perfil findPerfil(int idPerfil);
     Perfil selectPerfilByIdUsuarioAndIdProjeto(int idProjeto, int idUsuario);
+    Perfil selectUserProfileByProjctIdAndUserId(int projectId, int userId);
     List<Perfil> selectAll();
+    
+    
 }

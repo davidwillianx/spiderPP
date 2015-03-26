@@ -39,7 +39,7 @@ public class AcessarBean implements IAcessar{
                 this.entityManager.persist(acessar);
                 
         } catch (Exception error) {
-            throw new NoPersistException("Falha na vincular");
+            throw new NoPersistException("Falha na vincular", error);
         }
     }
 

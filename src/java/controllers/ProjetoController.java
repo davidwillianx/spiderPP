@@ -1,7 +1,10 @@
 package controllers;
 
+
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -10,9 +13,13 @@ import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
 import libs.exception.BusinessException;
+import libs.exception.FindProjectException;
+import libs.exception.NoPersistProjetoException;
+import libs.exception.NotFoundProjetoException;
 import models.ejbs.interfaces.IAcessar;
 import models.ejbs.interfaces.IProjeto;
 import models.entities.Projeto;
+
 
 /**
  *
@@ -22,9 +29,11 @@ import models.entities.Projeto;
 @RequestScoped
 public class ProjetoController {
     
+    private static final Logger LOGGER = Logger.getLogger(ProjetoController.class.getName());
+    
     private Projeto projeto = new Projeto();
     private Redirect redirect;
-    private BuildMessage buildMessage;
+    private BuildMessage buildMessage = new BuildMessage();
     private String pkm;
     private List<Projeto> projetos;
     
@@ -46,63 +55,65 @@ public class ProjetoController {
     public Projeto getProjeto() {
         return this.projeto;
     }
-
-    public void signProjeto(int idProjeto)
-    {
-        this.buildMessage = new BuildMessage();
-        
-        try{
-            this.projeto = this.iProjeto.selectProjetoById(idProjeto);
-            this.sessionManager = new SessionManager();
-            this.sessionManager.set("projeto", projeto);
-            
-            this.redirect = new Redirect();
-            this.redirect.redirectTo("/projeto/");
-            
-        }catch(BusinessException error)
-        {
-            this.buildMessage.addError("falha ao acessar o projeto");
-        }
-    }
-
+    
     public void saveProjeto(Projeto projeto) {
         
-        this.buildMessage = new BuildMessage();
+        buildMessage = new BuildMessage();
         
         try {
-            this.iProjeto.saveProjeto(projeto);
-            this.buildMessage.addInfo("Projeto cadastrado com Sucesso");
-            this.projeto = new Projeto();
+            Projeto savedProjeto = iProjeto.saveProjeto(projeto);
+            buildMessage.addInfo("Projeto cadastrado com Sucesso");
+            this.signProjeto(savedProjeto.getId());
         
-        } catch (Exception error) {
-            this.buildMessage.addError("Erro ao cadastrar Projeto.");
-            System.out.println("Ocorreu um erro: " + error);
-            error.printStackTrace();
+        } catch (NoPersistProjetoException error) {
+            buildMessage.addError(error.getMessage());
+            LOGGER.logp(Level.WARNING , ProjetoController.class.getName(), "saveProjeto", error.getMessage());
+        }
+    }
+    
+    
+    public void signProjeto(int idProjeto)
+    {
+        try{
+           projeto = iProjeto.selectProjetoById(idProjeto);
+           sessionManager = new SessionManager();
+           sessionManager.set("projeto", projeto);
+            
+           this.redirectToProject();
+           
+        }catch(NotFoundProjetoException error)
+        {
+           this.buildMessage.addError(error.getMessage());
+           LOGGER.logp(Level.WARNING , ProjetoController.class.getName(), "signProjeto", error.getMessage());
         }
     }
 
     public List<Projeto> getProjetos() {
         try {
-                this.projetos = this.iProjeto.selectProjetoByUsuario();
-                return this.projetos;
-        } catch (Exception error) {
-            System.out.println("Ocorreu um erro: " + error);
-            error.printStackTrace();
-            return null;
-        }
-    }
+        
+            projetos = this.iProjeto.selectProjectByUserSession();
 
-    public void removeProjeto(Projeto projeto) throws Exception {
-        System.out.println("pkm:" + this.pkm);
-        this.iProjeto.removeProjeto(this.pkm);
-        this.redirect.redirectTo("/user/home.xhtml");
+        } catch (FindProjectException error) {
+            LOGGER.logp(Level.WARNING , ProjetoController.class.getName(), "getProjetos", error.getMessage());
+        }
+        
+        return projetos;
     }
+    
+    private void redirectToProject(){
+        redirect = new Redirect();
+        redirect.redirectTo("/projeto/");
+    }
+    
+    //-----------------------------------------------------------------------
+
+    
     
     
     public int showUserProjetoPersmission(int idProjeto, int idUsuario)
     {
         try{
-            return this.iProjeto.selectProjetoUsuarioPerfil(idProjeto, idUsuario);
+            return iProjeto.selectProjetoUsuarioPerfil(idProjeto, idUsuario);
             
         }catch(BusinessException error)
         {
@@ -110,6 +121,15 @@ public class ProjetoController {
             return 0;
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     public void preEditProjeto(int idProjeto)
     {

@@ -1,9 +1,10 @@
 package models.ejb;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
@@ -11,10 +12,18 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
+import javax.persistence.LockTimeoutException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+import javax.persistence.PessimisticLockException;
+import javax.persistence.QueryTimeoutException;
+import javax.persistence.TransactionRequiredException;
 import libs.SessionManager;
 import libs.exception.BusinessException;
+import libs.exception.FindProjectException;
 import libs.exception.NoPersistException;
+import libs.exception.NoPersistProjetoException;
+import libs.exception.NotFoundProjetoException;
 import models.ejbs.interfaces.IAcessar;
 import models.ejbs.interfaces.IPerfil;
 import models.ejbs.interfaces.IProjeto;
@@ -29,6 +38,7 @@ import models.entities.Usuario;
 @Stateless
 public class ProjetoBean implements IProjeto {
 
+    private static final Logger LOGGER =  Logger.getLogger(ProjetoBean.class.getName());
     private Date dateProjeto;
     private List<Projeto> projetos;
     private Perfil perfil;
@@ -49,73 +59,71 @@ public class ProjetoBean implements IProjeto {
     @EJB
     private IAcessar iAcessar;
 
+    
+    
+    
+    
+    
     @Override
-    public void saveProjeto(Projeto projeto) {
+    public Projeto saveProjeto(Projeto projeto) {
         try {
-            this.sessionManager = new SessionManager();
-            projeto.setDataInicio(currentDate());
-            this.entityManager.persist(projeto);
-            this.perfil = this.iPerfil.findPerfil(PERFIL_SCRUM_MASTER);
-            this.usuario = (Usuario) this.sessionManager.get("usuario");
-            this.iAcessar.save(this.perfil, this.usuario, projeto);
-            
-
-        } catch (NoPersistException error) {
-            throw new BusinessException("Falha ao salvar projeto");
-        } catch (Exception error) {
-            this.sessionContext.setRollbackOnly();
-            throw new BusinessException("Falha ao salvar projeto");
-        }
-
-    }
-
-    public Date currentDate() throws ParseException {
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); // posso usar outras mascaras para formatação
-        this.dateProjeto = simpleDateFormat.parse(simpleDateFormat.format(date));
-        return this.dateProjeto;
-    }
-
-    @Override
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Projeto> selectProjetoByUsuario() {
-        try {
+        
             sessionManager = new SessionManager();
+            
+            projeto.setDataInicio(new Date());
+            entityManager.persist(projeto);
+            Perfil SMPerfil = iPerfil.findPerfil(PERFIL_SCRUM_MASTER);
+            
             usuario = (Usuario) sessionManager.get("usuario");
-            this.projetos = this.entityManager.createNamedQuery("Projeto.findAllByUserId", Projeto.class)
-                    .setParameter("id_usuario", usuario.getId())
-                    .getResultList();
+            iAcessar.save(SMPerfil, usuario, projeto);
 
-            return this.projetos;
-        } catch (Exception error) {
-            this.sessionContext.setRollbackOnly();
-            return null;
+            return projeto;
+        } catch (PersistenceException error) {
+            sessionContext.setRollbackOnly();
+            LOGGER.logp(Level.WARNING , ProjetoBean.class.getName(), "saveProjeto", error.getMessage());
+            throw new NoPersistProjetoException("Falha ao salvar projeto", error);
         }
     }
-
-    @Override
-    public void removeProjeto(String id_pkm) throws Exception {
-        int id = Integer.parseInt(id_pkm);
-        Projeto projetoFound = (Projeto) this.entityManager.createNamedQuery("Projeto.findById")
-                .setParameter("id", id)
-                .getSingleResult();
-        this.entityManager.merge(projetoFound);
-        this.entityManager.remove(projetoFound);
-
-    }
-
+    
+    
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public Projeto selectProjetoById(int idProjeto) {
         try {
-            
-            this.projeto = entityManager.find(Projeto.class, idProjeto);
-            return this.projeto;
-            
-        } catch (Exception error) {
-            throw new BusinessException("Falha na consulta do projeto");
+              return entityManager.find(Projeto.class, idProjeto);
+
+        } catch (IllegalArgumentException error) {
+            throw new NotFoundProjetoException("Erro ao pesquisar com o valor requisitado", error);
         }
     }
+    
+    @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Projeto> selectProjectByUserSession() {
+        try {
+            sessionManager = new SessionManager();
+            usuario = (Usuario) sessionManager.get("usuario");
+            projetos = entityManager
+                      .createNamedQuery("Projeto.findAllByUserId", Projeto.class)
+                      .setParameter("id_usuario", usuario.getId())
+                      .getResultList();
+
+            return projetos;
+            
+        } catch (QueryTimeoutException | TransactionRequiredException | 
+                 PessimisticLockException | LockTimeoutException error) {
+            
+            this.sessionContext.setRollbackOnly();
+            LOGGER.logp(Level.WARNING , ProjetoBean.class.getName(), "selectProjectUserSession", error.getMessage());
+            throw  new FindProjectException("O processo esta demorado ou não consegue concluir a operação", error);
+        }
+    }
+
+    
+    
+    // CLASS Undersupervision --------------------------------------------------------------------
+
+    
     
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -127,10 +135,26 @@ public class ProjetoBean implements IProjeto {
         }catch(BusinessException error)
         {
             System.out.println("Exception x");
-            throw new BusinessException((error.getMessage()));
+            throw new BusinessException((error.getMessage()), error);
         }
     }
+    
+    
+    
+    
+    @Override
+    public void removeProjeto(String id_pkm) throws Exception {
+        int id = Integer.parseInt(id_pkm);
+        Projeto projetoFound = (Projeto) this.entityManager.createNamedQuery("Projeto.findById")
+                .setParameter("id", id)
+                .getSingleResult();
+        this.entityManager.merge(projetoFound);
+        this.entityManager.remove(projetoFound);
 
+    }
+
+    
+    
     @Override
     public void updateProjeto(Projeto projeto) {
         try{
@@ -139,7 +163,7 @@ public class ProjetoBean implements IProjeto {
                     
         }catch(Exception error)
         {
-            throw new NoPersistException("Falha na atualização do projeto");
+            throw new NoPersistException("Falha na atualização do projeto", error);
         }
     }
 }

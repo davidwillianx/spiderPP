@@ -6,7 +6,10 @@
 
 package libs;
 
+
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +23,7 @@ public class Redirect {
     private FacesContext facesContext;
     private HttpServletRequest request;
     private  HttpServletResponse response;
+    private static final Logger LOGGER  = Logger.getLogger(Redirect.class.getName());
     
     public Redirect()
     {
@@ -28,14 +32,13 @@ public class Redirect {
         this.request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
     }
     
-    public void redirectTo(String page)
-    {
-        try{
-           response.sendRedirect(request.getContextPath()+page);
-        }catch(Exception error)
-        {
-            System.out.println("Error ao redirecionar");
+    public void redirectTo(String page) {
+        try {
+
+            response.sendRedirect(request.getContextPath() + page);
+
+        } catch (IOException | IllegalStateException error) {
+            LOGGER.logp(Level.WARNING, Redirect.class.getName(), "redirectTo", "Problema ao redirecionar");
         }
-        
     }
 }

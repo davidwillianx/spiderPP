@@ -51,7 +51,7 @@ public class MensagemBean {
             entityManager.persist(this.mensagem);
             
         } catch (Exception error) {
-            throw  new NoPersistException("Falha ao salvar mensagem "+error.getMessage());
+            throw  new NoPersistException("Falha ao salvar mensagem "+error.getMessage(), error);
         }
     }
 
@@ -67,7 +67,7 @@ public class MensagemBean {
             return this.mensagens;
 
         } catch (Exception error) {
-            throw new NotFoundException("Falha ao encontrar informaçoes");
+            throw new NotFoundException("Falha ao encontrar informaçoes", error);
         }
     }
     

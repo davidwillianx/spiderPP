@@ -38,6 +38,57 @@ public class PerfilBean  implements  IPerfil{
     @Resource
     private SessionContext sessionContext;
 
+    
+    @Override
+    public Perfil selectUserProfileByProjctIdAndUserId(int projectId, int userId) {
+        Perfil userProfile = (Perfil) entityManager
+                .createNamedQuery("Perfil.findByProjectIdAndUserId")
+                .setParameter("id_projeto", projectId)
+                .setParameter("id_usuario", userId).setMaxResults(1);
+        
+        return userProfile;
+    }
+    
+    
+    
+    //--------------------------------------------------------------------------
+    
+    
+        @Override
+    public Perfil selectPerfilByIdUsuarioAndIdProjeto(int idProjeto, int idUsuario)
+    {
+        try{
+            
+            perfil = (Perfil)  entityManager.createNamedQuery("Perfil.findByProjectIdAndUserId")
+                                .setParameter("id_projeto", idProjeto)             
+                                .setParameter("id_usuario", idUsuario)
+                                .getSingleResult();
+            
+            return perfil;
+            
+        }catch(Exception error)
+        {
+            
+            throw new BusinessException("Falha ao buscar perfil do usuário", error);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @Override
     public Perfil findPerfil(int idPerfil) {
         try{
@@ -49,28 +100,11 @@ public class PerfilBean  implements  IPerfil{
           
         }catch(Exception error)
         {
-           throw new NotFoundException("Perfil não encontrado");
+           throw new NotFoundException("Perfil não encontrado", error);
         }
     }
     
-    @Override
-    public Perfil selectPerfilByIdUsuarioAndIdProjeto(int idProjeto, int idUsuario)
-    {
-        try{
-            
-            this.perfil = (Perfil) this.entityManager.createNamedQuery("Perfil.findByIdProjetoAndIdUsuario")
-                                .setParameter("id_projeto", idProjeto)             
-                                .setParameter("id_usuario", idUsuario)
-                                .getSingleResult();
-            
-            return this.perfil;
-            
-        }catch(Exception error)
-        {
-            System.err.println(" error "+error.getMessage());
-            throw new BusinessException("Falha ao buscar perfil do usuário");
-        }
-    }
+
 
     @Override
     public List<Perfil> selectAll() {
@@ -78,8 +112,10 @@ public class PerfilBean  implements  IPerfil{
             this.perfis = this.entityManager.createNamedQuery("Perfil.findAll").getResultList();
             return this.perfis;
         }catch(Exception error){
-            throw  new NotFoundException(("Falha na busca dos perfis"));
+            throw  new NotFoundException("Falha na busca dos perfis", error);
         }
     }
+
+    
     
 }

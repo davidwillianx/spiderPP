@@ -60,7 +60,7 @@ public class EstoriaBean implements IEstoria {
 
         } catch (Exception error) {
             this.sessionContext.setRollbackOnly();
-            throw new NoPersistException("falha ao persistir estoria");
+            throw new NoPersistException("falha ao persistir estoria", error);
         }
     }
     
@@ -76,8 +76,8 @@ public class EstoriaBean implements IEstoria {
             this.entityManager.persist(subtask);  
             
             
-        } catch (Exception e) {
-            throw new NoPersistException("falha ao persistir subtask");
+        } catch (Exception error) {
+            throw new NoPersistException("falha ao persistir subtask",error);
         } 
     }
     
@@ -95,8 +95,8 @@ public class EstoriaBean implements IEstoria {
             }
             rootEstoria.setSubtasks(subtasks);
                
-        } catch (Exception e) {
-           throw new NoPersistException("Falha ao persistir estorias");
+        } catch (Exception error) {
+           throw new NoPersistException("Falha ao persistir estorias", error);
         }
     }
 
@@ -146,7 +146,7 @@ public class EstoriaBean implements IEstoria {
             return this.estoria;
         } catch (Exception error) {
             System.err.println("Error em EstoriaBean-selecEstoriaById-->" + error.getMessage());
-            throw new BusinessException("Falha ao consultar estória");
+            throw new BusinessException("Falha ao consultar estória", error);
         }
     }
 
@@ -158,7 +158,7 @@ public class EstoriaBean implements IEstoria {
                     .getSingleResult();
             return this.estoria;
         } catch (Exception error) { 
-            throw new BusinessException("Falha ao consultar estória");
+            throw new BusinessException("Falha ao consultar estória", error);
         }
     }
 
@@ -176,7 +176,7 @@ public class EstoriaBean implements IEstoria {
             this.entityManager.merge(estoria);
         } catch (NumberFormatException error) {
             System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
-            throw new NoPersistException("Falha na atualização da Estória");
+            throw new NoPersistException("Falha na atualização da Estória",error);
         }
     }
 
@@ -197,8 +197,8 @@ public class EstoriaBean implements IEstoria {
                                         .setParameter("id", idEstoria)
                                         .getResultList();
             return estorias;
-        } catch (Exception e) {
-            throw  new NotFoundException("fala ao realizar operação");
+        } catch (Exception error) {
+            throw  new NotFoundException("fala ao realizar operação", error);
         } 
     }
     
@@ -207,8 +207,8 @@ public class EstoriaBean implements IEstoria {
     {
         try {
             return entityManager.createNamedQuery("Estoria.findAllParents").getResultList();
-        } catch (Exception e) {
-            throw new NotFoundException("Nenhum Resultado");
+        } catch (Exception error) {
+            throw new NotFoundException("Nenhum Resultado", error);
         }
     }
     
@@ -253,7 +253,7 @@ public class EstoriaBean implements IEstoria {
             return media;
         } catch (Exception error) {
             System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
-            throw new NoPersistException("Falha no metodo que gera a media do projeto");
+            throw new NoPersistException("Falha no metodo que gera a media do projeto", error);
         }
     }
     
@@ -272,7 +272,7 @@ public class EstoriaBean implements IEstoria {
             return total;
         } catch (Exception error) {
             System.err.println("Error em EstoriaBean-updateEstoria-->" + error.getMessage());
-            throw new NoPersistException("Falha no metodo que gera o total das estimativas");
+            throw new NoPersistException("Falha no metodo que gera o total das estimativas", error);
         }
     }
 

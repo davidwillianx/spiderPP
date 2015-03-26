@@ -16,8 +16,8 @@ import javax.ejb.ApplicationException;
 @ApplicationException(rollback = true)
 public class NoPersistException extends RuntimeException{
         
-    public NoPersistException(String message)
+    public NoPersistException(String message, Throwable error)
     {
-        super(message);
+        super(message, error);
     }
 }

@@ -54,7 +54,7 @@ public class EstimativaBean implements IEstimativa{
             return this.estimativa;
         } catch (Exception error){
             System.err.println("Error em EstoriaBean-selecEstoriaById-->" + error.getMessage());
-            throw new BusinessException("Falha ao consultar estimativa da estória");
+            throw new BusinessException("Falha ao consultar estimativa da estória", error);
         }
     } 
 
@@ -69,8 +69,8 @@ public class EstimativaBean implements IEstimativa{
             estimativa.setEstimativaPK(new EstimativaPK(estoria.getEstoriaPK().getId()));
             entityManager.persist(estimativa);
                 
-        } catch (Exception e) {
-            throw new NoPersistException("Falha ao relizar operação"); 
+        } catch (Exception error) {
+            throw new NoPersistException("Falha ao relizar operação", error); 
         }
     }
  
@@ -82,7 +82,7 @@ public class EstimativaBean implements IEstimativa{
                             .getResultList();
             
         } catch (Exception error) {
-            throw new NotFoundException("Falha ao encontrar");
+            throw new NotFoundException("Falha ao encontrar", error);
         }
     }
 }
