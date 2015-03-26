@@ -2,7 +2,10 @@
 package models.ejb;
 
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
@@ -130,13 +133,16 @@ public class UsuarioBean implements IUsuario{
            //TODO Lançar um exception
            System.out.println("ErrorUpdatePassword: "+error.getMessage());
            this.context.setRollbackOnly();
-           return false;
-       }
+           
+       } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UsuarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return false;
     }
     
-    private String hash(String string) throws UnsupportedEncodingException{
-        this.buildHash = new BuildHash();
-        return this.buildHash.createHash(string);
+    private String hash(String string) throws UnsupportedEncodingException, NoSuchAlgorithmException{
+        this.buildHash = new BuildHash(string);
+        return this.buildHash.createHash();
     }
 
       /**
@@ -153,6 +159,8 @@ public class UsuarioBean implements IUsuario{
         }catch(UnsupportedEncodingException error)
         {
             this.context.setRollbackOnly();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UsuarioBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -271,6 +279,8 @@ public class UsuarioBean implements IUsuario{
         }catch(UnsupportedEncodingException error){
             
             throw new BusinessException("Falha na operação", error);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UsuarioBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

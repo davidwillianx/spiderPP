@@ -57,9 +57,10 @@
                                 <h:outputLink  class="btn btn-primary btn-large" value="poker.xhtml">
                                     <h:outputText value="Iniciar Estimativa " rendered="#{projetoController.showUserPermission(projeto.id  ,usuario.id).isScrumMaster()}"/> 
                                     <h:outputText value="Participar do Jogo " rendered="#{!projetoController.showUserPermission(projeto.id  ,usuario.id).isScrumMaster()}"/> 
-                                    <f:param name="rm" value="#{projetoController.showHashProject(projeto.id)}"/>
-                                    <f:param name="usr" value="#{projetoController.showHashUsuario(usuario.id)}"/>
-                                    <f:param name="pr" value="#{projetoController.showHashPerfil(usuario.id,projeto.id)}"/>
+                                    
+                                    <f:param name="rm" value="#{projetoController.showHashProjectId(projeto.id)}"/>
+                                    <f:param name="usr" value="#{projetoController.showHashUserId(usuario.id)}"/>
+                                    <f:param name="pr" value="#{projetoController.showHashProfile(usuario.id, projeto.id)}"/>
                                 </h:outputLink>
                             <!--</h:panelGroup>-->
                         </ul>
@@ -138,7 +139,7 @@
                         <li class="">
                             
                             <h:form>
-                                <h:commandLink action="#{projetoController.exitProjeto}" class="title">
+                                <h:commandLink action="#{projetoController.goOutProject}" class="title">
                                 <i class="fa fa-power-off"></i>
                                     <span class="title">Sair</span>
                                 </h:commandLink>

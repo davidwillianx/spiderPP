@@ -2,6 +2,7 @@ package controllers;
 
 
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +13,6 @@ import libs.BuildHash;
 import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
-import libs.exception.BusinessException;
 import libs.exception.FindPerfilException;
 import libs.exception.FindProjectException;
 import libs.exception.NoPersistProjetoException;
@@ -26,19 +26,20 @@ import models.entities.Projeto;
 /**
  *
  * @author BlenoVale
+ * @author DavidWillianx
  */
 @Named
 @RequestScoped
 public class ProjetoController {
     
     private static final Logger LOGGER = Logger.getLogger(ProjetoController.class.getName());
-    
+    private BuildHash hashProjectId, hashUserId, hashProfile;
     
     private Projeto projeto = new Projeto();
     private Redirect redirect;
     private BuildMessage buildMessage = new BuildMessage();
-    private String pkm;
     private List<Projeto> projetos;
+    
     
     private SessionManager sessionManager;
 
@@ -114,66 +115,69 @@ public class ProjetoController {
     }
     
     
+    public void goOutProject() {
+        sessionManager = new SessionManager();
+        sessionManager.remove("projeto");
+        this.redirect.redirectTo("/user/index.xhtml");
+    }
+    
     private void redirectToProject(){
         redirect = new Redirect();
         redirect.redirectTo("/projeto/");
     }
     
-    
-    
-    //-----------------------------------------------------------------------
 
-    
-    public void preEditProjeto(int idProjeto)
-    {
-        try{
-            this.projeto = this.iProjeto.selectProjetoById(idProjeto);
-            this.redirect.redirectTo("/projeto/editar.xhtml");
-        }catch(BusinessException error)
-        {
-            this.buildMessage.addError(error.getMessage());
-        }
-    }
-    
-    public void exitProjeto()
-    {
-        try{
-            this.sessionManager =  new SessionManager();
-            this.sessionManager.remove("projeto");
-            this.redirect.redirectTo("/user/index.xhtml");
-        }catch(Exception error)
-        {
-            System.err.println("Falha ao sair");
-        }
-    }
-    
-    public String showHashProject(int idProjeto) throws UnsupportedEncodingException
-    {
-        BuildHash hashBuilder = new BuildHash();
-        return hashBuilder.buildHashStringURL(String.valueOf(idProjeto));
-    }
-    
-    public String showHashPerfil(int idUsuario, int idProjeto) throws UnsupportedEncodingException
-    {
-        Perfil userProfile = this.showUserPermission(idProjeto, idUsuario);
+    public String showHashProjectId(int projectId){
         
-        BuildHash buildHash = new BuildHash();
-        return buildHash.buildHashStringURL(String.valueOf(userProfile.getId()));
+        try {
+             hashProjectId = new BuildHash(Integer.toString(projectId));    
+            
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException error) {
+            
+            this.buildMessage.addError("Problemas ao gerar seu acesse ao jogo, reinicie a página e tente novamente");
+            LOGGER.logp(Level.SEVERE, ProjetoController.class.getName(), "showHashProjectId", "Falha ao gerar o hash do projeto", error);
+        }
+        
+        return hashProjectId.buildHashURLData();
     }
     
-    public String showHashUsuario(int idUsuario) throws UnsupportedEncodingException{
+    public String showHashProfile(int userId, int projectId){
         
-        return new BuildHash().buildHashStringURL(String.valueOf(idUsuario));
+        
+        try {
+            Perfil userProfile = this.showUserPermission(projectId, userId);
+            hashProfile = new BuildHash(
+                        Integer.toString(userProfile.getId())
+            );
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException error) {
+            
+            this.buildMessage.addError("Problemas ao gerar seu acesse ao jogo, reinicie a página e tente novamente");
+            LOGGER.logp(Level.SEVERE, ProjetoController.class.getName(), "showHashProfile", "Falha ao gerar o hash do projeto", error);
+        }
+        return hashProfile.buildHashURLData();
     }
-
-    public String showMemberProfileDescription(int idUsuario, int idProjeto){
+    
+    public String showHashUserId(int userId){
+        try {
+            hashUserId = new BuildHash(
+                    Integer.toString(userId)
+            );
+            
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException error) {
+            
+            this.buildMessage.addError("Problemas ao gerar seu acesse ao jogo, reinicie a página e tente novamente");
+            LOGGER.logp(Level.SEVERE, ProjetoController.class.getName(), "showHashUserId", "Falha ao gerar o hash do projeto", error);
+        }
+        
+        return hashUserId.buildHashURLData();
+    }
+//-----------------------------------------------------------------------
+     public String showMemberProfileDescription(int idUsuario, int idProjeto){
         try {
              return acessarBusiness.findMemberProfile(idUsuario,idProjeto).getNome();
         } catch (Exception e) {
             return "Error: nao foi encontrado perfil para o usuario";
         }
     }
-    
-    
     
 }

@@ -12,28 +12,30 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  *
- * @author smp
+ * @author DavidWillianx
  */
 public class BuildHash {
-
-    public String createHash(String hash) throws UnsupportedEncodingException {
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            messageDigest.update(hash.getBytes("UTF-8"));
-            byte[] digest = messageDigest.digest();
-            BigInteger bigInteger = new BigInteger(1, digest);
-            String hashed = bigInteger.toString(16);
-            System.out.println("Hash: " + hashed);
-
-            return hashed;
-
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException error) {
-            return "";
-        }
+    
+    MessageDigest messageCreator;
+    byte[] digestResult ;
+    BigInteger dataHashed;
+    String dataToHash;
+       
+    /*@param dataToHash*/
+    public BuildHash(String dataToHash) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+        this.dataToHash = dataToHash;
+        this.messageCreator = MessageDigest.getInstance("SHA-256");
+        this.messageCreator.update(dataToHash.getBytes("UTF-8"));
     }
     
-    public String buildHashStringURL(String information) throws UnsupportedEncodingException
-    {
-        return this.createHash(information)+information;
+    public String createHash() {
+        this.digestResult = messageCreator.digest();
+        this.dataHashed = new BigInteger(1, digestResult);
+        return this.dataHashed.toString(16);
+    }
+    
+    public String buildHashURLData(){
+        String hashedData = this.createHash();
+        return hashedData.concat(this.dataToHash);
     }
 }

@@ -41,4 +41,6 @@ public class Redirect {
             LOGGER.logp(Level.WARNING, Redirect.class.getName(), "redirectTo", "Problema ao redirecionar");
         }
     }
+    
+    
 }

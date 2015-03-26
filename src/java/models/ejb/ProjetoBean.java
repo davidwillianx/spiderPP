@@ -19,8 +19,6 @@ import javax.persistence.PessimisticLockException;
 import javax.persistence.QueryTimeoutException;
 import javax.persistence.TransactionRequiredException;
 import libs.SessionManager;
-import libs.exception.BusinessException;
-import libs.exception.FindPerfilException;
 import libs.exception.FindProjectException;
 import libs.exception.NoPersistException;
 import libs.exception.NoPersistProjetoException;
@@ -31,23 +29,24 @@ import models.ejbs.interfaces.IProjeto;
 import models.entities.Perfil;
 import models.entities.Projeto;
 import models.entities.Usuario;
-
+ 
 /**
  *
  * @author BlenoVale
+ * @author DavidWillianx
  */
 @Stateless
 public class ProjetoBean implements IProjeto {
 
     private static final Logger LOGGER =  Logger.getLogger(ProjetoBean.class.getName());
-    private Date dateProjeto;
+    private static final int PERFIL_SCRUM_MASTER = 1;
+    
     private List<Projeto> projetos;
-    private Perfil perfil;
     private Usuario usuario;
     private SessionManager sessionManager;
-    private Projeto projeto;
+    
 
-    private static final int PERFIL_SCRUM_MASTER = 1;
+    
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -122,6 +121,9 @@ public class ProjetoBean implements IProjeto {
     }
     
     // CLASS Undersupervision --------------------------------------------------------------------
+
+    
+    
     
     
     @Override
