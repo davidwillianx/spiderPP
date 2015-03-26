@@ -20,6 +20,7 @@ import javax.persistence.QueryTimeoutException;
 import javax.persistence.TransactionRequiredException;
 import libs.SessionManager;
 import libs.exception.BusinessException;
+import libs.exception.FindPerfilException;
 import libs.exception.FindProjectException;
 import libs.exception.NoPersistException;
 import libs.exception.NoPersistProjetoException;
@@ -59,10 +60,6 @@ public class ProjetoBean implements IProjeto {
     @EJB
     private IAcessar iAcessar;
 
-    
-    
-    
-    
     
     @Override
     public Projeto saveProjeto(Projeto projeto) {
@@ -119,27 +116,12 @@ public class ProjetoBean implements IProjeto {
         }
     }
 
-    
-    
-    // CLASS Undersupervision --------------------------------------------------------------------
-
-    
-    
     @Override
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public int selectProjetoUsuarioPerfil(int idProjeto, int idUsuario)
-    {
-        try{
-            this.perfil = this.iPerfil.selectPerfilByIdUsuarioAndIdProjeto(idProjeto, idUsuario);
-            return this.perfil.getId();
-        }catch(BusinessException error)
-        {
-            System.out.println("Exception x");
-            throw new BusinessException((error.getMessage()), error);
-        }
+    public Perfil selectUserProjectProfile(int projectId , int userId){
+        return iPerfil.selectPerfilByIdUsuarioAndIdProjeto(projectId, userId);
     }
     
-    
+    // CLASS Undersupervision --------------------------------------------------------------------
     
     
     @Override

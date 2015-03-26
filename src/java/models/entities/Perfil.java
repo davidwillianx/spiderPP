@@ -51,6 +51,13 @@ public class Perfil implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "perfil")
     private Collection<Acessar> acessarCollection;
 
+    
+    private static final int SCRUM_MASTER = 1;
+    private static final int REP_PRODUTO = 2;
+    private static final int TEAM = 3;
+    
+    
+    
     public Perfil() {
     }
 
@@ -108,6 +115,19 @@ public class Perfil implements Serializable {
         return true;
     }
 
+    public boolean isScrumMaster(){
+        return this.id == Perfil.SCRUM_MASTER;
+    }
+    
+    public boolean isProductOwner()
+    {
+        return this.id == Perfil.REP_PRODUTO;
+    }
+    
+    public boolean isTeam(){
+        return this.id == Perfil.TEAM;
+    }
+    
     @Override
     public String toString() {
         return "models.entities.Perfil[ id=" + id + " ]";

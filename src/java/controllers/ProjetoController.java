@@ -13,11 +13,13 @@ import libs.BuildMessage;
 import libs.Redirect;
 import libs.SessionManager;
 import libs.exception.BusinessException;
+import libs.exception.FindPerfilException;
 import libs.exception.FindProjectException;
 import libs.exception.NoPersistProjetoException;
 import libs.exception.NotFoundProjetoException;
 import models.ejbs.interfaces.IAcessar;
 import models.ejbs.interfaces.IProjeto;
+import models.entities.Perfil;
 import models.entities.Projeto;
 
 
@@ -30,6 +32,7 @@ import models.entities.Projeto;
 public class ProjetoController {
     
     private static final Logger LOGGER = Logger.getLogger(ProjetoController.class.getName());
+    
     
     private Projeto projeto = new Projeto();
     private Redirect redirect;
@@ -100,36 +103,26 @@ public class ProjetoController {
         return projetos;
     }
     
+    public Perfil showUserPermission(int projectId, int userId){
+        Perfil userProjectProfile = new Perfil();
+        try {
+             userProjectProfile = iProjeto.selectUserProjectProfile(projectId, userId);
+        } catch (FindPerfilException error) {
+            redirect.redirectTo("/index.xhtml");
+        }
+        return userProjectProfile;
+    }
+    
+    
     private void redirectToProject(){
         redirect = new Redirect();
         redirect.redirectTo("/projeto/");
     }
     
+    
+    
     //-----------------------------------------------------------------------
 
-    
-    
-    
-    public int showUserProjetoPersmission(int idProjeto, int idUsuario)
-    {
-        try{
-            return iProjeto.selectProjetoUsuarioPerfil(idProjeto, idUsuario);
-            
-        }catch(BusinessException error)
-        {
-            this.redirect.redirectTo("/index.xhtml");
-            return 0;
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     public void preEditProjeto(int idProjeto)
     {
@@ -162,9 +155,10 @@ public class ProjetoController {
     
     public String showHashPerfil(int idUsuario, int idProjeto) throws UnsupportedEncodingException
     {
-        int idPerfil =  this.showUserProjetoPersmission(idProjeto, idUsuario);
+        Perfil userProfile = this.showUserPermission(idProjeto, idUsuario);
+        
         BuildHash buildHash = new BuildHash();
-        return buildHash.buildHashStringURL(String.valueOf(idPerfil));
+        return buildHash.buildHashStringURL(String.valueOf(userProfile.getId()));
     }
     
     public String showHashUsuario(int idUsuario) throws UnsupportedEncodingException{
